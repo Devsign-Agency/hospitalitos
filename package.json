@@ -1,0 +1,20 @@
+{
+    "name": "kaad",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "nx serve",
+        "build": "nx build",
+        "test": "nx test"
+    },
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+        "nx": "15.5.1",
+        "@nrwl/cli": "13.10.6",
+        "@nrwl/workspace": "15.5.1",
+        "@types/node": "16.11.7",
+        "typescript": "4.8.4",
+        "prettier": "2.8.3"
+    }
+}
