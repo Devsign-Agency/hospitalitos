@@ -1,7 +1,8 @@
 {
     "version": 2,
     "projects": {
-        "api": "apps/api"
+        "api": "apps/api",
+        "config-api": "libs/config/api"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
