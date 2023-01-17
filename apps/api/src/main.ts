@@ -6,6 +6,7 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 
@@ -39,6 +40,16 @@ async function bootstrap() {
     const globalPrefix = `${config.get('globalPrefix')}`;
     app.setGlobalPrefix(globalPrefix);
     app.enableCors({ origin: '*' })
+
+    if (config.get('environment') == 'production' || true) {
+        const swaggerConfig = new DocumentBuilder()
+            .setTitle('Kaad API')
+            .setDescription('Kaad RESTful API')
+            .setVersion('1.0')
+            .build();
+        const document = SwaggerModule.createDocument(app, swaggerConfig);
+        SwaggerModule.setup('api/swagger', app, document);
+    }
 
     const port = process.env.PORT || 3333;
     await app.listen(port);
