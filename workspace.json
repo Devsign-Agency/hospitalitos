@@ -2,7 +2,8 @@
     "version": 2,
     "projects": {
         "api": "apps/api",
-        "config-api": "libs/config/api"
+        "config-api": "libs/config/api",
+        "security-api": "libs/security/api"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
