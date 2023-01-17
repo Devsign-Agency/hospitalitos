@@ -5,7 +5,8 @@
     "scripts": {
         "start": "nx serve",
         "build": "nx build",
-        "test": "nx test"
+        "test": "nx test",
+        "nest:resource": "nx g @nrwl/nest:resource $npm_config_name --directory lib -p $npm_config_project"
     },
     "private": true,
     "devDependencies": {
