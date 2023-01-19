@@ -17,9 +17,15 @@
                     "apps/api/src/assets",
                     {
                         "glob": "**/*",
-                        "input": "libs/mailer/api/src/lib/mail/templates",
+                        "input": "libs/mailer/api/src/lib/sender/templates",
                         "output": "templates"
-                    }],
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "libs/auth/api/src/lib/templates",
+                        "output": "templates"
+                    }
+                ],
                 "webpackConfig": "apps/api/webpack.config.js"
             },
             "configurations": {

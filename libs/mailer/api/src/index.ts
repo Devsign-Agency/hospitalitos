@@ -1,1 +1,1 @@
-export * from './lib/mailer-api.module';
+export * from './lib/sender';

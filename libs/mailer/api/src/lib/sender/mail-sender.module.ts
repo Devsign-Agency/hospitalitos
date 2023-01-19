@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { MailService } from './mail.service';
-import { MailController } from './mail.controller';
+import { MailSenderService } from './mail-sender.service';
+import { MailSenderController } from './mail-sender.controller';
 import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-    controllers: [MailController],
-    providers: [MailService],
+    controllers: [MailSenderController],
+    providers: [MailSenderService],
     imports: [
         MailerModule.forRootAsync({
             imports: [ConfigModule],
@@ -37,4 +37,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         })
     ]
 })
-export class MailModule { }
+export class MailSenderModule { }

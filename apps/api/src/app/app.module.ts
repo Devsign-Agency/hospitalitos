@@ -1,6 +1,6 @@
 import { AuthApiModule } from '@kaad/auth/api';
 import { ConfigApiModule } from '@kaad/config/api';
-import { MailerApiModule } from '@kaad/mailer/api';
+import { MailSenderModule } from '@kaad/mailer/api';
 import { SecurityApiModule } from '@kaad/security/api';
 import { Module } from '@nestjs/common';
 
@@ -11,7 +11,7 @@ import { AppService } from './app.service';
     imports: [
         AuthApiModule,
         ConfigApiModule,
-        MailerApiModule,
+        MailSenderModule,
         SecurityApiModule
     ],
     controllers: [

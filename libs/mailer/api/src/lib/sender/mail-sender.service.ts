@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { SendMailerDto } from './dto/send-mailer.dto';
 
 @Injectable()
-export class MailService {
+export class MailSenderService {
 
     constructor(
         private config: ConfigService,
