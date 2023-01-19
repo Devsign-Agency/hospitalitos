@@ -1,22 +1,23 @@
+import { MailSenderModule } from '@kaad/mailer/api';
+import { SecurityApiModule } from '@kaad/security/api';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AccountService } from './aacount/account.service';
+import { AccountEntity } from './aacount/entities/account.entity';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
-import { AuthValidator } from './auth/validators/auth.validator';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { LocalStrategy } from './auth/strategies/local.strategy';
 import { RefreshStrategy } from './auth/strategies/refresh.strategy';
+import { AuthValidator } from './auth/validators/auth.validator';
 import { JwtUtils } from './jwt/jwt.utils';
-import { SessionService } from './session/session.service';
-import { SecurityApiModule } from '@kaad/security/api';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { SessionEntity } from './session/entities/session.entity';
+import { SessionService } from './session/session.service';
 
 @Module({
-    controllers: [
-        AuthController
-    ],
+    controllers: [AuthController],
     providers: [
         AuthService,
         AuthValidator,
@@ -24,7 +25,8 @@ import { SessionEntity } from './session/entities/session.entity';
         JwtUtils,
         LocalStrategy,
         RefreshStrategy,
-        SessionService
+        SessionService,
+        AccountService,
     ],
     exports: [],
     imports: [
@@ -34,8 +36,9 @@ import { SessionEntity } from './session/entities/session.entity';
                 config.get('jwtConfiguration'),
             inject: [ConfigService],
         }),
+        MailSenderModule,
         SecurityApiModule,
-        TypeOrmModule.forFeature([SessionEntity])
+        TypeOrmModule.forFeature([AccountEntity, SessionEntity]),
     ],
 })
 export class AuthApiModule {}

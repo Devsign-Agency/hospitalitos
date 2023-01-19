@@ -1,6 +1,7 @@
 export const configuration = () => ({
     environment: process.env.NODE_ENV,
     globalPrefix: process.env.GLOBAL_PREFIX || 'api/v1',
+    globalUrl: process.env.GLOBAL_URL || `http://localhost`,
     port: process.env.PORT,
     databaseConnection: {
         type: 'postgres',
@@ -22,5 +23,9 @@ export const configuration = () => ({
         user: process.env.MAIL_TRANSPORT_AUTH_USER,
         pass: process.env.MAIL_TRANSPORT_AUTH_PASS,
     },
-
+    company: {
+        name: process.env.COMPANY_NAME,
+        url: process.env.COMPANY_URL,
+        logo: process.env.COMPANY_LOGO_URL
+    }
 })

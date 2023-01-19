@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
     controllers: [MailSenderController],
     providers: [MailSenderService],
+    exports: [MailSenderService],
     imports: [
         MailerModule.forRootAsync({
             imports: [ConfigModule],

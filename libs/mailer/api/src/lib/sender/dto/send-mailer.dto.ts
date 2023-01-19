@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export class SendMailerDto {
 
     @ApiProperty({ required: false })
-    from: string;
+    from?: string;
 
     @ApiProperty({ required: true, default: 'bpena.tester@gmail.com' })
     to: string;

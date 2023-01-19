@@ -8,7 +8,7 @@ export class PasswordEntity implements Password {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => UserEntity, (user: UserEntity) => user.passwords)
+    @ManyToOne(() => UserEntity, (user: UserEntity) => user.passwords, { cascade: true, onDelete: 'CASCADE' })
     user: User;
 
     @Column({ nullable: false, type: 'timestamptz', default: () => "CURRENT_TIMESTAMP" })

@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 export const validationSchema = Joi.object({
     NODE_ENV: Joi.string().valid('development', 'production', 'test').required(),
     GLOBAL_PREFIX: Joi.string().default('api/v1'),
+    GLOBAL_URL: Joi.string().default('http://localhost'),
     PORT: Joi.number().default(3333),
     CONNECTION_HOST: Joi.string().required(),
     CONNECTION_PORT: Joi.number().required(),
@@ -19,5 +20,8 @@ export const validationSchema = Joi.object({
     MAIL_DEFAULT_FROM: Joi.string().required(),
     MAIL_TRANSPORT_HOST: Joi.string().required(),
     MAIL_TRANSPORT_AUTH_USER: Joi.string().required(),
-    MAIL_TRANSPORT_AUTH_PASS: Joi.string().required()
+    MAIL_TRANSPORT_AUTH_PASS: Joi.string().required(),
+    COMPANY_NAME: Joi.string().required(),
+    COMPANY_URL: Joi.string().required(),
+    COMPANY_LOGO_URL: Joi.string().required()
 })
