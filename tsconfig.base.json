@@ -17,6 +17,7 @@
         "paths": {
             "@kaad/auth/api": ["libs/auth/api/src/index.ts"],
             "@kaad/config/api": ["libs/config/api/src/index.ts"],
+            "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],
             "@kaad/shared/api": ["libs/shared/api/src/index.ts"]
         }

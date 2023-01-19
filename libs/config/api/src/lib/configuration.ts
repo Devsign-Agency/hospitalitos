@@ -16,7 +16,11 @@ export const configuration = () => ({
         secret: process.env.JWT_ACCESS_TOKEN_SECRET,
         signOptions: { expiresIn: `${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}s`}
     },
-    emailReader: {
-        emailAllowed: process.env.EMAIL_READER_ALLOWED
-    }
+    mailer: {
+        from: process.env.MAIL_DEFAULT_FROM,
+        host: process.env.MAIL_TRANSPORT_HOST,
+        user: process.env.MAIL_TRANSPORT_AUTH_USER,
+        pass: process.env.MAIL_TRANSPORT_AUTH_PASS,
+    },
+
 })

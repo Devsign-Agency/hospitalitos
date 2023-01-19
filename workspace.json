@@ -4,6 +4,7 @@
         "api": "apps/api",
         "auth-api": "libs/auth/api",
         "config-api": "libs/config/api",
+        "mailer-api": "libs/mailer/api",
         "security-api": "libs/security/api",
         "shared-api": "libs/shared/api"
     },

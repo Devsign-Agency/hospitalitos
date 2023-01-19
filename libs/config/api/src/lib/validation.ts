@@ -15,5 +15,9 @@ export const validationSchema = Joi.object({
     JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.number().required(),
     JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
     JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.number().required(),
-    JWT_REFRESH_TOKEN_NAME: Joi.string().default('refresh_token').required()
+    JWT_REFRESH_TOKEN_NAME: Joi.string().default('refresh_token').required(),
+    MAIL_DEFAULT_FROM: Joi.string().required(),
+    MAIL_TRANSPORT_HOST: Joi.string().required(),
+    MAIL_TRANSPORT_AUTH_USER: Joi.string().required(),
+    MAIL_TRANSPORT_AUTH_PASS: Joi.string().required()
 })
