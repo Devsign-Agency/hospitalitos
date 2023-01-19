@@ -1,10 +1,21 @@
-import { User } from "@kaad/security/api";
+import { ApiProperty } from "@nestjs/swagger";
 
-export interface Register extends Partial<User> {
+export class Register {
+    @ApiProperty()
     username: string;
+
+    @ApiProperty()
     password: string;
+
+    @ApiProperty()
     email: string;
+
+    @ApiProperty()
     firstname: string;
+
+    @ApiProperty()
     lastname: string;
+
+    @ApiProperty()
     photoUrl: string;
 }

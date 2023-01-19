@@ -1,14 +1,17 @@
 import { Public } from '@kaad/shared/api';
 import { Body, Controller, Delete, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthResponse } from './dtos/auth-response.dto';
+import { Credentials } from './dtos/credentials.dto';
 import { RefreshResponse } from './dtos/refresh-response.dto';
 import { Register } from './dtos/register.dto';
 import { JwtGuard } from './guards/jwt.guard';
 import { LocalGuard } from './guards/local.guard';
 import { RefreshGuard } from './guards/refresh.guard';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 
@@ -18,7 +21,7 @@ export class AuthController {
     @HttpCode(200)
     @Public()
     @Post()
-    public async login(@Request() req, @Ip() ip: string): Promise<AuthResponse> {
+    public async login(@Request() req, @Ip() ip: string, @Body() credential: Credentials): Promise<AuthResponse> {
         return this.authService.login(req.user, ip);
     }
 

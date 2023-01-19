@@ -23,6 +23,9 @@ import { UserEntity } from './user/entities/user.entity';
     imports: [
         TypeOrmModule.forFeature([PasswordEntity, UserEntity])
     ],
-    exports: [],
+    exports: [
+        PasswordService,
+        UserService
+    ],
 })
 export class SecurityApiModule {}

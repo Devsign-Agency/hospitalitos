@@ -7,6 +7,11 @@ import { LocalStrategy } from './auth/strategies/local.strategy';
 import { RefreshStrategy } from './auth/strategies/refresh.strategy';
 import { JwtUtils } from './jwt/jwt.utils';
 import { SessionService } from './session/session.service';
+import { SecurityApiModule } from '@kaad/security/api';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SessionEntity } from './session/entities/session.entity';
 
 @Module({
     controllers: [
@@ -22,6 +27,15 @@ import { SessionService } from './session/session.service';
         SessionService
     ],
     exports: [],
-    imports: [],
+    imports: [
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: (config: ConfigService) =>
+                config.get('jwtConfiguration'),
+            inject: [ConfigService],
+        }),
+        SecurityApiModule,
+        TypeOrmModule.forFeature([SessionEntity])
+    ],
 })
 export class AuthApiModule {}
