@@ -98,8 +98,8 @@ export class PasswordService {
 
         const today = new Date();
         const diff = differenceInHours(today, forgotPassword.createdAt);
-        Logger.log(diff, 'PasswordService::resetPassword');
-        if (diff > 24) {
+        const validationLink = this.config.get<number>('validationLink');
+        if (diff > validationLink) {
             throw new BadRequestException('link expired')
         }
 

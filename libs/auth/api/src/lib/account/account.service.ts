@@ -1,5 +1,6 @@
 import { UserService } from '@kaad/security/api';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
 import { differenceInHours } from 'date-fns';
@@ -10,6 +11,7 @@ import { AccountEntity } from './entities/account.entity';
 export class AccountService {
     constructor(
         @InjectRepository(AccountEntity) private readonly accountRepository: Repository<AccountEntity>,
+        private readonly config: ConfigService,
         private readonly userService: UserService) {}
 
     async register(userId: string) {
@@ -23,7 +25,8 @@ export class AccountService {
     async verifyEmail(verificationCode: string) {
         const today = new Date();
         const account = await this.accountRepository.findOne({ where: { verificationCode } });
-        if (!!account && !account.verifiedAt && differenceInHours(today, account.createdAt) < 24) {
+        const validationLink = this.config.get<number>('validationLink');
+        if (!!account && !account.verifiedAt && differenceInHours(today, account.createdAt) < validationLink) {
             account.verifiedAt = today;
             const user = await this.userService.findById(account.user);
             user.emailVerified = true;

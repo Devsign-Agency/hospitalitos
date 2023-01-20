@@ -5,6 +5,7 @@ export const validationSchema = Joi.object({
     GLOBAL_PREFIX: Joi.string().default('api/v1'),
     GLOBAL_URL: Joi.string().default('http://localhost'),
     PORT: Joi.number().default(3333),
+    VALIDATION_LINK: Joi.number().default(24),
     CONNECTION_HOST: Joi.string().required(),
     CONNECTION_PORT: Joi.number().required(),
     CONNECTION_USERNAME: Joi.string().required(),

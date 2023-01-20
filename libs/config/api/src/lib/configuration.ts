@@ -3,6 +3,7 @@ export const configuration = () => ({
     globalPrefix: process.env.GLOBAL_PREFIX || 'api/v1',
     globalUrl: process.env.GLOBAL_URL || `http://localhost`,
     port: process.env.PORT,
+    validationLink: process.env.VALIDATION_LINK,
     databaseConnection: {
         type: 'postgres',
         host: process.env.CONNECTION_HOST,
