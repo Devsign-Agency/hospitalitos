@@ -23,7 +23,7 @@ export class AccountService {
     async verifyEmail(verificationCode: string) {
         const today = new Date();
         const account = await this.accountRepository.findOne({ where: { verificationCode } });
-        if (!!account && !account.verifiedAt && differenceInHours(account.createdAt, today) < 24) {
+        if (!!account && !account.verifiedAt && differenceInHours(today, account.createdAt) < 24) {
             account.verifiedAt = today;
             const user = await this.userService.findById(account.user);
             user.emailVerified = true;

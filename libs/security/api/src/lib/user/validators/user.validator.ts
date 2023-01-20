@@ -82,7 +82,7 @@ export class UserValidator {
 
     public async validateUserExistByEmail(email: string): Promise<boolean> {
         if (!(await this.emailInUse(email))) {
-            throw new NotFoundException(`user with username "${email}" not found`);
+            throw new NotFoundException(`user with email "${email}" not found`);
         }
 
         return true;

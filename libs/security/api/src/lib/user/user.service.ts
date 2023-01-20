@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { User } from './interfaces/user.interface';
 import { UserValidator } from './validators/user.validator';
@@ -41,7 +40,7 @@ export class UserService {
     public async findByEmail(email: string): Promise<User> {
         let user: User = null;
 
-        if (await this.validator.validateUserExistByUsername(email)) {
+        if (await this.validator.validateUserExistByEmail(email)) {
             user = await this.userRepository.findOne({
                 where: { email }
             });

@@ -8,6 +8,8 @@ import { UserValidator } from './user/validators/user.validator';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PasswordEntity } from './password/entities/password.entity';
 import { UserEntity } from './user/entities/user.entity';
+import { PasswordResetEntity } from './password/entities/password-reset.entity';
+import { MailSenderModule } from '@kaad/mailer/api';
 
 @Module({
     controllers: [
@@ -21,7 +23,8 @@ import { UserEntity } from './user/entities/user.entity';
         UserValidator
     ],
     imports: [
-        TypeOrmModule.forFeature([PasswordEntity, UserEntity])
+        MailSenderModule,
+        TypeOrmModule.forFeature([PasswordEntity, PasswordResetEntity, UserEntity])
     ],
     exports: [
         PasswordService,
