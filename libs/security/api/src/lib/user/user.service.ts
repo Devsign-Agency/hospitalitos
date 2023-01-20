@@ -81,7 +81,7 @@ export class UserService {
             user = await this.userRepository.findOne({ where: {id} });
 
             user.username = userData.username;
-            user.emailVerified = (user.email !== userData.email) ? false : user.emailVerified;
+            user.emailVerified = (user.email !== userData.email) ? false : userData.emailVerified;
             user.email = userData.email;
             user.firstname = userData.firstname;
             user.lastname = userData.lastname;

@@ -2,6 +2,8 @@ import { MailSenderService } from '@kaad/mailer/api';
 import { PasswordService, User, UserService } from '@kaad/security/api';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AccountService } from '../account/account.service';
+import { Account } from '../account/interfaces/account.interface';
 import { JwtUtils } from '../jwt/jwt.utils';
 import { SessionService } from '../session/session.service';
 import { AuthResponse } from './dtos/auth-response.dto';
@@ -11,7 +13,8 @@ import { Register } from './dtos/register.dto';
 @Injectable()
 export class AuthService {
 
-    constructor(private readonly config: ConfigService,
+    constructor(private readonly accountService: AccountService,
+        private readonly config: ConfigService,
         private readonly jwtUtils: JwtUtils,
         private readonly passwordService: PasswordService,
         private readonly mailSenderService: MailSenderService,
@@ -48,6 +51,8 @@ export class AuthService {
 
         await this.sessionService.create(user.id, refreshToken, ip);
 
+        const account: Account = await this.accountService.register(user.id);
+
         const globalUrl = this.config.get('globalUrl');
         const port = this.config.get('port');
         const globalPrefix = this.config.get('globalPrefix');
@@ -59,7 +64,7 @@ export class AuthService {
                 companyName: this.config.get('company.name'),
                 companyUrl: this.config.get('company.url'),
                 companyLogoUrl: this.config.get('company.logo'),
-                confirmUrl: `${globalUrl}:${port}/${globalPrefix}/confirm-email`,
+                confirmUrl: `${globalUrl}:${port}/${globalPrefix}/account/${account.verificationCode}`,
             }
         };
         const template = './register';

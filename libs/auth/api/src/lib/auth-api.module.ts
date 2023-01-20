@@ -4,8 +4,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountService } from './aacount/account.service';
-import { AccountEntity } from './aacount/entities/account.entity';
+import { AccountService } from './account/account.service';
+import { AccountEntity } from './account/entities/account.entity';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
@@ -15,10 +15,12 @@ import { AuthValidator } from './auth/validators/auth.validator';
 import { JwtUtils } from './jwt/jwt.utils';
 import { SessionEntity } from './session/entities/session.entity';
 import { SessionService } from './session/session.service';
+import { AccountController } from './account/account.controller';
 
 @Module({
-    controllers: [AuthController],
+    controllers: [AuthController, AccountController],
     providers: [
+        AccountService,
         AuthService,
         AuthValidator,
         JwtStrategy,
@@ -26,7 +28,6 @@ import { SessionService } from './session/session.service';
         LocalStrategy,
         RefreshStrategy,
         SessionService,
-        AccountService,
     ],
     exports: [],
     imports: [

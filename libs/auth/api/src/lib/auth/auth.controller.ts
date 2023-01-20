@@ -41,7 +41,7 @@ export class AuthController {
     @Post('register')
     @Public()
     public async register(@Body() registerData: Register, @Ip() ip: string): Promise<AuthResponse> {
-        return this.authService.register(registerData, ip);
+        return await this.authService.register(registerData, ip);
     }
 
     @Public()

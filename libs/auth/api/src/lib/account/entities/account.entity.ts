@@ -9,10 +9,10 @@ export class AccountEntity implements Account {
     @Column()
     user: string;
 
-    @Column({ type: "timestamptz" })
+    @Column({ type: "timestamptz", nullable: true })
     createdAt: Date;
 
-    @Column({ type: "timestamptz" })
+    @Column({ type: "timestamptz", nullable: true })
     verifiedAt: Date;
 
     @Column()
