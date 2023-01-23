@@ -4,6 +4,11 @@ export const configuration = () => ({
     globalUrl: process.env.GLOBAL_URL || `http://localhost`,
     port: process.env.PORT,
     validationLink: process.env.VALIDATION_LINK,
+    company: {
+        name: process.env.COMPANY_NAME,
+        url: process.env.COMPANY_URL,
+        logo: process.env.COMPANY_LOGO_URL
+    },
     databaseConnection: {
         type: 'postgres',
         host: process.env.CONNECTION_HOST,
@@ -24,9 +29,9 @@ export const configuration = () => ({
         user: process.env.MAIL_TRANSPORT_AUTH_USER,
         pass: process.env.MAIL_TRANSPORT_AUTH_PASS,
     },
-    company: {
-        name: process.env.COMPANY_NAME,
-        url: process.env.COMPANY_URL,
-        logo: process.env.COMPANY_LOGO_URL
+    gcloud: {
+        tokenDir: process.env.GCLOUD_TOKEN_DIR,
+        tokenFile: process.env.GCLOUD_TOKEN_FILE,
+        credentials: process.env.GCLOUD_CREDENTIAL_FILE
     }
 })

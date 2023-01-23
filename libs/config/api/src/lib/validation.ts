@@ -24,5 +24,8 @@ export const validationSchema = Joi.object({
     MAIL_TRANSPORT_AUTH_PASS: Joi.string().required(),
     COMPANY_NAME: Joi.string().required(),
     COMPANY_URL: Joi.string().required(),
-    COMPANY_LOGO_URL: Joi.string().required()
+    COMPANY_LOGO_URL: Joi.string().required(),
+    GCLOUD_TOKEN_DIR: Joi.string().required(),
+    GCLOUD_TOKEN_FILE: Joi.string().required(),
+    GCLOUD_CREDENTIAL_FILE: Joi.string().required()
 })
