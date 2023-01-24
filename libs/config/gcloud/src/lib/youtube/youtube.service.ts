@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
+import { BaseService } from '../common/base.service';
 import { MetadataVideo } from '../dto/metadata-video.dto';
 
 const SCOPES = [
@@ -10,38 +11,11 @@ const SCOPES = [
     'https://www.googleapis.com/auth/youtube.readonly'
 ];
 
-type Credential = {
-    web: {
-        auth_provider_x509_cert_url: string,
-        auth_uri: string,
-        client_id: string,
-        client_secret: string,
-        project_id: string,
-        redirect_uris: string[],
-        token_uri: string
-    }
-};
-
 @Injectable()
-export class YoutubeService {
-    private TOKEN_DIR: string;
-    private CREDENTIAL_PATH: string;
-    private TOKEN_PATH: string;
+export class YoutubeService extends BaseService {
 
-    constructor(private readonly config: ConfigService) {
-        this.TOKEN_DIR = `${this.config.get('gcloud.tokenDir')}`;
-        this.CREDENTIAL_PATH = `${this.TOKEN_DIR}/${this.config.get('gcloud.credentials')}`;
-        this.TOKEN_PATH = `${this.TOKEN_DIR}/${this.config.get('gcloud.tokenFile')}`;
-    }
-
-    private async getOauth2Client(): Promise<OAuth2Client> {
-        const content: Buffer = fs.readFileSync(this.CREDENTIAL_PATH);
-        const credentials: Credential = JSON.parse(content.toString()); // credential
-
-        // authentication
-        const { client_secret, client_id, redirect_uris } = credentials.web;
-        const oauth2Client: OAuth2Client = new OAuth2Client(client_id, client_secret, redirect_uris[0]);
-        return oauth2Client;
+    constructor(readonly configService: ConfigService) {
+        super(configService);
     }
 
     private async loadTokenCredentials() {
