@@ -16,6 +16,8 @@
         "baseUrl": ".",
         "paths": {
             "@kaad/auth/api": ["libs/auth/api/src/index.ts"],
+            "@kaad/auth/webapp/core": ["libs/auth/webapp/core/src/index.ts"],
+            "@kaad/auth/webapp/ui": ["libs/auth/webapp/ui/src/index.ts"],
             "@kaad/config/api": ["libs/config/api/src/index.ts"],
             "@kaad/config/gcloud": ["libs/config/gcloud/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],

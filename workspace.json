@@ -3,6 +3,8 @@
     "projects": {
         "api": "apps/api",
         "auth-api": "libs/auth/api",
+        "auth-webapp-core": "libs/auth/webapp/core",
+        "auth-webapp-ui": "libs/auth/webapp/ui",
         "config-api": "libs/config/api",
         "config-gcloud": "libs/config/gcloud",
         "mailer-api": "libs/mailer/api",
