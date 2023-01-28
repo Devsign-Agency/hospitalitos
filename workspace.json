@@ -4,7 +4,7 @@
         "api": "apps/api",
         "auth-api": "libs/auth/api",
         "config-api": "libs/config/api",
-        "config-gcloud": "libs/config/gcloud",
+        "gcloud-api": "libs/gcloud/api",
         "mailer-api": "libs/mailer/api",
         "security-api": "libs/security/api",
         "shared-api": "libs/shared/api"

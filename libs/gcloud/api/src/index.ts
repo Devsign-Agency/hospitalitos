@@ -1,4 +1,4 @@
-export * from './lib/config-gcloud.module';
+export * from './lib/gcloud-api.module';
 
 export * from './lib/authentication/strategies/google.strategy';
 export * from './lib/authentication/authentication.service';

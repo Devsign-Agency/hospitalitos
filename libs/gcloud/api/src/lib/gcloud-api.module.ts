@@ -10,4 +10,4 @@ import { GoogleStrategy } from './authentication/strategies/google.strategy';
     providers: [YoutubeService, AuthenticationService, GoogleStrategy],
     exports: [ AuthenticationService, GoogleStrategy],
 })
-export class ConfigGcloudModule {}
+export class GcloudApiModule {}

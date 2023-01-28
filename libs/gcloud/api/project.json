@@ -1,32 +1,32 @@
 {
-    "name": "config-gcloud",
+    "name": "gcloud-api",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "libs/config/gcloud/src",
+    "sourceRoot": "libs/gcloud/api/src",
     "projectType": "library",
     "targets": {
         "build": {
             "executor": "@nrwl/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/libs/config/gcloud",
-                "tsConfig": "libs/config/gcloud/tsconfig.lib.json",
-                "packageJson": "libs/config/gcloud/package.json",
-                "main": "libs/config/gcloud/src/index.ts",
-                "assets": ["libs/config/gcloud/*.md"]
+                "outputPath": "dist/libs/gcloud/api",
+                "tsConfig": "libs/gcloud/api/tsconfig.lib.json",
+                "packageJson": "libs/gcloud/api/package.json",
+                "main": "libs/gcloud/api/src/index.ts",
+                "assets": ["libs/gcloud/api/*.md"]
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["libs/config/gcloud/**/*.ts"]
+                "lintFilePatterns": ["libs/gcloud/api/**/*.ts"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "libs/config/gcloud/jest.config.ts",
+                "jestConfig": "libs/gcloud/api/jest.config.ts",
                 "passWithNoTests": true
             }
         }

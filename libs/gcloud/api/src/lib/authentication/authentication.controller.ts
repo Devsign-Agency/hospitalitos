@@ -1,7 +1,6 @@
-import { Controller, Get, Ip, Query, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Ip, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
-import { GoogleGuard } from './guards/google.guard';
 
 @ApiTags('GCloud Authentication')
 @Controller('gAuth')
