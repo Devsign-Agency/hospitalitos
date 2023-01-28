@@ -7,7 +7,9 @@
         "config-gcloud": "libs/config/gcloud",
         "mailer-api": "libs/mailer/api",
         "security-api": "libs/security/api",
-        "shared-api": "libs/shared/api"
+        "shared-api": "libs/shared/api",
+        "webapp-backoffice": "apps/webapp/backoffice",
+        "webapp-backoffice-e2e": "apps/webapp/backoffice-e2e"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
