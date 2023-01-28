@@ -6,7 +6,7 @@
         "auth-webapp-core": "libs/auth/webapp/core",
         "auth-webapp-ui": "libs/auth/webapp/ui",
         "config-api": "libs/config/api",
-        "config-gcloud": "libs/config/gcloud",
+        "gcloud-api": "libs/gcloud/api",
         "mailer-api": "libs/mailer/api",
         "security-api": "libs/security/api",
         "shared-api": "libs/shared/api",

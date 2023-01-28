@@ -1,5 +1,5 @@
 {
-    "name": "@kaad/config/gcloud",
+    "name": "@kaad/gcloud/api",
     "version": "0.0.1",
     "type": "commonjs"
 }
