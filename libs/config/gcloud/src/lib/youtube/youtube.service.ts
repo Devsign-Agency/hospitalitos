@@ -15,7 +15,8 @@ const SCOPES = [
 export class YoutubeService extends BaseService {
 
     constructor(readonly configService: ConfigService) {
-        super(configService);
+        super(configService, SCOPES);
+        this.URI_INDEX = 1;
     }
 
     private async loadTokenCredentials() {
@@ -25,18 +26,6 @@ export class YoutubeService extends BaseService {
         oauth2Client.credentials = JSON.parse(token.toString());
 
         return oauth2Client;
-    }
-
-    public async getAuthUrl() {
-        const oauth2Client: OAuth2Client = await this.getOauth2Client();
-
-        //get new token
-        const authUrl = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: SCOPES
-        });
-
-        return { authUrl };
     }
 
     public async login(code: string) {
@@ -58,7 +47,6 @@ export class YoutubeService extends BaseService {
                 }
 
                 fs.writeFileSync(this.TOKEN_PATH, JSON.stringify(token));
-                console.log('Token stored to ' + this.TOKEN_PATH);
                 resolve(true);
             });
         });

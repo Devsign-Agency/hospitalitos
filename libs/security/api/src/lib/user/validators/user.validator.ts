@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
+import { CreateGoogleUserDto } from '../dto/create-google-user.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { User } from '../interfaces/user.interface';
@@ -118,6 +119,19 @@ export class UserValidator {
     }
 
     public async validateCreationUser(user: CreateUserDto): Promise<boolean> {
+
+        if (await this.usernameInUse(user.username)) {
+            throw new BadRequestException("user with that username already exist");
+        }
+
+        if (await this.emailInUse(user.email)) {
+            throw new BadRequestException("user with that email already exist");
+        }
+
+        return await this.validateRequired(user);
+    }
+
+    public async validateCreationUserWithGoogle(user: CreateGoogleUserDto): Promise<boolean> {
 
         if (await this.usernameInUse(user.username)) {
             throw new BadRequestException("user with that username already exist");

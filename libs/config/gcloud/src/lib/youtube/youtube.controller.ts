@@ -1,9 +1,8 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, ParseFilePipe, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import 'multer';
 import { diskStorage } from 'multer';
-import { LoginDto } from '../dto/login.dto';
 import { MetadataVideo } from '../dto/metadata-video.dto';
 import { YoutubeService } from './youtube.service';
 
@@ -19,10 +18,10 @@ export class YoutubeController {
         return await this.youtubeService.getAuthUrl();
     }
 
-    @Post('login')
+    @Get('login')
     // @UseGuards(AdminGuard)
-    async login(@Body() data: LoginDto) {
-        return await this.youtubeService.login(data.code);
+    async login(@Query('code') code: string) {
+        return await this.youtubeService.login(code);
     }
 
     @Post('upload')

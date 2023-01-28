@@ -10,6 +10,7 @@ export interface User {
     role?: string;
     status?: string;
     documentId: string;
+    googleId: string;
 }
 
 export const EmptyUser: User = {
@@ -22,5 +23,6 @@ export const EmptyUser: User = {
     photoUrl: '',
     role: '',
     status: '',
-    documentId: ''
+    documentId: '',
+    googleId: ''
 }

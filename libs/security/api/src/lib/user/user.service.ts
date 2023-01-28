@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateGoogleUserDto } from './dto/create-google-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { User } from './interfaces/user.interface';
@@ -68,6 +69,17 @@ export class UserService {
         let user: User = null;
         if (await this.validator.validateCreationUser(userData)) {
 
+            user = await this.userRepository.save(userData);
+        }
+        return user;
+    }
+
+    public async createWithGoogle(userData: CreateGoogleUserDto): Promise<User> {
+        let user: User = null;
+
+        if (await this.validator.validateUserExistByEmail(userData.email)) {
+            // asociar googleId a user
+        } else if (await this.validator.validateCreationUser(userData)) {
             user = await this.userRepository.save(userData);
         }
         return user;

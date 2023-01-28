@@ -31,4 +31,7 @@ export class UserEntity implements User {
 
     @OneToMany(() => PasswordEntity, (password: PasswordEntity) => password.user)
     passwords?: Password[];
+
+    @Column({ nullable: true })
+    googleId: string;
 }
