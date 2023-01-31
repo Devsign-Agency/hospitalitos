@@ -16,9 +16,13 @@
         "baseUrl": ".",
         "paths": {
             "@kaad/auth/api": ["libs/auth/api/src/index.ts"],
+            "@kaad/auth/ng-common": ["libs/auth/ng-common/src/index.ts"],
             "@kaad/auth/webapp/core": ["libs/auth/webapp/core/src/index.ts"],
             "@kaad/auth/webapp/ui": ["libs/auth/webapp/ui/src/index.ts"],
             "@kaad/config/api": ["libs/config/api/src/index.ts"],
+            "@kaad/config/webapp/core": [
+                "libs/config/webapp/core/src/index.ts"
+            ],
             "@kaad/gcloud/api": ["libs/gcloud/api/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],

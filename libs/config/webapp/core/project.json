@@ -1,8 +1,8 @@
 {
-  "name": "auth-webapp-core",
+  "name": "config-webapp-core",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/auth/webapp/core/src",
+  "sourceRoot": "libs/config/webapp/core/src",
   "prefix": "kaad",
   "targets": {
     "build": {
@@ -11,14 +11,14 @@
         "{workspaceRoot}/dist/{projectRoot}"
       ],
       "options": {
-        "project": "libs/auth/webapp/core/ng-package.json"
+        "project": "libs/config/webapp/core/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/auth/webapp/core/tsconfig.lib.prod.json"
+          "tsConfig": "libs/config/webapp/core/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/auth/webapp/core/tsconfig.lib.json"
+          "tsConfig": "libs/config/webapp/core/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"
@@ -29,7 +29,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "libs/auth/webapp/core/jest.config.ts",
+        "jestConfig": "libs/config/webapp/core/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -46,8 +46,8 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "libs/auth/webapp/core/**/*.ts",
-          "libs/auth/webapp/core/**/*.html"
+          "libs/config/webapp/core/**/*.ts",
+          "libs/config/webapp/core/**/*.html"
         ]
       }
     }

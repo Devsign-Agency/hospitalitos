@@ -1,3 +1,4 @@
+import { AuthResponse, RefreshResponse, Register } from '@kaad/auth/ng-common';
 import { MailSenderService } from '@kaad/mailer/api';
 import { PasswordService, User, UserService } from '@kaad/security/api';
 import { Injectable } from '@nestjs/common';
@@ -6,9 +7,6 @@ import { AccountService } from '../account/account.service';
 import { Account } from '../account/interfaces/account.interface';
 import { JwtUtils } from '../jwt/jwt.utils';
 import { SessionService } from '../session/session.service';
-import { AuthResponse } from './dtos/auth-response.dto';
-import { RefreshResponse } from './dtos/refresh-response.dto';
-import { Register } from './dtos/register.dto';
 
 @Injectable()
 export class AuthService {
