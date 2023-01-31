@@ -1,19 +1,15 @@
 import { MailSenderService, SendMailerDto } from '@kaad/mailer/api';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { CreatePasswordDto, ForgotPassword, Password, ResetPassword, User } from '@kaad/security/ng-common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
 import { randomUUID } from 'crypto';
 import { differenceInHours } from 'date-fns';
 import { Repository } from 'typeorm';
-import { User } from '../user/interfaces/user.interface';
 import { UserService } from '../user/user.service';
-import { CreatePasswordDto } from './dto/create-password.dto';
-import { ForgotPassword } from './dto/forgot-password.dto';
-import { ResetPassword } from './dto/reset-password.dto';
 import { PasswordResetEntity } from './entities/password-reset.entity';
 import { PasswordEntity } from './entities/password.entity';
-import { Password } from './interfaces/password.interface';
 
 @Injectable()
 export class PasswordService {

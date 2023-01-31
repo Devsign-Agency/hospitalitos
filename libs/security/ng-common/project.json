@@ -1,0 +1,26 @@
+{
+    "name": "security-ng-common",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/security/ng-common/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/security/ng-common",
+                "main": "libs/security/ng-common/src/index.ts",
+                "tsConfig": "libs/security/ng-common/tsconfig.lib.json",
+                "assets": ["libs/security/ng-common/*.md"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/security/ng-common/**/*.ts"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,5 +1,5 @@
+import { PasswordReset } from "@kaad/security/ng-common";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { PasswordReset } from "../interfaces/password-reset.interface";
 
 @Entity('password-reset', { schema: 'security' })
 export class PasswordResetEntity implements PasswordReset {

@@ -4,10 +4,11 @@ import { Config } from './config';
 @Injectable({
     providedIn: 'root',
 })
-export class ConfigService {
+export class ConfigService extends Config {
     private config: Config = new Config();
 
     constructor(@Optional() config: Config) {
+        super();
         console.log('POR ACÁ');
         if (config) {
             this.options = config;
@@ -17,9 +18,6 @@ export class ConfigService {
     set options(opt: Config) {
         (Object.keys(opt) as (keyof typeof opt)[]).forEach(key => {
             this.config[key] = opt[key] ? opt[key] : this.config[key];
-            Object.defineProperty(this, key, {
-                get: () => this.config[key]
-            });
         });
     }
 }

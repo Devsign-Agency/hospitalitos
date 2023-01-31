@@ -1,10 +1,8 @@
+import { CreateGoogleUserDto, CreateUserDto, User } from '@kaad/security/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateGoogleUserDto } from './dto/create-google-user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { User } from './interfaces/user.interface';
 import { UserValidator } from './validators/user.validator';
 
 @Injectable()

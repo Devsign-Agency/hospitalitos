@@ -1,8 +1,8 @@
+import { JwtPayload } from '@kaad/auth/ng-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { JwtPayload } from '../../jwt/interfaces/payload.interface';
 import { AuthValidator } from '../validators/auth.validator';
 
 @Injectable()

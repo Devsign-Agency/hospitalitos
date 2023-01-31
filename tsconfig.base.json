@@ -26,6 +26,9 @@
             "@kaad/gcloud/api": ["libs/gcloud/api/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],
+            "@kaad/security/ng-common": [
+                "libs/security/ng-common/src/index.ts"
+            ],
             "@kaad/shared/api": ["libs/shared/api/src/index.ts"]
         }
     },

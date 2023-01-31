@@ -1,8 +1,8 @@
-import { User } from '@kaad/security/api';
+import { JwtPayload } from '@kaad/auth/ng-common';
+import { User } from '@kaad/security/ng-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './interfaces/payload.interface';
 
 @Injectable()
 export class JwtUtils {

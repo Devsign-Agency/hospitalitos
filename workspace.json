@@ -1,19 +1,20 @@
 {
-  "version": 2,
-  "projects": {
-    "api": "apps/api",
-    "auth-api": "libs/auth/api",
-    "auth-ng-common": "libs/auth/ng-common",
-    "auth-webapp-core": "libs/auth/webapp/core",
-    "auth-webapp-ui": "libs/auth/webapp/ui",
-    "config-api": "libs/config/api",
-    "config-webapp-core": "libs/config/webapp/core",
-    "gcloud-api": "libs/gcloud/api",
-    "mailer-api": "libs/mailer/api",
-    "security-api": "libs/security/api",
-    "shared-api": "libs/shared/api",
-    "webapp-backoffice": "apps/webapp/backoffice",
-    "webapp-backoffice-e2e": "apps/webapp/backoffice-e2e"
-  },
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
+    "version": 2,
+    "projects": {
+        "api": "apps/api",
+        "auth-api": "libs/auth/api",
+        "auth-ng-common": "libs/auth/ng-common",
+        "auth-webapp-core": "libs/auth/webapp/core",
+        "auth-webapp-ui": "libs/auth/webapp/ui",
+        "config-api": "libs/config/api",
+        "config-webapp-core": "libs/config/webapp/core",
+        "gcloud-api": "libs/gcloud/api",
+        "mailer-api": "libs/mailer/api",
+        "security-api": "libs/security/api",
+        "security-ng-common": "libs/security/ng-common",
+        "shared-api": "libs/shared/api",
+        "webapp-backoffice": "apps/webapp/backoffice",
+        "webapp-backoffice-e2e": "apps/webapp/backoffice-e2e"
+    },
+    "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

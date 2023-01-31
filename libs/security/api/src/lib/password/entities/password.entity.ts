@@ -1,7 +1,6 @@
+import { Password, User } from "@kaad/security/ng-common";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../user/entities/user.entity";
-import { User } from "../../user/interfaces/user.interface";
-import { Password } from "../interfaces/password.interface";
 
 @Entity('password', { schema: 'security' })
 export class PasswordEntity implements Password {
