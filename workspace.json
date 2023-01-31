@@ -13,6 +13,7 @@
         "security-api": "libs/security/api",
         "security-ng-common": "libs/security/ng-common",
         "shared-api": "libs/shared/api",
+        "shared-webapp-ui": "libs/shared/webapp/ui",
         "webapp-backoffice": "apps/webapp/backoffice",
         "webapp-backoffice-e2e": "apps/webapp/backoffice-e2e"
     },

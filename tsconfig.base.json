@@ -29,7 +29,8 @@
             "@kaad/security/ng-common": [
                 "libs/security/ng-common/src/index.ts"
             ],
-            "@kaad/shared/api": ["libs/shared/api/src/index.ts"]
+            "@kaad/shared/api": ["libs/shared/api/src/index.ts"],
+            "@kaad/shared/webapp/ui": ["libs/shared/webapp/ui/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]
