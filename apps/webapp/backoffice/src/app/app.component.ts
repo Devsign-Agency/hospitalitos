@@ -10,4 +10,28 @@ export class AppComponent {
     title = 'webapp-backoffice';
 
     constructor(private readonly config: ConfigService) {}
+
+    closeSideMenu() {
+        //
+    }
+
+    toggleSideMenu() {
+        //
+    }
+
+    toggleNotificationsMenu() {
+        //
+    }
+
+    closeNotificationsMenu() {
+        //
+    }
+
+    toggleProfileMenu() {
+        //
+    }
+
+    closeProfileMenu() {
+        //
+    }
 }
