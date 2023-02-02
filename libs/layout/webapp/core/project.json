@@ -1,0 +1,50 @@
+{
+    "name": "layout-webapp-core",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "libs/layout/webapp/core/src",
+    "prefix": "kaad",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:ng-packagr-lite",
+            "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+            "options": {
+                "project": "libs/layout/webapp/core/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/layout/webapp/core/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "libs/layout/webapp/core/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "libs/layout/webapp/core/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "libs/layout/webapp/core/**/*.ts",
+                    "libs/layout/webapp/core/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

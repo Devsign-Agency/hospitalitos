@@ -24,6 +24,10 @@
                 "libs/config/webapp/core/src/index.ts"
             ],
             "@kaad/gcloud/api": ["libs/gcloud/api/src/index.ts"],
+            "@kaad/layout/webapp/core": [
+                "libs/layout/webapp/core/src/index.ts"
+            ],
+            "@kaad/layout/webapp/ui": ["libs/layout/webapp/ui/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],
             "@kaad/security/ng-common": [

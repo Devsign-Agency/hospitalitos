@@ -9,6 +9,8 @@
         "config-api": "libs/config/api",
         "config-webapp-core": "libs/config/webapp/core",
         "gcloud-api": "libs/gcloud/api",
+        "layout-webapp-core": "libs/layout/webapp/core",
+        "layout-webapp-ui": "libs/layout/webapp/ui",
         "mailer-api": "libs/mailer/api",
         "security-api": "libs/security/api",
         "security-ng-common": "libs/security/ng-common",
