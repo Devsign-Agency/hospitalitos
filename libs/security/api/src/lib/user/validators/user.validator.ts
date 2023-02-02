@@ -10,12 +10,12 @@ export class UserValidator {
     constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) { }
 
     public async userExist(id: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({ where: {id} });
+        const user: Partial<User> | null = await this.userRepository.findOne({ where: {id} });
         return !!user;
     }
 
     public async usernameInUse(username: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({
+        const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
             where: { username }
         });
@@ -23,7 +23,7 @@ export class UserValidator {
     }
 
     public async emailInUse(email: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({
+        const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
             where: { email }
         });
@@ -31,7 +31,7 @@ export class UserValidator {
     }
 
     public async usernameOrEmailInUse(value: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({
+        const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
             where: [
                 { username: value },
@@ -42,7 +42,7 @@ export class UserValidator {
     }
 
     public async usernameInUseAndNotMe(username: string, id: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({
+        const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
             where: {
                 username,
@@ -53,7 +53,7 @@ export class UserValidator {
     }
 
     public async emailInUseAndNotMe(email: string, id: string): Promise<boolean> {
-        const user: Partial<User> = await this.userRepository.findOne({
+        const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
             where: {
                 email,

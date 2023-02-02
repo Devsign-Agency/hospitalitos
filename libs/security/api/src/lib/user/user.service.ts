@@ -15,20 +15,20 @@ export class UserService {
     }
 
     public async findById(id: string): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUserExistById(id)) {
-            user = await this.userRepository.findOne({ where: {id} });
+            user = await this.userRepository.findOneOrFail({ where: {id} });
         }
 
         return user;
     }
 
     public async findByUsername(username: string): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUserExistByUsername(username)) {
-            user = await this.userRepository.findOne({
+            user = await this.userRepository.findOneOrFail({
                 where: { username }
             });
         }
@@ -37,10 +37,10 @@ export class UserService {
     }
 
     public async findByEmail(email: string): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUserExistByEmail(email)) {
-            user = await this.userRepository.findOne({
+            user = await this.userRepository.findOneOrFail({
                 where: { email }
             });
         }
@@ -49,10 +49,10 @@ export class UserService {
     }
 
     public async findByUsernameOrEmail(value: string): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUserExistByUsernameOrEmail(value)) {
-            user = await this.userRepository.findOne({
+            user = await this.userRepository.findOneOrFail({
                 where: [
                     { username: value },
                     { email: value }
@@ -64,7 +64,7 @@ export class UserService {
     }
 
     public async create(userData: CreateUserDto): Promise<User> {
-        let user: User = null;
+        let user: User;
         if (await this.validator.validateCreationUser(userData)) {
 
             user = await this.userRepository.save(userData);
@@ -73,7 +73,7 @@ export class UserService {
     }
 
     public async createWithGoogle(userData: CreateGoogleUserDto): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUserExistByEmail(userData.email)) {
             // asociar googleId a user
@@ -84,7 +84,7 @@ export class UserService {
     }
 
     public async update(id: string, userData: User): Promise<User> {
-        let user: User = null;
+        let user: User;
 
         if (await this.validator.validateUpdateUser(id, userData)) {
             user = await this.userRepository.findOne({ where: {id} });
@@ -103,7 +103,7 @@ export class UserService {
     }
 
     public async delete(id: string): Promise<User> {
-        let user: User = null;
+        let user: User;
         await this.userRepository.findOne({ where: {id} });
         if (await this.validator.validateUserExistById(id)) {
             user = await this.userRepository.findOne({ where: {id} });

@@ -1,4 +1,4 @@
-import { User } from "@kaad/security/api";
+import { User } from "@kaad/security/ng-common";
 
 export interface AuthResponse {
     userId: string;
