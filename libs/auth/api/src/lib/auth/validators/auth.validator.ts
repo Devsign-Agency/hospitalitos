@@ -1,4 +1,5 @@
-import { PasswordService, User, UserService } from '@kaad/security/api';
+import { PasswordService, UserService } from '@kaad/security/api';
+import { User } from '@kaad/security/ng-common';
 import { Injectable } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { SessionService } from '../../session/session.service';

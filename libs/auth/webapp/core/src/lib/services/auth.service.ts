@@ -202,4 +202,30 @@ export class AuthService {
     public validateSession() {
         this.loggedIn.next(this.tokenService.hasToken);
     }
+
+    public getGoogleUrlLogin() {
+        const url = `${this.config.urlApi}/gAuth`;
+        const loginRequest = this.http
+            .get<{ authUrl: string}>(url, {
+                context: new HttpContext().set(BYPASS_JWT_TOKEN, true)
+            });
+
+        return loginRequest;
+    }
+
+    public googleLogin(code: string) {
+        this.tokenService.deleteAllToken();
+        const url = `${this.config.urlApi}/${this.config.uriLogin}/signinWithGoogle`;
+        const params = { code }
+        const loginRequest = this.http
+            .post<AuthResponse>(url, params, {
+                context: new HttpContext().set(BYPASS_JWT_TOKEN, true)
+            })
+            .pipe(
+                tap((response) => this.loginHandle(response)),
+                catchError(this.errorHandle)
+            );
+
+        return loginRequest;
+    }
 }

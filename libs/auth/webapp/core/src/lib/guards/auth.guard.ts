@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ConfigService } from '@kaad/config/webapp/core';
 import { Observable } from 'rxjs';
-import { ConfigService } from '../config/config.service';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({

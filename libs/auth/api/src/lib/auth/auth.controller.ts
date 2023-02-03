@@ -1,6 +1,6 @@
 import { AuthResponse, Credentials, RefreshResponse, Register } from '@kaad/auth/ng-common';
 import { Public } from '@kaad/shared/api';
-import { Body, Controller, Delete, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, HttpCode, Ip, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -43,8 +43,14 @@ export class AuthController {
     }
 
     @Public()
-    @Post("renew/validate")
+    @Post('renew/validate')
     public async validateToken(@Body() body: { [key: string]: string }): Promise<boolean> {
         return this.authService.validateToken(body[this.configService.get<string>('JWT_REFRESH_TOKEN_NAME')])
+    }
+
+    @Public()
+    @Post('signinWithGoogle')
+    public async signinWithGoogle(@Ip() ip: string, @Body() { code }: { code: string }) {
+        return this.authService.signinWithGoogle(code, ip);
     }
 }

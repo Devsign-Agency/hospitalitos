@@ -1,4 +1,5 @@
-import { User, UserService } from '@kaad/security/api';
+import { UserService } from '@kaad/security/api';
+import { User } from '@kaad/security/ng-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';

@@ -1,8 +1,12 @@
 import { AuthResponse, RefreshResponse, Register } from '@kaad/auth/ng-common';
+import { AuthenticationService } from '@kaad/gcloud/api';
 import { MailSenderService } from '@kaad/mailer/api';
-import { PasswordService, User, UserService } from '@kaad/security/api';
-import { Injectable } from '@nestjs/common';
+import { PasswordService, UserService } from '@kaad/security/api';
+import { User } from '@kaad/security/ng-common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Credentials } from 'google-auth-library';
+import { oauth2_v2 } from 'googleapis';
 import { AccountService } from '../account/account.service';
 import { Account } from '../account/interfaces/account.interface';
 import { JwtUtils } from '../jwt/jwt.utils';
@@ -13,6 +17,7 @@ export class AuthService {
 
     constructor(private readonly accountService: AccountService,
         private readonly config: ConfigService,
+        private readonly gcloudService: AuthenticationService,
         private readonly jwtUtils: JwtUtils,
         private readonly passwordService: PasswordService,
         private readonly mailSenderService: MailSenderService,
@@ -84,5 +89,26 @@ export class AuthService {
 
     public async validateToken(token: string): Promise<boolean> {
         return this.jwtUtils.validateRefreshToken(token);
+    }
+
+    public async signinWithGoogle(code: string, ip: string): Promise<AuthResponse> {
+        try {
+            const tokenData = await this.gcloudService.getGoogleToken(code);
+            const userInfo = await this.gcloudService.getUserInfo(tokenData);
+            return await this.signinOrRegisterWithGoogle(userInfo, ip);
+
+        } catch (error) {
+            throw new UnauthorizedException(null, "invalid credentials")
+        }
+    }
+
+    private async signinOrRegisterWithGoogle(userData: oauth2_v2.Schema$Userinfo, ip: string) {
+        try {
+            const user = await this.userService.findByGoogleId(userData.id);
+            return await this.login(user, ip);
+        } catch (error) {
+            const user = await this.userService.registerWithGoogle(userData);
+            return await this.login(user, ip);
+        }
     }
 }

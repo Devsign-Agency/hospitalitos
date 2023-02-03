@@ -14,6 +14,11 @@ export class UserValidator {
         return !!user;
     }
 
+    public async googleIdExist(gId: string): Promise<boolean> {
+        const user: Partial<User> | null = await this.userRepository.findOne({ where: { googleId: gId } });
+        return !!user;
+    }
+
     public async usernameInUse(username: string): Promise<boolean> {
         const user: Partial<User> | null = await this.userRepository.findOne({
             select: ['id'],
@@ -68,6 +73,13 @@ export class UserValidator {
             throw new NotFoundException(`user with id "${id}" not found`);
         }
 
+        return true;
+    }
+
+    public async validateUserExistByGoogleId(gId: string): Promise<boolean> {
+        if (!(await this.googleIdExist(gId))) {
+            throw new NotFoundException(`user with googleId "${gId}" not found`);
+        }
         return true;
     }
 

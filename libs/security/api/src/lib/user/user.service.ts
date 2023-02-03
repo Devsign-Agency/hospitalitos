@@ -1,6 +1,7 @@
 import { CreateGoogleUserDto, CreateUserDto, User } from '@kaad/security/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { oauth2_v2 } from 'googleapis';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { UserValidator } from './validators/user.validator';
@@ -19,6 +20,16 @@ export class UserService {
 
         if (await this.validator.validateUserExistById(id)) {
             user = await this.userRepository.findOneOrFail({ where: {id} });
+        }
+
+        return user;
+    }
+
+    public async findByGoogleId(gId: string): Promise<User> {
+        let user: User;
+
+        if (await this.validator.validateUserExistByGoogleId(gId)) {
+            user = await this.userRepository.findOneOrFail({ where: { googleId: gId }})
         }
 
         return user;
@@ -72,15 +83,27 @@ export class UserService {
         return user;
     }
 
-    public async createWithGoogle(userData: CreateGoogleUserDto): Promise<User> {
+    public async registerWithGoogle(userData: oauth2_v2.Schema$Userinfo): Promise<User> {
         let user: User;
 
-        if (await this.validator.validateUserExistByEmail(userData.email)) {
-            // asociar googleId a user
-        } else if (await this.validator.validateCreationUser(userData)) {
-            user = await this.userRepository.save(userData);
+        if (await this.validator.emailInUse(userData.email)) {
+            user = await this.findByEmail(userData.email);
+            user.googleId = userData.id;
+            user.photoUrl = userData.picture;
+        } else {
+            const dto: CreateUserDto = {
+                firstname: userData.given_name,
+                lastname: userData.family_name,
+                email: userData.email,
+                username: userData.email,
+                photoUrl: userData.picture
+            };
+            user = await this.create(dto);
         }
-        return user;
+
+        user.googleId = userData.id;
+        user.emailVerified = userData.verified_email;
+        return await this.userRepository.save(user);
     }
 
     public async update(id: string, userData: User): Promise<User> {

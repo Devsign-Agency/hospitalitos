@@ -10,7 +10,7 @@
                         </h6>
                     </div>
                     <div class="btn-wrapper text-center">
-                        <button type="button"
+                        <a type="button" href="{{ googleUrl$ | async }}" target="_self"
                             class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
                             <svg class="w-4 h-4 mr-2 -ml-1" aria-hidden="true" focusable="false" data-prefix="fab"
                                 data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
@@ -19,7 +19,7 @@
                                 </path>
                             </svg>
                             Sign in with Google
-                        </button>
+                        </a>
                     </div>
                     <hr class="mt-6 border-b-1 border-gray-400" />
                 </div>
@@ -27,12 +27,12 @@
                     <div class="text-gray-500 text-center mb-3 font-bold">
                         <small>Or sign in with credentials</small>
                     </div>
-                    <form>
+                    <form [formGroup]="form">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                 Email
                             </label>
-                            <input type="email"
+                            <input type="email" formControlName="username"
                                 class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                                 placeholder="Email" style="transition: all 0.15s ease 0s" />
                         </div>
@@ -40,7 +40,7 @@
                             <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                 Password
                             </label>
-                            <input type="password"
+                            <input type="password" formControlName="password"
                                 class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                                 placeholder="Password" style="transition: all 0.15s ease 0s" />
                         </div>
@@ -53,7 +53,7 @@
                             </label>
                         </div>
                         <div class="text-center mt-6">
-                            <button
+                            <button (click)="login()" [disabled]="loading || form.invalid"
                                 class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                                 type="button" style="transition: all 0.15s ease 0s">
                                 Sign In

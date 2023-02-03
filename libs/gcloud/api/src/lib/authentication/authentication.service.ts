@@ -1,6 +1,7 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { OAuth2Client } from 'google-auth-library';
+import { Credentials, OAuth2Client, TokenInfo } from 'google-auth-library';
+import { google, oauth2_v2 } from 'googleapis';
 import { BaseService } from '../common/base.service';
 
 const SCOPES = ['email', 'profile'];
@@ -12,7 +13,7 @@ export class AuthenticationService extends BaseService {
         this.URI_INDEX = 2;
     }
 
-    async signInWithGoogle(code: string) {
+    async getGoogleToken(code: string): Promise<Credentials> {
 
         const oauth2Client: OAuth2Client = await this.getOauth2Client();
 
@@ -24,7 +25,7 @@ export class AuthenticationService extends BaseService {
                         Logger.error(`Error while trying to retrieve access token: ${error}`, 'AuthenticationService::signinWithGoogle');
                         reject(err['data']?.error || err.message || err['statusText']);
                     } else {
-                        Logger.log(token);
+                        Logger.log(token, 'AuthenticationService::signinWithGoogle');
                         oauth2Client.credentials = token;
                         resolve(token);
                     }
@@ -32,6 +33,33 @@ export class AuthenticationService extends BaseService {
             });
             return token;
 
+        } catch (error) {
+            throw new BadRequestException(error);
+        }
+    }
+
+    async getTokenInfo(credentials: Credentials): Promise<TokenInfo> {
+        try {
+            const oauth2Client: OAuth2Client = await this.getOauth2Client();
+            oauth2Client.setCredentials(credentials);
+            return await oauth2Client.getTokenInfo(credentials.access_token);
+        } catch (error) {
+            throw new BadRequestException(error);
+        }
+    }
+
+    async getUserInfo(credentials: Credentials): Promise<oauth2_v2.Schema$Userinfo> {
+        try {
+            const userInfoClient = google.oauth2('v2').userinfo;
+
+            const oauth2Client: OAuth2Client = await this.getOauth2Client();
+            oauth2Client.setCredentials(credentials);
+
+            const userInfoResponse = await userInfoClient.get({
+                auth: oauth2Client
+            });
+
+            return userInfoResponse.data;
         } catch (error) {
             throw new BadRequestException(error);
         }

@@ -1,4 +1,3 @@
-import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import * as fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';

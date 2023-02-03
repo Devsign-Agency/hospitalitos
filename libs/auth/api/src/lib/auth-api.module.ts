@@ -16,6 +16,7 @@ import { JwtUtils } from './jwt/jwt.utils';
 import { SessionEntity } from './session/entities/session.entity';
 import { SessionService } from './session/session.service';
 import { AccountController } from './account/account.controller';
+import { GcloudApiModule } from '@kaad/gcloud/api';
 
 @Module({
     controllers: [AuthController, AccountController],
@@ -31,6 +32,7 @@ import { AccountController } from './account/account.controller';
     ],
     exports: [],
     imports: [
+        GcloudApiModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             useFactory: (config: ConfigService) =>
