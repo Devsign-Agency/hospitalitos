@@ -32,7 +32,7 @@ export class AsideComponent {
                 name: 'Users',
                 type: 'item',
                 icon: 'users',
-                uri: '#'
+                uri: 'security/user'
             }
         ]
     }

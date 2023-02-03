@@ -3,7 +3,7 @@ import { AuthWebappUiComponent } from "./auth-webapp-ui.component";
 import { LoginComponent } from "./views/login/login.component";
 import { RegisterComponent } from "./views/register/register.component";
 
-export const routes: Routes = [{
+export const authWebappUiRoutes: Routes = [{
     path: '',
     component: AuthWebappUiComponent,
     children: [

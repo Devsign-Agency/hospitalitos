@@ -8,7 +8,6 @@ const SCOPES = ['email', 'profile'];
 @Injectable()
 export class AuthenticationService extends BaseService {
     constructor(readonly config: ConfigService) {
-        Logger.log('por acá', 'AuthenticationService::constructor');
         super(config, SCOPES);
         this.URI_INDEX = 2;
     }

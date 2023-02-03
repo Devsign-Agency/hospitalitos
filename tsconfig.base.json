@@ -13,7 +13,7 @@
         "lib": ["es2017", "dom"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
-        "strictPropertyInitialization":false,
+        "strictPropertyInitialization": false,
         "baseUrl": ".",
         "paths": {
             "@kaad/auth/api": ["libs/auth/api/src/index.ts"],
@@ -30,9 +30,13 @@
             ],
             "@kaad/layout/webapp/ui": ["libs/layout/webapp/ui/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
+            "@kaad/main/webapp/ui": ["libs/main/webapp/ui/src/index.ts"],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],
             "@kaad/security/ng-common": [
                 "libs/security/ng-common/src/index.ts"
+            ],
+            "@kaad/security/webapp/ui": [
+                "libs/security/webapp/ui/src/index.ts"
             ],
             "@kaad/shared/api": ["libs/shared/api/src/index.ts"],
             "@kaad/shared/webapp/ui": ["libs/shared/webapp/ui/src/index.ts"]

@@ -9,7 +9,6 @@ export class ConfigService extends Config {
 
     constructor(@Optional() config: Config) {
         super();
-        console.log('POR ACÁ');
         if (config) {
             this.options = config;
         }
