@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthResponse, Credentials, RefreshResponse, Register } from '@kaad/auth/ng-common';
 import { ConfigService } from '@kaad/config/webapp/core';
+import { ToastService } from '@kaad/layout/webapp/ui';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { BYPASS_JWT_TOKEN } from '../interceptors/jwt.interceptor';
 import { TokenService } from './token.service';
@@ -18,7 +19,8 @@ export class AuthService {
         private config: ConfigService,
         private http: HttpClient,
         private router: Router,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private toastService: ToastService
     ) {
         this.isLoggedIn.then((value) => this.loggedIn.next(value));
     }
@@ -40,6 +42,7 @@ export class AuthService {
             this.tokenService.deleteAllToken();
             this.router.navigate([this.config.homePage]);
         }
+        this.toastService.showDanger(error.error.message);
         return throwError(() => error);
     }
 

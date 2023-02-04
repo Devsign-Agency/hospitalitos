@@ -30,12 +30,15 @@ export class LoginComponent {
 
     login() {
         if (this.form.valid) {
+            this.form.disable();
             this.loading = true;
             this.authService.login(this.form.value).subscribe({
-                next: (response) => console.log(response),
-                error: (error) => console.error(error),
-                complete: () => {
-                    console.log('complete');
+                next: () => {
+                    this.form.enable();
+                    this.loading = false;
+                },
+                error: () => {
+                    this.form.enable();
                     this.loading = false;
                 }
             });

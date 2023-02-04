@@ -8,13 +8,10 @@ import { MainComponent } from './layouts/main/main.component';
 import { SecurityComponent } from './layouts/security/security.component';
 import { SharedWebappUiModule } from '@kaad/shared/webapp/ui';
 import { RouterModule } from '@angular/router';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        SharedWebappUiModule
-    ],
+    imports: [CommonModule, RouterModule, SharedWebappUiModule],
     declarations: [
         HeaderComponent,
         FooterComponent,
@@ -22,12 +19,14 @@ import { RouterModule } from '@angular/router';
         MenuComponent,
         MainComponent,
         SecurityComponent,
+        ToastComponent,
     ],
     exports: [
         AsideComponent,
         HeaderComponent,
         MainComponent,
         SecurityComponent,
-    ]
+        ToastComponent,
+    ],
 })
-export class LayoutWebappUiModule { }
+export class LayoutWebappUiModule {}
