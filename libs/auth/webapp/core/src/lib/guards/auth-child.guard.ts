@@ -19,7 +19,6 @@ export class AuthChildGuard implements CanActivateChild {
 
             return new Promise<boolean | UrlTree>((resolve) => {
                 this.authService.isLoggedIn.then(isLoggedIn => {
-                    console.log('nano');
                     if (isLoggedIn) {
                         resolve(true);
                     } else {

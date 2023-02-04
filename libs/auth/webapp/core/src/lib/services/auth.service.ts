@@ -102,7 +102,7 @@ export class AuthService {
      */
     private logoutHandle = () => {
         this.cleanSessionData();
-        this.router.navigate([this.config.homePage]);
+        this.router.navigate([this.config.homePage], { onSameUrlNavigation: 'reload' });
     };
 
     /**

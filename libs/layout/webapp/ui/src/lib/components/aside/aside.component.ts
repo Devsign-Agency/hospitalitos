@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { faChartPie, faChartSimple, faPieChart } from '@fortawesome/free-solid-svg-icons';
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '@kaad/auth/webapp/core';
 import { ICONS } from '../../icons/svg/icons';
 import { Menu } from '../../menu/menu.interface';
 
@@ -35,5 +36,12 @@ export class AsideComponent {
                 uri: 'security/user'
             }
         ]
+    }
+
+    constructor(private readonly authService: AuthService) {
+    }
+
+    logout() {
+        this.authService.logout().subscribe();
     }
 }
