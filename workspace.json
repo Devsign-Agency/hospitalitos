@@ -15,6 +15,7 @@
         "main-webapp-ui": "libs/main/webapp/ui",
         "security-api": "libs/security/api",
         "security-ng-common": "libs/security/ng-common",
+        "security-webapp-core": "libs/security/webapp/core",
         "security-webapp-ui": "libs/security/webapp/ui",
         "shared-api": "libs/shared/api",
         "shared-webapp-ui": "libs/shared/webapp/ui",

@@ -35,6 +35,9 @@
             "@kaad/security/ng-common": [
                 "libs/security/ng-common/src/index.ts"
             ],
+            "@kaad/security/webapp/core": [
+                "libs/security/webapp/core/src/index.ts"
+            ],
             "@kaad/security/webapp/ui": [
                 "libs/security/webapp/ui/src/index.ts"
             ],
