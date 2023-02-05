@@ -1,12 +1,14 @@
+import { JwtGuard } from '@kaad/core/api';
 import { CreateUserDto, User } from '@kaad/security/ng-common';
 import {
-    Body, Controller, Delete, Get, Param, Patch, Post, Query
+    Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')
+@UseGuards(JwtGuard)
 export class UserController {
 
     constructor(private userService: UserService) { }
@@ -14,6 +16,11 @@ export class UserController {
     @Get()
     public async getAll(): Promise<User[]> {
         return await this.userService.findAll();
+    }
+
+    @Get('profile')
+    public async findProfile(@Req() req) {
+        return await this.userService.findById(req.user.id);
     }
 
     @Get(':criteria')

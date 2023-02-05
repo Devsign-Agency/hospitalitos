@@ -24,6 +24,7 @@
             "@kaad/config/webapp/core": [
                 "libs/config/webapp/core/src/index.ts"
             ],
+            "@kaad/core/api": ["libs/core/api/src/index.ts"],
             "@kaad/gcloud/api": ["libs/gcloud/api/src/index.ts"],
             "@kaad/layout/webapp/core": [
                 "libs/layout/webapp/core/src/index.ts"

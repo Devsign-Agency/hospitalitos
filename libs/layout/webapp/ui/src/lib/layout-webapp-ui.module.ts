@@ -9,6 +9,7 @@ import { SecurityComponent } from './layouts/security/security.component';
 import { SharedWebappUiModule } from '@kaad/shared/webapp/ui';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, SharedWebappUiModule],
@@ -20,6 +21,7 @@ import { ToastComponent } from './components/toast/toast.component';
         MainComponent,
         SecurityComponent,
         ToastComponent,
+        BreadcrumbComponent,
     ],
     exports: [
         AsideComponent,

@@ -17,6 +17,7 @@ import { SessionEntity } from './session/entities/session.entity';
 import { SessionService } from './session/session.service';
 import { AccountController } from './account/account.controller';
 import { GcloudApiModule } from '@kaad/gcloud/api';
+import { CoreApiModule } from '@kaad/core/api';
 
 @Module({
     controllers: [AuthController, AccountController],
@@ -32,6 +33,7 @@ import { GcloudApiModule } from '@kaad/gcloud/api';
     ],
     exports: [],
     imports: [
+        CoreApiModule,
         GcloudApiModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],

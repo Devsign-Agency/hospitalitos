@@ -9,7 +9,8 @@
         <div class="bg-gray-900 opacity-50 lg:hidden fixed inset-0 z-10" id="sidebarBackdrop"
             [class.hidden]="(opened$ | async) === false"></div>
         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-            <main class="my-6 p-4">
+            <kaad-breadcrumb></kaad-breadcrumb>
+            <main class="sm:px-4">
                 <ng-content></ng-content>
             </main>
 

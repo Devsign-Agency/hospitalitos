@@ -8,6 +8,7 @@
         "auth-webapp-ui": "libs/auth/webapp/ui",
         "config-api": "libs/config/api",
         "config-webapp-core": "libs/config/webapp/core",
+        "core-api": "libs/core/api",
         "gcloud-api": "libs/gcloud/api",
         "layout-webapp-core": "libs/layout/webapp/core",
         "layout-webapp-ui": "libs/layout/webapp/ui",
