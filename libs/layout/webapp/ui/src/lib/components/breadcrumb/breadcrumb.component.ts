@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { distinctUntilChanged, filter } from 'rxjs';
 
 type MenuItem = { label: string, url: string };
 
@@ -14,12 +14,26 @@ export class BreadcrumbComponent implements OnInit {
     readonly home = { icon: 'pi pi-home', url: 'home' };
     menuItems: MenuItem[];
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+    isRefreshed = true; // dummy variable flag
+
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                distinctUntilChanged()
+            )
+            .subscribe(() => {
+                //Build your breadcrumb starting with the root route of your current activated route. will call only on navigation change
+                this.isRefreshed = false;
+                this.menuItems = this.createBreadcrumbs(this.activatedRoute.root);
+            });
+    }
 
     ngOnInit(): void {
-        this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
+        if (this.isRefreshed) {
+            //will call only when page reload happens
+            this.menuItems = this.createBreadcrumbs(this.activatedRoute.root);
+        }
     }
 
     private createBreadcrumbs(route: ActivatedRoute, url: string = ''): MenuItem[] {
