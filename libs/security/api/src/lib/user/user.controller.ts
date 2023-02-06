@@ -1,5 +1,6 @@
 import { JwtGuard } from '@kaad/core/api';
 import { CreateUserDto, User } from '@kaad/security/ng-common';
+import { Page, PageOptions, SearchOptions } from '@kaad/shared/ng-common';
 import {
     Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
 } from '@nestjs/common';
@@ -14,8 +15,9 @@ export class UserController {
     constructor(private userService: UserService) { }
 
     @Get()
-    public async getAll(): Promise<User[]> {
-        return await this.userService.findAll();
+    public async getAll(
+            @Query() { criteria, ...pageOptions}: SearchOptions): Promise<Page<User>> {
+        return await this.userService.findAll(pageOptions as PageOptions, criteria);
     }
 
     @Get('profile')

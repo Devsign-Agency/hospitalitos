@@ -6,6 +6,7 @@ export const appRoutes: Route[] = [
         path: '',
         canActivate: [AuthGuard],
         runGuardsAndResolvers: 'always',
+        data: { breadcrumb: 'Home' },
         loadChildren: () =>
             import('@kaad/main/webapp/ui').then((m) => m.MainWebappUiModule)
     },

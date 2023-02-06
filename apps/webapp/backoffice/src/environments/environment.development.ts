@@ -6,6 +6,7 @@ export const environment = {
         uriRenewToken: 'auth/renew',
         uriRegister: 'auth/register',
         loginPage: 'auth/login',
+        logoutPage: 'auth/logout',
         homePage: '/'
     },
 };

@@ -1,4 +1,5 @@
-import { CreateGoogleUserDto, CreateUserDto, User } from '@kaad/security/ng-common';
+import { CreateUserDto, User } from '@kaad/security/ng-common';
+import { Page, PageMeta, PageOptions } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { oauth2_v2 } from 'googleapis';
@@ -11,8 +12,29 @@ export class UserService {
     constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
         private validator: UserValidator) { }
 
-    public async findAll(): Promise<User[]> {
-        return await this.userRepository.find();
+    public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<User>> {
+
+    const queryBuilder = this.userRepository.createQueryBuilder("user");
+
+    queryBuilder
+      .orderBy('user.email', pageOptions.order)
+      .skip(pageOptions.skip)
+      .take(pageOptions.take);
+
+    if (criteria) {
+        queryBuilder
+            .where('user.email like :criteria', { criteria: `%${criteria}%` })
+            .orWhere('user.username like :criteria', { criteria: `%${criteria}%` })
+            .orWhere('user.firstname like :criteria', { criteria: `%${criteria}%` })
+            .orWhere('user.lastname like :criteria', { criteria: `%${criteria}%` })
+    }
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageMetaDto = new PageMeta({ itemCount, pageOptions });
+
+    return new Page(entities, pageMetaDto);
     }
 
     public async findById(id: string): Promise<User> {

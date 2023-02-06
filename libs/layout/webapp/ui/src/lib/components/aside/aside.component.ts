@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from '@kaad/auth/webapp/core';
+import { ConfigService } from '@kaad/config/webapp/core';
 import { ICONS } from '../../icons/svg/icons';
 import { Menu } from '../../menu/menu.interface';
 
@@ -38,10 +39,11 @@ export class AsideComponent {
         ]
     }
 
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly config: ConfigService,
+                private readonly router: Router) {
     }
 
     logout() {
-        this.authService.logout().subscribe();
+        this.router.navigate([this.config.loginPage]);
     }
 }

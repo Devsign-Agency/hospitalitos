@@ -43,6 +43,7 @@
                 "libs/security/webapp/ui/src/index.ts"
             ],
             "@kaad/shared/api": ["libs/shared/api/src/index.ts"],
+            "@kaad/shared/ng-common": ["libs/shared/ng-common/src/index.ts"],
             "@kaad/shared/webapp/ui": ["libs/shared/webapp/ui/src/index.ts"]
         }
     },

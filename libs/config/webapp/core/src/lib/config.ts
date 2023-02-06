@@ -15,5 +15,6 @@ export class Config {
     refreshTokenHeaderName = 'refresh_token';
 
     loginPage = '/security/login';
+    logoutPage = '/security/logout';
     homePage = '/';
 }

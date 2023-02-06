@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
+import { Page } from '@kaad/shared/ng-common';
 import { catchError, throwError } from 'rxjs';
 
 @Injectable({
@@ -12,8 +13,14 @@ export class UserService {
     constructor(private readonly config: ConfigService,
                 private readonly http: HttpClient) { }
 
-    findAll() {
-        //
+    findAll(page = 1, take = 10, criteria = '') {
+        const url = `${this.config.urlApi}/user`;
+        const params = {
+            page,
+            take,
+            criteria
+        }
+        return this.http.get<Page<User>>(url, { params });
     }
 
     findById(id: string) {
