@@ -6,13 +6,13 @@ import { AsideComponent } from './components/aside/aside.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MainComponent } from './layouts/main/main.component';
 import { SecurityComponent } from './layouts/security/security.component';
-import { SharedWebappUiModule } from '@kaad/shared/webapp/ui';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, SharedWebappUiModule],
+    imports: [CommonModule, RouterModule],
     declarations: [
         HeaderComponent,
         FooterComponent,
@@ -22,6 +22,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
         SecurityComponent,
         ToastComponent,
         BreadcrumbComponent,
+        PaginationComponent,
     ],
     exports: [
         AsideComponent,
@@ -29,6 +30,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
         MainComponent,
         SecurityComponent,
         ToastComponent,
+        PaginationComponent
     ],
 })
 export class LayoutWebappUiModule {}

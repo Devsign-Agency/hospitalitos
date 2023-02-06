@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '@kaad/security/ng-common';
 import { UserService } from '@kaad/security/webapp/core';
-import { debounceTime, map, Observable } from 'rxjs';
+import { PageMeta } from '@kaad/shared/ng-common';
+import { debounceTime, map, Observable, tap } from 'rxjs';
 
 @Component({
     selector: 'kaad-list',
@@ -16,7 +17,8 @@ export class ListComponent implements OnInit {
     form: FormGroup;
 
     page = 1;
-    take = 10;
+    pageSize = 1;
+    listCount = 0;
     criteria = '';
 
     constructor(formBuilder: FormBuilder,
@@ -35,9 +37,16 @@ export class ListComponent implements OnInit {
     }
 
     search = () => {
-        this.userList$ = this.userService.findAll(this.page, this.take, this.criteria).pipe(
+        this.userList$ = this.userService.findAll(this.page, this.pageSize, this.criteria).pipe(
+            tap(page => this.updatePageInfo(page.meta)),
             map(page => page.data)
         );
+    }
+
+    updatePageInfo = (pageInfo: PageMeta) => {
+        this.page = +pageInfo.page;
+        this.pageSize = +pageInfo.take;
+        this.listCount = +pageInfo.itemCount;
     }
 
     searchCriteria = (value: string) => {

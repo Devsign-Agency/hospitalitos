@@ -17,7 +17,7 @@ export class UserController {
     @Get()
     public async getAll(
             @Query() { criteria, ...pageOptions}: SearchOptions): Promise<Page<User>> {
-        return await this.userService.findAll(pageOptions as PageOptions, criteria);
+        return await this.userService.findAll(new PageOptions(pageOptions), criteria);
     }
 
     @Get('profile')
