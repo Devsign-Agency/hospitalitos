@@ -1,0 +1,71 @@
+
+.btn {
+    // apply group style
+    @apply px-3 py-1.5;
+    @apply inline-flex items-center border outline-none focus:outline-none font-medium rounded-lg text-sm;
+
+    &-primary {
+        @apply bg-sky-800 text-gray-200 hover:bg-sky-700 active:bg-sky-800;
+        @apply disabled:opacity-50 disabled:bg-sky-800 disabled:active:bg-sky-800;
+        @apply dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:active:bg-gray-900;
+        @apply dark:disabled:opacity-50 dark:disabled:bg-gray-800 dark:disabled:active:bg-gray-800;
+    }
+
+    &-secondary {
+        @apply bg-blue-200 text-blue-800 hover:bg-blue-300 active:bg-blue-200;
+        @apply disabled:opacity-50 disabled:bg-blue-800 disabled:active:bg-blue-800;
+        @apply dark:bg-blue-800 dark:text-blue-200 dark:hover:bg-blue-700 dark:active:bg-blue-900;
+        @apply dark:disabled:opacity-50 dark:disabled:bg-blue-800 dark:disabled:active:bg-blue-800;
+    }
+
+    &.rounded-l {
+        @apply rounded-none;
+        @apply rounded-l-lg;
+    }
+
+    &.rounded-r {
+        @apply rounded-none;
+        @apply rounded-r-lg;
+    }
+
+    &.rounded-bl {
+        @apply rounded-none;
+        @apply rounded-bl-lg;
+    }
+
+    &.rounded-br {
+        @apply rounded-none;
+        @apply rounded-br-lg;
+    }
+
+    &-paginator {
+        @apply rounded-none;
+        @apply py-2;
+        @apply justify-center;
+        @apply border-b-0;
+        @apply first:border-l-0 last:border-r-0;
+    }
+
+    &-nav {
+        @apply text-base font-normal flex;
+        @apply bg-transparent dark:bg-transparent;
+        @apply border-none;
+
+        &.active {
+            @apply bg-sky-700 dark:bg-gray-700;
+        }
+
+        &.btn-accent {
+            @apply bg-sky-800 text-gray-200 hover:bg-sky-700 hover:text-gray-300;
+            @apply dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300;
+            @apply h-16 mt-auto p-2 px-3 w-full;
+            @apply rounded-none;
+        }
+    }
+
+    &-full {
+        @apply font-bold uppercase px-6 py-3 rounded mr-1 mb-1 w-full;
+        @apply shadow hover:shadow-lg;
+        @apply justify-center;
+    }
+}

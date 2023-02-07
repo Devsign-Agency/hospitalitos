@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
     form: FormGroup;
 
     page = 1;
-    pageSize = 1;
+    pageSize = 10;
     listCount = 0;
     criteria = '';
 

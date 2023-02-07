@@ -1,9 +1,6 @@
-<div class="bg-white flex items-center justify-between px-4 py-2 sm:px-0">
+<div class="flex items-center justify-between px-4 py-2 sm:px-0">
     <div>
-        <a [routerLink]="['new']"
-            class="inline-flex items-center border focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5
-            bg-gray-800 text-gray-200 hover:bg-gray-700 active:bg-gray-900
-            disabled:opacity-50 disabled:bg-gray-800 disabled:active:bg-gray-800">
+        <a [routerLink]="['new']" class="btn btn-primary">
             Add User
         </a>
     </div>
@@ -24,9 +21,9 @@
         </div>
     </form>
 </div>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 sm:rounded-lg">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+<div class="overflow-x-auto rounded-tl-lg rounded-tr-lg rounded-br-lg">
+    <table class="table">
+        <thead class="thead">
             <tr>
                 <th scope="col" class="p-4">
                     <div class="flex items-center">
@@ -49,9 +46,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let user of userList$ | async" [routerLink]="[user.id]"
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tbody class="tbody">
+            <tr *ngFor="let user of userList$ | async" [routerLink]="[user.id]" class="tr">
                 <td class="w-4 p-4">
                     <div class="flex items-center">
                         <input id="checkbox-table-search-1" type="checkbox"
@@ -59,11 +55,11 @@
                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                     </div>
                 </td>
-                <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                <td scope="row" class="flex items-center px-6 py-4 whitespace-nowrap">
                     <img class="w-10 h-10 rounded-full" [src]="user.photoUrl" alt="Jese image">
                     <div class="pl-3">
                         <div class="text-base font-semibold">{{ user.firstname }} {{ user.lastname }}</div>
-                        <div class="font-normal text-gray-500">{{ user.email }}</div>
+                        <div>{{ user.email }}</div>
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -76,12 +72,13 @@
                 </td>
                 <td class="px-6 py-4">
                     <a [routerLink]="[user.id, 'edit']"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                        class="font-medium text-blue-400 dark:text-blue-500 hover:underline">Edit user</a>
                 </td>
             </tr>
         </tbody>
     </table>
-
-    <kaad-pagination [page]="page" [pageSize]="pageSize" [collectionSize]="listCount" (pageChange)="gotoPage($event)"></kaad-pagination>
-
 </div>
+
+
+<kaad-pagination [page]="page" [pageSize]="pageSize" [collectionSize]="listCount"
+    (pageChange)="gotoPage($event)"></kaad-pagination>

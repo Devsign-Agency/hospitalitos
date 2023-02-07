@@ -1,0 +1,11 @@
+.bg {
+    &-primary {
+        @apply bg-sky-900;
+        @apply dark:bg-gray-900;
+    }
+
+    &-secondary {
+        @apply bg-blue-200;
+        @apply dark:bg-blue-900
+    }
+}

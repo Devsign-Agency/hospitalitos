@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fa0 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '@kaad/auth/webapp/core';
