@@ -9,6 +9,9 @@ import { AuthWebappUiComponent } from './auth-webapp-ui.component';
 import { LayoutWebappUiModule } from '@kaad/layout/webapp/ui';
 import { CallbackComponent } from './views/callback/callback.component';
 import { LogoutComponent } from './views/logout/logout.component';
+import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
+import { UpdatePasswordComponent } from './views/update-password/update-password.component';
+import { NotificationComponent } from './views/notification/notification.component';
 
 @NgModule({
     imports: [
@@ -23,6 +26,9 @@ import { LogoutComponent } from './views/logout/logout.component';
         AuthWebappUiComponent,
         CallbackComponent,
         LogoutComponent,
+        ForgotPasswordComponent,
+        UpdatePasswordComponent,
+        NotificationComponent,
     ],
 })
 export class AuthWebappUiModule {}

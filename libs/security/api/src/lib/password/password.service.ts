@@ -52,7 +52,7 @@ export class PasswordService {
         return await this.passwordRepository.save(passwordDto);
     }
 
-    public async forgotPassword({ email }: ForgotPassword): Promise<boolean> {
+    public async forgotPassword({ email, urlCallback }: ForgotPassword): Promise<boolean> {
         const user: User = await this.userService.findByEmail(email);
 
         let passwordReset = await this.passwordResetRepository.findOne({ where: { userId: user.id }});
@@ -65,10 +65,6 @@ export class PasswordService {
 
         await this.passwordResetRepository.save(passwordReset);
 
-        const globalUrl = this.config.get('globalUrl');
-        const port = this.config.get('port');
-        const globalPrefix = this.config.get('globalPrefix');
-
         const mailDto: SendMailerDto = {
             to: email,
             subject: 'Reset Password',
@@ -76,7 +72,7 @@ export class PasswordService {
                 companyName: this.config.get('company.name'),
                 companyUrl: this.config.get('company.url'),
                 companyLogoUrl: this.config.get('company.logo'),
-                recoverUrl: `${globalUrl}:${port}/${globalPrefix}/password/reset-password/${passwordReset.code}`,
+                recoverUrl: `${urlCallback}/${passwordReset.code}`,
             }
         };
 

@@ -1,8 +1,11 @@
 import { Routes } from "@angular/router";
 import { AuthWebappUiComponent } from "./auth-webapp-ui.component";
 import { CallbackComponent } from "./views/callback/callback.component";
+import { ForgotPasswordComponent } from "./views/forgot-password/forgot-password.component";
 import { LoginComponent } from "./views/login/login.component";
+import { NotificationComponent } from "./views/notification/notification.component";
 import { RegisterComponent } from "./views/register/register.component";
+import { UpdatePasswordComponent } from "./views/update-password/update-password.component";
 
 export const authWebappUiRoutes: Routes = [{
     path: '',
@@ -11,5 +14,8 @@ export const authWebappUiRoutes: Routes = [{
         { path: 'callback', component: CallbackComponent },
         { path: 'login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
+        { path: 'forgot-password', component: ForgotPasswordComponent },
+        { path: 'update-password/:validationCode', component: UpdatePasswordComponent },
+        { path: 'notification/:code', component: NotificationComponent }
     ]
 }];

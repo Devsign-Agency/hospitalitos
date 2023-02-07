@@ -7,6 +7,7 @@ export const environment = {
         uriRegister: 'auth/register',
         loginPage: 'auth/login',
         logoutPage: 'auth/logout',
-        homePage: '/'
+        homePage: '/',
+        urlFront: 'http://localhost:4200'
     },
 };
