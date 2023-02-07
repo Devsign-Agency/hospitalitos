@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { ForgotPassword, ResetPassword } from '@kaad/security/ng-common';
 
@@ -9,9 +10,12 @@ import { ForgotPassword, ResetPassword } from '@kaad/security/ng-common';
 export class PasswordService {
 
     constructor(private readonly config: ConfigService,
-                private readonly http: HttpClient) { }
+                private readonly http: HttpClient,
+                @Inject(DOCUMENT) private document: any) { }
 
     public forgot(dto: ForgotPassword) {
+        const domain = this.document.location.origin;
+        dto.urlCallback = `${domain}/${dto.urlCallback}`;
         const url = `${this.config.urlApi}/password/forgot-password`;
         return this.http.post<boolean>(url, dto);
     }

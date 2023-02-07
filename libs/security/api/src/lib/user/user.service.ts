@@ -14,34 +14,34 @@ export class UserService {
 
     public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<User>> {
 
-    const queryBuilder = this.userRepository.createQueryBuilder("user");
+        const queryBuilder = this.userRepository.createQueryBuilder("user");
 
-    queryBuilder
-      .orderBy('user.email', pageOptions.order)
-      .skip(pageOptions.skip)
-      .take(pageOptions.take);
-
-    if (criteria) {
         queryBuilder
-            .where('user.email like :criteria', { criteria: `%${criteria}%` })
-            .orWhere('user.username like :criteria', { criteria: `%${criteria}%` })
-            .orWhere('user.firstname like :criteria', { criteria: `%${criteria}%` })
-            .orWhere('user.lastname like :criteria', { criteria: `%${criteria}%` })
-    }
+            .orderBy('user.email', pageOptions.order)
+            .skip(pageOptions.skip)
+            .take(pageOptions.take);
 
-    const itemCount = await queryBuilder.getCount();
-    const { entities } = await queryBuilder.getRawAndEntities();
+        if (criteria) {
+            queryBuilder
+                .where('user.email like :criteria', { criteria: `%${criteria}%` })
+                .orWhere('user.username like :criteria', { criteria: `%${criteria}%` })
+                .orWhere('user.firstname like :criteria', { criteria: `%${criteria}%` })
+                .orWhere('user.lastname like :criteria', { criteria: `%${criteria}%` })
+        }
 
-    const pageMetaDto = new PageMeta({ itemCount, pageOptions });
+        const itemCount = await queryBuilder.getCount();
+        const { entities } = await queryBuilder.getRawAndEntities();
 
-    return new Page(entities, pageMetaDto);
+        const pageMetaDto = new PageMeta({ itemCount, pageOptions });
+
+        return new Page(entities, pageMetaDto);
     }
 
     public async findById(id: string): Promise<User> {
         let user: User;
 
         if (await this.validator.validateUserExistById(id)) {
-            user = await this.userRepository.findOneOrFail({ where: {id} });
+            user = await this.userRepository.findOneOrFail({ where: { id } });
         }
 
         return user;
@@ -51,7 +51,7 @@ export class UserService {
         let user: User;
 
         if (await this.validator.validateUserExistByGoogleId(gId)) {
-            user = await this.userRepository.findOneOrFail({ where: { googleId: gId }})
+            user = await this.userRepository.findOneOrFail({ where: { googleId: gId } })
         }
 
         return user;
@@ -132,7 +132,7 @@ export class UserService {
         let user: User;
 
         if (await this.validator.validateUpdateUser(id, userData)) {
-            user = await this.userRepository.findOne({ where: {id} });
+            user = await this.userRepository.findOne({ where: { id } });
 
             user.username = userData.username;
             user.emailVerified = (user.email !== userData.email) ? false : userData.emailVerified;
@@ -149,9 +149,9 @@ export class UserService {
 
     public async delete(id: string): Promise<User> {
         let user: User;
-        await this.userRepository.findOne({ where: {id} });
+        await this.userRepository.findOne({ where: { id } });
         if (await this.validator.validateUserExistById(id)) {
-            user = await this.userRepository.findOne({ where: {id} });
+            user = await this.userRepository.findOne({ where: { id } });
             await this.userRepository.remove(user);
         }
 

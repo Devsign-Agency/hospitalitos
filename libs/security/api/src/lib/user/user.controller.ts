@@ -5,6 +5,7 @@ import {
     Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PasswordService } from '../password/password.service';
 import { UserService } from './user.service';
 
 @ApiTags('User')
@@ -12,7 +13,8 @@ import { UserService } from './user.service';
 @UseGuards(JwtGuard)
 export class UserController {
 
-    constructor(private userService: UserService) { }
+    constructor(private readonly passwordService: PasswordService,
+                private readonly userService: UserService) { }
 
     @Get()
     public async getAll(
@@ -37,8 +39,15 @@ export class UserController {
     }
 
     @Post()
-    public async create(@Body() user: CreateUserDto): Promise<User> {
-        return await this.userService.create(user);
+    public async create(@Body() userData: CreateUserDto): Promise<User> {
+        const { password, ...user } = userData;
+        const newUser = await this.userService.create(user);
+
+        if (password) {
+            await this.passwordService.addNewPassword(newUser, password);
+        }
+
+        return newUser;
     }
 
     @Patch(':id')

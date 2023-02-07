@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '@kaad/layout/webapp/ui';
 import { PasswordService } from '@kaad/security/webapp/core';
@@ -20,8 +19,7 @@ export class ForgotPasswordComponent {
                 private readonly passwordService: PasswordService,
                 private readonly route: ActivatedRoute,
                 private readonly router: Router,
-                private readonly toastService: ToastService,
-                @Inject(DOCUMENT) private document: any) {
+                private readonly toastService: ToastService) {
         this.form = formBuilder.group({
             email: ['', [Validators.required, Validators.email]]
         });
@@ -31,8 +29,7 @@ export class ForgotPasswordComponent {
         if (this.form.valid) {
             this.loading = true;
             const { email } = this.form.value;
-            const domain = this.document.location.origin;
-            const urlCallback = `${domain}/auth/update-password`;
+            const urlCallback = `auth/update-password`;
             this.passwordService.forgot({email, urlCallback}).subscribe({
                 next: value => {
                     this.loading = false;

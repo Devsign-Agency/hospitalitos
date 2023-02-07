@@ -67,8 +67,15 @@
                         password
                     </h6>
                     <div class="flex flex-wrap">
+                        <div *ngIf="!showPasswordInput" class="w-full sm:w-6/12 sm:px-4">
+                            <div class="relative w-full mb-3">
+                                <button type="button" (click)="resetPassword()" class="btn btn-primary btn-full">
+                                    Reset Password
+                                </button>
+                            </div>
+                        </div>
 
-                        <div class="w-full sm:w-6/12 sm:px-4">
+                        <div *ngIf="showPasswordInput" class="w-full sm:w-6/12 sm:px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
                                     Password
@@ -78,7 +85,7 @@
                                     value="lucky.jesse">
                             </div>
                         </div>
-                        <div class="w-full sm:w-6/12 sm:px-4">
+                        <div *ngIf="showPasswordInput" class="w-full sm:w-6/12 sm:px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
                                     Retype password
