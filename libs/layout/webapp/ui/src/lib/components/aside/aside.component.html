@@ -18,18 +18,54 @@
         </form>
         <div class="flex-1 px-3 divide-y space-y-1">
             <ul class="space-y-2 pb-2">
-                <li *ngFor="let item of menu.items">
-                    <a [routerLink]="[item.uri]" routerLinkActive="active"
-                        class="btn btn-primary btn-nav group">
-                        <svg class="w-6 h-6 text-gray-200 group-hover:text-gray-300 transition duration-75"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path *ngFor="let path of icons[item.icon || 0]"
-                                [attr.clip-rule]="path.clipRule ? path.clipRule : null"
-                                [attr.d]="path.d ? path.d : null"></path>
-                        </svg>
-                        <span class="ml-3">{{ item.name }}</span>
-                    </a>
-                </li>
+                <ng-container *ngFor="let item of menu.items" [ngSwitch]="item.type">
+                    <li>
+                        <ng-container *ngSwitchCase="'menu'">
+                            <button type="button" (click)="item.active = !item.active" class="w-full btn btn-primary btn-nav group">
+                                <svg class="w-6 h-6 text-gray-200 group-hover:text-gray-300 transition duration-75"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path *ngFor="let path of icons[item.icon || 0]"
+                                        [attr.clip-rule]="path.clipRule ? path.clipRule : null"
+                                        [attr.d]="path.d ? path.d : null"></path>
+                                </svg>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ item.name }}</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul class=" py-2 space-y-2" [class.hidden]="!item.active">
+                                <li *ngFor="let sub of item.items">
+                                    <a [routerLink]="[sub.uri]" routerLinkActive="active"
+                                        class="btn btn-primary btn-nav sub-item group">
+                                        <svg class="w-6 h-6 text-gray-200 group-hover:text-gray-300 transition duration-75"
+                                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path *ngFor="let path of icons[sub.icon || 0]"
+                                                [attr.clip-rule]="path.clipRule ? path.clipRule : null"
+                                                [attr.d]="path.d ? path.d : null"></path>
+                                        </svg>
+                                        <span class="ml-3">{{ sub.name }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'item'">
+                            <a [routerLink]="[item.uri]" routerLinkActive="active"
+                                class="btn btn-primary btn-nav group">
+                                <svg class="w-6 h-6 text-gray-200 group-hover:text-gray-300 transition duration-75"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path *ngFor="let path of icons[item.icon || 0]"
+                                        [attr.clip-rule]="path.clipRule ? path.clipRule : null"
+                                        [attr.d]="path.d ? path.d : null"></path>
+                                </svg>
+                                <span class="ml-3">{{ item.name }}</span>
+                            </a>
+                        </ng-container>
+                    </li>
+                </ng-container>
             </ul>
             <!-- <div class="space-y-2 pt-2">
                 <a href="#"
@@ -77,8 +113,7 @@
             </div> -->
 
         </div>
-        <button (click)="logout()"
-            class="btn btn-nav btn-accent">
+        <button (click)="logout()" class="btn btn-nav btn-accent">
             <!-- <svg
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -92,8 +127,8 @@
                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z">
                 </path>
             </svg> -->
-            <svg class="w-6 h-6 transition duration-75" fill="currentColor"
-                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg class="w-6 h-6 transition duration-75" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd"
                     d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z">
                 </path>

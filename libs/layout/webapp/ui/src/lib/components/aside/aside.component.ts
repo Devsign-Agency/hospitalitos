@@ -25,10 +25,30 @@ export class AsideComponent {
                 uri: '/dashboard'
             },
             {
-                name: 'Kanban',
-                type: 'item',
+                name: 'Multimedia',
+                type: 'menu',
                 icon: 'kanban',
-                uri: 'auth/login'
+                uri: 'multimedia',
+                items: [
+                    {
+                        name: 'Videos',
+                        type: 'item',
+                        icon: 'video',
+                        uri: 'multimedia/video'
+                    },
+                    {
+                        name: 'Audios',
+                        type: 'item',
+                        icon: 'audio',
+                        uri: 'multimedia/audio'
+                    },
+                    {
+                        name: 'Books',
+                        type: 'item',
+                        icon: 'book',
+                        uri: 'multimedia/book'
+                    }
+                ]
             },
             {
                 name: 'Users',

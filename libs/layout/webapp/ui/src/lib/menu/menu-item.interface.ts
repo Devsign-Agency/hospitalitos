@@ -1,6 +1,8 @@
 export interface MenuItem {
     icon?: string;
-    type: 'item' | 'separator',
+    type: 'item' | 'menu',
     name?: string;
     uri?: string;
+    items?: MenuItem[];
+    active?: boolean;
 }
