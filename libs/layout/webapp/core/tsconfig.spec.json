@@ -11,5 +11,5 @@
         "src/**/*.test.ts",
         "src/**/*.spec.ts",
         "src/**/*.d.ts"
-    ]
+, "../ui/src/lib/services/modal.service.spec.ts"    ]
 }

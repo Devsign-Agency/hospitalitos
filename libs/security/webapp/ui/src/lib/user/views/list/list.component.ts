@@ -21,8 +21,12 @@ export class ListComponent implements OnInit {
     listCount = 0;
     criteria = '';
 
+    showModal = false;
+    selectedIds: string[] = [];
+
+
     constructor(formBuilder: FormBuilder,
-                private readonly userService: UserService) {
+        private readonly userService: UserService) {
         this.form = formBuilder.group({
             criteria: ['']
         });
@@ -57,5 +61,28 @@ export class ListComponent implements OnInit {
     gotoPage(page = 1) {
         this.page = page;
         this.search();
+    }
+
+    delete(id: string) {
+        this.selectedIds.push(id);
+        this.openModal();
+    }
+
+    openModal() {
+        this.showModal = true;
+    }
+
+    accept() {
+        this.showModal = false;
+        const id = this.selectedIds.shift();
+        if (id) {
+            this.userService.delete(id).subscribe({
+                next: () => this.search()
+            });
+        }
+    }
+
+    cancel() {
+        this.showModal = false;
     }
 }

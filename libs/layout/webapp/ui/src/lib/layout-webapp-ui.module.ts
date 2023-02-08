@@ -10,27 +10,30 @@ import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule],
     declarations: [
-        HeaderComponent,
-        FooterComponent,
         AsideComponent,
-        MenuComponent,
+        BreadcrumbComponent,
+        FooterComponent,
+        HeaderComponent,
         MainComponent,
+        MenuComponent,
+        ModalComponent,
+        PaginationComponent,
         SecurityComponent,
         ToastComponent,
-        BreadcrumbComponent,
-        PaginationComponent,
     ],
     exports: [
         AsideComponent,
         HeaderComponent,
         MainComponent,
+        ModalComponent,
+        PaginationComponent,
         SecurityComponent,
         ToastComponent,
-        PaginationComponent
     ],
 })
 export class LayoutWebappUiModule {}
