@@ -107,6 +107,6 @@ export class AsideComponent {
     }
 
     logout() {
-        this.router.navigate([this.config.loginPage]);
+        this.router.navigate([this.config.logoutPage]);
     }
 }
