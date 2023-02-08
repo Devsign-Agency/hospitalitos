@@ -1,3 +1,7 @@
 .breadcrumb {
     @apply bg-sky-100 dark:bg-gray-800;
+
+    a {
+        @apply last:cursor-default;
+    }
 }
