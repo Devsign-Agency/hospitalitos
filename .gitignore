@@ -42,4 +42,9 @@ Thumbs.db
 # logs
 /logs
 
+# uploaded files
+/ uploadedFiles
+
 .angular
+
+
