@@ -1,9 +1,10 @@
 import { Password, User } from "@kaad/security/ng-common";
+import { AuditableEntity } from "@kaad/shared/ng-common";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PasswordEntity } from "../../password/entities/password.entity";
 
 @Entity('user', { schema: 'security' })
-export class UserEntity implements User {
+export class UserEntity extends AuditableEntity implements User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

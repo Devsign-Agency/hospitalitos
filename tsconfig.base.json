@@ -32,6 +32,16 @@
             "@kaad/layout/webapp/ui": ["libs/layout/webapp/ui/src/index.ts"],
             "@kaad/mailer/api": ["libs/mailer/api/src/index.ts"],
             "@kaad/main/webapp/ui": ["libs/main/webapp/ui/src/index.ts"],
+            "@kaad/multimedia/api": ["libs/multimedia/api/src/index.ts"],
+            "@kaad/multimedia/ng-common": [
+                "libs/multimedia/ng-common/src/index.ts"
+            ],
+            "@kaad/multimedia/webapp/core": [
+                "libs/multimedia/webapp/core/src/index.ts"
+            ],
+            "@kaad/multimedia/webapp/ui": [
+                "libs/multimedia/webapp/ui/src/index.ts"
+            ],
             "@kaad/security/api": ["libs/security/api/src/index.ts"],
             "@kaad/security/ng-common": [
                 "libs/security/ng-common/src/index.ts"

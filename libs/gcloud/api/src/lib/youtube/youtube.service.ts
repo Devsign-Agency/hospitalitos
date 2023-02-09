@@ -5,6 +5,7 @@ import { OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
 import { BaseService } from '../common/base.service';
 import { MetadataVideo } from '../dto/metadata-video.dto';
+import { UploadVideoResponse } from '../dto/upload-video.response';
 
 const SCOPES = [
     'https://www.googleapis.com/auth/youtube.upload',
@@ -52,12 +53,12 @@ export class YoutubeService extends BaseService {
         });
     }
 
-    public async upload(file: Express.Multer.File, metadata: MetadataVideo) {
+    public async upload(file: Express.Multer.File, metadata: MetadataVideo): Promise<UploadVideoResponse> {
         const { title, description, tags, defaultLanguage, defaultAudioLanguage } = metadata;
         const auth: OAuth2Client = await this.loadTokenCredentials();
         const service = google.youtube({ version: 'v3', auth: auth });
 
-        return new Promise((resolve, reject) => {
+        return new Promise<UploadVideoResponse>((resolve, reject) => {
             service.videos.insert(
                 {
                     part: ['snippet,contentDetails,status'],
@@ -91,9 +92,10 @@ export class YoutubeService extends BaseService {
 
                     fs.rmSync(file.path);
 
-                    const urlVideo = `https://www.youtube.com/watch?v=${data.data.id}`
+                    const code = data.data.id;
+                    const urlVideo = `https://www.youtube.com/watch?v=${code}`;
                     Logger.log(`url video: ${urlVideo}`, 'YoutubeService:upload');
-                    resolve(urlVideo);
+                    resolve({ code, urlVideo });
                 }
             );
         });

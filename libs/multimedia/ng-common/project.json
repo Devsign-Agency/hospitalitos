@@ -1,0 +1,26 @@
+{
+    "name": "multimedia-ng-common",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/multimedia/ng-common/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/multimedia/ng-common",
+                "main": "libs/multimedia/ng-common/src/index.ts",
+                "tsConfig": "libs/multimedia/ng-common/tsconfig.lib.json",
+                "assets": ["libs/multimedia/ng-common/*.md"]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/multimedia/ng-common/**/*.ts"]
+            }
+        }
+    },
+    "tags": []
+}

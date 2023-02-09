@@ -8,6 +8,6 @@ import { GoogleStrategy } from './authentication/strategies/google.strategy';
 @Module({
     controllers: [YoutubeController, AuthenticationController],
     providers: [YoutubeService, AuthenticationService, GoogleStrategy],
-    exports: [ AuthenticationService, GoogleStrategy],
+    exports: [ AuthenticationService, GoogleStrategy, YoutubeService],
 })
 export class GcloudApiModule {}

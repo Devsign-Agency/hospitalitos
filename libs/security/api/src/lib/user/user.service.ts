@@ -17,7 +17,7 @@ export class UserService {
         const queryBuilder = this.userRepository.createQueryBuilder("user");
 
         queryBuilder
-            .orderBy('user.email', pageOptions.order)
+            .orderBy('user.createdAt', pageOptions.order)
             .skip(pageOptions.skip)
             .take(pageOptions.take);
 
@@ -148,8 +148,7 @@ export class UserService {
     }
 
     public async delete(id: string): Promise<User> {
-        let user: User;
-        await this.userRepository.findOne({ where: { id } });
+        let user: UserEntity;
         if (await this.validator.validateUserExistById(id)) {
             user = await this.userRepository.findOne({ where: { id } });
             await this.userRepository.remove(user);

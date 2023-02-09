@@ -1,8 +1,9 @@
+import { AuditableEntity } from "@kaad/shared/ng-common";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Account } from "../interfaces/account.interface";
 
 @Entity('account', { schema: 'auth' })
-export class AccountEntity implements Account {
+export class AccountEntity extends AuditableEntity implements Account {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

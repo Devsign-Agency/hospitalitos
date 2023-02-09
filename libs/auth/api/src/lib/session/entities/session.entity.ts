@@ -1,9 +1,10 @@
+import { AuditableEntity } from "@kaad/shared/ng-common";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Session } from "../interfaces/session.interface";
 
 
 @Entity('session', { schema: 'auth' })
-export class SessionEntity implements Session {
+export class SessionEntity extends AuditableEntity implements Session {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

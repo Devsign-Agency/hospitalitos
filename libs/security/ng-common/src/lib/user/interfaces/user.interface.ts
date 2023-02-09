@@ -1,5 +1,6 @@
+import { Auditable } from "@kaad/shared/ng-common";
 
-export interface User {
+export interface User extends Auditable {
     id: string;
     username: string;
     email: string;
@@ -24,5 +25,7 @@ export const EmptyUser: User = {
     role: '',
     status: '',
     documentId: '',
-    googleId: ''
+    googleId: '',
+    createdAt: new Date(),
+    updatedAt: new Date()
 }

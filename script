@@ -1,7 +1,7 @@
-nx g @nrwl/js:library --buildable --directory video --name ng-common
-nx g @nrwl/nest:library --buildable --directory video --name api
-nx g @nrwl/angular:library --buildable --directory video/webapp --name ui
-nx g @nrwl/angular:library --buildable --directory video/webapp --name core
+nx g @nrwl/js:library --buildable --directory multimedia --name ng-common
+nx g @nrwl/nest:library --buildable --directory multimedia --name api
+nx g @nrwl/angular:library --buildable --directory multimedia/webapp --name ui
+nx g @nrwl/angular:library --buildable --directory multimedia/webapp --name core
 
 nx g @nrwl/js:library --buildable --directory multimedia/video --name ng-common --importPath @kaad/video/ng-common
 nx g @nrwl/nest:library --buildable --directory multimedia/video --name api --importPath @kaad/video/api

@@ -52,7 +52,7 @@ export class SessionService {
     }
 
     public async delete(userId: string): Promise<boolean> {
-        const session: Session = await this.findByUserId(userId);
+        const session: SessionEntity = await this.findByUserId(userId);
 
         if (!session) {
             return false;
