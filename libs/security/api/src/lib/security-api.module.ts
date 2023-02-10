@@ -10,25 +10,23 @@ import { PasswordEntity } from './password/entities/password.entity';
 import { UserEntity } from './user/entities/user.entity';
 import { PasswordResetEntity } from './password/entities/password-reset.entity';
 import { MailSenderModule } from '@kaad/mailer/api';
+import { RoleEntity } from './role/entities/role.entity';
+import { RoleService } from './role/role.service';
+import { RoleValidator } from './role/validators/role.validator';
+import { RoleController } from './role/role.controller';
 
 @Module({
-    controllers: [
-        PasswordController,
-        UserController
-    ],
-    providers: [
-        PasswordService,
-        PasswordValidator,
-        UserService,
-        UserValidator
-    ],
+    controllers: [PasswordController, RoleController, UserController],
+    providers: [PasswordService, PasswordValidator, RoleService, RoleValidator, UserService, UserValidator],
     imports: [
         MailSenderModule,
-        TypeOrmModule.forFeature([PasswordEntity, PasswordResetEntity, UserEntity])
+        TypeOrmModule.forFeature([
+            PasswordEntity,
+            PasswordResetEntity,
+            RoleEntity,
+            UserEntity,
+        ]),
     ],
-    exports: [
-        PasswordService,
-        UserService
-    ],
+    exports: [PasswordService, RoleService, UserService],
 })
 export class SecurityApiModule {}

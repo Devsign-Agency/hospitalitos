@@ -1,5 +1,5 @@
 import { JwtGuard } from '@kaad/core/api';
-import { CreateUserDto, User } from '@kaad/security/ng-common';
+import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/ng-common';
 import {
     Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
@@ -28,7 +28,7 @@ export class UserController {
     }
 
     @Get(':criteria')
-    public async findById(@Param('criteria') criteria: string, @Query('findBy') findBy: string): Promise<User> {
+    public async findOne(@Param('criteria') criteria: string, @Query('findBy') findBy: string): Promise<User> {
         if (findBy === 'username') {
             return await this.userService.findByUsername(criteria);
         } else if (findBy === 'email') {
@@ -51,7 +51,7 @@ export class UserController {
     }
 
     @Patch(':id')
-    public async update(@Param('id') id: string, @Body() user: User): Promise<User> {
+    public async update(@Param('id') id: string, @Body() user: UpdateUserDto): Promise<User> {
         return this.userService.update(id, user);
     }
 

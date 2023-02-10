@@ -7,7 +7,7 @@ import { ToastService } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { PasswordService, UserService } from '@kaad/security/webapp/core';
 import { matchValidator } from '@kaad/shared/webapp/ui';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
     selector: 'kaad-form',
@@ -19,6 +19,7 @@ export class FormComponent implements OnInit {
     form: FormGroup;
     showPasswordInput = true;
     title = '';
+    isAdmin = false;
 
     constructor(formBuilder: FormBuilder,
                 private readonly auth: AuthService,
@@ -55,7 +56,10 @@ export class FormComponent implements OnInit {
             this.form.controls['email'].disable();
             this.form.controls['newpassword'].disable();
             this.form.controls['confirmPassword'].disable();
-            this.userService.findById(id).subscribe({
+            this.userService.findById(id).pipe(
+                tap(user => this.isAdmin = !!user.role?.includes('admin'))
+            )
+            .subscribe({
                 next: user => this.form.patchValue(user)
             });
         }
@@ -64,8 +68,10 @@ export class FormComponent implements OnInit {
     save() {
         if (this.form.valid) {
             const { id, firstname, lastname, username, email, photoUrl, newpassword } = this.form.getRawValue();
+            const role: string[] = [ 'user', ...(this.isAdmin ? [ 'admin' ] : [] )];
+
             const observable: Observable<User> = id
-                ? this.userService.update(id, { id, firstname, lastname, username, email, photoUrl })
+                ? this.userService.update(id, { id, firstname, lastname, username, email, photoUrl, role })
                 : this.userService.create({ username, email, firstname, lastname, photoUrl, password: newpassword });
             observable.subscribe({
                 next: () => {
@@ -94,5 +100,9 @@ export class FormComponent implements OnInit {
                 }
             })
         }
+    }
+
+    toggleAdmin() {
+        this.isAdmin = !this.isAdmin;
     }
 }

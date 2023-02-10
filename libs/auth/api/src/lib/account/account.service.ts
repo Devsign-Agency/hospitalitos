@@ -1,4 +1,5 @@
 import { UserService } from '@kaad/security/api';
+import { UpdateUserDto } from '@kaad/security/ng-common';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,7 +31,7 @@ export class AccountService {
             account.verifiedAt = today;
             const user = await this.userService.findById(account.user);
             user.emailVerified = true;
-            await this.userService.update(user.id, user);
+            await this.userService.update(user.id, user as UpdateUserDto);
             return this.accountRepository.save(account);
         } else if (!!account && account.verifiedAt) {
             throw new BadRequestException('link used');

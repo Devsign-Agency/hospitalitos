@@ -1,16 +1,20 @@
-import { CreateUserDto, User } from '@kaad/security/ng-common';
+import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { oauth2_v2 } from 'googleapis';
 import { Repository } from 'typeorm';
+import { RoleService } from '../role/role.service';
 import { UserEntity } from './entities/user.entity';
 import { UserValidator } from './validators/user.validator';
+
+const INITIAL_ROLE = 'user';
 
 @Injectable()
 export class UserService {
     constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-        private validator: UserValidator) { }
+        private readonly roleService: RoleService,
+        private readonly validator: UserValidator) { }
 
     public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<User>> {
 
@@ -99,8 +103,8 @@ export class UserService {
     public async create(userData: CreateUserDto): Promise<User> {
         let user: User;
         if (await this.validator.validateCreationUser(userData)) {
-
-            user = await this.userRepository.save(userData);
+            const toAdd = { ...userData, role: [ INITIAL_ROLE ] };
+            user = await this.userRepository.save(toAdd);
         }
         return user;
     }
@@ -128,18 +132,40 @@ export class UserService {
         return await this.userRepository.save(user);
     }
 
-    public async update(id: string, userData: User): Promise<User> {
+    public async update(id: string, userData: UpdateUserDto): Promise<User> {
         let user: User;
 
         if (await this.validator.validateUpdateUser(id, userData)) {
             user = await this.userRepository.findOne({ where: { id } });
 
-            user.username = userData.username;
-            user.emailVerified = (user.email !== userData.email) ? false : userData.emailVerified;
-            user.email = userData.email;
-            user.firstname = userData.firstname;
-            user.lastname = userData.lastname;
-            user.photoUrl = userData.photoUrl;
+            const { username, emailVerified, email, firstname, lastname, photoUrl, role } = userData;
+
+            if (username) {
+                user.username = username;
+            }
+
+            if (email) {
+                if (emailVerified === true || emailVerified === false) {
+                    user.emailVerified = (user.email !== userData.email) ? false : emailVerified;
+                }
+                user.email = email;
+            }
+
+            if (firstname) {
+                user.firstname = firstname;
+            }
+
+            if (lastname) {
+                user.lastname = lastname;
+            }
+
+            if (photoUrl) {
+                user.photoUrl = photoUrl;
+            }
+
+            if (role) {
+                user.role = await this.roleService.bulkCreation(role);
+            }
 
             user = await this.userRepository.save(user);
         }

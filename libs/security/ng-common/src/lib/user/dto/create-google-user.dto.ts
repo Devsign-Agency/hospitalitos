@@ -1,21 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { UserDto } from './user.dto';
 
-export class CreateGoogleUserDto {
-    @ApiProperty()
-    username: string;
-
-    @ApiProperty()
-    email: string;
-
-    @ApiProperty()
-    firstname: string;
-
-    @ApiProperty()
-    lastname: string;
-
-    @ApiProperty()
-    photoUrl: string;
-
+export class CreateGoogleUserDto extends PartialType(UserDto) {
     @ApiProperty()
     googleId: string;
 }

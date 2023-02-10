@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
-import { CreateGoogleUserDto, CreateUserDto, User } from '@kaad/security/ng-common';
+import { CreateGoogleUserDto, CreateUserDto, UpdateUserDto, User, UserDto } from '@kaad/security/ng-common';
 
 @Injectable()
 export class UserValidator {
@@ -107,7 +107,7 @@ export class UserValidator {
         return true;
     }
 
-    public async validateRequiredAndPassword(user: Partial<User>, password: string): Promise<boolean> {
+    public async validateRequiredAndPassword(user: Partial<CreateUserDto>, password: string): Promise<boolean> {
 
         if (!password) {
             throw new BadRequestException("password must not be empty");
@@ -116,7 +116,7 @@ export class UserValidator {
         return await this.validateRequired(user);
     }
 
-    public async validateRequired(user: Partial<User>): Promise<boolean> {
+    public async validateRequired(user: Partial<UserDto>): Promise<boolean> {
         if (!user.username) {
             throw new BadRequestException("username must not be empty");
         }
@@ -154,16 +154,16 @@ export class UserValidator {
         return await this.validateRequired(user);
     }
 
-    public async validateUpdateUser(id:string, user: User): Promise<boolean> {
+    public async validateUpdateUser(id:string, user: UpdateUserDto): Promise<boolean> {
 
-        if (await this.usernameInUseAndNotMe(user.username, id)) {
+        if (user.username && await this.usernameInUseAndNotMe(user.username, id)) {
             throw new BadRequestException("user with that username already exist");
         }
 
-        if (await this.emailInUseAndNotMe(user.email, id)) {
+        if (user.email && await this.emailInUseAndNotMe(user.email, id)) {
             throw new BadRequestException("user with that email already exist");
         }
 
-        return (await this.validateUserExistById(id)) && (await this.validateRequired(user));
+        return await this.validateUserExistById(id);
     }
 }

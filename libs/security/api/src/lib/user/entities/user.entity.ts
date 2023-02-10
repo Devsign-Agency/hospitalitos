@@ -1,7 +1,8 @@
-import { Password, User } from "@kaad/security/ng-common";
+import { Password, Role, User } from "@kaad/security/ng-common";
 import { AuditableEntity } from "@kaad/shared/ng-common";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PasswordEntity } from "../../password/entities/password.entity";
+import { RoleEntity } from "../../role/entities/role.entity";
 
 @Entity('user', { schema: 'security' })
 export class UserEntity extends AuditableEntity implements User {
@@ -28,6 +29,9 @@ export class UserEntity extends AuditableEntity implements User {
 
     @Column({ nullable: true })
     photoUrl: string;
+
+    @Column({ type: 'simple-array', nullable: true })
+    role: string[];
 
     @OneToMany(() => PasswordEntity, (password: PasswordEntity) => password.user)
     passwords?: Password[];

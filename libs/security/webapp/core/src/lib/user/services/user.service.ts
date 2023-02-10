@@ -60,7 +60,6 @@ export class UserService {
         return this.http.get<User>(url).pipe(
             catchError(error => {
                 console.error('Error: ', error);
-                // return of(EmptyUser);
                 return throwError(() => error);
             })
         );
