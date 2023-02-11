@@ -70,8 +70,8 @@
             </div>
             <div class="text-gray-700 overflow-auto">
                 <div class="flex space-x-2 justify-start px-4 py-2">
-                    <span *ngFor="let role of user.role" [class.bg-green-500]="role === 'user'"
-                        [class.bg-red-600]="role === 'admin'" [class.bg-gray-900]="role === 'god'"
+                    <span *ngFor="let role of user.role" [class.bg-green-500]="role === userRole"
+                        [class.bg-red-600]="role === adminRole" [class.bg-gray-900]="role === 'god'"
                         class="text-xs inline-block py-1.5 px-3 leading-none text-center whitespace-nowrap align-baseline font-bold text-white rounded-full">
                         {{ role }}
                     </span>

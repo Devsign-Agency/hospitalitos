@@ -4,6 +4,10 @@ export const configuration = () => ({
     globalUrl: process.env.GLOBAL_URL || `http://localhost`,
     port: process.env.PORT,
     validationLink: process.env.VALIDATION_LINK,
+    auth: {
+        adminRole: process.env.ADMIN_ROLE,
+        userRole: process.env.USER_ROLE
+    },
     company: {
         name: process.env.COMPANY_NAME,
         url: process.env.COMPANY_URL,

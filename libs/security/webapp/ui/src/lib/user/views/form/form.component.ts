@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthResponse } from '@kaad/auth/ng-common';
 import { AuthService } from '@kaad/auth/webapp/core';
+import { ConfigService } from '@kaad/config/webapp/core';
 import { ToastService } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { PasswordService, UserService } from '@kaad/security/webapp/core';
@@ -23,6 +24,7 @@ export class FormComponent implements OnInit {
 
     constructor(formBuilder: FormBuilder,
                 private readonly auth: AuthService,
+                private readonly config: ConfigService,
                 private readonly passwordService: PasswordService,
                 private readonly route: ActivatedRoute,
                 private readonly toastService: ToastService,
@@ -57,7 +59,7 @@ export class FormComponent implements OnInit {
             this.form.controls['newpassword'].disable();
             this.form.controls['confirmPassword'].disable();
             this.userService.findById(id).pipe(
-                tap(user => this.isAdmin = !!user.role?.includes('admin'))
+                tap(user => this.isAdmin = !!user.role?.includes(this.config.adminRole))
             )
             .subscribe({
                 next: user => this.form.patchValue(user)
@@ -68,7 +70,7 @@ export class FormComponent implements OnInit {
     save() {
         if (this.form.valid) {
             const { id, firstname, lastname, username, email, photoUrl, newpassword } = this.form.getRawValue();
-            const role: string[] = [ 'user', ...(this.isAdmin ? [ 'admin' ] : [] )];
+            const role: string[] = [ this.config.userRole, ...(this.isAdmin ? [ this.config.adminRole ] : [] )];
 
             const observable: Observable<User> = id
                 ? this.userService.update(id, { id, firstname, lastname, username, email, photoUrl, role })

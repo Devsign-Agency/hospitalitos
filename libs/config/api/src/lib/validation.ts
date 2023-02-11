@@ -1,3 +1,4 @@
+import { DEFAULT_ADMIN_ROLE, DEFAULT_USER_ROLE } from '@kaad/shared/ng-common';
 import * as Joi from 'joi';
 
 export const validationSchema = Joi.object({
@@ -27,5 +28,7 @@ export const validationSchema = Joi.object({
     COMPANY_LOGO_URL: Joi.string().required(),
     GCLOUD_TOKEN_DIR: Joi.string().required(),
     GCLOUD_TOKEN_FILE: Joi.string().required(),
-    GCLOUD_CREDENTIAL_FILE: Joi.string().required()
+    GCLOUD_CREDENTIAL_FILE: Joi.string().required(),
+    ADMIN_ROLE: Joi.string().required().default(DEFAULT_ADMIN_ROLE),
+    USER_ROLE: Joi.string().required().default(DEFAULT_USER_ROLE)
 })

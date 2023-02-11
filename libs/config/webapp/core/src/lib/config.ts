@@ -1,3 +1,4 @@
+import { DEFAULT_ADMIN_ROLE, DEFAULT_USER_ROLE } from "@kaad/shared/ng-common";
 
 export class Config {
 
@@ -17,4 +18,7 @@ export class Config {
     loginPage = '/security/login';
     logoutPage = '/security/logout';
     homePage = '/';
+
+    userRole = DEFAULT_USER_ROLE;
+    adminRole = DEFAULT_ADMIN_ROLE;
 }
