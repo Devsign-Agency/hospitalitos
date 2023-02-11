@@ -1,5 +1,6 @@
 import { CreateRoleDto, Role, UpdateRoleDto } from '@kaad/security/ng-common';
-import { Order, Page, PageMeta, PageOptions } from '@kaad/shared/ng-common';
+import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
+import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';

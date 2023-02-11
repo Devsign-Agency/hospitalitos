@@ -15,11 +15,13 @@ import {
 } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
+import { Video } from '@kaad/multimedia/ng-common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
 import { diskStorage } from 'multer';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
+import { CreateVideoDto } from './dtos/create-video.dto';
+import { UpdateVideoDto } from './dtos/update-video.dto';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')

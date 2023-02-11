@@ -1,9 +1,11 @@
 import { MetadataVideo, YoutubeService } from '@kaad/gcloud/api';
-import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
+import { Video } from '@kaad/multimedia/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
+import { CreateVideoDto } from './dtos/create-video.dto';
+import { UpdateVideoDto } from './dtos/update-video.dto';
 import { VideoEntity } from './entities/video.entity';
 import { VideoValidator } from './validators/video.validator';
 
