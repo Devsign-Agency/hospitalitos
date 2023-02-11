@@ -1,4 +1,4 @@
-import { CreateRoleDto, Role, UpdateRoleDto } from '@kaad/security/ng-common';
+import { Role } from '@kaad/security/ng-common';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
     Controller,
@@ -11,6 +11,8 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleService } from './role.service';
 
 @ApiTags('Role')

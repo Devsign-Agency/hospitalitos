@@ -12,16 +12,11 @@ import { Observable } from 'rxjs';
 })
 export class DetailComponent implements OnInit {
 
-    adminRole: string;
-    userRole: string;
     user$?: Observable<User>;
 
     constructor(private readonly config: ConfigService,
-                private readonly route: ActivatedRoute,
-                private readonly userService: UserService) {
-        this.adminRole = this.config.adminRole;
-        this.userRole = this.config.userRole;
-    }
+        private readonly route: ActivatedRoute,
+        private readonly userService: UserService) { }
 
     ngOnInit(): void {
         const id = this.route.snapshot.params['id'];

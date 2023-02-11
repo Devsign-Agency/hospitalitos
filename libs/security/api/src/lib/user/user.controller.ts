@@ -1,11 +1,13 @@
 import { JwtGuard } from '@kaad/core/api';
-import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
+import { User } from '@kaad/security/ng-common';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
     Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PasswordService } from '../password/password.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('User')

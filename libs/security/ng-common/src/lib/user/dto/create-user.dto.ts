@@ -1,7 +1,5 @@
-import { ApiPropertyOptional, PartialType } from "@nestjs/swagger";
 import { UserDto } from "./user.dto";
 
-export class CreateUserDto extends PartialType(UserDto) {
-    @ApiPropertyOptional()
+export interface CreateUserDto extends Partial<UserDto> {
     password?: string;
 }

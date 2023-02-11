@@ -1,9 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
-
-export class ForgotPassword {
-    @ApiProperty()
+export interface ForgotPassword {
     email: string;
-
-    @ApiProperty()
     urlCallback: string;
 }

@@ -1,6 +1,6 @@
 import { Order } from "./order.enum";
 
-export interface IPageOptions {
+export interface PageOptions {
     order?: Order;
     page: number;
     take: number;

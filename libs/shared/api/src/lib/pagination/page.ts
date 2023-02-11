@@ -1,4 +1,4 @@
-import { IPage } from "@kaad/shared/ng-common";
+import { Page as IPage } from "@kaad/shared/ng-common";
 import { ApiProperty } from "@nestjs/swagger";
 import { PageMeta } from "./page-meta";
 

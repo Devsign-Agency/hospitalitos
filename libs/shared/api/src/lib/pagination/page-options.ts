@@ -1,4 +1,4 @@
-import { IPageOptions, Order } from "@kaad/shared/ng-common";
+import { PageOptions as IPageOptions, Order } from "@kaad/shared/ng-common";
 import { ApiPropertyOptional } from "@nestjs/swagger";
 
 export class PageOptions implements IPageOptions {

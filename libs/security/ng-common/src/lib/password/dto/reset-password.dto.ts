@@ -1,9 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
-
-export class ResetPassword {
-    @ApiProperty()
+export interface ResetPassword {
     validationCode: string;
-
-    @ApiProperty()
     newPassword: string;
 }

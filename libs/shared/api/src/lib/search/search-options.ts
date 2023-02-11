@@ -1,6 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PageOptions } from '../pagination/page-options';
-export class SearchOptions extends PageOptions {
+import { SearchOptions as ISearchOptions } from '@kaad/shared/ng-common';
+
+export class SearchOptions extends PageOptions implements ISearchOptions {
 
     @ApiPropertyOptional({
         default: ''

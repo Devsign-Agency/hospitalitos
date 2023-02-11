@@ -1,8 +1,9 @@
-import { ForgotPassword, ResetPassword } from '@kaad/security/ng-common';
 import {
     Body, Controller, Post
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ForgotPassword } from './dto/forgot-password.dto';
+import { ResetPassword } from './dto/reset-password.dto';
 import { PasswordService } from './password.service';
 
 @ApiTags('Password')

@@ -1,12 +1,12 @@
-import { IPageOptions } from "./page-options";
+import { PageOptions } from "./page-options";
 
 
 export interface IPageMetaParameters {
-    pageOptions: IPageOptions;
+    pageOptions: PageOptions;
     itemCount: number;
 }
 
-export interface IPageMeta {
+export interface PageMeta {
     page: number;
     take: number;
     itemCount: number;

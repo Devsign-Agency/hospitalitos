@@ -1,6 +1,6 @@
-import { IPageMeta } from "./page-meta";
+import { PageMeta } from "./page-meta";
 
-export interface IPage<T> {
+export interface Page<T> {
     readonly data: T[];
-    readonly meta: IPageMeta;
+    readonly meta: PageMeta;
 }

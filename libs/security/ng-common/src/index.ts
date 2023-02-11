@@ -1,9 +1,9 @@
 export * from './lib/security-ng-common';
 
 export * from './lib/password/dto/create-password.dto';
-export * from './lib/password/dto/forgot-password-response.dto';
+export * from './lib/password/dto/forgot-password.response';
 export * from './lib/password/dto/forgot-password.dto';
-export * from './lib/password/dto/reset-password-response.dto';
+export * from './lib/password/dto/reset-password.response';
 export * from './lib/password/dto/reset-password.dto';
 export * from './lib/password/dto/update-password.dto';
 
