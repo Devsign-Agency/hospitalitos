@@ -1,6 +1,7 @@
+import { CreateVideoDto as ICreateVideoDto } from '@kaad/multimedia/ng-common';
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateVideoDto {
+export class CreateVideoDto implements ICreateVideoDto {
     @ApiProperty()
     name: string;
 

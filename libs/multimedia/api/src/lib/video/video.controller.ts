@@ -20,8 +20,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
 import { diskStorage } from 'multer';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
-import { CreateVideoDto } from './dtos/create-video.dto';
-import { UpdateVideoDto } from './dtos/update-video.dto';
+import { CreateVideoDto } from './dto/create-video.dto';
+import { UpdateVideoDto } from './dto/update-video.dto';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')

@@ -1,1 +1,1 @@
-export * from './lib/video/interfaces/video.interface';
+export * from './lib/video';
