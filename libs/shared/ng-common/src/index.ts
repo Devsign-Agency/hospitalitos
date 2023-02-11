@@ -1,4 +1,5 @@
-export * from './lib/database/auditable.entity';
+export * from './lib/constants/global.constant';
+
 export * from './lib/database/auditable.interface';
 
 export * from './lib/shared-ng-common';

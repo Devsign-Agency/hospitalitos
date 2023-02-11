@@ -1,5 +1,5 @@
 import { CreateRoleDto, Role, UpdateRoleDto } from '@kaad/security/ng-common';
-import { Page, PageOptions, SearchOptions } from '@kaad/shared/ng-common';
+import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
     Controller,
     Get,

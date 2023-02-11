@@ -1,10 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { PageOptions } from '../pagination/page-options';
-export class SearchOptions extends PageOptions {
-
-    @ApiPropertyOptional({
-        default: ''
-    })
-    readonly criteria: string = '';
-
+import { IPageOptions } from '../pagination/page-options';
+export interface ISearchOptions extends IPageOptions {
+    criteria: string;
 }

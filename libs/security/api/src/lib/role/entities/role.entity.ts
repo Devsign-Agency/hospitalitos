@@ -1,5 +1,5 @@
 import { Role } from "@kaad/security/ng-common";
-import { AuditableEntity } from "@kaad/shared/ng-common";
+import { AuditableEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ schema: 'security', name: 'role' })

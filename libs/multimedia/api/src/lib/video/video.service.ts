@@ -1,6 +1,6 @@
 import { MetadataVideo, YoutubeService } from '@kaad/gcloud/api';
 import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
-import { Page, PageMeta, PageOptions } from '@kaad/shared/ng-common';
+import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';

@@ -1,5 +1,5 @@
 import { Video } from '@kaad/multimedia/ng-common';
-import { AuditableEntity } from '@kaad/shared/ng-common';
+import { AuditableEntity } from '@kaad/shared/api';
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ schema: 'multimedia', name: 'video' })

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
-import { Page } from '@kaad/shared/ng-common';
+import { IPage } from '@kaad/shared/ng-common';
 import { catchError, throwError } from 'rxjs';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UserService {
             take,
             criteria
         }
-        return this.http.get<Page<User>>(url, { params });
+        return this.http.get<IPage<User>>(url, { params });
     }
 
     findById(id: string) {

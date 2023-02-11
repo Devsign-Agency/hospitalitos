@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '@kaad/security/ng-common';
 import { UserService } from '@kaad/security/webapp/core';
-import { PageMeta } from '@kaad/shared/ng-common';
+import { IPageMeta } from '@kaad/shared/ng-common';
 import { debounceTime, map, Observable, tap } from 'rxjs';
 
 @Component({
@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
         );
     }
 
-    updatePageInfo = (pageInfo: PageMeta) => {
+    updatePageInfo = (pageInfo: IPageMeta) => {
         this.page = +pageInfo.page;
         this.pageSize = +pageInfo.take;
         this.listCount = +pageInfo.itemCount;

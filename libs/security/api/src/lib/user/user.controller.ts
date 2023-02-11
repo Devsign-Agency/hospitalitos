@@ -1,6 +1,6 @@
 import { JwtGuard } from '@kaad/core/api';
 import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
-import { Page, PageOptions, SearchOptions } from '@kaad/shared/ng-common';
+import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
     Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards
 } from '@nestjs/common';

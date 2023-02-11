@@ -1,5 +1,5 @@
 import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
-import { Page, PageMeta, PageOptions } from '@kaad/shared/ng-common';
+import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { oauth2_v2 } from 'googleapis';

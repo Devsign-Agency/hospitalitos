@@ -1,5 +1,5 @@
 import { Password, User } from "@kaad/security/ng-common";
-import { AuditableEntity } from "@kaad/shared/ng-common";
+import { AuditableEntity } from "@kaad/shared/api";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../user/entities/user.entity";
 

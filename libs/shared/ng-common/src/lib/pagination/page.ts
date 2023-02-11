@@ -1,16 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { PageMeta } from "./page-meta";
+import { IPageMeta } from "./page-meta";
 
-export class Page<T> {
-
-    @ApiProperty({ isArray: true })
+export interface IPage<T> {
     readonly data: T[];
-
-    @ApiProperty({ type: () => PageMeta })
-    readonly meta: PageMeta;
-
-    constructor(data: T[], meta: PageMeta) {
-        this.data = data;
-        this.meta = meta;
-    }
+    readonly meta: IPageMeta;
 }

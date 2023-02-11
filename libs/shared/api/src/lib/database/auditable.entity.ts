@@ -1,5 +1,5 @@
 import { Column } from "typeorm";
-import { Auditable } from "./auditable.interface";
+import { Auditable } from '@kaad/shared/ng-common';
 
 export abstract class AuditableEntity implements Auditable {
     @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })

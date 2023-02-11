@@ -19,7 +19,7 @@ import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-commo
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
 import { diskStorage } from 'multer';
-import { Page, PageOptions, SearchOptions } from '@kaad/shared/ng-common';
+import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')
