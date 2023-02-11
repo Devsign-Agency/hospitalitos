@@ -1,7 +1,7 @@
-export * from './lib/auth/dtos/auth-response.dto';
-export * from './lib/auth/dtos/credentials.dto';
-export * from './lib/auth/dtos/refresh-response.dto';
-export * from './lib/auth/dtos/register.dto';
+export * from './lib/auth/dto/auth.response';
+export * from './lib/auth/dto/credentials.dto';
+export * from './lib/auth/dto/refresh.response';
+export * from './lib/auth/dto/register.dto';
 
 export * from './lib/jwt/interfaces/payload.interface';
 

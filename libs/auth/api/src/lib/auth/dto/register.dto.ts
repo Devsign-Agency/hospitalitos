@@ -1,6 +1,7 @@
+import { Register as IRegister } from '@kaad/auth/ng-common';
 import { ApiProperty } from "@nestjs/swagger";
 
-export class Register {
+export class Register implements IRegister {
     @ApiProperty()
     username: string;
 

@@ -1,10 +1,12 @@
-import { AuthResponse, Credentials, RefreshResponse, Register } from '@kaad/auth/ng-common';
+import { AuthResponse, RefreshResponse } from '@kaad/auth/ng-common';
 import { JwtGuard, LocalGuard, RefreshGuard } from '@kaad/core/api';
 import { Public } from '@kaad/shared/api';
 import { Body, Controller, Delete, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { Credentials } from './dto/credentials.dto';
+import { Register } from './dto/register.dto';
 
 @ApiTags('Auth')
 @Controller('auth')

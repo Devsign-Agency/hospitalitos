@@ -1,4 +1,4 @@
-export class RefreshResponse {
+export interface RefreshResponse {
     accessToken: string;
     refreshToken: string;
 }
