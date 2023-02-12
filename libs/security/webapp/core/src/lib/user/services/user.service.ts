@@ -36,7 +36,7 @@ export class UserService {
 
     findByEmail(email: string) {
         const url = `${this.config.urlApi}/user/${email}`;
-        const query = { findBy: 'username' };
+        const query = { findBy: 'email' };
         return this.http.get<User>(url, { params: query });
     }
 
