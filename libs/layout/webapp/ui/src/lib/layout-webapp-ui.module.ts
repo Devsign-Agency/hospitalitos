@@ -1,19 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AsideComponent } from './components/aside/aside.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { ToastComponent } from './components/toast/toast.component';
 import { MainComponent } from './layouts/main/main.component';
 import { SecurityComponent } from './layouts/security/security.component';
-import { RouterModule } from '@angular/router';
-import { ToastComponent } from './components/toast/toast.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { ListView } from './views/list/list.view';
+import { ContentDirective } from './directives/content.directive';
 
 @NgModule({
-    imports: [CommonModule, RouterModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule
+    ],
     declarations: [
         AsideComponent,
         BreadcrumbComponent,
@@ -25,6 +33,8 @@ import { ModalComponent } from './components/modal/modal.component';
         PaginationComponent,
         SecurityComponent,
         ToastComponent,
+        ListView,
+        ContentDirective,
     ],
     exports: [
         AsideComponent,
@@ -34,6 +44,8 @@ import { ModalComponent } from './components/modal/modal.component';
         PaginationComponent,
         SecurityComponent,
         ToastComponent,
+        ListView,
+        ContentDirective,
     ],
 })
 export class LayoutWebappUiModule {}

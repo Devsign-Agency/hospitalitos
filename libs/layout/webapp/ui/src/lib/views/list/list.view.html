@@ -32,14 +32,10 @@
                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Name
-                </th>
-                <th scope="col" class="text-center px-6 py-3">
-                    Role
-                </th>
-                <th scope="col" class="text-center px-6 py-3">
-                    Status
+                <th *ngFor="let columnSchema of config.columns" scope="col" class="px-6 py-3">
+                    <div class="whitespace-nowrap">
+                        {{ columnSchema.title }}
+                    </div>
                 </th>
                 <th scope="col" class="text-center px-6 py-3">
                     Action
@@ -47,7 +43,7 @@
             </tr>
         </thead>
         <tbody class="tbody">
-            <tr *ngFor="let user of userList$ | async" class="tr">
+            <tr *ngFor="let item of items" class="tr hover:cursor-pointer">
                 <td class="w-4 p-4">
                     <div class="flex items-center">
                         <input id="checkbox-table-search-1" type="checkbox"
@@ -55,37 +51,43 @@
                         <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                     </div>
                 </td>
-                <td [routerLink]="[user.id]" scope="row" class="flex items-center px-6 py-4 whitespace-nowrap">
-                    <img class="w-10 h-10 rounded-full" [src]="user.photoUrl" alt="Jese image">
+                <td *ngFor="let columnSchema of config.columns" (click)="showDetail(item)" class="px-6 py-4">
+                    <ng-container *ngTemplateOutlet="getTemplate(columnSchema.templateId)?.template || defaultTemplate; context:{ item }"></ng-container>
+                    <ng-template #defaultTemplate>
+                        <div class="text-base font-semibold">
+                            {{ item[columnSchema.field] }}
+                        </div>
+                    </ng-template>
+                </td>
+                <!-- <td [routerLink]="[video.id]" scope="row" class="flex items-center px-6 py-4 whitespace-nowrap">
+                    <img class="w-10 h-10 rounded-full" [src]="'video.photoUrl'" alt="Jese image">
                     <div class="pl-3">
-                        <div class="text-base font-semibold">{{ user.firstname }} {{ user.lastname }}</div>
-                        <div>{{ user.email }}</div>
+                        <div class="text-base font-semibold">{{ video.code }}</div>
+                        <div>{{ video.url }}</div>
                     </div>
                 </td>
-                <td [routerLink]="[user.id]" class="px-6 py-4">
-                    <div class="flex space-x-2 justify-center">
-                        <span *ngFor="let role of user.role" class="pill pill-primary">
-                            {{ role }}
-                        </span>
-                    </div>
-                </td>
-                <td [routerLink]="[user.id]" class="px-6 py-4">
+                <td [routerLink]="[video.id]" class="px-6 py-4">
                     <div class="flex items-center">
                         <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
                     </div>
                 </td>
+                <td [routerLink]="[video.id]" class="px-6 py-4">
+                    <div class="flex items-center">
+                        {{ video.createdAt | date:'dd / MM / yyyy' }}
+                    </div>
+                </td> -->
                 <td class="px-6 py-4">
                     <div class="flex items-center">
-                        <a [routerLink]="[user.id, 'edit']" class="mr-3 btn-icon btn-primary">
+                        <button (click)="showEdit(item)" class="mr-3 btn-icon btn-primary">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125">
                                 </path>
                             </svg>
-                        </a>
+                        </button>
 
-                        <button (click)="delete(user.id)" class="btn-icon btn-danger">
+                        <button (click)="showDelete(item)" class="btn-icon btn-danger">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -100,12 +102,11 @@
     </table>
 </div>
 
-
-<kaad-pagination [page]="page" [pageSize]="pageSize" [collectionSize]="listCount"
+<kaad-pagination [page]="page" [pageSize]="pageSize" [collectionSize]="collectionSize"
     (pageChange)="gotoPage($event)"></kaad-pagination>
 
 
-<div *ngIf="showModal" id="popup-modal"
+<div *ngIf="showConfirmation" id="popup-modal"
     class="fixed flex flex-col h-modal justify-center left-0 md:h-full md:inset-0 mt-auto overflow-x-hidden overflow-y-auto p-4 right-0 top-0 z-50">
     <div class="relative w-full h-full max-w-md md:h-auto mx-auto">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -126,17 +127,19 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete
-                    this user?</h3>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete this item?
+                </h3>
                 <button data-modal-hide="popup-modal" type="button" (click)="accept()"
                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                     Yes, I'm sure
                 </button>
                 <button data-modal-hide="popup-modal" type="button" (click)="cancel()"
-                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
-                    cancel</button>
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    No, cancel
+                </button>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+<div *ngIf="showConfirmation" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
