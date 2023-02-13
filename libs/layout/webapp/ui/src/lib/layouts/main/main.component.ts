@@ -12,4 +12,8 @@ export class MainComponent {
     constructor(private readonly asideService: AsideService) {
         this.opened$ = asideService.asideOpened$;
     }
+
+    hideAside() {
+        this.asideService.toggleOpenedState();
+    }
 }
