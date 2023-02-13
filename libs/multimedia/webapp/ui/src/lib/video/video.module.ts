@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SharedWebappUiModule } from '@kaad/shared/webapp/ui';
 import { VideoComponent } from './video.component';
 import { videoRoutes } from './video.routes';
@@ -12,7 +13,8 @@ import { ListComponent } from './views/list/list.component';
     imports: [
         CommonModule,
         RouterModule.forChild(videoRoutes),
-        SharedWebappUiModule
+        SharedWebappUiModule,
+        YouTubePlayerModule
     ],
     declarations: [
         VideoComponent,
