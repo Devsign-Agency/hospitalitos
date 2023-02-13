@@ -1,31 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
-import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
-import { Page } from '@kaad/shared/ng-common';
+import { User } from '@kaad/security/ng-common';
+import { BaseService } from '@kaad/shared/webapp/core';
 import { catchError, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseService<User> {
 
-    constructor(private readonly config: ConfigService,
-                private readonly http: HttpClient) { }
-
-    findAll(page = 1, take = 10, criteria = '') {
-        const url = `${this.config.urlApi}/user`;
-        const params = {
-            page,
-            take,
-            criteria
-        }
-        return this.http.get<Page<User>>(url, { params });
-    }
-
-    findById(id: string) {
-        const url = `${this.config.urlApi}/user/${id}`;
-        return this.http.get<User>(url);
+    constructor(protected override readonly config: ConfigService,
+                protected override readonly http: HttpClient) {
+        super(config, http);
+        this.uri = 'user';
     }
 
     findByUsername(username: string) {
@@ -38,21 +26,6 @@ export class UserService {
         const url = `${this.config.urlApi}/user/${email}`;
         const query = { findBy: 'email' };
         return this.http.get<User>(url, { params: query });
-    }
-
-    create(dto: CreateUserDto) {
-        const url = `${this.config.urlApi}/user`;
-        return this.http.post<User>(url, dto);
-    }
-
-    update(id: string, dto: UpdateUserDto) {
-        const url = `${this.config.urlApi}/user/${id}`;
-        return this.http.patch<User>(url, dto);
-    }
-
-    delete(id: string) {
-        const url = `${this.config.urlApi}/user/${id}`;
-        return this.http.delete<User>(url);
     }
 
     profile() {

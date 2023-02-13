@@ -1,6 +1,6 @@
-import { Auditable } from "@kaad/shared/ng-common";
+import { BaseDataBase } from "@kaad/shared/ng-common";
 
-export interface Multimedia extends Auditable {
+export interface Multimedia extends BaseDataBase {
     id: string;
     name: string;
     description: string;

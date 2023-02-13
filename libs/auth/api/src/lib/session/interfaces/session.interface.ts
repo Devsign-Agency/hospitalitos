@@ -1,6 +1,6 @@
-import { Auditable } from "@kaad/shared/ng-common";
+import { BaseDataBase } from "@kaad/shared/ng-common";
 
-export interface Session extends Auditable {
+export interface Session extends BaseDataBase {
     id: string;
     ip: string;
     user: string;

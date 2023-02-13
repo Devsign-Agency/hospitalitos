@@ -1,6 +1,6 @@
-import { Auditable } from "@kaad/shared/ng-common";
+import { BaseDataBase } from "@kaad/shared/ng-common";
 
-export interface Account extends Auditable {
+export interface Account extends BaseDataBase {
     id: string;
     user: string;
     createdAt: Date;

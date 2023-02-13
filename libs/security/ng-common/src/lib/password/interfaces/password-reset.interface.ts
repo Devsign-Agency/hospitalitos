@@ -1,6 +1,6 @@
-import { Auditable } from "@kaad/shared/ng-common";
+import { BaseDataBase } from "@kaad/shared/ng-common";
 
-export interface PasswordReset extends Auditable {
+export interface PasswordReset extends BaseDataBase {
     id: string;
     userId: string;
     createdAt: Date;

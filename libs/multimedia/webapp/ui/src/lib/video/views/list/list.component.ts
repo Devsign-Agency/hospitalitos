@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTableType } from '@kaad/layout/webapp/ui';
 import { Video } from '@kaad/multimedia/ng-common';
 import { VideoService } from '@kaad/multimedia/webapp/core';
 import { PageMeta } from '@kaad/shared/ng-common';
+import { AbstractListComponent } from '@kaad/shared/webapp/ui';
 import { map, Observable, tap } from 'rxjs';
 
 @Component({
@@ -12,21 +12,11 @@ import { map, Observable, tap } from 'rxjs';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends AbstractListComponent<Video> {
 
     videoList$?: Observable<Video[]>;
 
-    form: FormGroup;
-
-    page = 1;
-    pageSize = 2;
-    listCount = 0;
-    criteria = '';
-
-    showModal = false;
-    selectedIds: string[] = [];
-
-    conf: DataTableType<Video> = {
+    override conf: DataTableType<Video> = {
         columns: [
             {
                 title: 'Name',
@@ -58,49 +48,10 @@ export class ListComponent implements OnInit {
         ]
     }
 
-    constructor(private readonly activatedRoute: ActivatedRoute,
-        private readonly router: Router,
-        private readonly videoService: VideoService) { }
-
-    ngOnInit() {
-        this.search();
-    }
-
-    search = () => {
-        this.videoList$ = this.videoService.findAll(this.page, this.pageSize, this.criteria).pipe(
-            tap(page => this.updatePageInfo(page.meta)),
-            map(page => page.data)
-        );
-    }
-
-    updatePageInfo = (pageInfo: PageMeta) => {
-        this.page = +pageInfo.page;
-        this.pageSize = +pageInfo.take;
-        this.listCount = +pageInfo.itemCount;
-    }
-
-    searchCriteria = (value: string) => {
-        this.criteria = value;
-        this.search();
-    }
-
-    gotoPage(page = 1) {
-        this.page = page;
-        this.search();
-    }
-
-    delete(item: Video) {
-        this.videoService.delete(item.id).subscribe({
-            next: () => this.search()
-        });
-    }
-
-    detail(item: Video) {
-        this.router.navigate([item.id], { relativeTo: this.activatedRoute });
-    }
-
-    edit(item: Video) {
-        this.router.navigate([item.id, 'edit'], { relativeTo: this.activatedRoute });
+    constructor(protected override readonly activatedRoute: ActivatedRoute,
+                protected override readonly router: Router,
+                protected readonly videoService: VideoService) {
+        super(activatedRoute, router, videoService);
     }
 }
 

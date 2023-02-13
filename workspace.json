@@ -24,6 +24,7 @@
         "security-webapp-ui": "libs/security/webapp/ui",
         "shared-api": "libs/shared/api",
         "shared-ng-common": "libs/shared/ng-common",
+        "shared-webapp-core": "libs/shared/webapp/core",
         "shared-webapp-ui": "libs/shared/webapp/ui",
         "webapp-backoffice": "apps/webapp/backoffice",
         "webapp-backoffice-e2e": "apps/webapp/backoffice-e2e"

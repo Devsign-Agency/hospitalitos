@@ -1,6 +1,6 @@
-<kaad-list-layout [config]="conf" [items]="(videoList$ | async) || []" [page]="page" [pageSize]="pageSize"
+<kaad-list-layout [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
     [collectionSize]="listCount" (pageChange)="gotoPage($event)" (delete)="delete($event)" (detail)="detail($event)"
-    (edit)="edit($event)">
+    (edit)="edit($event)" (search)="searchCriteria($event)">
 
     <ng-template #code templateContent id="code" let-item="item">
         <div class="flex items-center whitespace-nowrap">

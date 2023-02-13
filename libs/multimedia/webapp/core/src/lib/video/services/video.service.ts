@@ -1,29 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
-import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
-import { Page } from '@kaad/shared/ng-common';
+import { Video } from '@kaad/multimedia/ng-common';
+import { BaseService } from '@kaad/shared/webapp/core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class VideoService {
-    constructor(private readonly config: ConfigService,
-                private readonly http: HttpClient) { }
+export class VideoService extends BaseService<Video> {
 
-    findAll(page = 1, take = 10, criteria = '') {
-        const url = `${this.config.urlApi}/video`;
-        const params = {
-            page,
-            take,
-            criteria
-        }
-        return this.http.get<Page<Video>>(url, { params });
-    }
-
-    findById(id: string) {
-        const url = `${this.config.urlApi}/video/${id}`;
-        return this.http.get<Video>(url);
+    constructor(protected override readonly config: ConfigService,
+                protected override readonly http: HttpClient) {
+        super(config, http);
+        this.uri = 'video';
     }
 
     findByName(name: string) {
@@ -36,20 +25,5 @@ export class VideoService {
         const url = `${this.config.urlApi}/video/${code}`;
         const query = { findBy: 'code' };
         return this.http.get<Video>(url, { params: query });
-    }
-
-    create(dto: CreateVideoDto) {
-        const url = `${this.config.urlApi}/video`;
-        return this.http.post<Video>(url, dto);
-    }
-
-    update(id: string, dto: UpdateVideoDto) {
-        const url = `${this.config.urlApi}/video/${id}`;
-        return this.http.patch<Video>(url, dto);
-    }
-
-    delete(id: string) {
-        const url = `${this.config.urlApi}/video/${id}`;
-        return this.http.delete<Video>(url);
     }
 }

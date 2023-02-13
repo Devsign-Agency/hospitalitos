@@ -2,6 +2,7 @@ import { Component, ContentChildren, EventEmitter, Input, Output, QueryList } fr
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContentDirective, DataTableType } from '@kaad/layout/webapp/ui';
 import { debounceTime } from 'rxjs';
+import { HasId } from '@kaad/shared/ng-common';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { debounceTime } from 'rxjs';
     styleUrls: ['./list.view.scss'],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export class ListView<T> {
+export class ListView<T extends HasId> {
 
     @Input() items: T[] = [];
     @Input() config: DataTableType<T>;
@@ -18,9 +19,9 @@ export class ListView<T> {
     @Input() pageSize = 10;
     @Input() collectionSize = 0;
 
-    @Output() delete: EventEmitter<T> = new EventEmitter<T>();
-    @Output() detail: EventEmitter<T> = new EventEmitter<T>();
-    @Output() edit: EventEmitter<T> = new EventEmitter<T>();
+    @Output() delete: EventEmitter<string> = new EventEmitter<string>();
+    @Output() detail: EventEmitter<string> = new EventEmitter<string>();
+    @Output() edit: EventEmitter<string> = new EventEmitter<string>();
 
     @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
@@ -29,7 +30,7 @@ export class ListView<T> {
 
     form: FormGroup;
     showConfirmation = false;
-    selectedItems: T[] = [];
+    selectedIds: string[] = [];
 
     constructor(formBuilder: FormBuilder) {
         this.form = formBuilder.group({
@@ -38,7 +39,12 @@ export class ListView<T> {
 
         this.form.controls['criteria'].valueChanges.pipe(
             debounceTime(300)
-        ).subscribe(this.search.emit)
+        ).subscribe({
+            next: value => {
+                console.log(value);
+                this.search.emit(value);
+            }
+        });
     }
 
     getTemplate(id?: string) {
@@ -53,23 +59,23 @@ export class ListView<T> {
     }
 
     showDetail(item: T) {
-        this.detail.emit(item);
+        this.detail.emit(item.id);
     }
 
     showEdit(item: T) {
-        this.edit.emit(item);
+        this.edit.emit(item.id);
     }
 
     showDelete(item: T) {
-        this.selectedItems.push(item);
+        this.selectedIds.push(item.id);
         this.showConfirmation = true;
     }
 
     accept() {
         this.showConfirmation = false;
-        const item = this.selectedItems.shift();
-        if (item) {
-            this.delete.emit(item);
+        const id = this.selectedIds.shift();
+        if (id) {
+            this.delete.emit(id);
         }
     }
 
