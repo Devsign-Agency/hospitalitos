@@ -1,35 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AuthResponse } from '@kaad/auth/ng-common';
-import { AuthService } from '@kaad/auth/webapp/core';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { ToastService } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { PasswordService, UserService } from '@kaad/security/webapp/core';
-import { matchValidator } from '@kaad/shared/webapp/ui';
-import { Observable, tap } from 'rxjs';
+import { AbstractFormComponent, matchValidator } from '@kaad/shared/webapp/ui';
+import { tap } from 'rxjs';
 
 @Component({
     selector: 'kaad-form',
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit {
+export class FormComponent extends AbstractFormComponent<User> {
 
-    form: FormGroup;
-    showPasswordInput = true;
-    title = '';
     isAdmin = false;
 
     constructor(formBuilder: FormBuilder,
-                private readonly auth: AuthService,
-                private readonly config: ConfigService,
-                private readonly passwordService: PasswordService,
-                private readonly route: ActivatedRoute,
-                private readonly toastService: ToastService,
-                private readonly userService: UserService) {
-        this.form = formBuilder.group({
+                protected override readonly config: ConfigService,
+                protected readonly passwordService: PasswordService,
+                protected override readonly route: ActivatedRoute,
+                protected override readonly toastService: ToastService,
+                protected readonly userService: UserService) {
+        super(formBuilder, config, route, toastService, userService);
+    }
+
+    protected override buildForm(formBuilder: FormBuilder): FormGroup {
+        return formBuilder.group({
             id: [null],
             firstname: [''],
             lastname: [''],
@@ -50,15 +48,14 @@ export class FormComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        const id = this.route.snapshot.params['id'];
+    protected override processId(id?: string): void {
         this.title = id  ? 'Edit User' : 'New User';
         if (id) {
             this.showPasswordInput = false;
             this.form.controls['email'].disable();
             this.form.controls['newpassword'].disable();
             this.form.controls['confirmPassword'].disable();
-            this.userService.findById(id).pipe(
+            this.findItem(id).pipe(
                 tap(user => this.isAdmin = !!user.role?.includes(this.config.adminRole))
             )
             .subscribe({
@@ -67,22 +64,22 @@ export class FormComponent implements OnInit {
         }
     }
 
-    save() {
-        if (this.form.valid) {
-            const { id, firstname, lastname, username, email, photoUrl, newpassword } = this.form.getRawValue();
-            const role: string[] = [ this.config.userRole, ...(this.isAdmin ? [ this.config.adminRole ] : [] )];
+    protected override buildEntityToCreate(): unknown {
+        const { firstname, lastname, username, email, photoUrl, newpassword } = this.form.getRawValue();
+        const role: string[] = [ this.config.userRole, ...(this.isAdmin ? [ this.config.adminRole ] : [] )];
+        return { username, email, firstname, lastname, photoUrl, password: newpassword, role };
+    }
 
-            const observable: Observable<User> = id
-                ? this.userService.update(id, { id, firstname, lastname, username, email, photoUrl, role })
-                : this.userService.create({ username, email, firstname, lastname, photoUrl, password: newpassword });
-            observable.subscribe({
-                next: () => {
-                    this.toastService.showSuccess('Save Success!');
-                    if (!id) {
-                        this.form.reset();
-                    }
-                }
-            })
+    protected override buildEntityToUpdate(): unknown {
+        const { id, firstname, lastname, username, email, photoUrl } = this.form.getRawValue();
+        const role: string[] = [ this.config.userRole, ...(this.isAdmin ? [ this.config.adminRole ] : [] )];
+        return { id, firstname, lastname, username, email, photoUrl, role };
+    }
+
+    protected override postSave(savedItem: User) {
+        super.postSave(savedItem);
+        if (this.isNew) {
+            this.isAdmin = false;
         }
     }
 

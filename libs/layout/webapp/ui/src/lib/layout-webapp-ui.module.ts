@@ -15,6 +15,7 @@ import { SecurityComponent } from './layouts/security/security.component';
 import { ListView } from './views/list/list.view';
 import { ContentDirective } from './directives/content.directive';
 import { DetailView } from './views/detail/detail.view';
+import { FormView } from './views/form/form.view';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
@@ -32,6 +33,7 @@ import { DetailView } from './views/detail/detail.view';
         ListView,
         ContentDirective,
         DetailView,
+        FormView,
     ],
     exports: [
         AsideComponent,
@@ -44,6 +46,7 @@ import { DetailView } from './views/detail/detail.view';
         ListView,
         ContentDirective,
         DetailView,
+        FormView,
     ],
 })
 export class LayoutWebappUiModule {}
