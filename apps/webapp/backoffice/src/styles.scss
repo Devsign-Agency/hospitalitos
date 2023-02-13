@@ -11,6 +11,14 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+.loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 @import './theme/breadcrumbs';
 @import './theme/buttons';
 @import './theme/colors';

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '@kaad/config/webapp/core';
-import { ToastService } from '@kaad/layout/webapp/ui';
+import { LoadingService, ToastService } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { PasswordService, UserService } from '@kaad/security/webapp/core';
 import { AbstractFormComponent, matchValidator } from '@kaad/shared/webapp/ui';
@@ -22,8 +22,9 @@ export class FormComponent extends AbstractFormComponent<User> {
                 protected readonly passwordService: PasswordService,
                 protected override readonly route: ActivatedRoute,
                 protected override readonly toastService: ToastService,
+                protected override readonly loading: LoadingService,
                 protected readonly userService: UserService) {
-        super(formBuilder, config, route, toastService, userService);
+        super(formBuilder, config, loading, route, toastService, userService);
     }
 
     protected override buildForm(formBuilder: FormBuilder): FormGroup {
@@ -86,16 +87,18 @@ export class FormComponent extends AbstractFormComponent<User> {
     resetPassword() {
         const { email } = this.form.getRawValue();
         if (email) {
-
+            this.loading.show();
             const urlCallback = `auth/update-password`;
             this.passwordService.forgot({email, urlCallback}).subscribe({
                 next: value => {
                     if (value) {
                         this.toastService.showSuccess('Email sended');
                     }
+                    this.loading.hide();
                 },
                 error: (error) => {
                     this.toastService.showDanger(error.error.message);
+                    this.loading.hide();
                 }
             })
         }

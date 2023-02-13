@@ -16,6 +16,7 @@ import { ListView } from './views/list/list.view';
 import { ContentDirective } from './directives/content.directive';
 import { DetailView } from './views/detail/detail.view';
 import { FormView } from './views/form/form.view';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
@@ -34,6 +35,7 @@ import { FormView } from './views/form/form.view';
         ContentDirective,
         DetailView,
         FormView,
+        LoadingComponent,
     ],
     exports: [
         AsideComponent,
@@ -47,6 +49,7 @@ import { FormView } from './views/form/form.view';
         ContentDirective,
         DetailView,
         FormView,
+        LoadingComponent,
     ],
 })
 export class LayoutWebappUiModule {}

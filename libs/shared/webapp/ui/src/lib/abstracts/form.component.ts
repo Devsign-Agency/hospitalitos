@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ConfigService } from "@kaad/config/webapp/core";
-import { ToastService } from "@kaad/layout/webapp/ui";
+import { LoadingService, ToastService } from "@kaad/layout/webapp/ui";
 import { HasId } from "@kaad/shared/ng-common";
 import { BaseService } from "@kaad/shared/webapp/core";
-import { Observable, tap } from "rxjs";
+import { catchError, Observable, tap, throwError } from "rxjs";
 
 @Component({
     selector: 'kaad-base-detail',
@@ -24,6 +24,7 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
 
     constructor(formBuilder: FormBuilder,
         protected readonly config: ConfigService,
+        protected readonly loading: LoadingService,
         protected readonly route: ActivatedRoute,
         protected readonly toastService: ToastService,
         protected readonly service: BaseService<T>) {
@@ -47,19 +48,30 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
     }
 
     protected findItem(id: string) {
+        this.loading.show();
         return this.service.findById(id).pipe(
-            tap(item => this.item = item)
+            tap(item => this.item = item),
+            tap(() => this.loading.hide()),
+            catchError((error) => {
+                this.loading.hide();
+                return throwError(() => error);
+            })
         );
     }
 
     save() {
         if (this.form.valid) {
+            this.loading.show();
             const observable: Observable<T> = !this.isNew
                 ? this.service.update(this.item.id, this.buildEntityToUpdate())
                 : this.service.create(this.buildEntityToCreate());
             observable.subscribe({
                 next: savedItem => {
-                    this.postSave(savedItem)
+                    this.postSave(savedItem);
+                    this.loading.hide();
+                },
+                error: () => {
+                    this.loading.hide()
                 }
             })
         }

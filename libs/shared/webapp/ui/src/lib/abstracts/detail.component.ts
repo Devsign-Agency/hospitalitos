@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ConfigService } from "@kaad/config/webapp/core";
+import { LoadingService } from "@kaad/layout/webapp/ui";
 import { BaseService } from "@kaad/shared/webapp/core";
-import { Observable } from "rxjs";
+import { catchError, Observable, tap, throwError } from "rxjs";
 
 @Component({
     selector: 'kaad-base-detail',
@@ -14,6 +15,7 @@ export class AbstractDetailComponent<T> implements OnInit {
 
     constructor(protected readonly activatedRoute: ActivatedRoute,
         protected readonly config: ConfigService,
+        protected readonly loading: LoadingService,
         protected readonly service: BaseService<T>) { }
 
     ngOnInit() {
@@ -24,6 +26,13 @@ export class AbstractDetailComponent<T> implements OnInit {
     }
 
     findItem(id: string) {
-        this.item$ = this.service.findById(id);
+        this.loading.show();
+        this.item$ = this.service.findById(id).pipe(
+            tap(() => this.loading.hide()),
+            catchError((error) => {
+                this.loading.hide();
+                return throwError(() => error);
+            })
+        );
     }
 }

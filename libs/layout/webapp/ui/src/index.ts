@@ -9,3 +9,4 @@ export * from './lib/services/toast.service';
 export * from './lib/types/data-table.type';
 
 export * from './lib/components/modal/modal.component';
+export * from './lib/services/loading.service';

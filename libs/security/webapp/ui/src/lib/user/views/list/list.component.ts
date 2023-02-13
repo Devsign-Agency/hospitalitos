@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataTableType } from '@kaad/layout/webapp/ui';
+import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { UserService } from '@kaad/security/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
@@ -11,9 +11,6 @@ import { AbstractListComponent } from '@kaad/shared/webapp/ui';
     styleUrls: ['./list.component.scss'],
 })
 export class ListComponent extends AbstractListComponent<User> {
-
-
-    override pageSize = 1;
 
     override conf: DataTableType<User> = {
         columns: [
@@ -44,8 +41,9 @@ export class ListComponent extends AbstractListComponent<User> {
     }
 
     constructor(protected override readonly activatedRoute: ActivatedRoute,
+                protected override readonly loading: LoadingService,
                 protected override readonly router: Router,
                 protected readonly userService: UserService) {
-            super(activatedRoute, router, userService);
+            super(activatedRoute, loading, router, userService);
     }
 }

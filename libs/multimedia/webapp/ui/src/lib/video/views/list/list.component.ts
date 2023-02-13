@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataTableType } from '@kaad/layout/webapp/ui';
+import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
 import { Video } from '@kaad/multimedia/ng-common';
 import { VideoService } from '@kaad/multimedia/webapp/core';
-import { PageMeta } from '@kaad/shared/ng-common';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'kaad-list',
@@ -49,9 +48,10 @@ export class ListComponent extends AbstractListComponent<Video> {
     }
 
     constructor(protected override readonly activatedRoute: ActivatedRoute,
+                protected override readonly loading: LoadingService,
                 protected override readonly router: Router,
                 protected readonly videoService: VideoService) {
-        super(activatedRoute, router, videoService);
+        super(activatedRoute, loading, router, videoService);
     }
 }
 

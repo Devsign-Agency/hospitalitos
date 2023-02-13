@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DataTableType } from "@kaad/layout/webapp/ui";
+import { DataTableType, LoadingService } from "@kaad/layout/webapp/ui";
 import { PageMeta } from "@kaad/shared/ng-common";
 import { BaseService } from "@kaad/shared/webapp/core";
-import { map, Observable, tap } from "rxjs";
+import { catchError, map, Observable, tap, throwError } from "rxjs";
 
 @Component({
     selector: 'kaad-base-list',
@@ -28,6 +28,7 @@ export class AbstractListComponent<T> implements OnInit {
     }
 
     constructor(protected readonly activatedRoute: ActivatedRoute,
+        protected readonly loading: LoadingService,
         protected readonly router: Router,
         protected readonly service: BaseService<T>) { }
 
@@ -36,9 +37,15 @@ export class AbstractListComponent<T> implements OnInit {
     }
 
     search = () => {
+        this.loading.show();
         this.itemList$ = this.service.findAll(this.page, this.pageSize, this.criteria).pipe(
             tap(page => this.updatePageInfo(page.meta)),
-            map(page => page.data)
+            map(page => page.data),
+            tap(() => this.loading.hide()),
+            catchError((error) => {
+                this.loading.hide();
+                return throwError(() => error);
+            })
         );
     }
 
