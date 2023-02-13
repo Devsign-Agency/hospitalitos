@@ -1,4 +1,4 @@
-<kaad-list-layout [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
+<kaad-list-view [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
     [collectionSize]="listCount" (pageChange)="gotoPage($event)" (delete)="delete($event)" (detail)="detail($event)"
     (edit)="edit($event)" (search)="searchCriteria($event)">
 
@@ -28,4 +28,4 @@
             <span>{{ item.createdAt | date:'hh:mm a' }}</span>
         </div>
     </ng-template>
-</kaad-list-layout>
+</kaad-list-view>

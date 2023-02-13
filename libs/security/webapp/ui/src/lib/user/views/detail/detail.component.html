@@ -1,82 +1,82 @@
-<div class="sm:flex no-wrap sm:-mx-2 " *ngIf="(user$ | async) as user">
-    <!-- Left Side -->
-    <div class="w-full sm:w-3/12 sm:mx-2">
-        <!-- Profile Card -->
-        <div class="bg-white p-3 border-t-4 border-gray-900">
-            <div class="image overflow-hidden">
-                <img class="h-auto w-full mx-auto" [src]="user.photoUrl" alt="">
-            </div>
-            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ user.firstname }} {{ user.lastname }}</h1>
-        </div>
-        <!-- End of profile card -->
-    </div>
-    <!-- Right Side -->
-    <div class="w-full sm:w-9/12 sm:mx-2">
-        <!-- Profile tab -->
-        <!-- About Section -->
-        <div class="bg-white p-3 shadow-sm rounded-sm">
-
-            <div class="text-center flex justify-between">
-                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                    <span clas="text-green-500">
-                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                    </span>
-                    <span class="tracking-wide">About</span>
+<kaad-detail-view *ngIf="(item$ | async) as item" [item]="item">
+        <!-- Left Side -->
+        <div class="w-full sm:w-3/12 sm:mx-2">
+            <!-- Profile Card -->
+            <div class="bg-white p-3 border-t-4 border-gray-900">
+                <div class="image overflow-hidden">
+                    <img class="h-auto w-full mx-auto" [src]="item.photoUrl" alt="">
                 </div>
-                <a routerLink="edit" class="btn btn-primary">
-                    Edit
-                </a>
+                <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ item.firstname }} {{ item.lastname }}</h1>
             </div>
-            <div class="text-gray-700 overflow-x-auto">
-                <div class="grid md:grid-cols-2 text-sm">
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">First Name</div>
-                        <div class="px-4 py-2">{{ user.firstname }}</div>
+            <!-- End of profile card -->
+        </div>
+        <!-- Right Side -->
+        <div class="w-full sm:w-9/12 sm:mx-2">
+            <!-- Profile tab -->
+            <!-- About Section -->
+            <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                <div class="text-center flex justify-between">
+                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                        <span clas="text-green-500">
+                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </span>
+                        <span class="tracking-wide">About</span>
                     </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Last Name</div>
-                        <div class="px-4 py-2">{{ user.lastname }}</div>
-                    </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Email.</div>
-                        <div class="px-4 py-2">
-                            <a class="text-blue-800" href="mailto:jane@example.com">{{ user.email }}</a>
+                    <a routerLink="edit" class="btn btn-primary">
+                        Edit
+                    </a>
+                </div>
+                <div class="text-gray-700 overflow-x-auto">
+                    <div class="grid md:grid-cols-2 text-sm">
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">First Name</div>
+                            <div class="px-4 py-2">{{ item.firstname }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Last Name</div>
+                            <div class="px-4 py-2">{{ item.lastname }}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Email.</div>
+                            <div class="px-4 py-2">
+                                <a class="text-blue-800" href="mailto:jane@example.com">{{ item.email }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- End of about section -->
-        <!-- Role Section -->
-        <div class="bg-white p-3 shadow-sm rounded-sm">
+            <!-- End of about section -->
+            <!-- Role Section -->
+            <div class="bg-white p-3 shadow-sm rounded-sm">
 
-            <div class="text-center flex justify-between">
-                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                    <span clas="text-green-500">
-                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z">
-                            </path>
-                        </svg>
-                    </span>
-                    <span class="tracking-wide">Roles</span>
+                <div class="text-center flex justify-between">
+                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                        <span clas="text-green-500">
+                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="tracking-wide">Roles</span>
+                    </div>
+                </div>
+                <div class="text-gray-700 overflow-auto">
+                    <div class="flex space-x-2 justify-start px-4 py-2">
+                        <span *ngFor="let role of item.role" class="pill pill-primary">
+                            {{ role }}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="text-gray-700 overflow-auto">
-                <div class="flex space-x-2 justify-start px-4 py-2">
-                    <span *ngFor="let role of user.role" class="pill pill-primary">
-                        {{ role }}
-                    </span>
-                </div>
-            </div>
+            <!-- End of about section -->
+            <!-- End of profile tab -->
         </div>
-        <!-- End of about section -->
-        <!-- End of profile tab -->
-    </div>
-</div>
+</kaad-detail-view>

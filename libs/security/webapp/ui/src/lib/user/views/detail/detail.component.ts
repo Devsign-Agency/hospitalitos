@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { User } from '@kaad/security/ng-common';
 import { UserService } from '@kaad/security/webapp/core';
+import { AbstractDetailComponent } from '@kaad/shared/webapp/ui';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,22 +11,11 @@ import { Observable } from 'rxjs';
     templateUrl: './detail.component.html',
     styleUrls: ['./detail.component.scss'],
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent extends AbstractDetailComponent<User> {
 
-    user$?: Observable<User>;
-
-    constructor(private readonly config: ConfigService,
-        private readonly route: ActivatedRoute,
-        private readonly userService: UserService) { }
-
-    ngOnInit(): void {
-        const id = this.route.snapshot.params['id'];
-        if (id) {
-            this.findUser(id);
-        }
-    }
-
-    findUser(id: string) {
-        this.user$ = this.userService.findById(id);
+    constructor(protected override readonly activatedRoute: ActivatedRoute,
+        protected override readonly config: ConfigService,
+        protected readonly userService: UserService) {
+        super(activatedRoute, config, userService);
     }
 }

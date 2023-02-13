@@ -6,7 +6,7 @@ import { HasId } from '@kaad/shared/ng-common';
 
 
 @Component({
-    selector: 'kaad-list-layout',
+    selector: 'kaad-list-view',
     templateUrl: './list.view.html',
     styleUrls: ['./list.view.scss'],
 })

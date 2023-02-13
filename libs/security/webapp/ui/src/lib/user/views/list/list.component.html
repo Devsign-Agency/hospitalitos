@@ -1,4 +1,4 @@
-<kaad-list-layout [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
+<kaad-list-view [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
     [collectionSize]="listCount" (pageChange)="gotoPage($event)" (delete)="delete($event)" (detail)="detail($event)"
     (edit)="edit($event)" (search)="searchCriteria($event)">
 
@@ -27,4 +27,4 @@
             <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
         </div>
     </ng-template>
-</kaad-list-layout>
+</kaad-list-view>

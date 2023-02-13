@@ -4,7 +4,6 @@ import { DataTableType } from '@kaad/layout/webapp/ui';
 import { User } from '@kaad/security/ng-common';
 import { UserService } from '@kaad/security/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'kaad-list',

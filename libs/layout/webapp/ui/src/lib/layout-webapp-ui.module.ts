@@ -14,14 +14,10 @@ import { MainComponent } from './layouts/main/main.component';
 import { SecurityComponent } from './layouts/security/security.component';
 import { ListView } from './views/list/list.view';
 import { ContentDirective } from './directives/content.directive';
+import { DetailView } from './views/detail/detail.view';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule
-    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
     declarations: [
         AsideComponent,
         BreadcrumbComponent,
@@ -35,6 +31,7 @@ import { ContentDirective } from './directives/content.directive';
         ToastComponent,
         ListView,
         ContentDirective,
+        DetailView,
     ],
     exports: [
         AsideComponent,
@@ -46,6 +43,7 @@ import { ContentDirective } from './directives/content.directive';
         ToastComponent,
         ListView,
         ContentDirective,
+        DetailView,
     ],
 })
 export class LayoutWebappUiModule {}
