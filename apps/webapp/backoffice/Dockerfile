@@ -1,4 +1,4 @@
-FROM defioracle/base:latest as builder
+FROM kaad/base:latest as builder
 
 WORKDIR /app
 
