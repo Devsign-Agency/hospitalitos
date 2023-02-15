@@ -42,6 +42,8 @@ export class ToastComponent implements OnInit {
                 }
 
                 this.show = !!toast.visible;
+
+                setTimeout(() => this.show = false, 10000)
             }
         });
     }
