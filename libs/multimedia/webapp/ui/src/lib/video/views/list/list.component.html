@@ -7,7 +7,7 @@
             <div class="image overflow-hidden w-20 h-10">
                 <youtube-player [videoId]="item.code" [width]="80" [height]="44"> </youtube-player>
             </div>
-            <div class="pl-3">
+            <div class="pl-3 hidden sm:block">
                 <div class="text-base font-semibold">{{ item.code }}</div>
                 <span (click)="$event.stopPropagation()">
                     <a [href]="item.url" target="_blank" class="link link-table">{{ item.url }}</a>
@@ -17,7 +17,7 @@
     </ng-template>
 
     <ng-template #tags templateContent id="tags" let-item="item">
-        <div class="flex space-x-2 justify-start">
+        <div class="flex space-x-2 justify-start w-32 sm:w-auto overflow-x-auto">
             <span *ngFor="let tag of item.tags" class="pill pill-primary">
                 {{ tag }}
             </span>
