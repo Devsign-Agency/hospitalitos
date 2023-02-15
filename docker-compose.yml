@@ -1,0 +1,86 @@
+version: "3"
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:11-alpine
+        volumes:
+            - ./postgres/data:/var/lib/postgresql/data/pgdata
+            - ./postgres/backups:/home/backups
+        environment:
+            - POSTGRES_USER=kaad
+            - POSTGRES_PASSWORD=123456
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+            - "5432:5432"
+
+    api:
+        container_name: api
+        image: kaad/api:latest
+        depends_on:
+            - postgres
+        links:
+            - postgres:postgres
+        volumes:
+            - ./api/logs:/app/logs
+        environment:
+            - NODE_ENV=development
+            - PORT=3000
+            - GLOBAL_PREFIX=api/v1
+            - GLOBAL_URL=http://localhost
+            - VALIDATION_LINK=24
+
+            # Company Information
+            - COMPANY_NAME=Kaad Solutions
+            - COMPANY_URL=https://google.com
+            - COMPANY_LOGO_URL=https://lh3.googleusercontent.com/ogw/AAEL6sgM9R3jjNa6BsAxR2xsa1c31yw-nV_xSsOTPtlbWQ=s32-c-mo
+
+            # Security globals
+            - ADMIN_ROLE=admin
+            - USER_ROLE=user
+
+            # Database
+            - CONNECTION_TYPE=postgres
+            - CONNECTION_HOST=localhost
+            - CONNECTION_PORT=55432
+            - CONNECTION_USERNAME=kaad
+            - CONNECTION_PASSWORD=123456
+            - CONNECTION_DATABASE=kaad_db
+            - CONNECTION_AUTOLOAD_ENTITIES=true
+            - CONNECTION_SYNCHRONIZE=true
+
+            # JWT
+            - JWT_ACCESS_TOKEN_SECRET=supersecretpassword
+            - JWT_ACCESS_TOKEN_EXPIRATION_TIME=3000
+            - JWT_REFRESH_TOKEN_SECRET=supersecretmegapower
+            - JWT_REFRESH_TOKEN_EXPIRATION_TIME=3600
+            - JWT_REFRESH_TOKEN_NAME=refresh_token
+
+            # Mail Sender
+            - MAIL_DEFAULT_FROM="Notificaciones kaad" <kaad.solutions@gmail.com>
+            - MAIL_TRANSPORT_HOST=smtp.gmail.com
+            - MAIL_TRANSPORT_AUTH_USER=bernardo.pena.ramos@gmail.com
+            - MAIL_TRANSPORT_AUTH_PASS=cefwrmzyskzrdbml
+
+            # GCloud
+            - GCLOUD_TOKEN_DIR=/Users/bpena/Workspaces/kaad/kaad/libs/gcloud/api/src/lib/credentials
+            - GCLOUD_TOKEN_FILE=youtube_upload_app_session.json
+            - GCLOUD_CREDENTIAL_FILE=client_secret.json
+        ports:
+            -  "3000:3000"
+
+    webapp:
+        container_name: webapp
+        image: kaad/webapp:latest
+        environment:
+            - PORT=443
+        volumes:
+            - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx/ssl:/etc/ssl
+        depends_on:
+            - api
+        ports:
+            - "443:443"
+
+networks:
+    default:
+
