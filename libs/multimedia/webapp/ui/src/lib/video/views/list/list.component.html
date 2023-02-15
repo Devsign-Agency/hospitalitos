@@ -4,7 +4,9 @@
 
     <ng-template #code templateContent id="code" let-item="item">
         <div class="flex items-center whitespace-nowrap">
-            <img class="w-10 h-10 rounded-full" [src]="'video.photoUrl'" alt="Jese image">
+            <div class="image overflow-hidden w-20 h-10">
+                <youtube-player [videoId]="item.code"> </youtube-player>
+            </div>
             <div class="pl-3">
                 <div class="text-base font-semibold">{{ item.code }}</div>
                 <span (click)="$event.stopPropagation()">
