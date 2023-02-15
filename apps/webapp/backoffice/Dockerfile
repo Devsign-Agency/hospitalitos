@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . ./
 
-RUN npx nx build webapp
+RUN npx nx build webapp-backoffice
 
 
 FROM nginx:alpine
