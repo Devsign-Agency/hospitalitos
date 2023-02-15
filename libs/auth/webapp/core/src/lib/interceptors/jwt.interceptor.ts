@@ -21,7 +21,8 @@ import {
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 
-export const BYPASS_JWT_TOKEN = new HttpContextToken(() => false);
+export const BYPASS_JWT_TOKEN: HttpContextToken<boolean> = new HttpContextToken(() => false);
+export const BYPASS_CONTENT_TYPE: HttpContextToken<boolean> = new HttpContextToken(() => false);
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -49,12 +50,9 @@ export class JwtInterceptor implements HttpInterceptor {
                     request = this.addToken(request, token.toString());
                 }
 
-                if (!request.headers.has('Content-Type')) {
+                if (!request.headers.has('Content-Type') && !request.context.get(BYPASS_CONTENT_TYPE) === true) {
                     request = request.clone({
-                        headers: request.headers.set(
-                            'Content-Type',
-                            'application/json'
-                        ),
+                        headers: request.headers.set('Content-Type', 'application/json'),
                     });
                 }
 

@@ -1,8 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { Page } from '@kaad/shared/ng-common';
 import { Serviceable } from '../interfaces/serviceable.interface';
+
+type Options = {
+    headers?: HttpHeaders | {
+        [header: string]: string | string[];
+    };
+    params?: HttpParams | {
+        [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    };
+    context?: HttpContext;
+};
 
 @Injectable({
     providedIn: 'root'
@@ -29,9 +39,9 @@ export class BaseService<T> implements Serviceable<T> {
         return this.http.get<T>(url);
     }
 
-    create(dto: unknown) {
+    create(dto: unknown, options?: Options) {
         const url = `${this.config.urlApi}/${this.uri}`;
-        return this.http.post<T>(url, dto);
+        return this.http.post<T>(url, dto, options);
     }
 
     update(id: string, dto: unknown) {

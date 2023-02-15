@@ -9,6 +9,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { json, urlencoded } from 'body-parser';
 
 import { AppModule } from './app/app.module';
 
@@ -38,10 +39,13 @@ async function bootstrap() {
     });
     const config = app.get(ConfigService);
     const globalPrefix = `${config.get('globalPrefix')}`;
-    app.setGlobalPrefix(globalPrefix);
+    app.setGlobalPrefix(globalPrefix);``
     app.enableCors({ origin: '*' })
 
-    if (config.get('environment') == 'production' || true) {
+    app.use(json({ limit: '50mb' }));
+    app.use(urlencoded({ limit: '50mb', extended: true }))
+
+    if (config.get('environment') != 'production') {
         const swaggerConfig = new DocumentBuilder()
             .setTitle('Kaad API')
             .setDescription('Kaad RESTful API')

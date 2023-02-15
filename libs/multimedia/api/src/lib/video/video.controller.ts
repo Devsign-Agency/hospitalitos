@@ -1,27 +1,15 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-    UseInterceptors,
-    UploadedFile,
-    ParseFilePipe,
-    FileTypeValidator,
-    MaxFileSizeValidator,
-    Query,
-} from '@nestjs/common';
-import { VideoService } from './video.service';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Video } from '@kaad/multimedia/ng-common';
+import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
+import {
+    Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Query, UploadedFile, UseInterceptors
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import 'multer';
 import { diskStorage } from 'multer';
-import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
+import { VideoService } from './video.service';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')
@@ -41,7 +29,7 @@ export class VideoController {
             new ParseFilePipe({
                 validators: [
                     new FileTypeValidator({ fileType: 'video/*' }),
-                    new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+                    new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 1024 }),
                 ]
             }),) file: Express.Multer.File) {
         return this.videoService.create(file, createVideoDto);

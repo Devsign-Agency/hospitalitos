@@ -6,14 +6,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class LoadingService {
 
-    private visible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    private visible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public visible$: Observable<boolean> = this.visible.asObservable();
 
     show() {
+        console.log('show');
         this.visible.next(true);
     }
 
     hide() {
+        console.log('hide');
         this.visible.next(false);
     }
 }

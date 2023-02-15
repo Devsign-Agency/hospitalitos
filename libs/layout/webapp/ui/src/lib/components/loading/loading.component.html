@@ -1,12 +1,11 @@
 <!-- Add relative class to container -->
-<div class="relative z-50">
-    Some content ...
+<div class="relative z-50" [class.hidden]="cssHidden">
 
     <!-- loading overlay -->
 
     <div class="absolute bg-gray-900 bg-opacity-60 flex h-screen items-center justify-center text-white w-full z-10">
         <div class="flex items-center">
-            <span class="text-3xl mr-4">Loading</span>
+            <span class="text-3xl mr-4">Loading {{ cssHidden }}</span>
             <!-- loading icon -->
             <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24">

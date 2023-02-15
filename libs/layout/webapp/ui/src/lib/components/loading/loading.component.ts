@@ -16,7 +16,10 @@ export class LoadingComponent {
 
     constructor(private readonly loading: LoadingService) {
         this.loading.visible$.subscribe({
-            next: show => this.cssHidden = !show
+            next: show => {
+                console.log('hidden: ', !show);
+                this.cssHidden = !show;
+            }
         });
     }
 }

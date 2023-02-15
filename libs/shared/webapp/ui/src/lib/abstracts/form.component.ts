@@ -22,6 +22,10 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
 
     protected get isNew(): boolean { return !this.item; }
 
+    public get f() {
+        return this.form.controls;
+    }
+
     constructor(formBuilder: FormBuilder,
         protected readonly config: ConfigService,
         protected readonly loading: LoadingService,
@@ -37,7 +41,7 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
 
     ngOnInit() {
         const id = this.route.snapshot.params['id'];
-        this.title = id  ? `Edit ${this.entityName}` : `New ${this.entityName}`;
+        this.title = id ? `Edit ${this.entityName}` : `New ${this.entityName}`;
         this.processId(id);
     }
 
@@ -70,7 +74,8 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
                     this.postSave(savedItem);
                     this.loading.hide();
                 },
-                error: () => {
+                error: (error) => {
+                console.log(error);
                     this.loading.hide()
                 }
             })

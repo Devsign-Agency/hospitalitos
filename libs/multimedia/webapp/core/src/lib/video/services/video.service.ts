@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BYPASS_CONTENT_TYPE } from '@kaad/auth/webapp/core';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { Video } from '@kaad/multimedia/ng-common';
 import { BaseService } from '@kaad/shared/webapp/core';
@@ -10,7 +11,7 @@ import { BaseService } from '@kaad/shared/webapp/core';
 export class VideoService extends BaseService<Video> {
 
     constructor(protected override readonly config: ConfigService,
-                protected override readonly http: HttpClient) {
+        protected override readonly http: HttpClient) {
         super(config, http);
         this.uri = 'video';
     }
@@ -25,5 +26,15 @@ export class VideoService extends BaseService<Video> {
         const url = `${this.config.urlApi}/video/${code}`;
         const query = { findBy: 'code' };
         return this.http.get<Video>(url, { params: query });
+    }
+
+    override create(dto: { formData: FormData, params: { name: string, description: string, tags: string | string }}) {
+        const { formData, params } = dto;
+        const options = {
+            params,
+            context: new HttpContext().set(BYPASS_CONTENT_TYPE, true),
+        }
+
+        return super.create(formData, options);
     }
 }

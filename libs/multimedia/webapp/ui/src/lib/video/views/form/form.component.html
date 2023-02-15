@@ -1,1 +1,72 @@
-<p>form works!</p>
+<kaad-form-view [title]="title" [disabled]="form.invalid" (save)="save()">
+    <form [formGroup]="form">
+
+        <h6 class="text-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            General information
+        </h6>
+        <div class="flex flex-wrap">
+            <div class="w-full sm:w-6/12 sm:px-4">
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
+                        Name
+                    </label>
+                    <input type="text" formControlName="name"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                </div>
+            </div>
+
+            <div class="w-full sm:w-6/12 sm:px-4">
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
+                        Tags
+                    </label>
+                    <input type="text" formControlName="tags"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none">
+                </div>
+            </div>
+
+            <div class="w-full sm:w-6/12 sm:px-4">
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
+                        File
+                    </label>
+                    <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file"
+                            class="relative flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                    </path>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                        class="font-semibold">Click to upload</span> or drag and drop</p>
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" formControlName="file"
+                                (change)="onFileChange($event)" accept="video/*" />
+                            <span *ngIf="f['fileName'].value"
+                                class="absolute bg-[#4285F4] bottom-0 font-medium p-2 rounded-bl-lg rounded-br-lg text-center text-white w-full">
+                                {{ f['fileName'].value }}
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-6/12 sm:px-4">
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-gray-600 text-xs mb-2" htmlfor="grid-password">
+                        Description
+                    </label>
+                    <textarea type="text" formControlName="description" rows="10"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-6 border-b-1 border-blueGray-300">
+
+    </form>
+</kaad-form-view>
