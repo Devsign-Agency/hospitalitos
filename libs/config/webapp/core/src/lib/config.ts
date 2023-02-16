@@ -15,8 +15,8 @@ export class Config {
     tokenHeaderName = 'access_token';
     refreshTokenHeaderName = 'refresh_token';
 
-    loginPage = '/security/login';
-    logoutPage = '/security/logout';
+    loginPage = '/auth/login';
+    logoutPage = '/auth/logout';
     homePage = '/';
 
     userRole = DEFAULT_USER_ROLE;
