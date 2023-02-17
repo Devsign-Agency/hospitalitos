@@ -8,6 +8,6 @@ export const environment = {
         loginPage: 'auth/login',
         logoutPage: 'auth/logout',
         homePage: '/',
-        urlFront: 'https://backoffice.hospitalitosdelafe.org'
+        urlFront: 'http://localhost:4200'
     },
 };
