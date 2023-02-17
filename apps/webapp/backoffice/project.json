@@ -36,7 +36,13 @@
                             "maximumError": "5mb"
                         }
                     ],
-                    "outputHashing": "all"
+                    "outputHashing": "all",
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/webapp/backoffice/src/environments/environment.ts",
+                            "with": "apps/webapp/backoffice/src/environments/environment.development.ts"
+                        }
+                    ]
                 },
                 "development": {
                     "buildOptimizer": false,
