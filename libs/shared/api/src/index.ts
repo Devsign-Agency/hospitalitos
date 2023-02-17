@@ -1,4 +1,5 @@
 export * from './lib/database/auditable.entity';
+export * from './lib/database/base.entity';
 
 export * from './lib/decorators/public.decorator';
 
