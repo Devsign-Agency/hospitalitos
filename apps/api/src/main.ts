@@ -45,7 +45,7 @@ async function bootstrap() {
     app.use(json({ limit: '50mb' }));
     app.use(urlencoded({ limit: '50mb', extended: true }))
 
-    if (config.get('environment') != 'production') {
+    if (config.get('environment') == 'production') {
         const swaggerConfig = new DocumentBuilder()
             .setTitle('Kaad API')
             .setDescription('Kaad RESTful API')

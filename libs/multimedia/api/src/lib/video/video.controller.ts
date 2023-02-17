@@ -1,7 +1,8 @@
+import { JwtGuard } from '@kaad/core/api';
 import { Video } from '@kaad/multimedia/ng-common';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
-    Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Query, UploadedFile, UseInterceptors
+    Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Query, UploadedFile, UseInterceptors, UseGuards
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
@@ -13,6 +14,7 @@ import { VideoService } from './video.service';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')
+@UseGuards(JwtGuard)
 export class VideoController {
     constructor(private readonly videoService: VideoService) {}
 
