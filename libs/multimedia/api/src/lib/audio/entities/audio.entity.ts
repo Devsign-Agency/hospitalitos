@@ -1,9 +1,9 @@
 import { Audio } from '@kaad/multimedia/ng-common';
-import { AuditableEntity } from "@kaad/shared/api";
+import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ schema: 'multimedia', name: 'video' })
-export class AudioEntity extends AuditableEntity implements Audio {
+export class AudioEntity extends BaseEntity implements Audio {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

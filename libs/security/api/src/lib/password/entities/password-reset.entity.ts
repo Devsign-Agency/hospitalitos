@@ -1,9 +1,9 @@
 import { PasswordReset } from "@kaad/security/ng-common";
-import { AuditableEntity } from "@kaad/shared/api";
+import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('password-reset', { schema: 'security' })
-export class PasswordResetEntity extends AuditableEntity implements PasswordReset {
+export class PasswordResetEntity extends BaseEntity implements PasswordReset {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

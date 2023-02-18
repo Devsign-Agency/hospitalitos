@@ -1,10 +1,10 @@
-import { AuditableEntity } from "@kaad/shared/api";
+import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Session } from "../interfaces/session.interface";
 
 
 @Entity('session', { schema: 'auth' })
-export class SessionEntity extends AuditableEntity implements Session {
+export class SessionEntity extends BaseEntity implements Session {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

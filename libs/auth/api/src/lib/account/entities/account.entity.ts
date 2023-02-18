@@ -1,9 +1,9 @@
-import { AuditableEntity } from "@kaad/shared/api";
+import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Account } from "../interfaces/account.interface";
 
 @Entity('account', { schema: 'auth' })
-export class AccountEntity extends AuditableEntity implements Account {
+export class AccountEntity extends BaseEntity implements Account {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

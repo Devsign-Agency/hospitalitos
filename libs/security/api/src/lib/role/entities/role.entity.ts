@@ -1,9 +1,9 @@
 import { Role } from "@kaad/security/ng-common";
-import { AuditableEntity } from "@kaad/shared/api";
+import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ schema: 'security', name: 'role' })
-export class RoleEntity extends AuditableEntity implements Role {
+export class RoleEntity extends BaseEntity implements Role {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
