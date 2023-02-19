@@ -84,15 +84,17 @@ export class YoutubeService extends BaseService {
                     }
                 },
                 (error, data) => {
+
+                    fs.rmSync(file.path);
+
                     if (error) {
                         Logger.error(error, 'YoutubeService:upload');
                         reject(error);
                         throw new InternalServerErrorException(error)
                     }
 
-                    fs.rmSync(file.path);
-
                     const code = data.data.id;
+
                     const urlVideo = `https://www.youtube.com/watch?v=${code}`;
                     Logger.log(`url video: ${urlVideo}`, 'YoutubeService:upload');
                     resolve({ code, urlVideo });

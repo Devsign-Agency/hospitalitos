@@ -10,3 +10,5 @@ export * from './lib/pagination/page-meta';
 export * from './lib/pagination/page-options';
 
 export * from './lib/search/search-options';
+
+export * from './lib/utils/file.utils';

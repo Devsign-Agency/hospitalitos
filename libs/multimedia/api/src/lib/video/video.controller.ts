@@ -2,9 +2,9 @@ import { JwtGuard } from '@kaad/core/api';
 import { Video } from '@kaad/multimedia/ng-common';
 import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
 import {
-    Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Query, UploadedFile, UseInterceptors, UseGuards
+    Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Query, UploadedFile, UseInterceptors, UseGuards, UploadedFiles, Logger
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import 'multer';
 import { diskStorage } from 'multer';
@@ -17,25 +17,6 @@ import { VideoService } from './video.service';
 @UseGuards(JwtGuard)
 export class VideoController {
     constructor(private readonly videoService: VideoService) {}
-
-    @Post()
-    @ApiConsumes('multipart/form-data')
-    @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: './uploadedFiles'
-        })
-    }))
-    create(
-        @Body() createVideoDto: CreateVideoDto,
-        @UploadedFile(
-            new ParseFilePipe({
-                validators: [
-                    new FileTypeValidator({ fileType: 'video/*' }),
-                    new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 1024 }),
-                ]
-            }),) file: Express.Multer.File) {
-        return this.videoService.create(file, createVideoDto);
-    }
 
     @Get()
     public async getAll(
@@ -52,6 +33,21 @@ export class VideoController {
         } else {
             return await this.videoService.findById(criteria);
         }
+    }
+
+    @Post()
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(FileFieldsInterceptor(
+        [
+            { name: 'file', maxCount: 1 },
+            { name: 'thumbnailImage', maxCount: 1 }
+        ],
+        { storage: diskStorage({ destination: process.env.MULTIMEDIA_UPLOAD_PATH }) }
+    ))
+    create(
+        @Body() createVideoDto: CreateVideoDto,
+        @UploadedFiles() files: { file?: Express.Multer.File[], thumbnailImage?: Express.Multer.File[] }) {
+        return this.videoService.create(files.file[0], files.thumbnailImage[0], createVideoDto);
     }
 
     @Patch(':id')

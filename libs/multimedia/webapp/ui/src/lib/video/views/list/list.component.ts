@@ -18,8 +18,8 @@ export class ListComponent extends AbstractListComponent<Video> {
     override conf: DataTableType<Video> = {
         columns: [
             {
-                title: 'Name',
-                field: 'name'
+                title: 'Title',
+                field: 'title'
             },
             {
                 title: 'Code',

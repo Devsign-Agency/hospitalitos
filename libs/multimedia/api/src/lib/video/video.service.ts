@@ -1,6 +1,6 @@
 import { MetadataVideo, YoutubeService } from '@kaad/gcloud/api';
 import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
-import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
+import { FileUtils, Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -24,8 +24,9 @@ export class VideoService {
 
         if (criteria) {
             queryBuilder
-                .where('video.name like :criteria', { criteria: `%${criteria}%` })
+                .where('video.title like :criteria', { criteria: `%${criteria}%` })
                 .orWhere('video.description like :criteria', { criteria: `%${criteria}%` })
+                .orWhere('video.synopsis like :criteria', { criteria: `%${criteria}%` })
                 .orWhere('video.tags like :criteria', { criteria: `%${criteria}%` });
         }
 
@@ -47,27 +48,33 @@ export class VideoService {
     }
 
     async findByName(name: string) {
-        return await this.videoRepository.findOne({ where: { name: Like(`%${name}%`) } });
+        return await this.videoRepository.findOne({ where: { title: Like(`%${name}%`) } });
     }
 
     async findByTag(tag: string) {
         return await this.videoRepository.findOne({ where: { tags: Like(`%${tag}%`) } });
     }
 
-    async create(file: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
+    async create(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
         let newVideo: Video;
 
         if (await this.validator.validateRequired(createVideoDto)) {
-            const { name, description, tags } = createVideoDto;
-            const meta: MetadataVideo = new MetadataVideo({ title: name, description, tags });
+            const { title, description, synopsis, tags } = createVideoDto;
+            const meta: MetadataVideo = new MetadataVideo({ title, description, tags });
             const { code, urlVideo } = await this.youtubeService.upload(file, meta);
 
             const video = new VideoEntity();
-            video.name = createVideoDto.name;
-            video.description = createVideoDto.description;
+            video.title = title;
+            video.description = description;
+            video.synopsis = synopsis;
             video.code = code;
             video.url = urlVideo;
             video.tags = tags;
+
+            if (thumbnailImage) {
+                const destinationPath = `${process.env.MULTIMEDIA_ASSETS_PATH}/thumbnails/video`;
+                video.thumbnail = FileUtils.copyAndDelete(thumbnailImage, destinationPath);
+            }
 
             newVideo = await this.videoRepository.save(video);
         }
@@ -81,14 +88,22 @@ export class VideoService {
         if (await this.validator.validateVideoExistById(id)) {
             video = await this.findById(id);
 
-            const { name, description, tags } = updateVideoDto;
+            const { title: name, description, synopsis, recommended, tags } = updateVideoDto;
 
             if (name) {
-                video.name = name;
+                video.title = name;
             }
 
             if (description) {
                 video.description = description;
+            }
+
+            if (synopsis) {
+                video.synopsis = synopsis;
+            }
+
+            if (recommended !== undefined) {
+                video.recommended = recommended;
             }
 
             if (tags && tags.length > 0) {

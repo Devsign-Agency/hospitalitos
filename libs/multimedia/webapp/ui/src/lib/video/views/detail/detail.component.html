@@ -1,18 +1,24 @@
 <kaad-detail-view *ngIf="(item$ | async) as item" [item]="item">
     <!-- Left Side -->
     <div class="w-full sm:w-4/12 sm:mx-2">
-        <!-- Profile Card -->
+        <!-- Multimedia Card -->
         <div class="bg-white p-3 border-t-4 border-sky-600 dark:border-gray-900">
             <div class="image overflow-hidden">
                 <youtube-player [videoId]="item.code"> </youtube-player>
             </div>
-            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ item.name }}</h1>
+            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ item.title }}</h1>
         </div>
-        <!-- End of profile card -->
+
+        <div class="bg-white p-3">
+            <div class="image overflow-hidden">
+                <img [src]="item.thumbnail">
+            </div>
+            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ item.title }}</h1>
+        </div>
+        <!-- End of Multimedia card -->
     </div>
     <!-- Right Side -->
     <div class="w-full sm:w-8/12 sm:mx-2">
-        <!-- Profile tab -->
         <!-- About Section -->
         <div class="bg-white p-3 shadow-sm rounded-sm">
 
@@ -34,8 +40,8 @@
             </div>
             <div class="text-gray-700 overflow-x-auto">
                 <div class="grid grid-cols-4 text-sm">
-                    <div class="px-4 py-2 font-semibold">Name</div>
-                    <div class="col-span-3 px-4 py-2">{{ item.name }}</div>
+                    <div class="px-4 py-2 font-semibold">Title</div>
+                    <div class="col-span-3 px-4 py-2">{{ item.title }}</div>
 
                     <div class="px-4 py-2 font-semibold">Tags</div>
                     <div class="col-span-3 text-gray-700 overflow-auto">
@@ -54,10 +60,12 @@
 
                     <div class="px-4 py-2 font-semibold">Description.</div>
                     <div class="col-span-3 px-4 py-2">{{ item.description }}</div>
+
+                    <div class="px-4 py-2 font-semibold">Synopsis.</div>
+                    <div class="col-span-3 px-4 py-2">{{ item.synopsis }}</div>
                 </div>
             </div>
         </div>
         <!-- End of about section -->
-        <!-- End of profile tab -->
     </div>
 </kaad-detail-view>

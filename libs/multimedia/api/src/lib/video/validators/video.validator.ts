@@ -28,17 +28,9 @@ export class VideoValidator {
     }
 
     public async validateRequired(video: Partial<Video>): Promise<boolean> {
-        if (!video.name) {
-            throw new BadRequestException("name must not be empty");
+        if (!video.title) {
+            throw new BadRequestException("title must not be empty");
         }
-
-        // if (!video.code) {
-        //     throw new BadRequestException("code must not be empty");
-        // }
-
-        // if (!video.url) {
-        //     throw new BadRequestException("url must not be empty");
-        // }
 
         if (!video.tags || video.tags.length === 0) {
             throw new BadRequestException("tags must not be empty");
