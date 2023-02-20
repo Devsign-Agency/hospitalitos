@@ -5,7 +5,7 @@
     <ng-template #code templateContent id="code" let-item="item">
         <div class="flex items-center whitespace-nowrap">
             <div class="image overflow-hidden w-20 h-10">
-                <img [src]="item.thumbnail" alt="item.title" class="w-full">
+                <img [src]="item.thumbnail | secure | async" alt="item.title" class="w-full">
                 <!-- <youtube-player [videoId]="item.code" [width]="80" [height]="44"> </youtube-player> -->
             </div>
             <div class="pl-3 hidden sm:block">

@@ -3,10 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutWebappUiModule } from '@kaad/layout/webapp/ui';
 import { AbstractListComponent } from './abstracts/list.component';
+import { SecurePipe } from './pipes/secure.pipe';
 
 @NgModule({
     declarations: [
-        AbstractListComponent
+        AbstractListComponent,
+        SecurePipe
     ],
     imports: [
         FontAwesomeModule,
@@ -19,7 +21,8 @@ import { AbstractListComponent } from './abstracts/list.component';
         FontAwesomeModule,
         FormsModule,
         LayoutWebappUiModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SecurePipe
     ]
 })
 export class SharedWebappUiModule {}

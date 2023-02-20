@@ -4,3 +4,4 @@ export * from './lib/abstracts/form.component';
 export * from './lib/abstracts/list.component';
 export * from './lib/resolvers/data.resolver';
 export * from './lib/validators/match.validator';
+export * from './lib/pipes/secure.pipe';
