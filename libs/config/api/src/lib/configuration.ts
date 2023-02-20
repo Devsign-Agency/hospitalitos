@@ -37,5 +37,11 @@ export const configuration = () => ({
         tokenDir: process.env.GCLOUD_TOKEN_DIR,
         tokenFile: process.env.GCLOUD_TOKEN_FILE,
         credentials: process.env.GCLOUD_CREDENTIAL_FILE
+    },
+    path: {
+        multimedia: {
+            assets: process.env.MULTIMEDIA_ASSETS_PATH,
+            ppload: process.env.MULTIMEDIA_UPLOAD_PATH
+        }
     }
 })

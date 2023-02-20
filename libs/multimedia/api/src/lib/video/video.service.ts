@@ -3,16 +3,24 @@ import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-commo
 import { FileUtils, Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
+import { join } from 'path';
 import { Like, Repository } from 'typeorm';
+import { MultimediaService } from '../common/services/multimedia/multimedia.service';
 import { VideoEntity } from './entities/video.entity';
 import { VideoValidator } from './validators/video.validator';
 
 @Injectable()
-export class VideoService {
-    constructor(@InjectRepository(VideoEntity) private readonly videoRepository: Repository<VideoEntity>,
-                private readonly validator: VideoValidator,
-                private readonly youtubeService: YoutubeService) {}
+export class VideoService extends MultimediaService<Video, VideoEntity> {
+    constructor(@InjectRepository(VideoEntity) protected readonly videoRepository: Repository<VideoEntity>,
+        protected readonly config: ConfigService,
+        protected readonly validator: VideoValidator,
+        protected readonly youtubeService: YoutubeService) {
+        super(config, validator);
+        this.entityName = 'video';
+        this.repository = videoRepository;
+    }
 
     public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<Video>> {
         const queryBuilder = this.videoRepository.createQueryBuilder("video");
@@ -38,16 +46,7 @@ export class VideoService {
         return new Page(entities, pageMetaDto);
     }
 
-    async findById(id: string) {
-        let video: Video;
-
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.videoRepository.findOne({ where: { id } });
-        }
-        return video;
-    }
-
-    async findByName(name: string) {
+    async findByTitle(name: string) {
         return await this.videoRepository.findOne({ where: { title: Like(`%${name}%`) } });
     }
 
@@ -55,73 +54,55 @@ export class VideoService {
         return await this.videoRepository.findOne({ where: { tags: Like(`%${tag}%`) } });
     }
 
-    async create(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
-        let newVideo: Video;
+    protected async preCreate(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
+        const { title, description, synopsis, tags } = createVideoDto;
+        const meta: MetadataVideo = new MetadataVideo({ title, description, tags });
+        const { code, urlVideo } = await this.youtubeService.upload(file, meta);
 
-        if (await this.validator.validateRequired(createVideoDto)) {
-            const { title, description, synopsis, tags } = createVideoDto;
-            const meta: MetadataVideo = new MetadataVideo({ title, description, tags });
-            const { code, urlVideo } = await this.youtubeService.upload(file, meta);
+        const video = new VideoEntity();
+        video.title = title;
+        video.description = description;
+        video.synopsis = synopsis;
+        video.code = code;
+        video.url = urlVideo;
+        video.tags = tags;
 
-            const video = new VideoEntity();
-            video.title = title;
-            video.description = description;
-            video.synopsis = synopsis;
-            video.code = code;
-            video.url = urlVideo;
-            video.tags = tags;
-
-            if (thumbnailImage) {
-                const destinationPath = `${process.env.MULTIMEDIA_ASSETS_PATH}/thumbnails/video`;
-                video.thumbnail = FileUtils.copyAndDelete(thumbnailImage, destinationPath);
-            }
-
-            newVideo = await this.videoRepository.save(video);
-        }
-
-        return newVideo;
-    }
-
-    async update(id: string, updateVideoDto: UpdateVideoDto) {
-        let video: Video;
-
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.findById(id);
-
-            const { title: name, description, synopsis, recommended, tags } = updateVideoDto;
-
-            if (name) {
-                video.title = name;
-            }
-
-            if (description) {
-                video.description = description;
-            }
-
-            if (synopsis) {
-                video.synopsis = synopsis;
-            }
-
-            if (recommended !== undefined) {
-                video.recommended = recommended;
-            }
-
-            if (tags && tags.length > 0) {
-                video.tags = tags;
-            }
-
-            video = await this.videoRepository.save(video);
+        if (thumbnailImage) {
+            const assetsPath = join(__dirname, this.config.get('path.multimedia.assets'));
+            const destinationPath = join(assetsPath, 'thumbnails', 'video');
+            const localPath = FileUtils.copyAndDelete(thumbnailImage, destinationPath);
+            const url = localPath.replace(destinationPath, this.config.get('globalPrefix') + '/video/thumbnail');
+            video.thumbnail = `/${url}`;
         }
 
         return video;
     }
 
-    async remove(id: string) {
-        let video: VideoEntity;
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.videoRepository.findOne({ where: { id } });
-            await this.videoRepository.remove(video);
+    protected async preUpdate(id: string, updateVideoDto: UpdateVideoDto) {
+        const video = await this.findById(id);
+
+        const { title: name, description, synopsis, recommended, tags } = updateVideoDto;
+
+        if (name) {
+            video.title = name;
         }
+
+        if (description) {
+            video.description = description;
+        }
+
+        if (synopsis) {
+            video.synopsis = synopsis;
+        }
+
+        if (recommended !== undefined) {
+            video.recommended = recommended;
+        }
+
+        if (tags && tags.length > 0) {
+            video.tags = tags;
+        }
+
         return video;
     }
 }

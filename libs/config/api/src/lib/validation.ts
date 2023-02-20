@@ -30,5 +30,7 @@ export const validationSchema = Joi.object({
     GCLOUD_TOKEN_FILE: Joi.string().required(),
     GCLOUD_CREDENTIAL_FILE: Joi.string().required(),
     ADMIN_ROLE: Joi.string().required().default(DEFAULT_ADMIN_ROLE),
-    USER_ROLE: Joi.string().required().default(DEFAULT_USER_ROLE)
+    USER_ROLE: Joi.string().required().default(DEFAULT_USER_ROLE),
+    MULTIMEDIA_ASSETS_PATH: Joi.string().required().default('../assets/multimedia'),
+    MULTIMEDIA_UPLOAD_PATH: Joi.string().required().default('../uploadedFiles')
 })
