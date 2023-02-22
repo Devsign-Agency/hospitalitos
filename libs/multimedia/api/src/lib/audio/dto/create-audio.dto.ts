@@ -1,16 +1,7 @@
 import { CreateAudioDto as ICreateAudioDto } from '@kaad/multimedia/ng-common';
-import { ApiProperty } from "@nestjs/swagger";
+import { PartialType } from '@nestjs/swagger';
+import { CreateMultimediaDto } from '../../common/dto/create-multimedia.dto';
 
-export class CreateAudioDto implements ICreateAudioDto {
-    @ApiProperty()
-    name: string;
+export class CreateAudioDto extends PartialType(CreateMultimediaDto) implements ICreateAudioDto {
 
-    @ApiProperty()
-    tags: string[];
-
-    @ApiProperty()
-    description: string;
-
-    @ApiProperty({ type: 'string', format: 'binary', required: true })
-    file: Express.Multer.File
 }

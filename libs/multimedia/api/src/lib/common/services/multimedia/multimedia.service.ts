@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { Multimedia } from '@kaad/multimedia/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
@@ -62,6 +63,22 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
         return item;
     }
 
+    async findByTitle(title: string) {
+        const entity = this.entityName;
+        const queryBuilder = this.repository.createQueryBuilder(entity);
+        queryBuilder
+            .where(`${entity}.title like :title`, { title: `%${title}%`});
+        return await queryBuilder.getOne();
+    }
+
+    async findByTag(tag: string) {
+        const entity = this.entityName;
+        const queryBuilder = this.repository.createQueryBuilder(entity);
+        queryBuilder
+            .where(`${entity}.tags like :tag`, { tag: `%${faTag}%`});
+        return await queryBuilder.getMany();
+    }
+
     protected getCreateDto() {
         return null;
     }
@@ -82,7 +99,31 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
     }
 
     protected async preUpdate(id: string, updateEntityDto: Partial<T>): Promise<E> {
-        return null;
+        const entity = await this.findById(id);
+
+        const { title: name, description, synopsis, recommended, tags } = updateEntityDto;
+
+        if (name) {
+            entity.title = name;
+        }
+
+        if (description) {
+            entity.description = description;
+        }
+
+        if (synopsis) {
+            entity.synopsis = synopsis;
+        }
+
+        if (recommended !== undefined) {
+            entity.recommended = recommended;
+        }
+
+        if (tags && tags.length > 0) {
+            entity.tags = tags;
+        }
+
+        return entity;
     }
 
     async update(id: string, updateVideoDto: Partial<T>) {

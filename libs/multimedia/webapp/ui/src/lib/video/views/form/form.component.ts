@@ -6,7 +6,6 @@ import { LoadingService, ToastService } from '@kaad/layout/webapp/ui';
 import { Video } from '@kaad/multimedia/ng-common';
 import { VideoService } from '@kaad/multimedia/webapp/core';
 import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
-import { tap } from 'rxjs';
 
 @Component({
     selector: 'kaad-form',
@@ -48,12 +47,9 @@ export class FormComponent extends AbstractFormComponent<Video> {
     protected override processId(id?: string): void {
         this.title = id ? 'Edit Video' : 'New Video';
         if (id) {
-            this.findItem(id).pipe(
-                tap(video => this.isAdmin = !!video.tags?.includes(this.config.adminRole))
-            )
-                .subscribe({
-                    next: video => this.form.patchValue(video)
-                });
+            this.findItem(id).subscribe({
+                next: video => this.form.patchValue(video)
+            });
         }
     }
 

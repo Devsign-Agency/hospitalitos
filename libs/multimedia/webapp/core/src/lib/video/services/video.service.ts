@@ -16,9 +16,9 @@ export class VideoService extends BaseService<Video> {
         this.uri = 'video';
     }
 
-    findByName(name: string) {
-        const url = `${this.config.urlApi}/video/${name}`;
-        const query = { findBy: 'name' };
+    findByTitle(title: string) {
+        const url = `${this.config.urlApi}/video/${title}`;
+        const query = { findBy: 'title' };
         return this.http.get<Video>(url, { params: query });
     }
 

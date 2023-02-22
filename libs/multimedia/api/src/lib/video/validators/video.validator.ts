@@ -1,3 +1,4 @@
+import { Video } from '@kaad/multimedia/ng-common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -5,7 +6,7 @@ import { MultimediaValidator } from '../../common/services/validator/multimedia.
 import { VideoEntity } from '../entities/video.entity';
 
 @Injectable()
-export class VideoValidator extends MultimediaValidator<VideoEntity, VideoEntity> {
+export class VideoValidator extends MultimediaValidator<Video, VideoEntity> {
 
     constructor(@InjectRepository(VideoEntity) protected readonly videoRepository: Repository<VideoEntity>) {
         super();

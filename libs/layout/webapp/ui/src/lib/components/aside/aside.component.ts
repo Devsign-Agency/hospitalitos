@@ -48,7 +48,7 @@ export class AsideComponent {
                         name: 'Books',
                         type: 'item',
                         icon: 'book',
-                        uri: 'multimedia/user'
+                        uri: 'multimedia/book'
                     }
                 ]
             },

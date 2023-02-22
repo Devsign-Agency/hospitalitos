@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { AudioModule } from './audio/audio.module';
 import { CommonModule } from './common/common.module';
 import { VideoModule } from './video/video.module';
+import { BookModule } from './book/book.module';
 
 @Module({
     controllers: [],
@@ -14,7 +15,8 @@ import { VideoModule } from './video/video.module';
         CommonModule,
         ConfigApiModule,
         SharedApiModule,
-        VideoModule
+        VideoModule,
+        BookModule,
     ],
 })
 export class MultimediaApiModule {}

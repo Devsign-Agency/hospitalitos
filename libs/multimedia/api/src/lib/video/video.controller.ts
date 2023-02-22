@@ -26,7 +26,7 @@ export class VideoController {
     }
 
     @Get(':criteria')
-    public async findById(@Param('criteria') criteria: string, @Query('findBy') findBy: string): Promise<Video> {
+    public async findByOne(@Param('criteria') criteria: string, @Query('findBy') findBy: string): Promise<Video | Video[]> {
         if (findBy === 'title') {
             return await this.videoService.findByTitle(criteria);
         } else if (findBy === 'tag') {
@@ -37,7 +37,7 @@ export class VideoController {
     }
 
     @Get('thumbnail/:fileId')
-    async serveThumbnail(@Param('fileId') fileId, @Res() res): Promise<any> {
+    public async serveThumbnail(@Param('fileId') fileId, @Res() res): Promise<void> {
         const root = join(__dirname, process.env.MULTIMEDIA_ASSETS_PATH, 'thumbnails', 'video');
         res.sendFile(fileId, { root });
     }
