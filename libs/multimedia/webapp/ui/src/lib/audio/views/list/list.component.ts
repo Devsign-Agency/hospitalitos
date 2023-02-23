@@ -4,7 +4,6 @@ import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
 import { Audio } from '@kaad/multimedia/ng-common';
 import { AudioService } from '@kaad/multimedia/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'kaad-list',
@@ -12,8 +11,6 @@ import { Observable } from 'rxjs';
     styleUrls: ['./list.component.scss'],
 })
 export class ListComponent extends AbstractListComponent<Audio> {
-
-    audioList$: Observable<Audio[]>;
 
     override conf: DataTableType<Audio> = {
         columns: [

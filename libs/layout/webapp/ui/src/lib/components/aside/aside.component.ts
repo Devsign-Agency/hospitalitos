@@ -49,6 +49,12 @@ export class AsideComponent {
                         type: 'item',
                         icon: 'book',
                         uri: 'multimedia/book'
+                    },
+                    {
+                        name: 'Categories',
+                        type: 'item',
+                        icon: 'category',
+                        uri: 'multimedia/category'
                     }
                 ]
             },

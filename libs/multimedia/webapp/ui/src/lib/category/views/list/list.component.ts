@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
-import { Book } from '@kaad/multimedia/ng-common';
-import { BookService } from '@kaad/multimedia/webapp/core';
+import { Category } from '@kaad/multimedia/ng-common';
+import { CategoryService } from '@kaad/multimedia/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
 
 @Component({
@@ -10,28 +10,12 @@ import { AbstractListComponent } from '@kaad/shared/webapp/ui';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent extends AbstractListComponent<Book> {
-
-    override conf: DataTableType<Book> = {
+export class ListComponent extends AbstractListComponent<Category> {
+    override conf: DataTableType<Category> = {
         columns: [
             {
-                title: 'Title',
-                field: 'title'
-            },
-            {
-                title: 'Code',
-                field: 'code',
-                templateId: 'code'
-            },
-            {
-                title: 'Tags',
-                field: 'tags',
-                templateId: 'tags'
-            },
-            {
-                title: 'Uploaded At',
-                field: 'createdAt',
-                templateId: 'date'
+                title: 'Name',
+                field:'name'
             }
         ],
         actions: [
@@ -42,12 +26,12 @@ export class ListComponent extends AbstractListComponent<Book> {
                 showOption: () => true
             }
         ]
-    }
+    };
 
     constructor(protected override readonly activatedRoute: ActivatedRoute,
                 protected override readonly loading: LoadingService,
                 protected override readonly router: Router,
-                protected readonly bookService: BookService) {
-        super(activatedRoute, loading, router, bookService);
+                protected readonly categoryService: CategoryService) {
+        super(activatedRoute, loading, router, categoryService);
     }
 }

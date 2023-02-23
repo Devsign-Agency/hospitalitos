@@ -14,8 +14,6 @@ import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
 })
 export class FormComponent extends AbstractFormComponent<Book> {
 
-    isAdmin = false;
-
     constructor(formBuilder: FormBuilder,
         protected override readonly config: ConfigService,
         protected override readonly route: ActivatedRoute,
@@ -69,13 +67,6 @@ export class FormComponent extends AbstractFormComponent<Book> {
     protected override buildEntityToUpdate(): unknown {
         const { id, title, description, synopsis, recommended, tags } = this.form.getRawValue();
         return { id, title, description, synopsis, recommended, tags };
-    }
-
-    protected override postSave(savedItem: Book) {
-        super.postSave(savedItem);
-        if (this.isNew) {
-            this.isAdmin = false;
-        }
     }
 
     onFileChange(event: any) {

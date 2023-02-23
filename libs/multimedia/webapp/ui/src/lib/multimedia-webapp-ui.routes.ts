@@ -15,6 +15,12 @@ export const multimediaWebappUiRoutes: Route[] = [
         loadChildren: () => import('./book/book.module').then((m) => m.BookModule)
     },
     {
+        path: 'category',
+        component: MultimediaWebappUiComponent,
+        data: { breadcrumb: 'category' },
+        loadChildren: () => import('./category/category.module').then((m) => m.CategoryModule)
+    },
+    {
         path: 'video',
         component: MultimediaWebappUiComponent,
         data: { breadcrumb: 'video' },
