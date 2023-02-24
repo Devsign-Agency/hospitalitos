@@ -6,11 +6,13 @@ import { VideoEntity } from './entities/video.entity';
 import { GcloudApiModule } from '@kaad/gcloud/api';
 import { CommonModule } from '../common/common.module';
 import { VideoValidator } from './validators/video.validator';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
     controllers: [VideoController],
     providers: [VideoService, VideoValidator],
     imports: [
+        CategoryModule,
         CommonModule,
         GcloudApiModule,
         TypeOrmModule.forFeature([VideoEntity])

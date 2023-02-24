@@ -2,10 +2,10 @@
     [collectionSize]="listCount" (pageChange)="gotoPage($event)" (delete)="delete($event)" (detail)="detail($event)"
     (edit)="edit($event)" (search)="searchCriteria($event)">
 
-    <ng-template #code templateContent id="code" let-item="item">
-        <div class="flex items-center whitespace-nowrap">
+    <ng-template #code templateContent id="code" let-item="item" let-css="css">
+        <div class="flex items-center whitespace-nowrap" [ngClass]="css">
             <div class="image overflow-hidden w-20 h-10">
-                <youtube-player [videoId]="item.code" [width]="80" [height]="44"> </youtube-player>
+                <img [src]="item.thumbnail | secure | async" alt="item.title" class="w-full">
             </div>
             <div class="pl-3 hidden sm:block">
                 <div class="text-base font-semibold">{{ item.code }}</div>
@@ -16,16 +16,24 @@
         </div>
     </ng-template>
 
-    <ng-template #tags templateContent id="tags" let-item="item">
-        <div class="flex space-x-2 justify-start w-32 sm:w-auto overflow-x-auto">
+    <ng-template #tags templateContent id="tags" let-item="item" let-css="css">
+        <div class="flex flex-nowrap space-x-2 justify-start" [ngClass]="css">
             <span *ngFor="let tag of item.tags" class="pill pill-primary">
                 {{ tag }}
             </span>
         </div>
     </ng-template>
 
-    <ng-template #date templateContent id="date" let-item="item">
-        <div class="flex flex-col items-end">
+    <ng-template #categories templateContent id="categories" let-item="item" let-css="css">
+        <div class="flex flex-nowrap space-x-2 justify-start" [ngClass]="css">
+            <span *ngFor="let category of item.categories" class="pill pill-primary">
+                {{ category.name }}
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template #date templateContent id="date" let-item="item" let-css="css">
+        <div class="flex flex-col items-end" [ngClass]="css">
             <span>{{ item.createdAt | date:'dd/MM/yyyy' }}</span>
             <span>{{ item.createdAt | date:'hh:mm a' }}</span>
         </div>

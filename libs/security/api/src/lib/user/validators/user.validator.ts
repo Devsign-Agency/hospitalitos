@@ -156,11 +156,11 @@ export class UserValidator {
 
     public async validateUpdateUser(id:string, user: UpdateUserDto): Promise<boolean> {
 
-        if (user.username && await this.usernameInUseAndNotMe(user.username, id)) {
+        if (user.username && !(await this.usernameInUseAndNotMe(user.username, id))) {
             throw new BadRequestException("user with that username already exist");
         }
 
-        if (user.email && await this.emailInUseAndNotMe(user.email, id)) {
+        if (user.email && !(await this.emailInUseAndNotMe(user.email, id))) {
             throw new BadRequestException("user with that email already exist");
         }
 

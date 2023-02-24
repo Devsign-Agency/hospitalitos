@@ -1,0 +1,33 @@
+<kaad-list-view [config]="conf" [items]="(itemList$ | async) || []" [page]="page" [pageSize]="pageSize"
+    [collectionSize]="listCount" (pageChange)="gotoPage($event)" (delete)="delete($event)" (detail)="detail($event)"
+    (edit)="edit($event)" (search)="searchCriteria($event)">
+
+    <ng-template #code templateContent id="code" let-item="item">
+        <div class="flex items-center whitespace-nowrap">
+            <div class="image overflow-hidden w-20 h-10">
+                <img [src]="item.thumbnail | secure | async" alt="item.title" class="w-full">
+            </div>
+            <div class="pl-3 hidden sm:block">
+                <div class="text-base font-semibold">{{ item.code }}</div>
+                <span (click)="$event.stopPropagation()">
+                    <a [href]="item.url" target="_blank" class="link link-table">{{ item.url }}</a>
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #tags templateContent id="tags" let-item="item">
+        <div class="flex space-x-2 justify-start w-32 sm:w-auto overflow-x-auto">
+            <span *ngFor="let tag of item.tags" class="pill pill-primary">
+                {{ tag }}
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template #date templateContent id="date" let-item="item">
+        <div class="flex flex-col items-end">
+            <span>{{ item.createdAt | date:'dd/MM/yyyy' }}</span>
+            <span>{{ item.createdAt | date:'hh:mm a' }}</span>
+        </div>
+    </ng-template>
+</kaad-list-view>

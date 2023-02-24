@@ -1,0 +1,42 @@
+<kaad-detail-view *ngIf="(item$ | async) as item" [item]="item">
+    <!-- Left Side -->
+    <div class="w-full sm:w-4/12 sm:mx-2">
+        <!-- Multimedia Card -->
+        <div class="bg-white p-3 border-t-4 border-sky-600 dark:border-gray-900">
+            <div class="image overflow-hidden">
+            </div>
+            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ item.name }}</h1>
+        </div>
+        <!-- End of Multimedia card -->
+    </div>
+    <!-- Right Side -->
+    <div class="w-full sm:w-8/12 sm:mx-2">
+        <!-- About Section -->
+        <div class="bg-white p-3 shadow-sm rounded-sm">
+
+            <div class="text-center flex justify-between">
+                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                    <span clas="text-green-500">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round"
+                                d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z">
+                            </path>
+                        </svg>
+                    </span>
+                    <span class="tracking-wide">General</span>
+                </div>
+                <a routerLink="edit" class="btn btn-primary">
+                    Edit
+                </a>
+            </div>
+            <div class="text-gray-700 overflow-x-auto">
+                <div class="grid grid-cols-4 text-sm">
+                    <div class="px-4 py-2 font-semibold">Name</div>
+                    <div class="col-span-3 px-4 py-2">{{ item.name }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- End of about section -->
+    </div>
+</kaad-detail-view>

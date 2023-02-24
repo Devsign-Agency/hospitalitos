@@ -16,9 +16,9 @@ export class VideoService extends BaseService<Video> {
         this.uri = 'video';
     }
 
-    findByName(name: string) {
-        const url = `${this.config.urlApi}/video/${name}`;
-        const query = { findBy: 'name' };
+    findByTitle(title: string) {
+        const url = `${this.config.urlApi}/video/${title}`;
+        const query = { findBy: 'title' };
         return this.http.get<Video>(url, { params: query });
     }
 
@@ -28,13 +28,11 @@ export class VideoService extends BaseService<Video> {
         return this.http.get<Video>(url, { params: query });
     }
 
-    override create(dto: { formData: FormData, params: { name: string, description: string, tags: string | string }}) {
-        const { formData, params } = dto;
+    override create(dto: FormData) {
         const options = {
-            params,
             context: new HttpContext().set(BYPASS_CONTENT_TYPE, true),
         }
 
-        return super.create(formData, options);
+        return super.create(dto, options);
     }
 }

@@ -1,112 +1,57 @@
 import { MetadataVideo, YoutubeService } from '@kaad/gcloud/api';
-import { CreateVideoDto, UpdateVideoDto, Video } from '@kaad/multimedia/ng-common';
-import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
-import { Order } from '@kaad/shared/ng-common';
+import { Category, CreateVideoDto, Video } from '@kaad/multimedia/ng-common';
+import { FileUtils } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { join } from 'path';
+import { Repository } from 'typeorm';
+import { CategoryService } from '../category/category.service';
+import { MultimediaService } from '../common/services/multimedia/multimedia.service';
 import { VideoEntity } from './entities/video.entity';
 import { VideoValidator } from './validators/video.validator';
 
 @Injectable()
-export class VideoService {
-    constructor(@InjectRepository(VideoEntity) private readonly videoRepository: Repository<VideoEntity>,
-                private readonly validator: VideoValidator,
-                private readonly youtubeService: YoutubeService) {}
+export class VideoService extends MultimediaService<Video, VideoEntity> {
+    constructor(@InjectRepository(VideoEntity) protected readonly videoRepository: Repository<VideoEntity>,
+        protected readonly config: ConfigService,
+        protected readonly validator: VideoValidator,
+        protected readonly youtubeService: YoutubeService,
+        protected readonly categoryService: CategoryService) {
+        super(config, validator, categoryService);
+        this.entityName = 'video';
+        this.repository = videoRepository;
+    }
 
-    public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<Video>> {
-        const queryBuilder = this.videoRepository.createQueryBuilder("video");
+    protected async preCreate(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
+        const { title, description, synopsis, tags, categories, categoriesString } = createVideoDto;
+        const meta: MetadataVideo = new MetadataVideo({ title, description, tags });
+        const { code, urlVideo } = await this.youtubeService.upload(file, meta);
 
-        queryBuilder
-            .orderBy('video.createdAt', Order.DESC)
-            .skip(pageOptions.skip)
-            .take(pageOptions.take);
+        const video = new VideoEntity();
+        video.title = title;
+        video.description = description;
+        video.synopsis = synopsis;
+        video.code = code;
+        video.url = urlVideo;
+        video.tags = tags;
 
-        if (criteria) {
-            queryBuilder
-                .where('video.name like :criteria', { criteria: `%${criteria}%` })
-                .orWhere('video.description like :criteria', { criteria: `%${criteria}%` })
-                .orWhere('video.tags like :criteria', { criteria: `%${criteria}%` });
+        if (categoriesString) {
+            video.categories = JSON.parse(categoriesString) as Category[];
+        } else if (categories && categories.length > 0) {
+            video.categories = categories;
+        } else {
+            video.categories = [];
         }
 
-        const itemCount = await queryBuilder.getCount();
-        const { entities } = await queryBuilder.getRawAndEntities();
-
-        const pageMetaDto = new PageMeta({ itemCount, pageOptions });
-
-        return new Page(entities, pageMetaDto);
-    }
-
-    async findById(id: string) {
-        let video: Video;
-
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.videoRepository.findOne({ where: { id } });
-        }
-        return video;
-    }
-
-    async findByName(name: string) {
-        return await this.videoRepository.findOne({ where: { name: Like(`%${name}%`) } });
-    }
-
-    async findByTag(tag: string) {
-        return await this.videoRepository.findOne({ where: { tags: Like(`%${tag}%`) } });
-    }
-
-    async create(file: Express.Multer.File, createVideoDto: CreateVideoDto): Promise<Video> {
-        let newVideo: Video;
-
-        if (await this.validator.validateRequired(createVideoDto)) {
-            const { name, description, tags } = createVideoDto;
-            const meta: MetadataVideo = new MetadataVideo({ title: name, description, tags });
-            const { code, urlVideo } = await this.youtubeService.upload(file, meta);
-
-            const video = new VideoEntity();
-            video.name = createVideoDto.name;
-            video.description = createVideoDto.description;
-            video.code = code;
-            video.url = urlVideo;
-            video.tags = tags;
-
-            newVideo = await this.videoRepository.save(video);
+        if (thumbnailImage) {
+            const assetsPath = join(__dirname, this.config.get('path.multimedia.assets'));
+            const destinationPath = join(assetsPath, 'thumbnails', 'video');
+            const localPath = FileUtils.copyAndDelete(thumbnailImage, destinationPath);
+            const url = localPath.replace(destinationPath, this.config.get('globalPrefix') + '/video/thumbnail');
+            video.thumbnail = `/${url}`;
         }
 
-        return newVideo;
-    }
-
-    async update(id: string, updateVideoDto: UpdateVideoDto) {
-        let video: Video;
-
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.findById(id);
-
-            const { name, description, tags } = updateVideoDto;
-
-            if (name) {
-                video.name = name;
-            }
-
-            if (description) {
-                video.description = description;
-            }
-
-            if (tags && tags.length > 0) {
-                video.tags = tags;
-            }
-
-            video = await this.videoRepository.save(video);
-        }
-
-        return video;
-    }
-
-    async remove(id: string) {
-        let video: VideoEntity;
-        if (await this.validator.validateVideoExistById(id)) {
-            video = await this.videoRepository.findOne({ where: { id } });
-            await this.videoRepository.remove(video);
-        }
         return video;
     }
 }

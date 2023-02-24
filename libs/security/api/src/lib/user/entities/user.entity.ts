@@ -1,14 +1,10 @@
-import { Password, Role, User } from "@kaad/security/ng-common";
-import { AuditableEntity } from "@kaad/shared/api";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Password, User } from "@kaad/security/ng-common";
+import { BaseEntity } from "@kaad/shared/api";
+import { Column, Entity, OneToMany } from "typeorm";
 import { PasswordEntity } from "../../password/entities/password.entity";
-import { RoleEntity } from "../../role/entities/role.entity";
 
 @Entity('user', { schema: 'security' })
-export class UserEntity extends AuditableEntity implements User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
+export class UserEntity extends BaseEntity implements User {
     @Column({ nullable: true })
     documentId: string;
 

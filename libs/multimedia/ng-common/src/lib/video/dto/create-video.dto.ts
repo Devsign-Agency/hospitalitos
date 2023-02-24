@@ -1,6 +1,3 @@
-export interface CreateVideoDto {
-    name: string;
-    tags: string[];
-    description: string;
-    file: unknown;
-}
+import { CreateMultimediaDto } from "../../common";
+
+export type CreateVideoDto = Partial<CreateMultimediaDto>

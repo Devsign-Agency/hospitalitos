@@ -4,7 +4,6 @@ import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
 import { Video } from '@kaad/multimedia/ng-common';
 import { VideoService } from '@kaad/multimedia/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'kaad-list',
@@ -13,13 +12,13 @@ import { Observable } from 'rxjs';
 })
 export class ListComponent extends AbstractListComponent<Video> {
 
-    videoList$?: Observable<Video[]>;
-
     override conf: DataTableType<Video> = {
         columns: [
             {
-                title: 'Name',
-                field: 'name'
+                title: 'Title',
+                field: 'title',
+                css: 'w-32 max-w-32 overflow-x-hidden',
+                wrapperCss: 'w-36 max-w-36'
             },
             {
                 title: 'Code',
@@ -29,12 +28,23 @@ export class ListComponent extends AbstractListComponent<Video> {
             {
                 title: 'Tags',
                 field: 'tags',
-                templateId: 'tags'
+                templateId: 'tags',
+                css: 'w-32 max-w-32 overflow-x-auto',
+                wrapperCss: 'w-36 max-w-36'
+            },
+            {
+                title: 'Categories',
+                field: 'categories',
+                templateId: 'categories',
+                css: 'w-32 max-w-32 overflow-x-auto',
+                wrapperCss: 'w-36 max-w-36'
             },
             {
                 title: 'Uploaded At',
                 field: 'createdAt',
-                templateId: 'date'
+                templateId: 'date',
+                css: 'w-24 max-w-24',
+                wrapperCss: 'w-32 max-w-32'
             }
         ],
         actions: [

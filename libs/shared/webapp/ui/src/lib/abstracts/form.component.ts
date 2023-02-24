@@ -75,7 +75,8 @@ export class AbstractFormComponent<T extends HasId> implements OnInit {
                     this.loading.hide();
                 },
                 error: (error) => {
-                console.log(error);
+                    console.log(error);
+                    this.toastService.showDanger(error.error.message);
                     this.loading.hide()
                 }
             })
