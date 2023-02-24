@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { faTag } from '@fortawesome/free-solid-svg-icons';
-import { Multimedia } from '@kaad/multimedia/ng-common';
+import { Category, Multimedia } from '@kaad/multimedia/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
+import { CategoryService } from '../../../category/category.service';
+import { CategoryEntity } from '../../../category/entities/category.entity';
 import { MultimediaEntity } from '../../entities/multimedia.entity';
 import { MultimediaValidator } from '../validator/multimedia.validator';
 
@@ -16,7 +18,8 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
     protected repository: Repository<E>;
 
     constructor(protected readonly config: ConfigService,
-                protected readonly validator: MultimediaValidator<T, E>) {}
+                protected readonly validator: MultimediaValidator<T, E>,
+                protected readonly categoryService: CategoryService) {}
 
     public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<E>> {
         const queryBuilder = this.createQueryBuilder(pageOptions, criteria);
@@ -34,6 +37,7 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
         const queryBuilder = this.repository.createQueryBuilder(entity);
 
         queryBuilder
+            .leftJoinAndSelect(`${entity}.categories`, 'categories')
             .orderBy(`${entity}.createdAt`, Order.DESC)
             .skip(pageOptions.skip)
             .take(pageOptions.take);
@@ -57,6 +61,7 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
             const queryBuilder = this.repository.createQueryBuilder(entity);
 
             queryBuilder
+                .leftJoinAndSelect(`${entity}.categories`, 'categories')
                 .where(`${entity}.id = :id`, { id })
             item = await queryBuilder.getOne();
         }
@@ -79,12 +84,12 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
         return await queryBuilder.getMany();
     }
 
-    protected getCreateDto() {
+    protected async preCreate(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createMultimediaDto: Partial<T>): Promise<E> {
         return null;
     }
 
-    protected async preCreate(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createMultimediaDto: Partial<T>): Promise<E> {
-        return null;
+    protected async getCategories(categories: Category[]): Promise<CategoryEntity[]> {
+        return await this.categoryService.bulk(categories);
     }
 
     async create(file: Express.Multer.File, thumbnailImage: Express.Multer.File, createMultimediaDto: Partial<T>): Promise<T> {
@@ -92,6 +97,10 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
 
         if (await this.validator.validateRequired(createMultimediaDto)) {
             const entity = await this.preCreate(file, thumbnailImage, createMultimediaDto);
+            const { categories } = createMultimediaDto;
+            if (categories && categories.length > 0) {
+                entity.categories = await this.getCategories(categories);
+            }
             newEntity = await this.repository.save(entity);
         }
 
@@ -101,7 +110,7 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
     protected async preUpdate(id: string, updateEntityDto: Partial<T>): Promise<E> {
         const entity = await this.findById(id);
 
-        const { title: name, description, synopsis, recommended, tags } = updateEntityDto;
+        const { title: name, description, synopsis, recommended, tags, categories } = updateEntityDto;
 
         if (name) {
             entity.title = name;
@@ -121,6 +130,12 @@ export class MultimediaService<T extends Multimedia, E extends MultimediaEntity 
 
         if (tags && tags.length > 0) {
             entity.tags = tags;
+        }
+
+        if (categories && categories.length > 0) {
+            entity.categories = await this.getCategories(categories);
+        } else {
+            entity.categories = [];
         }
 
         return entity;

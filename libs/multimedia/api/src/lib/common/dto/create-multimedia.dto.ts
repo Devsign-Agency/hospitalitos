@@ -1,4 +1,4 @@
-import { CreateMultimediaDto as ICreateMultimediaDto } from "@kaad/multimedia/ng-common";
+import { Category, CreateMultimediaDto as ICreateMultimediaDto } from "@kaad/multimedia/ng-common";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateMultimediaDto implements ICreateMultimediaDto {
@@ -16,6 +16,12 @@ export class CreateMultimediaDto implements ICreateMultimediaDto {
 
     @ApiProperty()
     tags: string[];
+
+    @ApiPropertyOptional()
+    categories?: Category[];
+
+    @ApiPropertyOptional()
+    categoriesString?: string;
 
     // @ApiProperty({ type: 'string', format: 'binary', required: true })
     thumbnailImage?: Express.Multer.File;

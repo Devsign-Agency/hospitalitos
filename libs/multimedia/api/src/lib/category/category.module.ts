@@ -10,6 +10,7 @@ import { CategoryEntity } from './entities/category.entity';
     providers: [CategoryService, CategoryValidator],
     imports: [
         TypeOrmModule.forFeature([CategoryEntity])
-    ]
+    ],
+    exports: [CategoryService]
 })
 export class CategoryModule {}

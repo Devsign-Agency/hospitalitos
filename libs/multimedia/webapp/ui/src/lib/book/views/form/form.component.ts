@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { LoadingService, ToastService } from '@kaad/layout/webapp/ui';
-import { Book } from '@kaad/multimedia/ng-common';
-import { BookService } from '@kaad/multimedia/webapp/core';
+import { Book, Category } from '@kaad/multimedia/ng-common';
+import { BookService, CategoryService } from '@kaad/multimedia/webapp/core';
 import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
+import { firstValueFrom, map } from 'rxjs';
 
 @Component({
     selector: 'kaad-form',
@@ -14,12 +15,15 @@ import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
 })
 export class FormComponent extends AbstractFormComponent<Book> {
 
+    categoryList: Category[] = [];
+
     constructor(formBuilder: FormBuilder,
         protected override readonly config: ConfigService,
         protected override readonly route: ActivatedRoute,
         protected override readonly toastService: ToastService,
         protected override readonly loading: LoadingService,
-        protected readonly bookService: BookService) {
+        protected readonly bookService: BookService,
+        protected readonly categoryService: CategoryService) {
         super(formBuilder, config, loading, route, toastService, bookService);
     }
 
@@ -42,11 +46,19 @@ export class FormComponent extends AbstractFormComponent<Book> {
         });
     }
 
-    protected override processId(id?: string): void {
+    private findCategories() {
+        return this.categoryService.findAll(1, 100).pipe(map(page => page.data));
+    }
+
+    protected override async processId(id?: string): Promise<void> {
         this.title = id ? 'Edit Book' : 'New Book';
+        this.categoryList = await( firstValueFrom(this.findCategories()) );
         if (id) {
-            this.findItem(id).subscribe({
-                next: video => this.form.patchValue(video)
+            const video = await ( firstValueFrom(this.findItem(id)) );
+            this.form.patchValue(video);
+            this.categoryList.map(category => {
+                const inUse = (video.categories || []).find(c => c.id === category.id);
+                category.selected = !!inUse;
             });
         }
     }
@@ -61,12 +73,21 @@ export class FormComponent extends AbstractFormComponent<Book> {
         formData.append('synopsis', synopsis)
         formData.append('tags', tags);
 
+        const categories = this.categoryList
+            .filter(c => c.selected);
+        //     .forEach((c, i) => {
+        //         formData.append(`category[${i}].id`, c.id);
+        //         formData.append(`category[${i}].name`, c.name);
+        //     });
+        formData.append('categoriesString', JSON.stringify(categories));
+
         return formData;
     }
 
     protected override buildEntityToUpdate(): unknown {
         const { id, title, description, synopsis, recommended, tags } = this.form.getRawValue();
-        return { id, title, description, synopsis, recommended, tags };
+        const categories = this.categoryList.filter(c => c.selected);
+        return { id, title, description, synopsis, recommended, tags, categories };
     }
 
     onFileChange(event: any) {
@@ -88,5 +109,9 @@ export class FormComponent extends AbstractFormComponent<Book> {
                 thumbnailName: file.name
             });
         }
+    }
+
+    toggleSelected(category: Category) {
+        category.selected = !category.selected;
     }
 }

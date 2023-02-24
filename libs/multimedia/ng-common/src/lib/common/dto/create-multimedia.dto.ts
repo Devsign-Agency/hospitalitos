@@ -1,3 +1,5 @@
+import { Category } from "../../category";
+
 export interface CreateMultimediaDto {
     title: string;
     description: string;
@@ -6,4 +8,6 @@ export interface CreateMultimediaDto {
     tags: string[];
     thumbnailImage?: unknown;
     file?: unknown;
+    categories?: Category[];
+    categoriesString?: string;
 }

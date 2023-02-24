@@ -3,7 +3,7 @@ import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoryEntity } from './entities/category.entity';
@@ -13,7 +13,7 @@ import { CategoryValidator } from './validators/category.validator';
 export class CategoryService {
 
     constructor(@InjectRepository(CategoryEntity) private readonly repository: Repository<CategoryEntity>,
-                private readonly validator: CategoryValidator) {}
+        private readonly validator: CategoryValidator) { }
 
     public async findAll(pageOptions: PageOptions, criteria?: string): Promise<Page<Category>> {
         const queryBuilder = this.repository.createQueryBuilder('category');
@@ -36,7 +36,7 @@ export class CategoryService {
     public async findById(id: string) {
         let category: Category
 
-        if (await this.validator.validateExistById(id)){
+        if (await this.validator.validateExistById(id)) {
             category = await this.repository.findOne({ where: { id } });
         }
 
@@ -46,7 +46,7 @@ export class CategoryService {
     public async findByName(name: string) {
         let category: Category
 
-        if (await this.validator.validateExistByName(name)){
+        if (await this.validator.validateExistByName(name)) {
             category = await this.repository.findOne({ where: { name } });
         }
 
@@ -85,5 +85,26 @@ export class CategoryService {
             await this.repository.remove(category);
         }
         return category;
+    }
+
+    public async findIn(categories: Category[]) {
+        return await this.repository.find({ where: { id: In(categories.map(c => c.id)) } });
+    }
+
+    public async bulk(categories: Category[]) {
+        const preExistent = await this.findIn(categories);
+        if (categories.length !== preExistent.length) {
+            const notCreated = categories
+                .filter(c => !preExistent.find(pe => pe.id === c.id))
+                .map(c => {
+                    const category = new CategoryEntity();
+                    category.name = c.name;
+                    return category;
+                });
+
+            await this.repository.insert(notCreated);
+        }
+
+        return await this.findIn(categories);
     }
 }

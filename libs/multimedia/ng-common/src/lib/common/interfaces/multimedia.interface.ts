@@ -1,4 +1,5 @@
 import { BaseDataBase } from "@kaad/shared/ng-common";
+import { Category } from "../../category";
 
 export interface Multimedia extends BaseDataBase {
     title: string;
@@ -8,4 +9,5 @@ export interface Multimedia extends BaseDataBase {
     thumbnail: string;
     recommended: boolean;
     tags: string[];
+    categories: Category[];
 }
