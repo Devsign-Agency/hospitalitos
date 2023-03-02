@@ -3,6 +3,7 @@ import 'package:mobile_app/features/generator.page.dart';
 import 'package:mobile_app/features/favorite.page.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
+import 'package:mobile_app/widgets/custom_bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -48,36 +49,11 @@ class _MainScreenState extends State<MainScreen> {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          currentIndex: selectedIndex,
-          enableFeedback: true,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          showUnselectedLabels: true,
-          unselectedItemColor: Theme.of(context).colorScheme.onBackground,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home'
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: 'Business'
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_outlined),
-              label: 'School'
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book_outlined),
-              label: 'Settings'
-            ),
-          ],
-        ),
-        body: Center(
-          child: page,
+        bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
+        body: SingleChildScrollView(
+          child: Center(
+            child: page,
+          ),
         ),
       ),
     );
