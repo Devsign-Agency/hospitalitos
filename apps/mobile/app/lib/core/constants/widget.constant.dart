@@ -1,4 +1,3 @@
-import 'package:mobile_app/core/constants/image.constant.dart';
 import 'package:mobile_app/widgets/custom_bottom_bar.dart';
 
 class WidgetConstant {

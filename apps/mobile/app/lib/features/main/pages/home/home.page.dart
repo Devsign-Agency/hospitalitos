@@ -1,6 +1,7 @@
+import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 
 class HomePage extends StatelessWidget {
   static const String route = 'home';
@@ -99,6 +100,10 @@ class HomePage extends StatelessWidget {
                   fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
     ]),
   ];
+
+  Future<List<EpubBook>> fetchData() async {
+    return EpubDocument.openAssetFolder('/epubs');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,10 +207,11 @@ class HomePage extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Visto recientemente',
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyle.txtNunitoSansSemiBold23,
+                      child: Text(
+                        'Visto recientemente',
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: AppStyle.txtNunitoSansSemiBold23,
                       ),
                     ),
                     Spacer(),
@@ -222,54 +228,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 )),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 14.0),
-              height: 136.0,
-              width: double.infinity,
-              child: ListView(
-                // This next line does the trick.
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  SizedBox(width: 14.0),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  ViewedPreview(
-                    backgroundImage: AssetImage('assets/images/proto.png'),
-                    progressValue: 0.25,
-                    title: 'Título',
-                  ),
-                  SizedBox(width: 6),
-                ],
-              ),
-            ),
+            PreviewItemList(future: fetchData()),
           ],
         ),
 
@@ -300,66 +259,6 @@ class HomePage extends StatelessWidget {
           ],
         )
       ],
-    );
-  }
-}
-
-class ViewedPreview extends StatelessWidget {
-  final ImageProvider<Object> backgroundImage;
-  final String title;
-  final double progressValue;
-
-  const ViewedPreview(
-      {super.key,
-      required this.backgroundImage,
-      this.title = 'No Title',
-      this.progressValue = 0.0});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 150.0,
-      margin: EdgeInsets.only(right: 8),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(14))),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(14),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                  image: DecorationImage(
-                      opacity: 0.52,
-                      image: AssetImage('assets/images/proto.png'),
-                      fit: BoxFit.cover)),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 14.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Text(''),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Título',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ),
-                  SizedBox(height: 8.0),
-                  LinearProgressIndicator(
-                    backgroundColor: Colors.white54,
-                    value: 0.25,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

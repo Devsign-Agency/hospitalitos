@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';

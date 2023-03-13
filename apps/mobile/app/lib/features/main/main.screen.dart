@@ -3,7 +3,7 @@ import 'package:mobile_app/features/generator.page.dart';
 import 'package:mobile_app/features/favorite.page.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
-import 'package:mobile_app/widgets/custom_bottom_bar.dart';
+import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -56,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
+    //   child: EpubReader()
     );
   }
 }
