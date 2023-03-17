@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/book/router/router.dart';
 import 'package:mobile_app/features/main/router/router.dart';
 import 'package:mobile_app/features/security/router/router.dart';
 
@@ -10,6 +11,7 @@ class RouterApp {
 
     routes.addAll(RouterMain.getRoutes());
     routes.addAll(RouterSecurity.getRoutes());
+    routes.addAll(RouterBook.getRoutes());
 
     return routes;
   }

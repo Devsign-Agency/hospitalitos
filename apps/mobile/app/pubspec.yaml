@@ -46,6 +46,8 @@ dependencies:
   epub_view:
     path: ../flutter_dependencies/epub_view
   path_provider: ^2.0.13
+  html: ^0.15.2
+  flutter_html: ^3.0.0-alpha.6
 
 dev_dependencies:
   flutter_test:
