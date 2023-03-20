@@ -2,6 +2,7 @@ import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
+import 'package:mobile_app/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
   static const String route = 'home';
@@ -12,92 +13,100 @@ class HomePage extends StatelessWidget {
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('Liturgia', style: TextStyle(fontSize: 12, height: 2))),
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child:
-              Text('08 de enero', style: TextStyle(fontSize: 28, height: 1.4))),
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
-              style: TextStyle(
-                  fontSize: 16, height: 1.2, fontWeight: FontWeight.w300))),
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
+    ]),
+    Column(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+      SizedBox(height: 8.0),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('Del propio del día. Salterio II',
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
   ];
 
@@ -115,23 +124,49 @@ class HomePage extends StatelessWidget {
               left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
           child: Row(
             children: [
-              BorderedIcon(icon: Icons.person_outlined),
+              CustomIconButton(
+                height: 48,
+                width: 48,
+                variant: IconButtonVariant.FillGray400,
+                child: CustomImageView(
+                  color: ColorConstant.gray800,
+                  svgPath: ImageConstant.imgUserGray800,
+                ),
+              ),
               SizedBox(width: 10),
               Expanded(
                   child: Column(
                 children: [
                   Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Buen día', style: TextStyle(fontSize: 12))),
+                      child: Text('Buen día',
+                          style: AppStyle.txtNunitoSansSemiBold13Gray800)),
                   Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('José', style: TextStyle(fontSize: 20)))
+                      child: Text('José',
+                          style: AppStyle.txtNunitoSansSemiBold23))
                 ],
               )),
               SizedBox(width: 10),
-              BorderedIcon(icon: Icons.search_outlined),
+              CustomIconButton(
+                height: 48,
+                width: 48,
+                variant: IconButtonVariant.FillGray300,
+                child: CustomImageView(
+                  color: ColorConstant.gray800,
+                  svgPath: ImageConstant.imgSearch,
+                ),
+              ),
               SizedBox(width: 5),
-              BorderedIcon(icon: Icons.notifications_outlined),
+              CustomIconButton(
+                height: 48,
+                width: 48,
+                variant: IconButtonVariant.FillGray300,
+                child: CustomImageView(
+                  color: ColorConstant.gray800,
+                  svgPath: ImageConstant.imgNotification,
+                ),
+              ),
             ],
           ),
         ),
@@ -189,11 +224,16 @@ class HomePage extends StatelessWidget {
                 ]),
             child: Row(
               children: [
-                Icon(Icons.favorite_border),
+                CustomImageView(
+                    color: ColorConstant.gray800,
+                    svgPath: ImageConstant.imgFavorite,
+                    height: getSize(24),
+                    width: getSize(24),
+                    margin: getMargin(top: 4, bottom: 4)),
                 SizedBox(width: 10),
                 Text(
                   'Mis Favoritos',
-                  style: TextStyle(fontSize: 18),
+                  style: AppStyle.txtNunitoSansSemiBold23,
                 )
               ],
             )),
@@ -248,11 +288,14 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ExpandedButton(icon: ImageConstant.imgButtonalerts, label: 'Lecturas'),
+                  ExpandedButton(
+                      icon: ImageConstant.imgButtonalerts, label: 'Lecturas'),
                   SizedBox(width: 14.0),
-                  ExpandedButton(icon: ImageConstant.imgVolume, label: 'Oraciones'),
+                  ExpandedButton(
+                      icon: ImageConstant.imgVolume, label: 'Oraciones'),
                   SizedBox(width: 14.0),
-                  ExpandedButton(icon: ImageConstant.imgVolumeIndigo900, label: 'Blog')
+                  ExpandedButton(
+                      icon: ImageConstant.imgVolumeIndigo900, label: 'Blog')
                 ],
               ),
             )

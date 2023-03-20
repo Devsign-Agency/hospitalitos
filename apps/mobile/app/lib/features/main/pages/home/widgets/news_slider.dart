@@ -15,7 +15,7 @@ class _NewsSliderState extends State<NewsSlider> {
   @override
   Widget build(BuildContext context) {
     Color color = Color.fromRGBO(225, 224, 230, 1);
-    Color activeColor = Theme.of(context).colorScheme.primary;
+    Color activeColor = Color.fromRGBO(255, 211, 80, 1); //Theme.of(context).colorScheme.primary;
 
     List<Widget> data() {
       List<Widget> list = [];

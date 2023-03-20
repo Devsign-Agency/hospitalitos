@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LightVariables {
   static const Brightness brightness = Brightness.light;
   static const Color seed = Colors.white;
-  static const Color primary = Color.fromRGBO(254, 213, 100, 1); //
+  static const Color primary = Color.fromRGBO(255, 211, 80, 1); //
   static const Color onPrimary = Color.fromRGBO(33, 28, 89, 1); //
   static const Color primaryContainer = Colors.white;
   static const Color onPrimaryContainer = Colors.black45;

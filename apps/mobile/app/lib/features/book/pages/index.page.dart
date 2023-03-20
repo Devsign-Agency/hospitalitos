@@ -47,7 +47,10 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) => ListTile(
-                  title: Text(book.Chapters![index].Title!),
+                  title: Text(
+                    book.Chapters![index].Title!,
+                    style: AppStyle.txtNunitoSansRegular16,
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.popAndPushNamed(context, 'book',

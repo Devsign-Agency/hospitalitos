@@ -1,4 +1,4 @@
-package com.kaad.mobile_app
+package hospitalitos.de.la.fe.pvc
 
 import io.flutter.embedding.android.FlutterActivity
 

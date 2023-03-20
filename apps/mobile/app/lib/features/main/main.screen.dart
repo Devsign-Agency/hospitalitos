@@ -5,6 +5,7 @@ import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_app/core/app_export.dart';
 
 class MainScreen extends StatefulWidget {
   static const String route = '';
@@ -48,11 +49,14 @@ class _MainScreenState extends State<MainScreen> {
 
     return ChangeNotifierProvider(
       create: (context) => AppState(),
-      child: Scaffold(
-        bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
-        body: SingleChildScrollView(
-          child: Center(
-            child: page,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: ColorConstant.gray100,
+          bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
+          body: SingleChildScrollView(
+            child: Center(
+              child: page,
+            ),
           ),
         ),
       ),
