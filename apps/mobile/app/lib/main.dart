@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/router/router.dart';
-import 'package:mobile_app/shared/providers/providers.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +20,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Kaad App',
-        initialRoute: RouterApp.initialRoute,
-        routes: RouterApp.getRoutes(),
-        onGenerateRoute: (settings) => RouterApp.onGenerateRoute(settings),
-        theme: Provider.of<ThemeProvider>(context).currentTheme);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService())
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Kaad App',
+          initialRoute: RouterApp.initialRoute,
+          routes: RouterApp.getRoutes(),
+          onGenerateRoute: (settings) => RouterApp.onGenerateRoute(settings),
+          theme: Provider.of<ThemeProvider>(context).currentTheme),
+    );
   }
 }

@@ -4,8 +4,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 export class PageOptions implements IPageOptions {
     constructor(options: IPageOptions) {
         this.order = options.order || Order.ASC;
-        this.page = options.page;
-        this.take = options.take;
+        this.page = options.page || 1;
+        this.take = options.take || 10;
     }
 
     @ApiPropertyOptional({ enum: Order, default: Order.ASC })

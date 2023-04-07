@@ -46,8 +46,12 @@ dependencies:
   epub_view:
     path: ../flutter_dependencies/epub_view
   path_provider: ^2.0.13
-  html: ^0.15.2
   flutter_html: ^3.0.0-alpha.6
+  html: ^0.15.2
+  http: ^0.13.5
+  outline_gradient_button: ^2.0.1+1
+  flutter_secure_storage: ^8.0.0
+  http_interceptor: ^1.0.2
 
 dev_dependencies:
   flutter_test:

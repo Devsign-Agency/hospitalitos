@@ -12,7 +12,7 @@ class RouterSecurity {
     Map<String, Widget Function(BuildContext)> routes = {};
 
     routes.addAll(
-        {LoginScreen.route: (BuildContext context) => const LoginScreen()});
+        {LoginScreen.route: (BuildContext context) => LoginScreen()});
 
     for (final option in menuOptions) {
       routes.addAll({option.route: (BuildContext context) => option.screen});

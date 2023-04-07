@@ -5,11 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "apps/mobile/app/lib/main.dart"
+        },
+        {
+            "type": "node",
             "name": "Attach to NestJS API",
-            "stopOnEntry": "flase",
             "port": 9229,
-            "request": "attach",
-            "type": "pwa-node"
+            "request": "attach"
         }
     ]
 }

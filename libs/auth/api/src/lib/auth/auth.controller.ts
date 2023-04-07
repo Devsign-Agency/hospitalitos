@@ -1,7 +1,7 @@
 import { AuthResponse, RefreshResponse } from '@kaad/auth/ng-common';
 import { JwtGuard, LocalGuard, RefreshGuard } from '@kaad/core/api';
 import { Public } from '@kaad/shared/api';
-import { Body, Controller, Delete, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -36,6 +36,12 @@ export class AuthController {
         return await this.authService.refreshAccessToken(req.user);
     }
 
+    @UseGuards(JwtGuard)
+    @Get()
+    public async validateToken(): Promise<boolean> {
+        return true;
+    }
+
     @Post('register')
     @Public()
     public async register(@Body() registerData: Register, @Ip() ip: string): Promise<AuthResponse> {
@@ -44,7 +50,7 @@ export class AuthController {
 
     @Public()
     @Post('renew/validate')
-    public async validateToken(@Body() body: { [key: string]: string }): Promise<boolean> {
+    public async validateRenewToken(@Body() body: { [key: string]: string }): Promise<boolean> {
         return this.authService.validateToken(body[this.configService.get<string>('JWT_REFRESH_TOKEN_NAME')])
     }
 
