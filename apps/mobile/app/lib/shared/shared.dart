@@ -1,1 +1,3 @@
-export 'package:mobile_app/shared/preferences.dart';
+export './preferences.dart';
+export './services/auth_service.dart';
+export './providers/providers.dart';

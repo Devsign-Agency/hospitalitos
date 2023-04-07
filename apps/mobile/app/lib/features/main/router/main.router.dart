@@ -4,7 +4,7 @@ import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/router/menu_option.dart';
 
 class RouterMain {
-  static const initialRoute = '';
+  static const initialRoute = LoadingPage.route;
 
   static final menuOptions = <MenuOption>[];
 
@@ -15,6 +15,8 @@ class RouterMain {
         {MainScreen.route: (BuildContext context) => MainScreen()});
     routes.addAll(
         {HomePage.route: (BuildContext context) => HomePage()});
+    routes.addAll(
+        {LoadingPage.route: (BuildContext context) => LoadingPage()});
     routes.addAll(
         {WelcomeScreen.route: (BuildContext context) => const WelcomeScreen()});
     routes.addAll({
