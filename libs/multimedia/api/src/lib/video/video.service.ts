@@ -10,6 +10,8 @@ import { CategoryService } from '../category/category.service';
 import { MultimediaService } from '../common/services/multimedia/multimedia.service';
 import { VideoEntity } from './entities/video.entity';
 import { VideoValidator } from './validators/video.validator';
+import { Express } from 'express';
+import { Multer } from 'multer';
 
 @Injectable()
 export class VideoService extends MultimediaService<Video, VideoEntity> {

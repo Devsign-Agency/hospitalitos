@@ -11,6 +11,8 @@ import { MultimediaService } from '../common/services/multimedia/multimedia.serv
 import { CreateBookDto } from './dto/create-book.dto';
 import { BookEntity } from './entities/book.entity';
 import { BookValidator } from './validators/book.validator';
+import { Express } from 'express';
+import { Multer } from 'multer';
 
 @Injectable()
 export class BookService extends MultimediaService<Book, BookEntity> {

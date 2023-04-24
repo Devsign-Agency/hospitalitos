@@ -12,6 +12,8 @@ import { join } from 'path';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { VideoService } from './video.service';
+import { Express } from 'express';
+import { Multer } from 'multer';
 
 @ApiTags('Multimedia/Video')
 @Controller('video')

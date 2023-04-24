@@ -1,5 +1,7 @@
 import { Category, CreateMultimediaDto as ICreateMultimediaDto } from "@kaad/multimedia/ng-common";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { Express } from 'express';
+import { Multer } from 'multer';
 
 export class CreateMultimediaDto implements ICreateMultimediaDto {
     @ApiProperty()
