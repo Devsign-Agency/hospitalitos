@@ -332,9 +332,9 @@ class CustomButton extends StatelessWidget {
             -0.15,
           ),
           colors: [
-            ColorConstant.gray10075,
-            ColorConstant.gray10002,
-            ColorConstant.gray10002,
+            ColorConstant.gray10003T45,
+            ColorConstant.gray10003T05,
+            ColorConstant.gray10003T05,
           ],
         );
       default:

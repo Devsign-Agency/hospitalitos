@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final List<Widget> _slides = [
-    Column(children: [
+    Wrap(children: [
       Align(
           alignment: Alignment.centerLeft,
           child:
@@ -20,11 +20,11 @@ class HomePage extends StatelessWidget {
           child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
+        widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
+    ]),Wrap(children: [
       Align(
           alignment: Alignment.centerLeft,
           child:
@@ -34,11 +34,11 @@ class HomePage extends StatelessWidget {
           child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
+        widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
+    ]),Wrap(children: [
       Align(
           alignment: Alignment.centerLeft,
           child:
@@ -48,11 +48,11 @@ class HomePage extends StatelessWidget {
           child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
+        widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
+    ]),Wrap(children: [
       Align(
           alignment: Alignment.centerLeft,
           child:
@@ -62,48 +62,7 @@ class HomePage extends StatelessWidget {
           child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
       SizedBox(height: 8.0),
       Align(
-          alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
-      SizedBox(height: 8.0),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
-      SizedBox(height: 8.0),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Column(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
-      SizedBox(height: 8.0),
-      Align(
+        widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
           child: Text('Del propio del día. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),

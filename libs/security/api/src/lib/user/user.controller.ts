@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 export class UserController {
 
     constructor(private readonly passwordService: PasswordService,

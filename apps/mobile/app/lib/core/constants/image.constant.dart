@@ -188,6 +188,8 @@ class ImageConstant {
 
   static String imgLocation = 'assets/images/img_location.svg';
 
+  static String imgMaskgroup = 'assets/images/img_maskgroup.svg';
+
   static String imgArrowleftGray800 =
       'assets/images/img_arrowleft_gray_800.svg';
 

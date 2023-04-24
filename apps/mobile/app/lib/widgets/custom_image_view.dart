@@ -29,6 +29,7 @@ class CustomImageView extends StatelessWidget {
   EdgeInsetsGeometry? margin;
   BorderRadius? radius;
   BoxBorder? border;
+  BlendMode? blendMode;
 
   ///a [CustomImageView] it can be used for showing any type of images
   /// it will shows the placeholder image if image is not found on network image
@@ -47,6 +48,7 @@ class CustomImageView extends StatelessWidget {
     this.margin,
     this.border,
     this.placeHolder = 'assets/images/image_not_found.png',
+    this.blendMode = BlendMode.dst
   });
 
   @override
@@ -107,7 +109,7 @@ class CustomImageView extends StatelessWidget {
           height: height,
           width: width,
           fit: fit ?? BoxFit.contain,
-          colorFilter: ColorFilter.mode(color == null ? Colors.blue : color!, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(color == null ? Colors.blue : color!, blendMode!),
         ),
       );
     } else if (file != null && file!.path.isNotEmpty) {
