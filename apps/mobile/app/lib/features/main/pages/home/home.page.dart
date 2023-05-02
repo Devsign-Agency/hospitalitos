@@ -1,14 +1,22 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
+import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String route = 'home';
 
   HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final List<Widget> _slides = [
     Wrap(children: [
       Align(
@@ -68,9 +76,18 @@ class HomePage extends StatelessWidget {
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
   ];
+  late User user;
 
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    user = authService.user;
   }
 
   @override
@@ -105,7 +122,7 @@ class HomePage extends StatelessWidget {
                           style: AppStyle.txtNunitoSansSemiBold13Gray800)),
                         Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('José',
+                            child: Text(user.firstname ?? '',
                           style: AppStyle.txtNunitoSansSemiBold23))
                       ],
                     )),
