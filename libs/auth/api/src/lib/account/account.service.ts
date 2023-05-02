@@ -30,8 +30,11 @@ export class AccountService {
         if (!!account && !account.verifiedAt && differenceInHours(today, account.createdAt) < validationLink) {
             account.verifiedAt = today;
             const user = await this.userService.findById(account.user);
+            const preferences = user.preferences ? user.preferences.map(p => p.id) : [];
             user.emailVerified = true;
-            await this.userService.update(user.id, user as UpdateUserDto);
+            const toUpdate = { preferences, ...user };
+
+            await this.userService.update(user.id, toUpdate as UpdateUserDto);
             return this.accountRepository.save(account);
         } else if (!!account && account.verifiedAt) {
             throw new BadRequestException('link used');
@@ -47,3 +50,4 @@ export class AccountService {
         //
     }
 }
+

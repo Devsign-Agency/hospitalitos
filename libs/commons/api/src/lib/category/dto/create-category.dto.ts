@@ -1,4 +1,4 @@
-import { CreateCategoryDto as ICreateCategoryDto } from '@kaad/multimedia/ng-common';
+import { CreateCategoryDto as ICreateCategoryDto } from '@kaad/commons/ng-common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCategoryDto implements ICreateCategoryDto {

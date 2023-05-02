@@ -70,7 +70,7 @@ class CustomButton extends StatelessWidget {
         children: [
           prefixWidget ?? SizedBox(),
           Text(
-            text ?? "",
+            text ?? '',
             textAlign: TextAlign.center,
             style: _setFontStyle(),
           ),
@@ -79,7 +79,7 @@ class CustomButton extends StatelessWidget {
       );
     } else {
       return Text(
-        text ?? "",
+        text ?? '',
         textAlign: TextAlign.center,
         style: _setFontStyle(),
       );
@@ -108,6 +108,7 @@ class CustomButton extends StatelessWidget {
         ),
         padding: _setPadding(),
         backgroundColor: _setColor(),
+        disabledBackgroundColor: ColorConstant.gray300,
         side: _setTextButtonBorder(),
         shadowColor: _setTextButtonShadowColor(),
         shape: RoundedRectangleBorder(

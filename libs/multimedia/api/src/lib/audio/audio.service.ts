@@ -1,4 +1,4 @@
-import { Audio, Category } from '@kaad/multimedia/ng-common';
+import { Audio } from '@kaad/multimedia/ng-common';
 import { FileUtils } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,7 +10,8 @@ import { CreateAudioDto } from './dto/create-audio.dto';
 import { AudioEntity } from './entities/audio.entity';
 import { AudioValidator } from './validators/audio.validator';
 import { randomUUID } from 'crypto';
-import { CategoryService } from '../category/category.service';
+import { CategoryService } from '@kaad/commons/api';
+import { Category } from '@kaad/commons/ng-common';
 
 @Injectable()
 export class AudioService extends MultimediaService<Audio, AudioEntity> {

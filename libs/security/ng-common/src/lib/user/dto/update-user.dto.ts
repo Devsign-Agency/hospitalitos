@@ -3,5 +3,5 @@ import { CreateUserDto } from './create-user.dto';
 export interface UpdateUserDto extends Partial<CreateUserDto> {
     id: string;
     emailVerified?: boolean;
-    role?: string[]
+    role?: string[];
 }

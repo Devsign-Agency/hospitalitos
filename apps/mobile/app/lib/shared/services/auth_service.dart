@@ -31,6 +31,51 @@ class AuthService with ChangeNotifier {
     await storage.delete(key: Constants.refreshTokenKey);
   }
 
+  Future<bool> register(String name, String email, String password,
+      List<String> preferences) async {
+    bool isValid = false;
+    authenticating = true;
+    try {
+      final Map<String, dynamic> data = {
+        'firstname': name,
+        'email': email,
+        'username': email,
+        'password': password
+      };
+
+      if (preferences.isNotEmpty) {
+        data['preferences'] = preferences;
+      }
+
+      final url = Uri.parse('$apiUrl/${Constants.authUri}/register');
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 201) {
+        handleLogin(response);
+        isValid = true;
+      }
+    } catch (e) {
+      print(e);
+    }
+    authenticating = false;
+    return isValid;
+  }
+
+  void handleLogin(http.Response response) async {
+    final loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
+    user = loginResponse.user;
+
+    await _saveToken(loginResponse.accessToken);
+    await _saveRefreshToken(loginResponse.refreshToken);
+  }
+
   Future<bool> login(String email, String password) async {
     bool isValid = false;
     authenticating = true;
@@ -48,16 +93,11 @@ class AuthService with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        final loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
-        user = loginResponse.user;
-
-        await _saveToken(loginResponse.accessToken);
-        await _saveRefreshToken(loginResponse.refreshToken);
-
+        handleLogin(response);
         isValid = true;
       }
     } catch (e) {
-        print(e);
+      print(e);
     }
     authenticating = false;
     return isValid;
@@ -67,7 +107,7 @@ class AuthService with ChangeNotifier {
     final token = await _storage.read(key: Constants.accessTokenKey);
     print(token);
     if (token == null || token.isEmpty) {
-        return false;
+      return false;
     }
 
     final http_ = HttpInterceptor();

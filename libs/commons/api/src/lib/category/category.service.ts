@@ -1,5 +1,3 @@
-import { Category } from '@kaad/multimedia/ng-common';
-import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +6,8 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoryEntity } from './entities/category.entity';
 import { CategoryValidator } from './validators/category.validator';
+import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
+import { Category } from '@kaad/commons/ng-common';
 
 @Injectable()
 export class CategoryService {
@@ -31,6 +31,14 @@ export class CategoryService {
         const [list, count] = await queryBuilder.getManyAndCount();
         const pageMetaDto = new PageMeta({ itemCount: count, pageOptions });
         return new Page(list, pageMetaDto);
+    }
+
+    public async findAllIn(ids: string[]): Promise<Category[]> {
+        let categories: Category[] = [];
+
+        categories = await this.repository.find({ where: { id: In(ids) }});
+
+        return categories;
     }
 
     public async findById(id: string) {

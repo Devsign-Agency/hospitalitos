@@ -5,4 +5,7 @@ import { UserDto } from "./user.dto";
 export class CreateUserDto extends PartialType(UserDto) implements ICreateUserDto {
     @ApiPropertyOptional()
     password?: string;
+
+    @ApiPropertyOptional({ type: 'array' })
+    preferences?: string[];
 }

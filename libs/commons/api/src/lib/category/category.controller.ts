@@ -1,25 +1,16 @@
 import { JwtGuard } from '@kaad/core/api';
-import { Category } from '@kaad/multimedia/ng-common';
-import { Page, PageOptions, SearchOptions } from '@kaad/shared/api';
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-    Query,
-    UseGuards,
-} from '@nestjs/common';
+import { PageOptions } from '@kaad/shared/api';
+import { Page, SearchOptions } from '@kaad/shared/ng-common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Category } from '@kaad/commons/ng-common';
 
 @ApiTags('Multimedia/Categories')
 @Controller('category')
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 

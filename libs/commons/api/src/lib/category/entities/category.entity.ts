@@ -1,4 +1,4 @@
-import { Category } from "@kaad/multimedia/ng-common";
+import { Category } from "@kaad/commons/ng-common";
 import { BaseEntity } from "@kaad/shared/api";
 import { Column, Entity } from "typeorm";
 

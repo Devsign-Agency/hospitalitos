@@ -2,8 +2,10 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+
   CustomTextFormField(
-      {this.shape,
+      {this.tkey,
+      this.shape,
       this.padding,
       this.variant,
       this.fontStyle,
@@ -21,7 +23,10 @@ class CustomTextFormField extends StatelessWidget {
       this.prefixConstraints,
       this.suffix,
       this.suffixConstraints,
-      this.validator});
+      this.validator,
+      this.onChanged});
+
+  Key? tkey;
 
   TextFormFieldShape? shape;
 
@@ -61,6 +66,8 @@ class CustomTextFormField extends StatelessWidget {
 
   FormFieldValidator<String>? validator;
 
+  ValueChanged<String>? onChanged;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -76,6 +83,9 @@ class CustomTextFormField extends StatelessWidget {
       width: width ?? double.maxFinite,
       margin: margin,
       child: TextFormField(
+        key: tkey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: onChanged,
         controller: controller,
         focusNode: focusNode,
         style: _setFontStyle(),

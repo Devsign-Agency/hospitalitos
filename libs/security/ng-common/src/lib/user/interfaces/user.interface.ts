@@ -1,3 +1,4 @@
+import { Category } from "@kaad/commons/ng-common";
 import { BaseDataBase } from "@kaad/shared/ng-common";
 export interface User extends BaseDataBase {
     id: string;
@@ -11,4 +12,5 @@ export interface User extends BaseDataBase {
     status?: string;
     documentId: string;
     googleId: string;
+    preferences?: Category[];
 }

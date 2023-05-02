@@ -4,7 +4,7 @@ import { BookController } from './book.controller';
 import { BookValidator } from './validators/book.validator';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookEntity } from './entities/book.entity';
-import { CategoryModule } from '../category/category.module';
+import { CategoryModule } from '@kaad/commons/api';
 
 @Module({
     controllers: [BookController],

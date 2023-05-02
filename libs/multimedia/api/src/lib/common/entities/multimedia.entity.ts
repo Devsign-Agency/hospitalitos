@@ -1,7 +1,7 @@
-import { Category, Multimedia } from '@kaad/multimedia/ng-common';
+import { Multimedia } from '@kaad/multimedia/ng-common';
 import { BaseEntity } from '@kaad/shared/api';
 import { Column, JoinTable, ManyToMany } from 'typeorm';
-import { CategoryEntity } from '../../category/entities/category.entity';
+import { CategoryEntity } from '@kaad/commons/api';
 
 export abstract class MultimediaEntity extends BaseEntity implements Multimedia {
     @Column({ nullable: false })
@@ -27,5 +27,5 @@ export abstract class MultimediaEntity extends BaseEntity implements Multimedia 
 
     @ManyToMany(() => CategoryEntity)
     @JoinTable()
-    categories: Category[];
+    categories: CategoryEntity[];
 }

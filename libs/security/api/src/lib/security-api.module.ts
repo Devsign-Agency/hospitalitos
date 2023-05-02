@@ -14,11 +14,13 @@ import { RoleEntity } from './role/entities/role.entity';
 import { RoleService } from './role/role.service';
 import { RoleValidator } from './role/validators/role.validator';
 import { RoleController } from './role/role.controller';
+import { CategoryModule } from '@kaad/commons/api';
 
 @Module({
     controllers: [PasswordController, RoleController, UserController],
     providers: [PasswordService, PasswordValidator, RoleService, RoleValidator, UserService, UserValidator],
     imports: [
+        CategoryModule,
         MailSenderModule,
         TypeOrmModule.forFeature([
             PasswordEntity,

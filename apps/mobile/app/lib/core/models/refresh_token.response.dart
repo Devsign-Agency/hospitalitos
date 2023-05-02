@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-RefreshTokenResponse loginResponseFromJson(String str) => RefreshTokenResponse.fromJson(json.decode(str));
+RefreshTokenResponse refreshResponseFromJson(String str) => RefreshTokenResponse.fromJson(json.decode(str));
 
-String loginResponseToJson(RefreshTokenResponse data) => json.encode(data.toJson());
+String refreshResponseToJson(RefreshTokenResponse data) => json.encode(data.toJson());
 
 class RefreshTokenResponse {
     RefreshTokenResponse({

@@ -1,6 +1,5 @@
 import { AuthResponse, RefreshResponse } from '@kaad/auth/ng-common';
-import { JwtGuard, LocalGuard, RefreshGuard } from '@kaad/core/api';
-import { Public } from '@kaad/shared/api';
+import { JwtGuard, LocalGuard, Public, RefreshGuard } from '@kaad/core/api';
 import { Body, Controller, Delete, Get, HttpCode, Ip, Post, Request, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';

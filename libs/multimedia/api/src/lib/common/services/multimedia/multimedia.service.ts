@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { faTag } from '@fortawesome/free-solid-svg-icons';
-import { Category, Multimedia } from '@kaad/multimedia/ng-common';
+import { Multimedia } from '@kaad/multimedia/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
 import { Order } from '@kaad/shared/ng-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
-import { CategoryService } from '../../../category/category.service';
-import { CategoryEntity } from '../../../category/entities/category.entity';
 import { MultimediaEntity } from '../../entities/multimedia.entity';
 import { MultimediaValidator } from '../validator/multimedia.validator';
 import { Express } from 'express';
 import { Multer } from 'multer';
+import { CategoryEntity, CategoryService } from '@kaad/commons/api';
+import { Category } from '@kaad/commons/ng-common';
 
 @Injectable()
 export class MultimediaService<T extends Multimedia, E extends MultimediaEntity & T> {

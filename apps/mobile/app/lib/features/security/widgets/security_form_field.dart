@@ -4,26 +4,34 @@ import 'package:mobile_app/widgets/custom_text_form_field.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 
 class SecurityFormField extends StatelessWidget {
+  Key? tkey;
   final TextEditingController controller;
   final String placeHolder;
   final bool isObscureText;
   final String? svgPath;
-  final FocusNode? focusNode;
+  FocusNode? focusNode;
   final EdgeInsetsGeometry? margin;
   final TextInputType? textInputType;
+  ValueChanged<String>? onChanged;
+  FormFieldValidator<String>? validator;
 
   SecurityFormField(
-      {required this.controller,
+      { super.key,
+      this.tkey,
+      required this.controller,
       this.svgPath,
       this.focusNode,
       this.placeHolder = '',
       this.isObscureText = false,
       this.textInputType = TextInputType.text,
-      this.margin});
+      this.margin,
+      this.onChanged,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
     return CustomTextFormField(
+        tkey: tkey,
         focusNode: focusNode,
         controller: controller,
         hintText: placeHolder,
@@ -32,6 +40,8 @@ class SecurityFormField extends StatelessWidget {
         textInputType: TextInputType.text,
         textInputAction: TextInputAction.done,
         isObscureText: isObscureText,
+        validator: validator,
+        onChanged: onChanged,
         prefix: svgPath == null
             ? null
             : Container(

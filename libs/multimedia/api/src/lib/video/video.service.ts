@@ -1,17 +1,18 @@
 import { MetadataVideo, YoutubeService } from '@kaad/gcloud/api';
-import { Category, CreateVideoDto, Video } from '@kaad/multimedia/ng-common';
+import { CreateVideoDto, Video } from '@kaad/multimedia/ng-common';
 import { FileUtils } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { join } from 'path';
 import { Repository } from 'typeorm';
-import { CategoryService } from '../category/category.service';
 import { MultimediaService } from '../common/services/multimedia/multimedia.service';
 import { VideoEntity } from './entities/video.entity';
 import { VideoValidator } from './validators/video.validator';
 import { Express } from 'express';
 import { Multer } from 'multer';
+import { Category } from '@kaad/commons/ng-common';
+import { CategoryService } from '@kaad/commons/api';
 
 @Injectable()
 export class VideoService extends MultimediaService<Video, VideoEntity> {

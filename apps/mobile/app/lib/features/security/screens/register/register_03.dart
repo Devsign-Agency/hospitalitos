@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/features/security/screens/screens.dart';
+import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/security/widgets/widgets.dart';
+import 'package:mobile_app/helpers/show_alert.dart';
+import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/custom_button.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreenPreferences extends StatelessWidget {
   static const String route = 'register_03';
@@ -20,15 +26,15 @@ class RegisterScreenPreferences extends StatelessWidget {
                 title: 'Cuéntanos de ti',
                 subTitle:
                     'Elige temas que te interesen para una experiencia a tu medida',
-                header: _Header(),
+                header: _Header(onSkip: () {}),
                 child: _Form())));
   }
 }
 
 class _Header extends StatelessWidget {
-  VoidCallback? onSkeep;
+  final VoidCallback? onSkip;
 
-  _Header();
+  _Header({this.onSkip});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +52,7 @@ class _Header extends StatelessWidget {
               blendMode: BlendMode.srcIn,
               onTap: () => Navigator.pop(context)),
           TextButton(
-              onPressed: onSkeep,
+              onPressed: onSkip,
               child: Text(
                 'Saltar',
                 overflow: TextOverflow.ellipsis,
@@ -61,6 +67,8 @@ class _Header extends StatelessWidget {
 }
 
 class _Form extends StatefulWidget {
+  final List<String> preferences = [];
+
   _Form();
 
   @override
@@ -68,8 +76,32 @@ class _Form extends StatefulWidget {
 }
 
 class _FormState extends State<_Form> {
+  late List<Category> categories = [];
+  int maxQty = 0;
+
+  @override
+  initState() {
+    _findCategories();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    categories.clear();
+    super.dispose();
+  }
+
+  _findCategories() async {
+    final categoryService =
+        Provider.of<CategoryService>(context, listen: false);
+    categories = await categoryService.getAll();
+    maxQty = min(3, categories.length);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         CustomStepper(
@@ -82,15 +114,53 @@ class _FormState extends State<_Form> {
                 runSpacing: getVerticalSize(5),
                 spacing: getHorizontalSize(5),
                 children: List<Widget>.generate(
-                    24, (index) => ChipviewinputchipItemWidget()))),
+                    categories.length,
+                    (index) => ChipviewinputchipItemWidget(
+                        text: categories[index].name,
+                        onSelected: (value) {
+                          if (value) {
+                            widget.preferences.add(categories[index].id);
+                          } else {
+                            widget.preferences.remove(categories[index].id);
+                          }
+                          setState(() {});
+                        },
+                        selected: widget.preferences
+                            .contains(categories[index].id))))),
         CustomButton(
             height: getVerticalSize(48),
-            text: 'Continuar',
+            text: '${widget.preferences.length}/$maxQty Continuar',
             margin: getMargin(top: 60),
-            onTap: true
-                ? null
-                : () => Navigator.pushNamed(context, PreRegisterScreen.route)),
+            onTap: widget.preferences.length != maxQty ? null : submit
+        )
       ],
     );
+  }
+
+  void submit({bool skipPreferences = false}) async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final storage = FlutterSecureStorage();
+    final String? name = await storage.read(key: 'name');
+    final String? email = await storage.read(key: 'email');
+    final String? password = await storage.read(key: 'password');
+    final List<String> preferences = [];
+
+    if (widget.preferences.length == maxQty && !skipPreferences) {
+      preferences.addAll(widget.preferences);
+    }
+
+    bool isValid = await authService.register(name!, email!, password!, preferences);
+    if (isValid) {
+      await storage.delete(key: 'name');
+      await storage.delete(key: 'email');
+      await storage.delete(key: 'password');
+      preferences.clear();
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, RouterMain.initialRoute);
+      }
+    } else {
+      // Mostrar alerta
+      if (context.mounted) showAlert(context, 'Error', 'Error on register');
+    }
   }
 }

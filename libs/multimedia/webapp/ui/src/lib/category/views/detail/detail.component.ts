@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { LoadingService } from '@kaad/layout/webapp/ui';
-import { Category } from '@kaad/multimedia/ng-common';
+import { Category } from '@kaad/commons/ng-common';
 import { CategoryService } from '@kaad/multimedia/webapp/core';
 import { AbstractDetailComponent } from '@kaad/shared/webapp/ui';
 

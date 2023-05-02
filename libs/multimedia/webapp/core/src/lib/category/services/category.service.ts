@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '@kaad/config/webapp/core';
-import { Category } from '@kaad/multimedia/ng-common';
+import { Category } from '@kaad/commons/ng-common';
 import { BaseService } from '@kaad/shared/webapp/core';
 
 @Injectable({

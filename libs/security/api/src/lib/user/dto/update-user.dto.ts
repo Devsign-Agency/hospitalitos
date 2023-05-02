@@ -11,5 +11,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) implements IUdateU
     emailVerified?: boolean;
 
     @ApiPropertyOptional({ type: 'array', examples: [DEFAULT_ADMIN_ROLE, DEFAULT_USER_ROLE] })
-    role?: string[]
+    role?: string[];
+
+    @ApiPropertyOptional({ type: 'array' })
+    preferences?: string[];
 }

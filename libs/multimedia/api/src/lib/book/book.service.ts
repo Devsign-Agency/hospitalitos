@@ -1,4 +1,4 @@
-import { Book, Category } from '@kaad/multimedia/ng-common';
+import { Book } from '@kaad/multimedia/ng-common';
 import { FileUtils } from '@kaad/shared/api';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -6,13 +6,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
 import { join } from 'path';
 import { Repository } from 'typeorm';
-import { CategoryService } from '../category/category.service';
 import { MultimediaService } from '../common/services/multimedia/multimedia.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BookEntity } from './entities/book.entity';
 import { BookValidator } from './validators/book.validator';
 import { Express } from 'express';
 import { Multer } from 'multer';
+import { CategoryService } from '@kaad/commons/api';
+import { Category } from '@kaad/commons/ng-common';
 
 @Injectable()
 export class BookService extends MultimediaService<Book, BookEntity> {

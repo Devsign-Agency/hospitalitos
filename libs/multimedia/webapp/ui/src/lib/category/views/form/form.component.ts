@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { LoadingService, ToastService } from '@kaad/layout/webapp/ui';
-import { Category } from '@kaad/multimedia/ng-common';
+import { Category } from '@kaad/commons/ng-common';
 import { CategoryService } from '@kaad/multimedia/webapp/core';
 import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
 

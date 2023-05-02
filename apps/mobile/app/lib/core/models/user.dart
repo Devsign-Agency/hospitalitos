@@ -3,6 +3,7 @@
 //     final user = userFromJson(jsonString);
 
 import 'dart:convert';
+import './category.response.dart';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
@@ -18,9 +19,10 @@ class User {
         required this.email,
         required this.emailVerified,
         required this.firstname,
-        required this.lastname,
+        this.lastname,
         required this.photoUrl,
         required this.role,
+        this.preferences = const [],
         this.googleId,
     });
 
@@ -31,10 +33,11 @@ class User {
     String username;
     String email;
     bool emailVerified;
-    String firstname;
-    String lastname;
-    String photoUrl;
+    String? firstname;
+    String? lastname;
+    String? photoUrl;
     List<String> role;
+    List<Category> preferences;
     dynamic googleId;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
@@ -49,6 +52,7 @@ class User {
         lastname: json['lastname'],
         photoUrl: json['photoUrl'],
         role: List<String>.from(json['role'].map((x) => x)),
+        preferences: List<Category>.from(json['preferences'].map((x) => Category.fromJson(x))),
         googleId: json['googleId'],
     );
 
@@ -64,6 +68,7 @@ class User {
         'lastname': lastname,
         'photoUrl': photoUrl,
         'role': List<dynamic>.from(role.map((x) => x)),
+        'preferences': List<dynamic>.from(preferences.map((x) => x.toJson())),
         'googleId': googleId,
     };
 }

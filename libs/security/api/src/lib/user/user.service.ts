@@ -1,5 +1,6 @@
 import { CreateUserDto, UpdateUserDto, User } from '@kaad/security/ng-common';
 import { Page, PageMeta, PageOptions } from '@kaad/shared/api';
+import { Category } from '@kaad/commons/ng-common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { oauth2_v2 } from 'googleapis';
@@ -7,12 +8,14 @@ import { Repository } from 'typeorm';
 import { RoleService } from '../role/role.service';
 import { UserEntity } from './entities/user.entity';
 import { UserValidator } from './validators/user.validator';
+import { CategoryService } from '@kaad/commons/api';
 
 const INITIAL_ROLE = 'user';
 
 @Injectable()
 export class UserService {
     constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+        private readonly categoryService: CategoryService,
         private readonly roleService: RoleService,
         private readonly validator: UserValidator) { }
 
@@ -45,7 +48,10 @@ export class UserService {
         let user: User;
 
         if (await this.validator.validateUserExistById(id)) {
-            user = await this.userRepository.findOneOrFail({ where: { id } });
+            user = await this.userRepository.findOneOrFail({
+                relations: { preferences: true },
+                where: { id }
+            });
         }
 
         return user;
@@ -55,7 +61,10 @@ export class UserService {
         let user: User;
 
         if (await this.validator.validateUserExistByGoogleId(gId)) {
-            user = await this.userRepository.findOneOrFail({ where: { googleId: gId } })
+            user = await this.userRepository.findOneOrFail({
+                relations: { preferences: true },
+                where: { googleId: gId }
+            })
         }
 
         return user;
@@ -66,6 +75,7 @@ export class UserService {
 
         if (await this.validator.validateUserExistByUsername(username)) {
             user = await this.userRepository.findOneOrFail({
+                relations: { preferences: true },
                 where: { username }
             });
         }
@@ -78,6 +88,7 @@ export class UserService {
 
         if (await this.validator.validateUserExistByEmail(email)) {
             user = await this.userRepository.findOneOrFail({
+                relations: { preferences: true },
                 where: { email }
             });
         }
@@ -90,6 +101,7 @@ export class UserService {
 
         if (await this.validator.validateUserExistByUsernameOrEmail(value)) {
             user = await this.userRepository.findOneOrFail({
+                relations: { preferences: true },
                 where: [
                     { username: value },
                     { email: value }
@@ -100,10 +112,14 @@ export class UserService {
         return user;
     }
 
-    public async create(userData: CreateUserDto): Promise<User> {
+    public async create({preferences, ...userData}: CreateUserDto): Promise<User> {
         let user: User;
         if (await this.validator.validateCreationUser(userData)) {
-            const toAdd = { ...userData, role: [ INITIAL_ROLE ] };
+            let categories: Category[] = [];
+            if (preferences && preferences.length > 0) {
+                categories = await this.categoryService.findAllIn(preferences);
+            }
+            const toAdd = { ...userData, preferences: categories, role: [ INITIAL_ROLE ] };
             user = await this.userRepository.save(toAdd);
         }
         return user;

@@ -10,11 +10,13 @@ import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CategoryModule } from '@kaad/commons/api';
 
 @Module({
     imports: [
         AuthApiModule,
         ConfigApiModule,
+        CategoryModule,
         GcloudApiModule,
         MailSenderModule,
         MultimediaApiModule,

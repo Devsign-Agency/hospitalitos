@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTableType, LoadingService } from '@kaad/layout/webapp/ui';
-import { Category } from '@kaad/multimedia/ng-common';
+import { Category } from '@kaad/commons/ng-common';
 import { CategoryService } from '@kaad/multimedia/webapp/core';
 import { AbstractListComponent } from '@kaad/shared/webapp/ui';
 

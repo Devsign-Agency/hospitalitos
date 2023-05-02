@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from '@kaad/commons/ng-common';
 import { ConfigService } from '@kaad/config/webapp/core';
 import { LoadingService, ToastService } from '@kaad/layout/webapp/ui';
-import { Category, Video } from '@kaad/multimedia/ng-common';
+import { Video } from '@kaad/multimedia/ng-common';
 import { CategoryService, VideoService } from '@kaad/multimedia/webapp/core';
 import { AbstractFormComponent } from '@kaad/shared/webapp/ui';
 import { firstValueFrom, map } from 'rxjs';

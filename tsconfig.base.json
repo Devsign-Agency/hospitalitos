@@ -20,6 +20,8 @@
             "@kaad/auth/ng-common": ["libs/auth/ng-common/src/index.ts"],
             "@kaad/auth/webapp/core": ["libs/auth/webapp/core/src/index.ts"],
             "@kaad/auth/webapp/ui": ["libs/auth/webapp/ui/src/index.ts"],
+            "@kaad/commons/api": ["libs/commons/api/src/index.ts"],
+            "@kaad/commons/ng-common": ["libs/commons/ng-common/src/index.ts"],
             "@kaad/config/api": ["libs/config/api/src/index.ts"],
             "@kaad/config/webapp/core": [
                 "libs/config/webapp/core/src/index.ts"

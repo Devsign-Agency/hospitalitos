@@ -1,4 +1,4 @@
-import { Category } from "../../category";
+import { Category } from "@kaad/commons/ng-common";
 
 export interface CreateMultimediaDto {
     title: string;
