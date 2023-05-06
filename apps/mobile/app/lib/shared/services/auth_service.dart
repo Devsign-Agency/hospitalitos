@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/core/constants/constants.dart';
 import 'package:mobile_app/core/models/login.response.dart';
@@ -103,6 +104,41 @@ class AuthService with ChangeNotifier {
     return isValid;
   }
 
+  Future<bool> loginWithGoogle() async {
+    GoogleSignIn googleSignin = GoogleSignIn();
+    GoogleSignInAccount? account = await googleSignin.signIn();
+    bool isValid = false;
+    authenticating = true;
+
+    try {
+      Map<String, String> data = {
+        'displayName': account!.displayName ?? 'no name',
+        'email': account.email,
+        'id': account.id,
+        'photoUrl': account.photoUrl ?? ''
+      };
+      
+      final url = Uri.parse('$apiUrl/${Constants.authUri}/registerWithGoogle');
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        handleLogin(response);
+        isValid = true;
+      }
+    } catch (e) {
+      print(e);
+    }
+    authenticating = false;
+    return isValid;
+  }
+
   Future<bool> isLoggedIn() async {
     final token = await _storage.read(key: Constants.accessTokenKey);
     print(token);
@@ -133,5 +169,10 @@ class AuthService with ChangeNotifier {
   Future logout() async {
     await _storage.delete(key: Constants.accessTokenKey);
     await _storage.delete(key: Constants.refreshTokenKey);
+  }
+
+  Future googleSignOut() async {
+    GoogleSignIn googleSignin = GoogleSignIn();
+    await googleSignin.disconnect();
   }
 }

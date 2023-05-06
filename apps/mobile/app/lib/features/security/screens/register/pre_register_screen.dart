@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/security/widgets/security_screen.dart';
+import 'package:mobile_app/helpers/show_alert.dart';
+import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/custom_button.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
+import 'package:provider/provider.dart';
 
 import '../login/login_screen.dart';
 import 'register_01.dart';
@@ -63,10 +67,16 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _Form extends StatelessWidget {
+class _Form extends StatefulWidget {
   _Form();
 
+  @override
+  State<_Form> createState() => _FormState();
+}
+
+class _FormState extends State<_Form> {
   final TextEditingController usernameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -80,38 +90,41 @@ class _Form extends StatelessWidget {
                 textAlign: TextAlign.left,
                 style: AppStyle.txtNunitoSansRegular14Gray9001
                     .copyWith(letterSpacing: getHorizontalSize(0.25)))),
-        Container(
-          width: double.infinity,
-          margin: getMargin(
-            top: 32,
-          ),
-          padding: getPadding(
-            left: 12,
-            top: 16,
-            right: 12,
-            bottom: 16,
-          ),
-          decoration: AppDecoration.outlineIndigo900.copyWith(
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomImageView(
-                svgPath: ImageConstant.imgGoogle,
-                height: getSize(24),
-                width: getSize(24),
-              ),
-              Padding(
-                padding: getPadding(left: 12),
-                child: Text(
-                  'Google',
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: AppStyle.txtNunitoSansSemiBold16,
+        GestureDetector(
+          onTap: _registerWithGoogle,
+          child: Container(
+            width: double.infinity,
+            margin: getMargin(
+              top: 32,
+            ),
+            padding: getPadding(
+              left: 12,
+              top: 16,
+              right: 12,
+              bottom: 16,
+            ),
+            decoration: AppDecoration.outlineIndigo900.copyWith(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomImageView(
+                  svgPath: ImageConstant.imgGoogle,
+                  height: getSize(24),
+                  width: getSize(24),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: getPadding(left: 12),
+                  child: Text(
+                    'Google',
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: AppStyle.txtNunitoSansSemiBold16,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Padding(
@@ -167,5 +180,18 @@ class _Form extends StatelessWidget {
                 textAlign: TextAlign.center)),
       ],
     );
+  }
+
+  void _registerWithGoogle() async {
+    AuthService authService = Provider.of<AuthService>(context, listen: false);
+    bool isValid = await authService.loginWithGoogle();
+    if (isValid) {
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, RouterMain.initialRoute);
+      }
+    } else {
+      // Mostrar alerta
+      if (context.mounted) showAlert(context, 'Error', 'Error on register');
+    }
   }
 }

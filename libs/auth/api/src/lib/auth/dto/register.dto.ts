@@ -20,3 +20,20 @@ export class Register implements IRegister {
     @ApiProperty()
     photoUrl: string;
 }
+
+export class RegisterWithGoogle {
+    @ApiProperty()
+    id: string;
+    
+    @ApiProperty()
+    username: string;
+
+    @ApiProperty()
+    email: string;
+
+    @ApiProperty()
+    displayName: string;
+
+    @ApiProperty()
+    photoUrl: string;
+}

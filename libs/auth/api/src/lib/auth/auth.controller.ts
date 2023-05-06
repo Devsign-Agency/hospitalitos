@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { Credentials } from './dto/credentials.dto';
-import { Register } from './dto/register.dto';
+import { Register, RegisterWithGoogle } from './dto/register.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -57,5 +57,11 @@ export class AuthController {
     @Post('signinWithGoogle')
     public async signinWithGoogle(@Ip() ip: string, @Body() { code }: { code: string }) {
         return this.authService.signinWithGoogle(code, ip);
+    }
+
+    @Public()
+    @Post('registerWithGoogle')
+    public async registerWithGoogle(@Ip() ip: string, @Body() data: RegisterWithGoogle) {
+        return this.authService.registerWithGoogle(data, ip);
     }
 }

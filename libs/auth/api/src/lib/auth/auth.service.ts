@@ -10,6 +10,7 @@ import { AccountService } from '../account/account.service';
 import { Account } from '../account/interfaces/account.interface';
 import { JwtUtils } from '../jwt/jwt.utils';
 import { SessionService } from '../session/session.service';
+import { RegisterWithGoogle } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -98,6 +99,21 @@ export class AuthService {
 
         } catch (error) {
             throw new UnauthorizedException(null, "invalid credentials")
+        }
+    }
+
+    public async registerWithGoogle(data: RegisterWithGoogle, ip: string) {
+        try {
+            const userData = {
+                id: data.id,
+                email: data.email,
+                name: data.displayName,
+                picture: data.photoUrl
+            };
+            return await this.signinOrRegisterWithGoogle(userData, ip);
+
+        } catch (error) {
+            throw new UnauthorizedException(null, 'invalid credentials');
         }
     }
 

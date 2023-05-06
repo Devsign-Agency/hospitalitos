@@ -7,3 +7,9 @@ nx g @nrwl/js:library --buildable --directory multimedia/video --name ng-common 
 nx g @nrwl/nest:library --buildable --directory multimedia/video --name api --importPath @kaad/video/api
 nx g @nrwl/angular:library --buildable --directory multimedia/video/webapp --name ui --importPath @kaad/video/webapp/ui
 nx g @nrwl/angular:library --buildable --directory multimedia/video/webapp --name core --importPath @kaad/video/webapp/core
+
+
+// apk
+~/Library/Android/sdk/build-tools/31.0.0/zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk hospitalitos.apk
+~/Library/Android/sdk/build-tools/31.0.0/apksigner sign --ks devsign.jks --v1-signing-enabled true --v2-signing-enabled true hospitalitos.apk
+// clave devsign2022

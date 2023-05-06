@@ -65,10 +65,16 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _Form extends StatelessWidget {
+class _Form extends StatefulWidget {
   _Form();
 
+  @override
+  State<_Form> createState() => _FormState();
+}
+
+class _FormState extends State<_Form> {
   final TextEditingController usernameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -97,17 +103,15 @@ class _Form extends StatelessWidget {
                       color: ColorConstant.transparent,
                       height: getSize(32),
                       width: getSize(32),
-                      onTap: () {
-                        onTapImgGoogle(context);
-                      }),
-                  CustomImageView(
-                      svgPath: ImageConstant.imgFacebook,
-                      height: getSize(32),
-                      width: getSize(32),
-                      margin: getMargin(left: 56),
-                      onTap: () {
-                        onTapImgFacebook(context);
-                      })
+                      onTap: onTapImgGoogle
+                  ),
+                  // CustomImageView(
+                  //     svgPath: ImageConstant.imgFacebook,
+                  //     height: getSize(32),
+                  //     width: getSize(32),
+                  //     margin: getMargin(left: 56),
+                  //     onTap: onTapImgFacebook
+                  // )
                 ])),
         _SecurityFormField(
           focusNode: FocusNode(),
@@ -134,7 +138,7 @@ class _Form extends StatelessWidget {
             height: getVerticalSize(48),
             text: 'Iniciar Sesión',
             margin: getMargin(top: 60),
-            onTap: authService.authenticating ? null : () => login(context)),
+            onTap: authService.authenticating ? null : login),
         Padding(
             padding: getPadding(top: 21),
             child: TextButton(
@@ -162,7 +166,7 @@ class _Form extends StatelessWidget {
     );
   }
 
-  login(BuildContext context) async {
+  login() async {
     FocusScope.of(context).unfocus();
     final username = usernameController.text;
     final password = passwordController.text;
@@ -178,14 +182,20 @@ class _Form extends StatelessWidget {
     }
   }
 
-  onTapImgGoogle(BuildContext context) async {
-    var url = 'https://accounts.google.com/';
-    // if (!await launch(url)) {
-    //   throw 'Could not launch https://accounts.google.com/';
-    // }
+  onTapImgGoogle() async {
+    AuthService authService = Provider.of<AuthService>(context, listen: false);
+    bool isValid = await authService.loginWithGoogle();
+    if (isValid) {
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, RouterMain.initialRoute);
+      }
+    } else {
+      // Mostrar alerta
+      if (context.mounted) showAlert(context, 'Error', 'Error on register');
+    }
   }
 
-  onTapImgFacebook(BuildContext context) async {
+  onTapImgFacebook() async {
     var url = 'https://www.facebook.com/login/';
     // if (!await launch(url)) {
     //   throw 'Could not launch https://www.facebook.com/login/';
