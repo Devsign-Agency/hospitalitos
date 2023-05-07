@@ -24,17 +24,16 @@ class AppbarImage extends StatelessWidget {
 
   Color? color;
 
-  Function? onTap;
+  GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
+      onTap: onTap,
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
         child: CustomImageView(
+          radius: BorderRadius.all(Radius.circular(5.0)),
           svgPath: svgPath,
           imagePath: imagePath,
           height: height,

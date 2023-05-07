@@ -8,6 +8,7 @@ import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
   ];
-  late User user;
+  late User? user;
 
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                                     AppStyle.txtNunitoSansSemiBold13Gray800)),
                         Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(user.firstname ?? '',
+                            child: Text(user?.firstname ?? '',
                                 style: AppStyle.txtNunitoSansSemiBold23))
                       ],
                     )),
@@ -137,6 +138,7 @@ class _HomePageState extends State<HomePage> {
                       height: 48,
                       width: 48,
                       variant: IconButtonVariant.FillGray300,
+                      onTap: _playText,
                       child: CustomImageView(
                         color: ColorConstant.gray800,
                         svgPath: ImageConstant.imgSearch,
@@ -306,5 +308,11 @@ class _HomePageState extends State<HomePage> {
       Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
           ModalRoute.withName(RouterMain.initialRoute));
     }
+  }
+
+  _playText() async {
+    TextToSpeech tts = TextToSpeech();
+    
+    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

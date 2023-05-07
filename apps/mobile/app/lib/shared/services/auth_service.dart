@@ -10,7 +10,7 @@ import 'package:mobile_app/shared/providers/interceptor.dart';
 
 class AuthService with ChangeNotifier {
   final apiUrl = Constants.apiUrl;
-  late User user;
+  User? user;
   bool _authenticating = false;
   final _storage = FlutterSecureStorage();
 

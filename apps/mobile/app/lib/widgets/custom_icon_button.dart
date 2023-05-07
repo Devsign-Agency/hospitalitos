@@ -68,6 +68,10 @@ class CustomIconButton extends StatelessWidget {
         return getPadding(
           all: 14,
         );
+      case IconButtonPadding.PaddingAll5:
+        return getPadding(
+          all: 2,
+        );
       default:
         return getPadding(
           all: 10,
@@ -161,6 +165,7 @@ enum IconButtonShape {
 enum IconButtonPadding {
   PaddingAll10,
   PaddingAll14,
+  PaddingAll5
 }
 enum IconButtonVariant {
   NoFill,

@@ -53,6 +53,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   http_interceptor: ^1.0.2
   google_sign_in: ^6.1.0
+  flutter_tts: ^3.6.3
 
 dev_dependencies:
   flutter_test:
