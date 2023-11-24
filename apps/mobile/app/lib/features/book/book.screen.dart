@@ -48,54 +48,7 @@ class _MainScreenState extends State<BookScreen> {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Scaffold(
-        backgroundColor: ColorConstant.whiteA700,
-        appBar: CustomAppBar(
-            height: getVerticalSize(48),
-            leadingWidth: 31,
-            leading: AppbarImage(
-                height: getSize(20),
-                width: getSize(20),
-                svgPath: ImageConstant.imgArrowleftGray900,
-                color: ColorConstant.gray900,
-                margin: getMargin(left: 7),
-                onTap: () => onTapArrowleft12(context)),
-            title:
-                AppbarSubtitle(text: book!.Title!, margin: getMargin(left: 7)),
-            actions: [(
-              playing ? 
-              CustomIconButton(
-                      height: 38,
-                      width: 38,
-                      alignment: Alignment.center,
-                      padding: IconButtonPadding.PaddingAll5,
-                      variant: IconButtonVariant.FillGray300,
-                      onTap: () => _stopText(),
-                      child: CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgMusic,
-                      ),
-                    )
-              : 
-              AppbarImage(
-                  height: getSize(24),
-                  width: getSize(24),
-                  svgPath: ImageConstant.imgMusic,
-                  color: ColorConstant.gray900,
-                  margin: getMargin(left: 7, right: 14),
-                  onTap: () => _playText(chapter),
-              )),
-              AppbarImage(
-                  height: getSize(24),
-                  width: getSize(24),
-                  svgPath: ImageConstant.imgOverflowmenu,
-                  color: ColorConstant.gray900,
-                  margin: getMargin(left: 0, right: 14)
-              )
-            ],
-            styleType: Style.bgFillWhiteA700),
-        bottomNavigationBar: BookBottomBar(
-            onChanged: (index) => _onItemTapped(index, context, book)),
-        body: ChapterPage(book: book, chapter: chapter!),
+        body: ChapterPage(book: book!, chapter: chapter!),
       ),
       //   child: EpubReader()
     );

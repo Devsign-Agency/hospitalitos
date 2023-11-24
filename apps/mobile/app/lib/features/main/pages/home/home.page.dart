@@ -2,8 +2,10 @@ import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/user.dart';
+import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
+import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
 import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
@@ -117,6 +119,7 @@ class _HomePageState extends State<HomePage> {
                         color: ColorConstant.gray800,
                         svgPath: ImageConstant.imgUserGray800,
                       ),
+                      onTap: () => Navigator.of(context).pushNamed('profile'),
                     ),
                     SizedBox(width: 10),
                     Expanded(
@@ -149,11 +152,13 @@ class _HomePageState extends State<HomePage> {
                       height: 48,
                       width: 48,
                       variant: IconButtonVariant.FillGray300,
-                      onTap: _logout,
+                      // onTap: _logout,
                       child: CustomImageView(
                         color: ColorConstant.gray800,
                         svgPath: ImageConstant.imgNotification,
                       ),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(NotificationsScreen.route),
                     ),
                   ],
                 ),
@@ -211,20 +216,24 @@ class _HomePageState extends State<HomePage> {
                           spreadRadius: -4.0,
                         ), //BoxShadow
                       ]),
-                  child: Row(
-                    children: [
-                      CustomImageView(
-                          color: ColorConstant.gray800,
-                          svgPath: ImageConstant.imgFavorite,
-                          height: getSize(24),
-                          width: getSize(24),
-                          margin: getMargin(top: 4, bottom: 4)),
-                      SizedBox(width: 10),
-                      Text(
-                        'Mis Favoritos',
-                        style: AppStyle.txtNunitoSansSemiBold23,
-                      )
-                    ],
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(FavoriteListScreen.route),
+                    child: Row(
+                      children: [
+                        CustomImageView(
+                            color: ColorConstant.gray800,
+                            svgPath: ImageConstant.imgFavorite,
+                            height: getSize(24),
+                            width: getSize(24),
+                            margin: getMargin(top: 4, bottom: 4)),
+                        SizedBox(width: 10),
+                        Text(
+                          'Mis Favoritos',
+                          style: AppStyle.txtNunitoSansSemiBold23,
+                        )
+                      ],
+                    ),
                   )),
 
               // Recently viewed
@@ -287,8 +296,10 @@ class _HomePageState extends State<HomePage> {
                             icon: ImageConstant.imgVolume, label: 'Oraciones'),
                         SizedBox(width: 14.0),
                         ExpandedButton(
-                            icon: ImageConstant.imgVolumeIndigo900,
-                            label: 'Blog')
+                          icon: ImageConstant.imgVolumeIndigo900,
+                          label: 'Blog',
+                          route: 'blog',
+                        )
                       ],
                     ),
                   )
@@ -297,6 +308,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        bottomNavigationBar: CustomBottomBar(onChanged: (int index) {}),
       ),
     );
   }
@@ -312,7 +324,7 @@ class _HomePageState extends State<HomePage> {
 
   _playText() async {
     TextToSpeech tts = TextToSpeech();
-    
+
     await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

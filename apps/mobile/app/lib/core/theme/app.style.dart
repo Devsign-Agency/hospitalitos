@@ -121,6 +121,13 @@ class AppStyle {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle txtNunitoSansSemiBold20Black900 = TextStyle(
+    color: ColorConstant.black900,
+    fontSize: getFontSize(20),
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle txtNunitoSansSemiBold20Gray900 = TextStyle(
     color: ColorConstant.gray900,
     fontSize: getFontSize(20),
@@ -375,6 +382,13 @@ class AppStyle {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle txtRobotoRegular14Gray10002 = TextStyle(
+    color: ColorConstant.gray10002,
+    fontSize: getFontSize(14),
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle txtNunitoSansRegular18 = TextStyle(
     color: ColorConstant.red500,
     fontSize: getFontSize(18),
@@ -441,6 +455,13 @@ class AppStyle {
   static TextStyle txtNunitoSansSemiBold14 = TextStyle(
     color: ColorConstant.indigo900,
     fontSize: getFontSize(14),
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle txtNunitoSansSemiBold13Primary200 = TextStyle(
+    color: ColorConstant.purple200,
+    fontSize: getFontSize(13),
     fontFamily: 'Nunito Sans',
     fontWeight: FontWeight.w600,
   );

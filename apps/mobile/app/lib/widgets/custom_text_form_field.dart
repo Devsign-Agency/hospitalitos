@@ -2,7 +2,6 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-
   CustomTextFormField(
       {this.tkey,
       this.shape,
@@ -13,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
       this.width,
       this.margin,
       this.controller,
+      this.enabled,
       this.focusNode,
       this.isObscureText = false,
       this.textInputAction = TextInputAction.next,
@@ -43,6 +43,8 @@ class CustomTextFormField extends StatelessWidget {
   EdgeInsetsGeometry? margin;
 
   TextEditingController? controller;
+
+  bool? enabled;
 
   FocusNode? focusNode;
 
@@ -80,6 +82,22 @@ class CustomTextFormField extends StatelessWidget {
 
   _buildTextFormFieldWidget() {
     return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(24, 39, 75, 0.08),
+            blurRadius: 42,
+            spreadRadius: -4.0,
+            offset: const Offset(0, 12),
+          ),
+          BoxShadow(
+            color: Color.fromRGBO(24, 39, 75, 0.08),
+            blurRadius: 18,
+            spreadRadius: -6.0,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
       width: width ?? double.maxFinite,
       margin: margin,
       child: TextFormField(
@@ -88,6 +106,7 @@ class CustomTextFormField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         focusNode: focusNode,
+        enabled: enabled ?? true,
         style: _setFontStyle(),
         obscureText: isObscureText!,
         textInputAction: textInputAction,
@@ -258,7 +277,12 @@ class CustomTextFormField extends StatelessWidget {
           ),
         );
       case TextFormFieldVariant.None:
-        return InputBorder.none;
+        return OutlineInputBorder(
+            borderRadius: _setOutlineBorderRadius(),
+            borderSide: BorderSide(
+              color: ColorConstant.whiteA700,
+              width: 1.0,
+            ));
       default:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
@@ -309,8 +333,8 @@ class CustomTextFormField extends StatelessWidget {
         return true;
       case TextFormFieldVariant.OutlineGray300:
         return false;
-      case TextFormFieldVariant.None:
-        return false;
+      // case TextFormFieldVariant.None:
+      //   return false;
       default:
         return true;
     }
@@ -341,12 +365,7 @@ class CustomTextFormField extends StatelessWidget {
           bottom: 30,
         );
       default:
-        return getPadding(
-          top: 15,
-          right: 15,
-          bottom: 15,
-          left: 15
-        );
+        return getPadding(top: 15, right: 15, bottom: 15, left: 15);
     }
   }
 }
@@ -356,6 +375,7 @@ enum TextFormFieldShape {
   RoundedBorder4,
   RoundedBorder8,
 }
+
 enum TextFormFieldPadding {
   PaddingT15,
   PaddingT15_1,
@@ -363,6 +383,7 @@ enum TextFormFieldPadding {
   PaddingT11,
   PaddingT30,
 }
+
 enum TextFormFieldVariant {
   None,
   OutlineGray500,
@@ -375,6 +396,7 @@ enum TextFormFieldVariant {
   OutlineBlack9004c_2,
   OutlineGray300,
 }
+
 enum TextFormFieldFontStyle {
   NunitoSansRegular18,
   NunitoSansRegular18Red500,

@@ -155,6 +155,10 @@ class CustomButton extends StatelessWidget {
         return ColorConstant.whiteA700;
       case ButtonVariant.FillIndigo900:
         return ColorConstant.indigo900;
+      case ButtonVariant.FillYellow:
+        return ColorConstant.yellow100;
+      case ButtonVariant.FillRed200:
+        return ColorConstant.red200;
       case ButtonVariant.Outline:
         return null;
       default:
@@ -382,6 +386,7 @@ class CustomButton extends StatelessWidget {
       case ButtonVariant.OutlineIndigo900:
       case ButtonVariant.OutlineGray300:
       case ButtonVariant.FillIndigo900:
+      case ButtonVariant.FillYellow:
         return null;
       default:
         return [
@@ -409,12 +414,14 @@ enum ButtonShape {
   RoundedBorder8,
   CircleBorder18,
 }
+
 enum ButtonPadding {
   PaddingAll13,
   PaddingAll6,
   PaddingAll9,
   PaddingT5,
 }
+
 enum ButtonVariant {
   OutlineBluegray90014,
   Outline,
@@ -424,7 +431,11 @@ enum ButtonVariant {
   OutlineIndigo900,
   OutlineGray300,
   FillIndigo900,
+  FillYellow,
+  FillRed200,
+  Fill
 }
+
 enum ButtonFontStyle {
   NunitoSansSemiBold16,
   NunitoSansSemiBold20,

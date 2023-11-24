@@ -10,7 +10,7 @@ class CategoryService with ChangeNotifier {
 
   Future<List<Category>> getAll() async {
     List<Category> categories = [];
-
+    print('obteniendo categorias');
     try {
       final url = Uri.parse('$apiUrl/category');
       final response = await http.get(
@@ -20,7 +20,8 @@ class CategoryService with ChangeNotifier {
           'Accept': 'application/json',
         }
       );
-
+      print('categorias obtenidas $response');
+      
       if (response.statusCode == 200) {
         final Page<Category> pageCategory = Page.fromJson(jsonDecode(response.body));
         categories = pageCategory.data;

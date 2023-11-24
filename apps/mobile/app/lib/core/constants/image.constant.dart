@@ -42,6 +42,8 @@ class ImageConstant {
 
   static String imgClose = 'assets/images/img_close.svg';
 
+  static String imgCloseGray24x24 = 'assets/images/img_close_gray_24x24.svg';
+
   static String imgArrowup = 'assets/images/img_arrowup.svg';
 
   static String imgMusic = 'assets/images/img_music.svg';
@@ -74,6 +76,9 @@ class ImageConstant {
 
   static String imgUserGray80024x24 =
       'assets/images/img_user_gray_800_24x24.svg';
+
+  static String imgDownloadGray30024x24 =
+      'assets/images/img_download_gray_300_24x24.svg';
 
   static String imgImage10 = 'assets/images/img_image10.png';
 
@@ -215,6 +220,8 @@ class ImageConstant {
   static String imgQuestion = 'assets/images/img_question.svg';
 
   static String imgIconWhiteA700 = 'assets/images/img_icon_white_a700.svg';
+
+  static String imgShareWhiteA700 = 'assets/images/img_share_white_a700.svg';
 
   static String imgArrowdownIndigo900 =
       'assets/images/img_arrowdown_indigo_900.svg';

@@ -48,6 +48,8 @@ class AuthService with ChangeNotifier {
         data['preferences'] = preferences;
       }
 
+      print('saliendo registro...');
+      print(data);
       final url = Uri.parse('$apiUrl/${Constants.authUri}/register');
       final response = await http.post(
         url,
@@ -57,6 +59,8 @@ class AuthService with ChangeNotifier {
         },
         body: jsonEncode(data),
       );
+
+      print('response: $response');
 
       if (response.statusCode == 201) {
         handleLogin(response);
@@ -84,6 +88,7 @@ class AuthService with ChangeNotifier {
       final data = {'username': email, 'password': password};
 
       final url = Uri.parse('$apiUrl/${Constants.authUri}');
+      print(url);
       final response = await http.post(
         url,
         headers: <String, String>{

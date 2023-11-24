@@ -97,6 +97,12 @@ class CustomIconButton extends StatelessWidget {
         return ColorConstant.indigo90033;
       case IconButtonVariant.FillDeeppurple5002:
         return ColorConstant.deepPurple5002;
+      case IconButtonVariant.FillDeeppurple5002:
+        return ColorConstant.deepPurple5002;
+      case IconButtonVariant.FillYellow:
+        return ColorConstant.yellow100;
+      case IconButtonVariant.FillRed200:
+        return ColorConstant.red200;
       default:
         return ColorConstant.amber300;
     }
@@ -162,11 +168,9 @@ enum IconButtonShape {
   CircleBorder24,
   CircleBorder28,
 }
-enum IconButtonPadding {
-  PaddingAll10,
-  PaddingAll14,
-  PaddingAll5
-}
+
+enum IconButtonPadding { PaddingAll10, PaddingAll14, PaddingAll5 }
+
 enum IconButtonVariant {
   NoFill,
   FillAmber300,
@@ -174,7 +178,9 @@ enum IconButtonVariant {
   FillGray400,
   FillWhiteA700,
   FillRed50033,
+  FillRed200,
   OutlineBlack9004c,
   FillIndigo90033,
   FillDeeppurple5002,
+  FillYellow
 }

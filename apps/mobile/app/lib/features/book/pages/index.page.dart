@@ -9,40 +9,39 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
 
     return Scaffold(
       backgroundColor: ColorConstant.gray300,
       appBar: CustomAppBar(
-          height: getVerticalSize(
-            60,
+        height: getVerticalSize(
+          60,
+        ),
+        leadingWidth: 31,
+        leading: AppbarImage(
+            height: getSize(20),
+            width: getSize(20),
+            svgPath: ImageConstant.imgArrowleftGray900,
+            color: ColorConstant.gray900,
+            margin: getMargin(left: 7)),
+        title: AppbarSubtitle(
+          text: 'Índice',
+          margin: getMargin(
+            left: 18,
           ),
-          leadingWidth: 31,
-          leading: AppbarImage(
-                height: getSize(20),
-                width: getSize(20),
-                svgPath: ImageConstant.imgArrowleftGray900,
-                color: ColorConstant.gray900,
-                margin: getMargin(left: 7)
-          ),
-          title: AppbarSubtitle(
-            text: 'Índice',
-            margin: getMargin(
-              left: 18,
-            ),
-          ),
-          actions: [
-            AppbarImage(
+        ),
+        actions: [
+          AppbarImage(
               height: getSize(24),
               width: getSize(24),
               svgPath: ImageConstant.imgSearch,
               color: ColorConstant.gray900,
-              margin: getMargin(left: 7, right: 14)
-            ),
-          ],
-        ),
-        // AppBar(title: Text(book!.Title!)),
+              margin: getMargin(left: 7, right: 14)),
+        ],
+      ) as PreferredSizeWidget,
+      // AppBar(title: Text(book!.Title!)),
       body: Center(
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
@@ -55,9 +54,7 @@ class IndexPage extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.popAndPushNamed(context, 'book',
                         arguments: EpubArguments(
-                            book: book,
-                            chapter: book.Chapters![index]
-                        ));
+                            book: book, chapter: book.Chapters![index]));
                   },
                 )),
       ),
