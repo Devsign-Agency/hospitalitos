@@ -74,7 +74,7 @@ class CustomImageView extends StatelessWidget {
   _buildCircleImage() {
     if (radius != null) {
       return ClipRRect(
-        borderRadius: radius as BorderRadius,
+        borderRadius: radius as BorderRadiusGeometry,
         child: _buildImageWithBorder(),
       );
     } else {

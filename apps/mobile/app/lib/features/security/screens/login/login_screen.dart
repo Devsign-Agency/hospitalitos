@@ -103,8 +103,7 @@ class _FormState extends State<_Form> {
                       color: ColorConstant.transparent,
                       height: getSize(32),
                       width: getSize(32),
-                      onTap: onTapImgGoogle
-                  ),
+                      onTap: onTapImgGoogle),
                   // CustomImageView(
                   //     svgPath: ImageConstant.imgFacebook,
                   //     height: getSize(32),
@@ -142,7 +141,8 @@ class _FormState extends State<_Form> {
         Padding(
             padding: getPadding(top: 21),
             child: TextButton(
-              onPressed: () => Navigator.pushNamed(context, PreRegisterScreen.route),
+              onPressed: () =>
+                  Navigator.pushNamed(context, PreRegisterScreen.route),
               child: Text('O regístrate acá',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
