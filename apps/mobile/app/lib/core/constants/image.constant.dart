@@ -11,6 +11,8 @@ class ImageConstant {
 
   static String imgMedia116x535 = 'assets/images/img_media_116x535.png';
 
+  static String imgFaceEmogi = 'assets/images/img_face_emogi.svg';
+
   static String imgArrowupIndigo900 =
       'assets/images/img_arrowup_indigo_900.svg';
 
@@ -222,6 +224,10 @@ class ImageConstant {
   static String imgIconWhiteA700 = 'assets/images/img_icon_white_a700.svg';
 
   static String imgShareWhiteA700 = 'assets/images/img_share_white_a700.svg';
+
+  static String imgShare = 'assets/images/img_share.svg';
+
+  static String imgShareGray50 = 'assets/images/img_share_gray_50.svg';
 
   static String imgArrowdownIndigo900 =
       'assets/images/img_arrowdown_indigo_900.svg';

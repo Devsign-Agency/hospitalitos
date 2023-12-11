@@ -178,7 +178,8 @@ class _ListFavorite extends StatelessWidget {
               ClipRRect(
                 borderRadius: borderRadius,
                 child: CustomImageView(
-                  imagePath: 'assets/images/img_media.png',
+                  imagePath:
+                      'assets/images/img_media.png', // TODO: Verificar cambiar por svgPath
                   width: getSize(132),
                   height: double.infinity,
                 ),

@@ -38,11 +38,12 @@ class PreviewItemList extends StatelessWidget {
                     return SizedBox(width: 6);
                   } else {
                     EpubBook book = snapshot.data![index - 1];
-                    Image image = Image.memory(Uint8List.fromList(
-                        encodePng(book.CoverImage!)));
+                    print(snapshot);
+                    Image image = Image.memory(
+                        Uint8List.fromList(encodePng(book.CoverImage!)));
 
                     String title = book.Title!.trim();
-                    return ViewedPreview(
+                    return _ViewedPreview(
                       onTap: () => onTap(context, book),
                       backgroundImage: image,
                       progressValue: 0.0,
@@ -57,20 +58,18 @@ class PreviewItemList extends StatelessWidget {
   }
 
   onTap(context, EpubBook book) {
-    Navigator.pushNamed(context, 'book', arguments: EpubArguments(
-        book: book,
-        chapter: book.Chapters![0]
-    ));
+    Navigator.pushNamed(context, 'book',
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 }
 
-class ViewedPreview extends StatelessWidget {
+class _ViewedPreview extends StatelessWidget {
   final Image backgroundImage;
   final String title;
   final double progressValue;
   final VoidCallback onTap;
 
-  const ViewedPreview(
+  const _ViewedPreview(
       {super.key,
       required this.backgroundImage,
       required this.onTap,

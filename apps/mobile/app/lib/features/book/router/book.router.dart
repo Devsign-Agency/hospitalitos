@@ -12,8 +12,8 @@ class RouterBook {
     Map<String, Widget Function(BuildContext)> routes = {};
 
     routes.addAll({
-        BookScreen.route: (BuildContext context) => BookScreen(),
-        IndexPage.route: (BuildContext context) => IndexPage()
+      BookScreen.route: (BuildContext context) => BookScreen(),
+      IndexPage.route: (BuildContext context) => IndexPage()
     });
 
     for (final option in menuOptions) {

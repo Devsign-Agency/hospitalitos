@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/blog/router/router.dart';
 import 'package:mobile_app/features/book/router/router.dart';
+import 'package:mobile_app/features/library/router/library_router.dart';
 import 'package:mobile_app/features/main/router/router.dart';
 import 'package:mobile_app/features/notification/router/router_notification.dart';
 import 'package:mobile_app/features/security/router/router.dart';
-
-import '../features/favorite/router/router.dart';
-import '../features/profile/router/router.dart';
+import 'package:mobile_app/features/favorite/router/router.dart';
+import 'package:mobile_app/features/profile/router/router.dart';
 
 class RouterApp {
   static const initialRoute = RouterMain.initialRoute;
@@ -21,6 +21,7 @@ class RouterApp {
     routes.addAll(RouterProfile.getRoutes());
     routes.addAll(RouterFavorite.getRoutes());
     routes.addAll(RouterNotification.getRoutes());
+    routes.addAll(RouterLibrary.getRoutes());
 
     return routes;
   }

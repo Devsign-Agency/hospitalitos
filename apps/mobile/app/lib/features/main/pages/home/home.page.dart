@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
+import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -83,6 +84,36 @@ class _HomePageState extends State<HomePage> {
           child: Text('Del propio del día. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
+    Wrap(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+      SizedBox(height: 8.0),
+      Align(
+          widthFactor: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Text('Del propio del día. Salterio II',
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
+    ]),
+    Wrap(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+      SizedBox(height: 8.0),
+      Align(
+          widthFactor: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Text('Del propio del día. Salterio II',
+              style: AppStyle.txtNunitoSansRegular18Gray900)),
+    ]),
   ];
   late User? user;
 
@@ -96,6 +127,13 @@ class _HomePageState extends State<HomePage> {
 
     final authService = Provider.of<AuthService>(context, listen: false);
     user = authService.user;
+  }
+
+  void _onChangeTab(int index) {
+    switch (index) {
+      case 1:
+        Navigator.of(context).pushNamed(CoursesScreen.route);
+    }
   }
 
   @override
@@ -258,16 +296,20 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               children: [
                                 Text('Ver más',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300)),
-                                Icon(Icons.chevron_right_outlined)
+                                    style: AppStyle
+                                        .txtNunitoSansSemiBold16Indigo900),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightIndigo900,
+                                  width: getSize(24),
+                                  height: getSize(24),
+                                  color: ColorConstant.indigo900,
+                                ),
                               ],
                             ),
                           ),
                         ],
                       )),
-                  PreviewItemList(future: fetchData()),
+                  CardPreviewItem(future: fetchData()),
                 ],
               ),
 
@@ -308,7 +350,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(onChanged: (int index) {}),
+        bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
       ),
     );
   }

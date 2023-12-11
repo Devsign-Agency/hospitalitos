@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/themes/light_variables.dart';
 
 class LightTheme {
-
   static final colors = ColorScheme.fromSeed(
     seedColor: LightVariables.seed,
     brightness: LightVariables.brightness,
@@ -13,10 +12,12 @@ class LightTheme {
     tertiary: LightVariables.tertiary,
     onTertiary: LightVariables.onTertiary,
     background: LightVariables.background,
-    onBackground: LightVariables.onBackground
+    onBackground: LightVariables.onBackground,
   );
-  static get theme => ThemeData.from(
-    colorScheme: colors
-  );
-
+  static get theme => ThemeData(
+        colorScheme: colors,
+        appBarTheme: const AppBarTheme(
+          color: Colors.white,
+        ),
+      );
 }

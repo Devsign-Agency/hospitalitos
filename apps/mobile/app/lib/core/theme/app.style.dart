@@ -51,6 +51,13 @@ class AppStyle {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle txtNunitoSansSemiBold13Gray200 = TextStyle(
+    color: ColorConstant.gray200,
+    fontSize: getFontSize(13),
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle txtRobotoFlexRegular14 = TextStyle(
     color: ColorConstant.whiteA700,
     fontSize: getFontSize(14),

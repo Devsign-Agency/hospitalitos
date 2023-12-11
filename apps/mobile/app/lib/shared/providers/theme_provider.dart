@@ -7,7 +7,7 @@ class ThemeProvider extends ChangeNotifier {
   final ThemeData dark = DarkTheme.theme;
 
   ThemeProvider({required bool isDarkmode})
-    :currentTheme = !isDarkmode ? DarkTheme.theme : LightTheme.theme;
+      : currentTheme = !isDarkmode ? DarkTheme.theme : LightTheme.theme;
 
   setLightMode() {
     currentTheme = LightTheme.theme;

@@ -30,7 +30,8 @@ class _MainScreenState extends State<BookScreen> {
   void _onItemTapped(int index, BuildContext context, EpubBook book) {
     switch (index) {
       case 2:
-        Navigator.pushNamed(context, 'book/index', arguments: EpubArguments(book: book));
+        Navigator.pushNamed(context, 'book/index',
+            arguments: EpubArguments(book: book));
         break;
       default:
         setState(() {
@@ -41,7 +42,8 @@ class _MainScreenState extends State<BookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
     final chapter = arguments.chapter;
 
@@ -58,7 +60,9 @@ class _MainScreenState extends State<BookScreen> {
     if (chapter != null) {
       String? content = chapter.HtmlContent;
       if (content != null) {
-        setState(() { playing = true; });
+        setState(() {
+          playing = true;
+        });
         await tts.play(content);
       }
     }
@@ -66,12 +70,16 @@ class _MainScreenState extends State<BookScreen> {
 
   _pauseText() async {
     await tts.pause();
-    setState(() { playing = false; });
+    setState(() {
+      playing = false;
+    });
   }
 
   _stopText() async {
     await tts.pause();
-    setState(() { playing = false; });
+    setState(() {
+      playing = false;
+    });
   }
 
   onTapArrowleft12(BuildContext context) {

@@ -10,6 +10,7 @@ class ChipviewinputchipItemWidget extends StatelessWidget {
   final String text;
   final ValueChanged<bool>? onSelected;
   final ValueChanged<bool>? onDeleted;
+  final Widget? avatar;
   bool selected;
   bool hasDeleteIcon;
 
@@ -18,6 +19,7 @@ class ChipviewinputchipItemWidget extends StatelessWidget {
       this.selected = false,
       this.hasDeleteIcon = false,
       this.onDeleted,
+      this.avatar,
       required this.text});
 
   @override
@@ -36,6 +38,7 @@ class ChipviewinputchipItemWidget extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
+      avatar: avatar,
       deleteIcon: hasDeleteIcon
           ? CustomImageView(
               color: ColorConstant.black900,
