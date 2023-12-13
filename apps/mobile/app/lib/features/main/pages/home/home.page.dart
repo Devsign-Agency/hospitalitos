@@ -136,6 +136,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  onTap(context, EpubBook book) {
+    print(book);
+    Navigator.pushNamed(context, 'book',
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -309,7 +315,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )),
-                  CardPreviewItem(future: fetchData()),
+                  CardPreviewItemList(
+                    future: fetchData(),
+                    onTappedItem: onTap,
+                  ),
                 ],
               ),
 
@@ -365,6 +374,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _playText() async {
+    print('playText');
     TextToSpeech tts = TextToSpeech();
 
     await tts.play('Hola mundo, esto es una prueba de flutter.');

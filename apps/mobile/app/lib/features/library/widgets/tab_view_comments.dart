@@ -13,6 +13,7 @@ class TabViewComments extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FutureBuilder(
             future: getComments(),

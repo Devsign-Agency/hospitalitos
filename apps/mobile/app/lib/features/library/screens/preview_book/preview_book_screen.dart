@@ -4,6 +4,7 @@ import 'package:mobile_app/features/library/widgets/tab_view_chapters.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../core/models/viewed_preview.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/widgets.dart';
 
@@ -48,7 +49,7 @@ class _PreviewBookScreenState extends State<PreviewBookScreen> {
               // Recommended
               TabViewRecommended(
                 future: getBooks(),
-                onTapItem: () => Navigator.pushNamed(context, 'reader-book',
+                onItemTapped: () => Navigator.pushNamed(context, 'reader-book',
                     arguments: 'instance-book'),
               ),
 
@@ -61,8 +62,29 @@ class _PreviewBookScreenState extends State<PreviewBookScreen> {
     ));
   }
 
-  Future<dynamic> getBooks() {
-    return Future.delayed(Duration(seconds: 1));
+  Future<List<ViewedPreviewItem>> getBooks() {
+    List<ViewedPreviewItem> items = [
+      ViewedPreviewItem(
+          id: '1', title: 'Título', image: 'assets/images/img_5.png'),
+      ViewedPreviewItem(
+          id: '2', title: 'Título', image: 'assets/images/img_7.png'),
+      ViewedPreviewItem(
+          id: '3', title: 'Título', image: 'assets/images/img_8.png'),
+      ViewedPreviewItem(
+          id: '4', title: 'Título', image: 'assets/images/img_5.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_img7.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_8.png'),
+      ViewedPreviewItem(
+          id: '4', title: 'Título', image: 'assets/images/img_5.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_img7.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_8.png'),
+    ];
+
+    return Future.delayed(Duration(seconds: 1), () => items);
   }
 
   bool get _isSliverAppBarExpanded {

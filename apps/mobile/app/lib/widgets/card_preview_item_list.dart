@@ -4,11 +4,12 @@ import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/core/models/epub.arguments.dart';
 
-class CardPreviewItem extends StatelessWidget {
+class CardPreviewItemList extends StatelessWidget {
   final Future<List<EpubBook>> future;
-  const CardPreviewItem({super.key, required this.future});
+  final onTappedItem;
+  const CardPreviewItemList(
+      {super.key, required this.future, required this.onTappedItem});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class CardPreviewItem extends StatelessWidget {
 
                     String title = book.Title!.trim();
                     return _ViewedPreview(
-                      onTap: () => onTap(context, book),
+                      onTap: () => {onTappedItem(context, book)},
                       backgroundImage: image,
                       progressValue: 0.0,
                       title: title,
@@ -83,7 +84,7 @@ class _ViewedPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(),
+      onTap: onTap,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Container(

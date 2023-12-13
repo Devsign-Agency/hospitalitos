@@ -17,7 +17,7 @@ class NotificationsScreen extends StatelessWidget {
             _CustomAppBar(),
 
             // Notification list
-            _NoficiationList()
+            _NotificationList()
             // Menu
           ]),
         ),
@@ -26,8 +26,8 @@ class NotificationsScreen extends StatelessWidget {
   }
 }
 
-class _NoficiationList extends StatelessWidget {
-  const _NoficiationList({
+class _NotificationList extends StatelessWidget {
+  const _NotificationList({
     super.key,
   });
 

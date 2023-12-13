@@ -1,7 +1,7 @@
 export 'package:mobile_app/features/main/pages/home/widgets/preview_item_list.dart';
 export 'package:mobile_app/widgets/background.dart';
 export 'package:mobile_app/widgets/barInputSearch.dart';
-export 'package:mobile_app/widgets/card_preview_item.dart';
+export 'package:mobile_app/widgets/card_preview_item_list.dart';
 export 'package:mobile_app/widgets/custom_bottom_bar.dart';
 export 'package:mobile_app/widgets/custom_icon_button.dart';
 export 'package:mobile_app/widgets/custom_image_view.dart';

@@ -7,7 +7,7 @@ import 'widgets.dart';
 
 class FiltersBar extends StatefulWidget {
   final List<FilterData> items;
-  final void Function(int index) onChangeSelected;
+  final void Function(int) onChangeSelected;
   const FiltersBar(
       {super.key, required this.items, required this.onChangeSelected});
 

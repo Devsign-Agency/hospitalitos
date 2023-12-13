@@ -3,11 +3,12 @@ import 'package:mobile_app/features/library/screens/preview_video/widgets/widget
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../core/models/viewed_preview.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/widgets.dart';
 
 class PreviewVideoScreen extends StatefulWidget {
-  static const String route = 'preview-course';
+  static const String route = 'preview-video';
 
   const PreviewVideoScreen({super.key});
 
@@ -44,7 +45,7 @@ class _PreviewVideoScreenState extends State<PreviewVideoScreen> {
               // Recommended
               TabViewRecommended(
                 future: getVideos(),
-                onTapItem: () => Navigator.pushNamed(context, ''),
+                onItemTapped: () => Navigator.pushNamed(context, ''),
               ),
 
               // Commentaries
@@ -57,7 +58,21 @@ class _PreviewVideoScreenState extends State<PreviewVideoScreen> {
   }
 
   Future<dynamic> getVideos() {
-    return Future.delayed(Duration(seconds: 1));
+    List<ViewedPreviewItem> items = [
+      ViewedPreviewItem(
+          id: '1', title: 'Título', image: 'assets/images/img_image12.png'),
+      ViewedPreviewItem(
+          id: '2', title: 'Título', image: 'assets/images/img_image11.png'),
+      ViewedPreviewItem(
+          id: '3', title: 'Título', image: 'assets/images/img_image10.png'),
+      ViewedPreviewItem(
+          id: '4', title: 'Título', image: 'assets/images/img_image9.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_image12.png'),
+      ViewedPreviewItem(
+          id: '5', title: 'Título', image: 'assets/images/img_image11.png'),
+    ];
+    return Future.delayed(Duration(seconds: 1), () => items);
   }
 
   bool get _isSliverAppBarExpanded {

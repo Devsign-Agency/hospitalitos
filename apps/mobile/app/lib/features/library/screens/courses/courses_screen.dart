@@ -6,10 +6,17 @@ import 'package:mobile_app/widgets/filters_bar.dart';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 
-class CoursesScreen extends StatelessWidget {
+class CoursesScreen extends StatefulWidget {
   static const route = 'courses';
   const CoursesScreen({Key? key}) : super(key: key);
 
+  @override
+  State<CoursesScreen> createState() => _CoursesScreenState();
+}
+
+class _CoursesScreenState extends State<CoursesScreen> {
+  int _selectedFilter = 0;
+  String _routeName = '';
   void _handleActions() {
     print('You have clicked!');
   }
@@ -20,6 +27,23 @@ class CoursesScreen extends StatelessWidget {
 
   void changeSelected(int index) {
     print(index);
+  }
+
+  void changeSelectedFilterItem(int index) {
+    _selectedFilter = index;
+    switch (_selectedFilter) {
+      case 0:
+        _routeName = 'preview-video';
+        break;
+      case 1:
+        _routeName = 'preview-book';
+        break;
+    }
+  }
+
+  onTap(context, EpubBook book) {
+    Navigator.pushNamed(context, _routeName,
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
   @override
@@ -56,11 +80,12 @@ class CoursesScreen extends StatelessWidget {
               child: BarInputSearch(),
             ),
 
-            /// Filters
+            // Items filter
             Padding(
               padding: getPadding(bottom: 16),
               child: FiltersBar(
-                  items: filtersData, onChangeSelected: changeSelected),
+                  items: filtersData,
+                  onChangeSelected: changeSelectedFilterItem),
             ),
 
             // Preview Image
@@ -84,49 +109,14 @@ class CoursesScreen extends StatelessWidget {
                   itemCount: 5),
             ),
 
-            // Recently viewed
-            Column(
-              children: [
-                Padding(
-                    padding: getPadding(left: 16, right: 16, bottom: 24),
-                    child: Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Categorías Populares',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtNunitoSansSemiBold23,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: [
-                              Text('Ver más',
-                                  style: AppStyle
-                                      .txtNunitoSansSemiBold16Indigo900),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightIndigo900,
-                                width: getSize(24),
-                                height: getSize(24),
-                                color: ColorConstant.indigo900,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                Column(
-                  children: [
-                    FiltersBar(
-                        items: filtersData2, onChangeSelected: changeSelected),
-                    CardPreviewItem(future: fetchData()),
-                  ],
-                ),
-              ],
+            // Popular categories
+            _ListItemScrollableHorizontal(
+              title: 'Categorías Populares',
+              hasFilter: true,
+              filterItems: filtersData2,
+              onTappedItem: onTap,
+              onSelectedFilterItem: changeSelectedFilterItem,
+              future: fetchData(),
             ),
 
             SizedBox(
@@ -134,42 +124,10 @@ class CoursesScreen extends StatelessWidget {
             ),
 
             // Recommended
-            Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 14.0),
-                    child: Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Recomendados',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtNunitoSansSemiBold23,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: [
-                              Text('Ver más',
-                                  style: AppStyle
-                                      .txtNunitoSansSemiBold16Indigo900),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightIndigo900,
-                                width: getSize(24),
-                                height: getSize(24),
-                                color: ColorConstant.indigo900,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                CardPreviewItem(future: fetchData()),
-              ],
+            _ListItemScrollableHorizontal(
+              title: 'Recomendados',
+              onTappedItem: onTap,
+              future: fetchData(),
             ),
           ],
         ),
@@ -199,6 +157,71 @@ class _CustomAppBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ListItemScrollableHorizontal extends StatelessWidget {
+  final String title;
+  final bool? hasFilter;
+  final List<FilterData>? filterItems;
+  final void Function(int)? onSelectedFilterItem;
+  final void Function(dynamic, EpubBook) onTappedItem;
+  final Future<List<EpubBook>> future;
+
+  const _ListItemScrollableHorizontal(
+      {super.key,
+      this.hasFilter = false,
+      required this.onTappedItem,
+      this.filterItems,
+      required this.future,
+      required this.title,
+      this.onSelectedFilterItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+            padding: getPadding(left: 16, right: 16, bottom: 24),
+            child: Row(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: AppStyle.txtNunitoSansSemiBold23,
+                  ),
+                ),
+                Spacer(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    children: [
+                      Text('Ver más',
+                          style: AppStyle.txtNunitoSansSemiBold16Indigo900),
+                      CustomImageView(
+                        svgPath: ImageConstant.imgArrowrightIndigo900,
+                        width: getSize(24),
+                        height: getSize(24),
+                        color: ColorConstant.indigo900,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+        Column(
+          children: [
+            if (hasFilter != null && hasFilter! && filterItems != null)
+              FiltersBar(
+                  items: filterItems!, onChangeSelected: onSelectedFilterItem!),
+            CardPreviewItemList(future: future, onTappedItem: onTappedItem),
+          ],
+        ),
+      ],
     );
   }
 }

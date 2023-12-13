@@ -26,8 +26,6 @@ class _ChapterPageState extends State<ChapterPage> {
   void initState() {
     super.initState();
 
-    print('assets/epubs/${widget.book.Title}.epub');
-
     _epubController = EpubController(
       // Load document
 

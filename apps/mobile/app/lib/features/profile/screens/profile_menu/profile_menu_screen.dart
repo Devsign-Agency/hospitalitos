@@ -55,10 +55,18 @@ class ProfileMenuScreen extends StatelessWidget {
         body: Column(children: [
           // AppBar
           _CustomAppBar(),
+
+          // Avatar
           _CustomCircleAvatar(),
+
           SizedBox(height: 32),
+
+          // Menu options
           _Menu(),
+
           Spacer(),
+
+          // Footer
           Padding(
             padding: getPadding(left: 16, right: 16, bottom: 26),
             child: CustomButton(
