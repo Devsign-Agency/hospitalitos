@@ -13,6 +13,8 @@ class RouterLibrary {
       PreviewVideoScreen.route: (BuildContext context) => PreviewVideoScreen(),
       PreviewBookScreen.route: (BuildContext context) => PreviewBookScreen(),
       ReaderBookScreen.route: (BuildContext context) => ReaderBookScreen(),
+      PreviewPodcastScreen.route: (BuildContext context) =>
+          PreviewPodcastScreen(),
     });
 
     return routes;

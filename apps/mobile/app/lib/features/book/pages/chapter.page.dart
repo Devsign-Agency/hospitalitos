@@ -1,8 +1,11 @@
-import 'package:epub_view/epub_view.dart' hide Image;
+import 'dart:io';
+import 'package:vocsy_epub_viewer/epub_viewer.dart';
+
+import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/themes/dark_theme.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/app_export.dart';
 import '../../../shared/shared.dart';
 import '../../../widgets/widgets.dart';
@@ -21,6 +24,7 @@ class ChapterPage extends StatefulWidget {
 
 class _ChapterPageState extends State<ChapterPage> {
   late EpubController _epubController;
+  late EpubBook de;
 
   @override
   void initState() {

@@ -8,6 +8,9 @@ import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/features/favorite/router/router.dart';
 import 'package:mobile_app/features/profile/router/router.dart';
 
+import '../features/bible/router/router.dart';
+import '../features/liturgia/router/router.dart';
+
 class RouterApp {
   static const initialRoute = RouterMain.initialRoute;
 
@@ -22,6 +25,8 @@ class RouterApp {
     routes.addAll(RouterFavorite.getRoutes());
     routes.addAll(RouterNotification.getRoutes());
     routes.addAll(RouterLibrary.getRoutes());
+    routes.addAll(RouterLiturgia.getRoutes());
+    routes.addAll(RouterBible.getRoutes());
 
     return routes;
   }

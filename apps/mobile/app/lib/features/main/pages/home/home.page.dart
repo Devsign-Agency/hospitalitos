@@ -2,8 +2,10 @@ import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/user.dart';
+import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/screens.dart';
+import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -12,6 +14,7 @@ import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:vocsy_epub_viewer/epub_viewer.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -133,13 +136,30 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 1:
         Navigator.of(context).pushNamed(CoursesScreen.route);
+        break;
+      case 2:
+        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+        break;
+      case 3:
+        Navigator.of(context).pushNamed(MainScreen.route);
+        break;
     }
   }
 
-  onTap(context, EpubBook book) {
+  onTap(context, EpubBook book) async {
     print(book);
-    Navigator.pushNamed(context, 'book',
-        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+    print(book.Title);
+    await VocsyEpub.openAsset(
+      'assets/epubs/${book.Title}.epub',
+      lastLocation: EpubLocator.fromJson({
+        "bookId": "2239",
+        "href": "/OEBPS/ch06.xhtml",
+        "created": 1539934158390,
+        "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
+      }),
+    );
+    // Navigator.pushNamed(context, 'book',
+    //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
   @override

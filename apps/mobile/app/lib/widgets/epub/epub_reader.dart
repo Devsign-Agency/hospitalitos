@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:epub_view/epub_view.dart';
 
-class EpubReader extends StatefulWidget {
-  const EpubReader({Key? key}) : super(key: key);
+class EpubReade extends StatefulWidget {
+  const EpubReade({Key? key}) : super(key: key);
 
   @override
-  State<EpubReader> createState() => _EpubReaderState();
+  State<EpubReade> createState() => _EpubReadeState();
 }
 
-class _EpubReaderState extends State<EpubReader> {
+class _EpubReadeState extends State<EpubReade> {
   late EpubController _epubController;
 
   @override

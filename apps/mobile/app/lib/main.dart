@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobile_app/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Kaad App',
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          supportedLocales: [const Locale('es')],
           initialRoute: RouterApp.initialRoute,
           routes: RouterApp.getRoutes(),
           onGenerateRoute: (settings) => RouterApp.onGenerateRoute(settings),

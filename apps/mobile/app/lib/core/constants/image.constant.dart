@@ -13,6 +13,8 @@ class ImageConstant {
 
   static String imgFaceEmogi = 'assets/images/img_face_emogi.svg';
 
+  static String imgMediaVideo = 'assets/images/img_media_video.svg';
+
   static String imgArrowupIndigo900 =
       'assets/images/img_arrowup_indigo_900.svg';
 

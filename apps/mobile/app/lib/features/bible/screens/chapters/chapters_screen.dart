@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/models/list_view_favorite.dart';
 
 import '../../../../core/app_export.dart';
-import '../../../../core/models/list_view_favorite.dart';
 import '../../../../widgets/widgets.dart';
 
-class FavoriteListScreen extends StatefulWidget {
-  static String route = 'favorite-list';
-
-  const FavoriteListScreen({super.key});
+class ChaptersScreen extends StatefulWidget {
+  static const String route = 'chapters-route';
+  const ChaptersScreen({Key? key}) : super(key: key);
 
   @override
-  State<FavoriteListScreen> createState() => _FavoriteListScreenState();
+  State<ChaptersScreen> createState() => _ChaptersScreenState();
 }
 
-class _FavoriteListScreenState extends State<FavoriteListScreen> {
+class _ChaptersScreenState extends State<ChaptersScreen> {
   bool _isEditing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<ListViewFavoriteModel> chapterList = [
+      ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
+      ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
+      ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
+      ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
+    ];
+
+    return SafeArea(
+      child: Scaffold(
+        body: Column(children: [
+          // Show AppBar
+          _CustomAppBar(editAction: _changeModeView, isEditing: _isEditing),
+
+          // builds a list, but if it is empty it shows a notification message
+          _buildMainContent(chapterList)
+        ]),
+      ),
+    );
+  }
 
   void _changeModeView() {
     _isEditing = !_isEditing;
@@ -34,70 +55,17 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
               child: ListViewItemFavorite(
                 isEditing: _isEditing,
                 items: chapterList,
-                hasImage: true,
                 onTappedItem: (ListViewFavoriteModel item) {
                   print(item.title);
                 },
               ),
             ))
         : NotificationEmptyList(
-            title: 'Esto se ve un poco vacio...',
+            title: 'Parece que aún no has empezado',
             message:
-                'Recuerda que puedes guardar tu contenido favorito para tenerlo siempre a la mano.',
-            label: 'Explorar contenido',
+                'Recuerda que puedes guardar los capítulos que quieras de la Biblia para tenerlos siempre a la mano.',
+            label: 'Ir a la Biblia',
           );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final List<ListViewFavoriteModel> favorites = [
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-    ];
-    final List<Map<String, dynamic>> menuOptions = [
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgDownloadGray30024x24,
-        'title': 'Descargando',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-    ];
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _CustomAppBar(editAction: _changeModeView, isEditing: _isEditing),
-
-            // Menu options
-            MenuOptions(menuOptions: menuOptions),
-
-            // builds a list, but if it is empty it shows a notification message
-            _buildMainContent(favorites)
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -136,7 +104,7 @@ class _CustomAppBar extends StatelessWidget {
           Expanded(
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(!isEditing ? 'Mi Lista' : 'Editar',
+                child: Text(!isEditing ? 'Guardado' : 'Editar',
                     style: AppStyle.txtNunitoSansSemiBold26)),
           ),
           if (!isEditing)

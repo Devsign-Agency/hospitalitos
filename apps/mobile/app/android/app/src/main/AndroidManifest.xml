@@ -1,10 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hospitalitos.de.la.fe.pvc">
+    package="hospitalitos.de.la.fe.pvc"
+    xmlns:tools="http://schemas.android.com/tools"
+>
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Hospitalitos de la fe"
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+    >
         <activity
             android:name=".MainActivity"
             android:exported="true"
