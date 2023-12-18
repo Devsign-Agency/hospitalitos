@@ -70,7 +70,7 @@ class _PreviewPodcastScreenState extends State<PreviewPodcastScreen> {
                 //   wbook,
                 // );
                 await VocsyEpub.openAsset(
-                  'assets/epubs/G.A.E.epub',
+                  'assets/epubs/book.epub',
                   lastLocation: EpubLocator.fromJson({
                     "bookId": "2239",
                     "href": "/OEBPS/ch06.xhtml",

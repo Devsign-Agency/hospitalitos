@@ -38,6 +38,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
       case 1:
         _routeName = 'preview-book';
         break;
+      case 2:
+        _routeName = 'preview-podcast';
+        break;
     }
   }
 
