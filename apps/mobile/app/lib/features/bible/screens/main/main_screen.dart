@@ -37,24 +37,25 @@ class MainScreen extends StatelessWidget {
             )),
 
             CustomCard(
+                onTapped: () => Navigator.pushNamed(context, IndexScreen.route),
                 child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CustomIconButton(
-                  height: getSize(48),
-                  width: getSize(48),
-                  variant: IconButtonVariant.NoFill,
-                  child: CustomImageView(
-                    color: ColorConstant.gray800,
-                    svgPath: ImageConstant.imgBookmark,
-                  ),
-                ),
-                Text(
-                  'Ver índice',
-                  style: AppStyle.txtNunitoSansSemiBold23,
-                ),
-              ],
-            )),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomIconButton(
+                      height: getSize(48),
+                      width: getSize(48),
+                      variant: IconButtonVariant.NoFill,
+                      child: CustomImageView(
+                        color: ColorConstant.gray800,
+                        svgPath: ImageConstant.imgBookmark,
+                      ),
+                    ),
+                    Text(
+                      'Ver índice',
+                      style: AppStyle.txtNunitoSansSemiBold23,
+                    ),
+                  ],
+                )),
 
             CustomCard(
                 onTapped: () => Navigator.pushNamed(
@@ -119,6 +120,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         CustomIconButton(
           height: getSize(48),
+          margin: getMargin(right: 16),
           width: getSize(48),
           variant: IconButtonVariant.FillGray300,
           child: CustomImageView(

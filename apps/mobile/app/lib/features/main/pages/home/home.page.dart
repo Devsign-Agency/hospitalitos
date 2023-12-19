@@ -147,19 +147,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   onTap(context, EpubBook book) async {
-    print(book);
-    print(book.Title);
-    // await VocsyEpub.openAsset(
-    //   'assets/epubs/${book.Title}.epub',
-    //   // lastLocation: EpubLocator.fromJson({
-    //   //   "bookId": "2239",
-    //   //   "href": "/OEBPS/ch06.xhtml",
-    //   //   "created": 1539934158390,
-    //   //   "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
-    //   // }),
-    // );
-    Navigator.pushNamed(context, 'book',
-        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+    VocsyEpub.setConfig(
+      themeColor: Theme.of(context).primaryColor,
+      identifier: "iosBook",
+      scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+      allowSharing: true,
+      enableTts: true,
+      nightMode: true,
+    );
+    // get current locator
+    VocsyEpub.locatorStream.listen((locator) {
+      print('LOCATOR: $locator');
+    });
+    await VocsyEpub.openAsset(
+      'assets/epubs/${book.Title}.epub',
+      lastLocation: EpubLocator.fromJson({
+        "bookId": "2239",
+        "href": "/OEBPS/ch06.xhtml",
+        "created": 1539934158390,
+        "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
+      }),
+    );
+    // Navigator.pushNamed(context, 'book',
+    //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
   @override

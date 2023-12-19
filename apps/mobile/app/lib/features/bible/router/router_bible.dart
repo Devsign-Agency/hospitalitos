@@ -11,6 +11,7 @@ class RouterBible {
     routes.addAll({MainScreen.route: (BuildContext context) => MainScreen()});
     routes.addAll(
         {ChaptersScreen.route: (BuildContext context) => ChaptersScreen()});
+    routes.addAll({IndexScreen.route: (BuildContext context) => IndexScreen()});
 
     return routes;
   }

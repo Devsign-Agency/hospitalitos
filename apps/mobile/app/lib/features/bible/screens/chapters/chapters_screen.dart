@@ -24,16 +24,53 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
       ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
     ];
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(children: [
-          // Show AppBar
-          _CustomAppBar(editAction: _changeModeView, isEditing: _isEditing),
-
-          // builds a list, but if it is empty it shows a notification message
-          _buildMainContent(chapterList)
-        ]),
+    return Scaffold(
+      appBar: _CustomAppBar(
+        title: _isEditing ? 'Guardado' : 'Editar',
+        backgroundColor: ColorConstant.gray50,
+        leading: CustomIconButton(
+          height: getSize(48),
+          width: getSize(48),
+          variant: IconButtonVariant.NoFill,
+          child: CustomImageView(
+            color: ColorConstant.whiteA700,
+            svgPath: !_isEditing
+                ? ImageConstant.imgArrowleftGray800
+                : ImageConstant.imgCloseGray24x24,
+          ),
+          onTap: () {
+            _isEditing ? _changeModeView() : Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          if (!_isEditing)
+            CustomIconButton(
+              height: 48,
+              width: 48,
+              variant: IconButtonVariant.FillGray300,
+              child: CustomImageView(
+                color: ColorConstant.gray800,
+                svgPath: ImageConstant.imgSearch,
+              ),
+            ),
+          SizedBox(width: 8),
+          if (!_isEditing)
+            CustomIconButton(
+              height: getSize(48),
+              width: getSize(48),
+              variant: IconButtonVariant.FillGray300,
+              child: CustomImageView(
+                color: ColorConstant.gray800,
+                svgPath: ImageConstant.imgEdit,
+              ),
+              onTap: () => _changeModeView(),
+            ),
+        ],
       ),
+      body: Column(children: [
+        // builds a list, but if it is empty it shows a notification message
+        _buildMainContent(chapterList)
+      ]),
     );
   }
 
@@ -69,68 +106,42 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
   }
 }
 
-class _CustomAppBar extends StatelessWidget {
-  final editAction;
-  final bool isEditing;
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Color? backgroundColor;
+  final Color? textIconColor;
+  final String? icon;
+  final String? title;
+  final double? height;
+  final List<Widget>? menuItem;
+  final bool hideBack;
+  final List<Widget>? actions;
+  final Widget? leading;
 
   const _CustomAppBar({
     super.key,
-    required this.editAction,
-    required this.isEditing,
+    this.backgroundColor = Colors.red,
+    this.textIconColor = Colors.red,
+    this.icon,
+    this.title = '',
+    this.menuItem,
+    this.height: kToolbarHeight,
+    this.hideBack = false,
+    this.actions,
+    this.leading,
   });
+  @override
+  Size get preferredSize => Size.fromHeight(height!);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(
-          left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
-      child: Row(
-        children: [
-          CustomIconButton(
-            height: getSize(48),
-            width: getSize(48),
-            variant: IconButtonVariant.NoFill,
-            child: CustomImageView(
-              color: ColorConstant.whiteA700,
-              svgPath: !isEditing
-                  ? ImageConstant.imgArrowleftGray800
-                  : ImageConstant.imgCloseGray24x24,
-            ),
-            onTap: () {
-              isEditing ? editAction() : Navigator.of(context).pop();
-            },
-          ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(!isEditing ? 'Guardado' : 'Editar',
-                    style: AppStyle.txtNunitoSansSemiBold26)),
-          ),
-          if (!isEditing)
-            CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgSearch,
-              ),
-            ),
-          SizedBox(width: 8),
-          if (!isEditing)
-            CustomIconButton(
-              height: getSize(48),
-              width: getSize(48),
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgEdit,
-              ),
-              onTap: () => editAction(),
-            ),
-        ],
-      ),
+    return AppBar(
+      automaticallyImplyLeading: false,
+      leading: leading,
+      backgroundColor: backgroundColor,
+      title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26)),
+      actions: [if (actions != null) ...actions!, SizedBox(width: 16)],
     );
   }
 }
