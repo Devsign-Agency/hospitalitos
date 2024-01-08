@@ -5,8 +5,11 @@ import '../core/app_export.dart';
 import 'widgets.dart';
 
 class BarInputSearch extends StatelessWidget {
+  final Function onChange;
+
   const BarInputSearch({
     super.key,
+    required this.onChange,
   });
 
   @override
@@ -14,6 +17,9 @@ class BarInputSearch extends StatelessWidget {
     return Padding(
       padding: getPadding(left: 16, right: 16),
       child: CustomTextFormField(
+          onChanged: (String value) {
+            onChange(value);
+          },
           margin: getMargin(top: 16),
           shape: TextFormFieldShape.RoundedBorder12,
           variant: TextFormFieldVariant.None,

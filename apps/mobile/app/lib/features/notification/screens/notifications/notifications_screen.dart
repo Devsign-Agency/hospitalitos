@@ -9,18 +9,17 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: const Scaffold(
-        body: SingleChildScrollView(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            // AppBar
-            _CustomAppBar(),
-
-            // Notification list
-            _NotificationList()
-            // Menu
-          ]),
-        ),
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Notificaciones',
+        backgroundColor: ColorConstant.gray50,
+      ),
+      body: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          // Notification list
+          _NotificationList()
+          // Menu
+        ]),
       ),
     );
   }
@@ -120,40 +119,6 @@ class _NotificationListItemWidgetState
               widget.notification['description'],
               style: AppStyle.txtNunitoSansSemiBold14Gray900,
             )
-        ],
-      ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(
-          left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
-      child: Row(
-        children: [
-          CustomIconButton(
-            height: getSize(48),
-            width: getSize(48),
-            variant: IconButtonVariant.NoFill,
-            child: CustomImageView(
-                color: ColorConstant.whiteA700,
-                svgPath: ImageConstant.imgArrowleftGray800),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Notificaciones',
-                    style: AppStyle.txtNunitoSansSemiBold26)),
-          ),
         ],
       ),
     );

@@ -14,6 +14,13 @@ class ChaptersScreen extends StatefulWidget {
 
 class _ChaptersScreenState extends State<ChaptersScreen> {
   bool _isEditing = false;
+  late List<Map<String, dynamic>> actions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initActions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,47 +32,14 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     ];
 
     return Scaffold(
-      appBar: _CustomAppBar(
+      appBar: CustomAppBar(
         title: _isEditing ? 'Guardado' : 'Editar',
         backgroundColor: ColorConstant.gray50,
-        leading: CustomIconButton(
-          height: getSize(48),
-          width: getSize(48),
-          variant: IconButtonVariant.NoFill,
-          child: CustomImageView(
-            color: ColorConstant.whiteA700,
-            svgPath: !_isEditing
-                ? ImageConstant.imgArrowleftGray800
-                : ImageConstant.imgCloseGray24x24,
-          ),
-          onTap: () {
-            _isEditing ? _changeModeView() : Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          if (!_isEditing)
-            CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgSearch,
-              ),
-            ),
-          SizedBox(width: 8),
-          if (!_isEditing)
-            CustomIconButton(
-              height: getSize(48),
-              width: getSize(48),
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgEdit,
-              ),
-              onTap: () => _changeModeView(),
-            ),
-        ],
+        iconButtonVariant: !_isEditing
+            ? IconButtonVariant.FillGray300
+            : IconButtonVariant.NoFill,
+        // hideActions: _isEditing,
+        actions: [...actions],
       ),
       body: Column(children: [
         // builds a list, but if it is empty it shows a notification message
@@ -75,8 +49,32 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
   }
 
   void _changeModeView() {
+    actions.clear();
     _isEditing = !_isEditing;
+    if (!_isEditing) {
+      initActions();
+    } else {
+      actions = [
+        {
+          'icon': ImageConstant.imgCloseGray24x24,
+          'action': () => {_changeModeView()}
+        },
+      ];
+    }
     setState(() {});
+  }
+
+  void initActions() {
+    actions = [
+      {
+        'icon': ImageConstant.imgSearch,
+        'action': () => {print('Search...')}
+      },
+      {
+        'icon': ImageConstant.imgEdit,
+        'action': () => {_changeModeView()}
+      },
+    ];
   }
 
   void _handleActions() {
@@ -103,45 +101,5 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                 'Recuerda que puedes guardar los capítulos que quieras de la Biblia para tenerlos siempre a la mano.',
             label: 'Ir a la Biblia',
           );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Color? backgroundColor;
-  final Color? textIconColor;
-  final String? icon;
-  final String? title;
-  final double? height;
-  final List<Widget>? menuItem;
-  final bool hideBack;
-  final List<Widget>? actions;
-  final Widget? leading;
-
-  const _CustomAppBar({
-    super.key,
-    this.backgroundColor = Colors.red,
-    this.textIconColor = Colors.red,
-    this.icon,
-    this.title = '',
-    this.menuItem,
-    this.height: kToolbarHeight,
-    this.hideBack = false,
-    this.actions,
-    this.leading,
-  });
-  @override
-  Size get preferredSize => Size.fromHeight(height!);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      leading: leading,
-      backgroundColor: backgroundColor,
-      title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26)),
-      actions: [if (actions != null) ...actions!, SizedBox(width: 16)],
-    );
   }
 }

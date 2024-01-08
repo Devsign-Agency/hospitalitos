@@ -10,10 +10,18 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> actions = [
+      {
+        'icon': ImageConstant.imgSearch,
+        'action': () => {print('Search...')}
+      },
+    ];
     return Scaffold(
-      appBar: _CustomAppBar(
+      appBar: CustomAppBar(
         title: 'La Biblia',
         backgroundColor: ColorConstant.gray50,
+        iconButtonVariant: IconButtonVariant.FillGray300,
+        actions: [...actions],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -36,6 +44,7 @@ class MainScreen extends StatelessWidget {
               ],
             )),
 
+            // Index
             CustomCard(
                 onTapped: () => Navigator.pushNamed(context, IndexScreen.route),
                 child: Row(
@@ -57,6 +66,7 @@ class MainScreen extends StatelessWidget {
                   ],
                 )),
 
+            // Saved pages
             CustomCard(
                 onTapped: () => Navigator.pushNamed(
                     context, ChaptersScreen.route,
@@ -84,51 +94,6 @@ class MainScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Color? backgroundColor;
-  final Color? textIconColor;
-  final String? icon;
-  final String? title;
-  final double? height;
-  final List<Widget>? menuItem;
-  final bool hideBack;
-
-  const _CustomAppBar({
-    super.key,
-    this.backgroundColor = Colors.red,
-    this.textIconColor = Colors.red,
-    this.icon,
-    this.title = '',
-    this.menuItem,
-    this.height: kToolbarHeight,
-    this.hideBack = false,
-  });
-  @override
-  Size get preferredSize => Size.fromHeight(height!);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: backgroundColor,
-      title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26)),
-      actions: [
-        CustomIconButton(
-          height: getSize(48),
-          margin: getMargin(right: 16),
-          width: getSize(48),
-          variant: IconButtonVariant.FillGray300,
-          child: CustomImageView(
-            color: ColorConstant.gray800,
-            svgPath: ImageConstant.imgSearch,
-          ),
-        ),
-      ],
     );
   }
 }

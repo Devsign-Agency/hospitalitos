@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobile_app/router/router.dart';
+import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
-        ChangeNotifierProvider(create: (_) => CategoryService())
+        ChangeNotifierProvider(create: (_) => CategoryService()),
+        ChangeNotifierProvider(create: (_) => BibleService()),
+        ChangeNotifierProvider(create: (_) => LiturgyService()),
+        ChangeNotifierProvider(create: (_) => FavoriteService()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
@@ -12,6 +16,7 @@ import 'package:mobile_app/features/notification/screens/notifications/notificat
 import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
@@ -147,27 +152,53 @@ class _HomePageState extends State<HomePage> {
   }
 
   onTap(context, EpubBook book) async {
-    VocsyEpub.setConfig(
-      themeColor: Theme.of(context).primaryColor,
-      identifier: "iosBook",
-      scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-      allowSharing: true,
-      enableTts: true,
-      nightMode: true,
-    );
-    // get current locator
-    VocsyEpub.locatorStream.listen((locator) {
-      print('LOCATOR: $locator');
-    });
-    await VocsyEpub.openAsset(
-      'assets/epubs/${book.Title}.epub',
-      lastLocation: EpubLocator.fromJson({
-        "bookId": "2239",
-        "href": "/OEBPS/ch06.xhtml",
-        "created": 1539934158390,
-        "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
-      }),
-    );
+    dynamic path;
+//Get the epub into memory somehow
+    // String fileName = 'book.epub';
+    // String fullPath = path.join(Directory.current.path, fileName);
+    // var targetFile = new File(fullPath);
+    // List<int> bytes = await targetFile.readAsBytes();
+
+    // Directory directory = await getApplicationDocumentsDirectory();
+    // EpubReader.readBook();
+    // print(directory.path);
+    dynamic other = rootBundle.load('assets/epubs/book.epub');
+    // print(other);
+    // File _epubFile = File('mobile/app/assets/epubs/book.epub');
+    late dynamic book = EpubReader.readBook(other);
+    print(book);
+    final contents = await other.readAsBytes();
+    EpubBookRef epub = await EpubReader.openBook(contents.toList());
+    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    List<String> htmlList = [];
+    for (var value in cont.values) {
+      htmlList.add(value.Content!);
+    }
+    // var doc = parse(htmlList.join());
+    // final String parsedString = parse(doc.body!.text).documentElement!.text;
+    // print(parsedString);
+
+    // VocsyEpub.setConfig(
+    //   themeColor: Theme.of(context).primaryColor,
+    //   identifier: "iosBook",
+    //   scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+    //   allowSharing: true,
+    //   enableTts: true,
+    //   nightMode: true,
+    // );
+    // // get current locator
+    // VocsyEpub.locatorStream.listen((locator) {
+    //   print('LOCATOR: $locator');
+    // });
+    // await VocsyEpub.openAsset(
+    //   'assets/epubs/${book.Title}.epub',
+    //   lastLocation: EpubLocator.fromJson({
+    //     "bookId": "2239",
+    //     "href": "/OEBPS/ch06.xhtml",
+    //     "created": 1539934158390,
+    //     "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
+    //   }),
+    // );
     // Navigator.pushNamed(context, 'book',
     //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
@@ -238,77 +269,35 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               // News Slider
-              Container(
-                margin: const EdgeInsets.only(
-                    left: 14.0, right: 14.0, bottom: 10.0),
-                padding: const EdgeInsets.only(
-                    left: 16.0, right: 16.0, top: 10.0, bottom: 14.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(24, 39, 75, 0.08),
-                        offset: const Offset(0.0, 8.0),
-                        blurRadius: 18.0,
-                        spreadRadius: -6.0,
-                      ), //BoxSha
-                      BoxShadow(
-                        color: Color.fromRGBO(24, 39, 75, 0.08),
-                        offset: const Offset(0.0, 12.0),
-                        blurRadius: 42.0,
-                        spreadRadius: -4.0,
-                      ), //BoxShadow
-                    ]),
+
+              CustomCard(
+                margin: getMargin(left: 14.0, right: 14.0, bottom: 8.0),
                 child: NewsSlider(
                   children: _slides,
                 ),
               ),
 
               // My Favorites
-              Container(
-                  margin: const EdgeInsets.only(
-                      left: 14.0, right: 14.0, bottom: 14.0),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 15.0),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(14)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromRGBO(24, 39, 75, 0.08),
-                          offset: const Offset(0.0, 8.0),
-                          blurRadius: 18.0,
-                          spreadRadius: -6.0,
-                        ), //BoxSha
-                        BoxShadow(
-                          color: Color.fromRGBO(24, 39, 75, 0.08),
-                          offset: const Offset(0.0, 12.0),
-                          blurRadius: 42.0,
-                          spreadRadius: -4.0,
-                        ), //BoxShadow
-                      ]),
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(FavoriteListScreen.route),
-                    child: Row(
-                      children: [
-                        CustomImageView(
-                            color: ColorConstant.gray800,
-                            svgPath: ImageConstant.imgFavorite,
-                            height: getSize(24),
-                            width: getSize(24),
-                            margin: getMargin(top: 4, bottom: 4)),
-                        SizedBox(width: 10),
-                        Text(
-                          'Mis Favoritos',
-                          style: AppStyle.txtNunitoSansSemiBold23,
-                        )
-                      ],
-                    ),
-                  )),
+              CustomCard(
+                margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
+                child: Row(
+                  children: [
+                    CustomImageView(
+                        color: ColorConstant.gray800,
+                        svgPath: ImageConstant.imgFavorite,
+                        height: getSize(24),
+                        width: getSize(24),
+                        margin: getMargin(top: 4, bottom: 4)),
+                    SizedBox(width: 10),
+                    Text(
+                      'Mis Favoritos',
+                      style: AppStyle.txtNunitoSansSemiBold23,
+                    )
+                  ],
+                ),
+                onTapped: () =>
+                    Navigator.of(context).pushNamed(FavoriteListScreen.route),
+              ),
 
               // Recently viewed
               Column(

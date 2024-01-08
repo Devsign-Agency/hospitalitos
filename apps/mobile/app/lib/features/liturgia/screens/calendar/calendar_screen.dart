@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/shared/shared.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -9,66 +11,10 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> liturgias = [
-      'Tiempo de navidad',
-      'Sábado de la semana II.',
-      'Del propio del día. Salterío II.'
-    ];
-
-    List<Map<String, dynamic>> items = [
-      {
-        'id': '0',
-        'title': 'Oficio de lectura',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '1',
-        'title': 'Laudes',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '2',
-        'title': 'Tercia',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '3',
-        'title': 'Sexta',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '4',
-        'title': 'Nona',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '5',
-        'title': 'Visperas',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-      {
-        'id': '6',
-        'title': 'Completas',
-        'description':
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'isSelected': false,
-      },
-    ];
+    LiturgyService liturgyService = Provider.of<LiturgyService>(context);
 
     return Scaffold(
-      appBar: _CustomAppBar(
+      appBar: CustomAppBar(
         title: 'Liturgia',
         backgroundColor: ColorConstant.gray50,
       ),
@@ -100,7 +46,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...liturgias.map((liturgia) =>
+                  ...liturgyService.liturgies.map((liturgia) =>
                       Text(liturgia, style: AppStyle.txtNunitoSansRegular16)),
                 ],
               ),
@@ -109,7 +55,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
             // Item List
             CustomCard(
                 child: ListCollapseItem(
-              items: items,
+              items: liturgyService.items,
               onSelectedItem: _handleSelectedItem,
             )),
 
@@ -160,38 +106,5 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
     // dateCtl.text = date.toIso8601String();
     print(date);
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Color? backgroundColor;
-  final Color? textIconColor;
-  final String? icon;
-  final String? title;
-  final double? height;
-  final List<Widget>? menuItem;
-  final bool hideBack;
-
-  const _CustomAppBar({
-    super.key,
-    this.backgroundColor = Colors.red,
-    this.textIconColor = Colors.red,
-    this.icon,
-    this.title = '',
-    this.menuItem,
-    this.height: kToolbarHeight,
-    this.hideBack = false,
-  });
-  @override
-  Size get preferredSize => Size.fromHeight(height!);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: backgroundColor,
-      title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26)),
-    );
   }
 }

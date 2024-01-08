@@ -66,6 +66,7 @@ class _FormState extends State<_Form> {
       children: [
         // Cuenta
         Text('Cuenta', style: AppStyle.txtNunitoSansSemiBold23),
+
         _EditProfileFormField(
           enabled: !widget.isEditing,
           focusNode: FocusNode(),
@@ -87,6 +88,7 @@ class _FormState extends State<_Form> {
 
         // Información Adicional
         Text('Información Adicional', style: AppStyle.txtNunitoSansSemiBold23),
+
         _EditProfileFormField(
           enabled: widget.isEditing,
           focusNode: FocusNode(),

@@ -80,7 +80,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
             // Search Input
             Padding(
               padding: getPadding(bottom: 16),
-              child: BarInputSearch(),
+              child: BarInputSearch(
+                onChange: (String value) {},
+              ),
             ),
 
             // Items filter

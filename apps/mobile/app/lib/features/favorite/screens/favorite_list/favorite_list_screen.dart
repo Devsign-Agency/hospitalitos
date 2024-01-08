@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/shared/shared.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/models/list_view_favorite.dart';
@@ -15,14 +17,73 @@ class FavoriteListScreen extends StatefulWidget {
 
 class _FavoriteListScreenState extends State<FavoriteListScreen> {
   bool _isEditing = false;
+  late List<Map<String, dynamic>> actions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initActions();
+  }
 
   void _changeModeView() {
+    actions.clear();
     _isEditing = !_isEditing;
+    if (!_isEditing) {
+      initActions();
+    } else {
+      actions = [
+        {
+          'icon': ImageConstant.imgCloseGray24x24,
+          'action': () => {_changeModeView()}
+        },
+      ];
+    }
     setState(() {});
+  }
+
+  void initActions() {
+    actions = [
+      {
+        'icon': ImageConstant.imgSearch,
+        'action': () => {print('Search...')}
+      },
+      {
+        'icon': ImageConstant.imgEdit,
+        'action': () => {_changeModeView()}
+      },
+    ];
   }
 
   void _handleActions() {
     print('You have clicked!');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    FavoriteService favoriteService = Provider.of<FavoriteService>(context);
+
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: !_isEditing ? 'Mi Lista' : 'Editar',
+        backgroundColor: ColorConstant.gray50,
+        iconButtonVariant: !_isEditing
+            ? IconButtonVariant.FillGray300
+            : IconButtonVariant.NoFill,
+        // hideActions: _isEditing,
+        actions: [...actions],
+      ),
+      body: Column(
+        children: [
+          // Menu options
+          Container(
+              margin: getMargin(top: 24),
+              child: MenuOptions(menuOptions: favoriteService.categories)),
+
+          // builds a list, but if it is empty it shows a notification message
+          _buildMainContent(favoriteService.favorites)
+        ],
+      ),
+    );
   }
 
   Widget _buildMainContent(List<ListViewFavoriteModel> chapterList) {
@@ -46,123 +107,5 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
                 'Recuerda que puedes guardar tu contenido favorito para tenerlo siempre a la mano.',
             label: 'Explorar contenido',
           );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final List<ListViewFavoriteModel> favorites = [
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-      ListViewFavoriteModel(id: '', title: 'Título'),
-    ];
-    final List<Map<String, dynamic>> menuOptions = [
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgDownloadGray30024x24,
-        'title': 'Descargando',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-      {
-        'icon': ImageConstant.imgPlay,
-        'title': 'Sin empezar',
-        'action': _handleActions
-      },
-    ];
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _CustomAppBar(editAction: _changeModeView, isEditing: _isEditing),
-
-            // Menu options
-            MenuOptions(menuOptions: menuOptions),
-
-            // builds a list, but if it is empty it shows a notification message
-            _buildMainContent(favorites)
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget {
-  final editAction;
-  final bool isEditing;
-
-  const _CustomAppBar({
-    super.key,
-    required this.editAction,
-    required this.isEditing,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(
-          left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
-      child: Row(
-        children: [
-          CustomIconButton(
-            height: getSize(48),
-            width: getSize(48),
-            variant: IconButtonVariant.NoFill,
-            child: CustomImageView(
-              color: ColorConstant.whiteA700,
-              svgPath: !isEditing
-                  ? ImageConstant.imgArrowleftGray800
-                  : ImageConstant.imgCloseGray24x24,
-            ),
-            onTap: () {
-              isEditing ? editAction() : Navigator.of(context).pop();
-            },
-          ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(!isEditing ? 'Mi Lista' : 'Editar',
-                    style: AppStyle.txtNunitoSansSemiBold26)),
-          ),
-          if (!isEditing)
-            CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgSearch,
-              ),
-            ),
-          SizedBox(width: 8),
-          if (!isEditing)
-            CustomIconButton(
-              height: getSize(48),
-              width: getSize(48),
-              variant: IconButtonVariant.FillGray300,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgEdit,
-              ),
-              onTap: () => editAction(),
-            ),
-        ],
-      ),
-    );
   }
 }
