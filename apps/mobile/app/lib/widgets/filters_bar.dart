@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/core/models/filter.dart';
+import 'package:mobile_app/core/models/chip_item.dart';
 
 import '../core/app_export.dart';
 import '../features/security/widgets/widgets.dart';
 import 'widgets.dart';
 
 class FiltersBar extends StatefulWidget {
-  final List<FilterData> items;
+  final List<ChipItem> items;
+  final int? selectedItem = 0;
   final void Function(int) onChangeSelected;
   const FiltersBar(
       {super.key, required this.items, required this.onChangeSelected});
@@ -16,15 +17,21 @@ class FiltersBar extends StatefulWidget {
 }
 
 class _FiltersBarState extends State<FiltersBar> {
-  int itemSelected = -1;
+  int selectedItem = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = widget.selectedItem ?? 0;
+  }
 
   void _handleSelected(int index) {
-    if (itemSelected >= 0 && itemSelected != index) {
-      widget.items[itemSelected].isSelected = false;
-    }
+    // if (selectedItem >= 0 && selectedItem != index) {
+    //   widget.items[selectedItem].isSelected = false;
+    // }
 
-    widget.items[index].isSelected = !widget.items[index].isSelected;
-    itemSelected = index;
+    // widget.items[index].isSelected = !widget.items[index].isSelected;
+    selectedItem = index;
     widget.onChangeSelected(index);
     setState(() {});
   }
@@ -39,18 +46,20 @@ class _FiltersBarState extends State<FiltersBar> {
             ...List<Widget>.generate(
                 widget.items.length,
                 (index) => Padding(
-                      padding: getPadding(right: 8),
-                      child: ChipviewinputchipItemWidget(
-                          text: widget.items[index].name,
-                          avatar: widget.items[index].icon != null
-                              ? CustomImageView(
-                                  color: ColorConstant.black900,
-                                  svgPath: widget.items[index].icon,
-                                )
-                              : null,
-                          onSelected: (value) => _handleSelected(index),
-                          selected: widget.items[index].isSelected),
-                    ))
+                    padding: getPadding(right: 8),
+                    child: ChipviewinputchipItemWidget(
+                      text: widget.items[index].name,
+                      avatar: widget.items[index].icon != null
+                          ? CustomImageView(
+                              color: index == selectedItem
+                                  ? ColorConstant.indigo900
+                                  : ColorConstant.gray30002,
+                              svgPath: widget.items[index].icon,
+                            )
+                          : null,
+                      onSelected: (value) => _handleSelected(index),
+                      selected: index == selectedItem,
+                    )))
           ]),
         ));
   }

@@ -15,6 +15,12 @@ class ImageConstant {
 
   static String imgMediaVideo = 'assets/images/img_media_video.svg';
 
+  static String imgVideo24x24 = 'assets/images/img_video_24x24.svg';
+
+  static String imgPodcast24x24 = 'assets/images/img_podcast_24x24.svg';
+
+  static String imgFavWhite24x24 = 'assets/images/img_fav_white_24x24.svg';
+
   static String imgArrowupIndigo900 =
       'assets/images/img_arrowup_indigo_900.svg';
 

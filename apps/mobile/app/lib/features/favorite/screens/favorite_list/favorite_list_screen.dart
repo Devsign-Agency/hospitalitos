@@ -3,7 +3,9 @@ import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../core/models/chip_item.dart';
 import '../../../../core/models/list_view_favorite.dart';
+import '../../../../widgets/filters_bar.dart';
 import '../../../../widgets/widgets.dart';
 
 class FavoriteListScreen extends StatefulWidget {
@@ -61,6 +63,17 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
   @override
   Widget build(BuildContext context) {
     FavoriteService favoriteService = Provider.of<FavoriteService>(context);
+    List<ChipItem> categories = [
+      ChipItem(id: 1, name: 'Sin empezar', icon: ImageConstant.imgPlay),
+      ChipItem(
+          id: 2,
+          name: 'Descargando',
+          icon: ImageConstant.imgDownloadGray30024x24),
+      ChipItem(id: 3, name: 'Sin empezar', icon: ImageConstant.imgPlay),
+      ChipItem(id: 1, name: 'Sin empezar', icon: ImageConstant.imgMusic),
+      ChipItem(id: 2, name: 'Sin empezar', icon: ImageConstant.imgMusic),
+      ChipItem(id: 3, name: 'Sin empezar', icon: ImageConstant.imgMusic),
+    ];
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -76,8 +89,14 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
         children: [
           // Menu options
           Container(
-              margin: getMargin(top: 24),
-              child: MenuOptions(menuOptions: favoriteService.categories)),
+            margin: getMargin(top: 24),
+            child: // Items filter
+                Padding(
+              padding: getPadding(bottom: 16),
+              child: FiltersBar(
+                  items: categories, onChangeSelected: (int index) {}),
+            ),
+          ),
 
           // builds a list, but if it is empty it shows a notification message
           _buildMainContent(favoriteService.favorites)

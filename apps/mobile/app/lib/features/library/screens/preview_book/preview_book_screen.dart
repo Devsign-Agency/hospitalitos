@@ -1,12 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/library/screens/preview_video/widgets/widgets.dart';
-import 'package:mobile_app/features/library/widgets/tab_view_chapters.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/models/viewed_preview.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/widgets.dart';
+import '../../widgets/tab_view_chapters.dart';
+import '../../widgets/widgets.dart';
+import 'package:image/image.dart' hide Image;
+import 'package:mobile_app/core/app_export.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class PreviewBookScreen extends StatefulWidget {
   static const String route = 'preview-book';
@@ -131,18 +137,17 @@ class _CustomAppBar extends StatelessWidget {
       ),
       actions: [
         CustomImageView(
-          svgPath: ImageConstant.imgFavorite,
+          svgPath: ImageConstant.imgFavWhite24x24,
           width: getSize(24),
           height: getSize(24),
-          color: ColorConstant.indigo900,
+          color: ColorConstant.whiteA700,
         ),
-
         SizedBox(width: 32),
         CustomImageView(
           svgPath: ImageConstant.imgShare,
           width: getSize(24),
           height: getSize(24),
-          color: ColorConstant.indigo900,
+          color: ColorConstant.whiteA700,
           onTap: () => showModalBottomSheet(
               backgroundColor: ColorConstant.gray50,
               shape: RoundedRectangleBorder(
@@ -150,10 +155,6 @@ class _CustomAppBar extends StatelessWidget {
               context: context,
               builder: (context) => ModalBottomSheet()),
         ),
-        // Icon(
-        //   Icons.share_outlined,
-        //   color: ColorConstant.indigo900,
-        // ),
         SizedBox(width: 16),
       ],
     );
@@ -170,145 +171,14 @@ class _FlexibleSpaceBarBackground extends StatefulWidget {
       _FlexibleSpaceBarBackgroundState();
 }
 
-class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({required this.controller});
-
-  static const List<Duration> _exampleCaptionOffsets = <Duration>[
-    Duration(seconds: -10),
-    Duration(seconds: -3),
-    Duration(seconds: -1, milliseconds: -500),
-    Duration(milliseconds: -250),
-    Duration.zero,
-    Duration(milliseconds: 250),
-    Duration(seconds: 1, milliseconds: 500),
-    Duration(seconds: 3),
-    Duration(seconds: 10),
-  ];
-  static const List<double> _examplePlaybackRates = <double>[
-    0.25,
-    0.5,
-    1.0,
-    1.5,
-    2.0,
-    3.0,
-    5.0,
-    10.0,
-  ];
-
-  final VideoPlayerController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 50),
-          reverseDuration: const Duration(milliseconds: 200),
-          child: controller.value.isPlaying
-              ? const SizedBox.shrink()
-              : Container(
-                  color: Colors.black26,
-                  child: const Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 100.0,
-                      semanticLabel: 'Play',
-                    ),
-                  ),
-                ),
-        ),
-        GestureDetector(
-          onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
-          },
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
-              ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: PopupMenuButton<double>(
-            initialValue: controller.value.playbackSpeed,
-            tooltip: 'Playback speed',
-            onSelected: (double speed) {
-              controller.setPlaybackSpeed(speed);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<double>>[
-                for (final double speed in _examplePlaybackRates)
-                  PopupMenuItem<double>(
-                    value: speed,
-                    child: Text('${speed}x'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
-              ),
-              child: Text('${controller.value.playbackSpeed}x'),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _FlexibleSpaceBarBackgroundState
     extends State<_FlexibleSpaceBarBackground> {
   late VideoPlayerController _controller;
-
-  // Future<ClosedCaptionFile> _loadCaptions() async {
-  //   final String fileContents = await DefaultAssetBundle.of(context)
-  //       .loadString('assets/bumble_bee_captions.vtt');
-  //   return WebVTTCaptionFile(
-  //       fileContents); // For vtt files, use WebVTTCaptionFile
-  // }
+  late String _fileName;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-      // closedCaptionFile: _loadCaptions(),
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-    )..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
   }
 
   @override
@@ -319,28 +189,23 @@ class _FlexibleSpaceBarBackgroundState
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final book = arguments.book;
+    Image image =
+        Image.memory(Uint8List.fromList(encodePng(book!.CoverImage!)));
+
     return SizedBox(
       width: double.infinity,
       height: 300.0,
       // color: Colors.red.withOpacity(0.3),
       child: Column(
         children: [
-          SizedBox(
+          Container(
             width: double.infinity,
             height: 224.0,
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        VideoPlayer(_controller),
-                        _ControlsOverlay(controller: _controller),
-                        VideoProgressIndicator(_controller,
-                            allowScrubbing: true),
-                      ],
-                    ))
-                : Container(),
+            decoration: BoxDecoration(
+                image: DecorationImage(image: image.image, fit: BoxFit.cover)),
           ),
           SizedBox(height: 16),
           CustomButton(
@@ -349,11 +214,9 @@ class _FlexibleSpaceBarBackgroundState
               height: getVerticalSize(48),
               text: 'Continuar viendo',
               onTap: () {
-                setState(() {
-                  _controller.value.isPlaying
-                      ? _controller.pause()
-                      : _controller.play();
-                });
+                Navigator.pushNamed(context, 'book',
+                    arguments:
+                        EpubArguments(book: book, chapter: book!.Chapters![0]));
               }),
           SizedBox(height: 16),
           CustomButton(

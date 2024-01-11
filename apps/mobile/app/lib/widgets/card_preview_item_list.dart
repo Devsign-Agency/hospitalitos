@@ -43,7 +43,6 @@ class CardPreviewItemList extends StatelessWidget {
                         Uint8List.fromList(encodePng(book.CoverImage!)));
 
                     String title = book.Title!.trim();
-                    print(title);
                     return _ViewedPreview(
                       onTap: () => {onTappedItem(context, book)},
                       backgroundImage: image,

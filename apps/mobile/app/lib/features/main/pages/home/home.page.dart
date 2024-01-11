@@ -162,21 +162,23 @@ class _HomePageState extends State<HomePage> {
     // Directory directory = await getApplicationDocumentsDirectory();
     // EpubReader.readBook();
     // print(directory.path);
-    dynamic other = rootBundle.load('assets/epubs/book.epub');
-    // print(other);
-    // File _epubFile = File('mobile/app/assets/epubs/book.epub');
-    late dynamic book = EpubReader.readBook(other);
-    print(book);
-    final contents = await other.readAsBytes();
-    EpubBookRef epub = await EpubReader.openBook(contents.toList());
-    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
-    List<String> htmlList = [];
-    for (var value in cont.values) {
-      htmlList.add(value.Content!);
-    }
+    // dynamic other = rootBundle.load('assets/epubs/book.epub');
+    // // print(other);
+    // // File _epubFile = File('mobile/app/assets/epubs/book.epub');
+    // late dynamic book = EpubReader.readBook(other);
+    // print(book);
+    // final contents = await other.readAsBytes();
+    // EpubBookRef epub = await EpubReader.openBook(contents.toList());
+    // var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    // List<String> htmlList = [];
+    // for (var value in cont.values) {
+    //   htmlList.add(value.Content!);
+    // }
     // var doc = parse(htmlList.join());
     // final String parsedString = parse(doc.body!.text).documentElement!.text;
     // print(parsedString);
+
+    // Book reader using the vocsy_epub library
 
     // VocsyEpub.setConfig(
     //   themeColor: Theme.of(context).primaryColor,
@@ -199,8 +201,11 @@ class _HomePageState extends State<HomePage> {
     //     "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
     //   }),
     // );
-    // Navigator.pushNamed(context, 'book',
-    //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+
+    // Book reader using the epub_book library
+
+    Navigator.pushNamed(context, 'book',
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
   @override

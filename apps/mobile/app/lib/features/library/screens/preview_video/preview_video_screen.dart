@@ -284,9 +284,8 @@ class _FlexibleSpaceBarBackgroundState
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+    _controller = VideoPlayerController.asset(
+      'assets/videos/video_test.mp4',
       // closedCaptionFile: _loadCaptions(),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     )..initialize().then((_) {

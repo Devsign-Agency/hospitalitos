@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/core/models/filter.dart';
+import 'package:flutter/services.dart';
+import 'package:mobile_app/widgets/card_preview_item_list%20copy.dart';
 import 'package:mobile_app/widgets/filters_bar.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../core/models/chip_item.dart';
 import '../../../../widgets/widgets.dart';
 
 class CoursesScreen extends StatefulWidget {
@@ -17,12 +23,67 @@ class CoursesScreen extends StatefulWidget {
 class _CoursesScreenState extends State<CoursesScreen> {
   int _selectedFilter = 0;
   String _routeName = '';
+  List<Uint8List> path = [];
+
   void _handleActions() {
     print('You have clicked!');
   }
 
+  @override
+  initState() {
+    super.initState();
+    getThumbnail();
+
+    // // retur
+  }
+
+  getThumbnail() async {
+    List<String> pathsName = [
+      'assets/videos/video_example.mp4',
+      'assets/videos/video_example2.mp4',
+      'assets/videos/video_test.mp4'
+    ];
+
+    // ignore: avoid_function_literals_in_foreach_calls
+    pathsName.forEach((element) async {
+      print(element);
+      final byteData = await rootBundle.load(element);
+      Directory tempDir = await getTemporaryDirectory();
+
+      File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(byteData.buffer
+            .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      final fileName = await VideoThumbnail.thumbnailFile(
+        video: tempVideo.path,
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG,
+        quality: 100,
+      );
+
+      final file = File(fileName!);
+      Uint8List imageBytes = file.readAsBytesSync();
+      path.add(imageBytes);
+      print('size ------ > ${path.length}');
+      // setState(() {});
+    });
+
+    print('Paths-------');
+    print(path);
+    return path;
+  }
+
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
+  }
+
+  Future<List<dynamic>> fetchVideoPaths() async {
+    // return getThumbnail();
+    return [
+      'assets/videos/video_example.mp4',
+      'assets/videos/video_example2.mp4',
+      'assets/videos/video_test.mp4'
+    ];
   }
 
   void changeSelected(int index) {
@@ -51,22 +112,22 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<FilterData> filtersData = [
-      FilterData(id: 1, name: 'Video', icon: ImageConstant.imgMusic),
-      FilterData(id: 2, name: 'Libro', icon: ImageConstant.imgBookmark),
-      FilterData(id: 3, name: 'Podcast', icon: ImageConstant.imgSignal),
-      FilterData(id: 1, name: 'Video', icon: ImageConstant.imgMusic),
-      FilterData(id: 2, name: 'Libro', icon: ImageConstant.imgMusic),
-      FilterData(id: 3, name: 'Podcast', icon: ImageConstant.imgMusic),
+    List<ChipItem> filtersData = [
+      ChipItem(id: 1, name: 'Video', icon: ImageConstant.imgVideo24x24),
+      ChipItem(id: 2, name: 'Libro', icon: ImageConstant.imgBookmark),
+      ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgPodcast24x24),
+      ChipItem(id: 1, name: 'Video', icon: ImageConstant.imgMusic),
+      ChipItem(id: 2, name: 'Libro', icon: ImageConstant.imgMusic),
+      ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgMusic),
     ];
 
-    List<FilterData> filtersData2 = [
-      FilterData(id: 1, name: 'Bullying'),
-      FilterData(id: 2, name: 'Doctrinas'),
-      FilterData(id: 3, name: 'Estrés'),
-      FilterData(id: 1, name: 'Fe'),
-      FilterData(id: 2, name: 'Libro'),
-      FilterData(id: 3, name: 'Podcast'),
+    List<ChipItem> filtersData2 = [
+      ChipItem(id: 1, name: 'Bullying'),
+      ChipItem(id: 2, name: 'Doctrinas'),
+      ChipItem(id: 3, name: 'Estrés'),
+      ChipItem(id: 1, name: 'Fe'),
+      ChipItem(id: 2, name: 'Libro'),
+      ChipItem(id: 3, name: 'Podcast'),
     ];
 
     return SafeArea(
@@ -134,6 +195,17 @@ class _CoursesScreenState extends State<CoursesScreen> {
               onTappedItem: onTap,
               future: fetchData(),
             ),
+
+            CardThumbnailVideoItemList(
+              future: fetchVideoPaths(),
+              onTappedItem: null,
+              paths: path,
+              pathsName: [
+                'assets/videos/video_example.mp4',
+                'assets/videos/video_test.mp4',
+                'assets/videos/video_example2.mp4',
+              ],
+            ),
           ],
         ),
       )),
@@ -169,7 +241,7 @@ class _CustomAppBar extends StatelessWidget {
 class _ListItemScrollableHorizontal extends StatelessWidget {
   final String title;
   final bool? hasFilter;
-  final List<FilterData>? filterItems;
+  final List<ChipItem>? filterItems;
   final void Function(int)? onSelectedFilterItem;
   final void Function(dynamic, EpubBook) onTappedItem;
   final Future<List<EpubBook>> future;
