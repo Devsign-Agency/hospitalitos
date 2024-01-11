@@ -24,71 +24,71 @@ class CardThumbnailVideoItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.symmetric(horizontal: 14.0),
-        // padding: EdgeInsets.symmetric(horizontal: 14),
-        height: 160.0,
-        width: double.infinity,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: pathsName.length,
-          itemBuilder: (context, index) {
-            VideoPlayerController controller = VideoPlayerController.asset(
-              pathsName[index],
-            )..initialize().then((_) {});
-
-            // controller.play();
-
-            return GestureDetector(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: Container(
-                  width: 150,
-                  height: 120.0,
-                  margin: EdgeInsets.symmetric(vertical: 14),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                  child: AspectRatio(
-                    aspectRatio: 1 / 0.5,
-                    child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12)),
-                        child: VideoPlayer(controller)),
-                  ),
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(width: 8.0);
-          },
-        ));
     // return Container(
-    //   margin: EdgeInsets.symmetric(vertical: 14.0),
-    //   height: 190.0,
-    //   width: double.infinity,
-    //   child: FutureBuilder(
-    //       future: getThumbnails(pathsName),
-    //       builder: (_, AsyncSnapshot snapshot) {
-    //         if (snapshot.connectionState == ConnectionState.waiting) {
-    //           //           // Si estamos cargando los datos, mostramos un indicador de carga
-    //           return Center(child: CircularProgressIndicator());
-    //         } else if (snapshot.hasError) {
-    //           // Si hubo un error al cargar los datos, mostramos un mensaje de error
-    //           return Center(child: Text('Error al cargar los datos'));
-    //         } else {
-    //           // Si los datos se cargaron correctamente, los mostramos en un ListView
-    //           int length = snapshot.data!.length;
-    //           print('Lenth ------> $length');
+    //     margin: EdgeInsets.symmetric(horizontal: 14.0),
+    //     // padding: EdgeInsets.symmetric(horizontal: 14),
+    //     height: 200.0,
+    //     width: double.infinity,
+    //     child: ListView.separated(
+    //       scrollDirection: Axis.horizontal,
+    //       shrinkWrap: true,
+    //       itemCount: pathsName.length,
+    //       itemBuilder: (context, index) {
+    //         VideoPlayerController controller = VideoPlayerController.asset(
+    //           pathsName[index],
+    //         )..initialize().then((_) {});
 
-    //           return ListView(
-    //             scrollDirection: Axis.horizontal,
-    //             children: [...snapshot.data],
-    //           );
-    //         }
-    //       }),
-    // );
+    //         // controller.play();
+
+    //         return GestureDetector(
+    //           child: ClipRRect(
+    //             borderRadius: BorderRadius.circular(20),
+    //             child: Container(
+    //               width: 150,
+    //               height: 180.0,
+    //               margin: EdgeInsets.symmetric(vertical: 14),
+    //               decoration:
+    //                   BoxDecoration(borderRadius: BorderRadius.circular(48)),
+    //               child: AspectRatio(
+    //                 aspectRatio: controller.value.aspectRatio,
+    //                 child: Container(
+    //                     decoration: BoxDecoration(
+    //                         borderRadius: BorderRadius.circular(42)),
+    //                     child: VideoPlayer(controller)),
+    //               ),
+    //             ),
+    //           ),
+    //         );
+    //       },
+    //       separatorBuilder: (context, index) {
+    //         return const SizedBox(width: 8.0);
+    //       },
+    //     ));
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 14.0),
+      height: 190.0,
+      width: double.infinity,
+      child: FutureBuilder(
+          future: getThumbnails(pathsName),
+          builder: (_, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              //           // Si estamos cargando los datos, mostramos un indicador de carga
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              // Si hubo un error al cargar los datos, mostramos un mensaje de error
+              return Center(child: Text('Error al cargar los datos'));
+            } else {
+              // Si los datos se cargaron correctamente, los mostramos en un ListView
+              int length = snapshot.data!.length;
+              print('Lenth ------> $length');
+
+              return ListView(
+                scrollDirection: Axis.horizontal,
+                children: [...snapshot.data],
+              );
+            }
+          }),
+    );
     // return Container(
     //   margin: EdgeInsets.symmetric(vertical: 14.0),
     //   height: 190.0,
@@ -200,15 +200,21 @@ class CardThumbnailVideoItemList extends StatelessWidget {
         imageFormat: ImageFormat.PNG,
         quality: 100,
       );
-
-      final file = File(fileName!);
-
       list.add(_ViewedPreview(
         onTap: () => {},
-        backgroundImage: file.readAsBytesSync(),
+        backgroundImage: File(fileName!).readAsBytesSync(),
         progressValue: 0.0,
         title: '',
       ));
+
+      final file = File(fileName!);
+
+      print('List update $list');
+      return Future.delayed(
+          Duration(
+            milliseconds: 2000,
+          ),
+          () => list);
     });
     print('Listado resultado: $list');
     return Future.delayed(

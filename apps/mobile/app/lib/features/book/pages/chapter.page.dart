@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
 
 import 'package:epub_view/epub_view.dart';
@@ -30,6 +32,8 @@ class _ChapterPageState extends State<ChapterPage> {
   void initState() {
     super.initState();
 
+    getTextFromEpubInstance();
+
     _epubController = EpubController(
       // Load document
 
@@ -42,6 +46,37 @@ class _ChapterPageState extends State<ChapterPage> {
       // Set start point
       epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
     );
+  }
+
+  getTextFromEpubInstance() async {
+    final byteData = await rootBundle.load('assets/epubs/book.epub');
+    Directory tempDir = await getTemporaryDirectory();
+
+    File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
+      ..createSync(recursive: true)
+      ..writeAsBytesSync(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    File _epubFile = File(tempVideo.path);
+    final contents = await _epubFile.readAsBytes();
+    EpubBookRef epub = await EpubReader.openBook(contents.toList());
+    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    List<String> htmlList = [];
+    for (var value in cont.values) {
+      htmlList.add(value.Content!);
+    }
+    var doc = parse(htmlList.join());
+    final String parsedString = parse(doc.body!.text).documentElement!.text;
+
+    print('text: $parsedString');
+    await _playText(parsedString);
+  }
+
+  _playText(parsedString) async {
+    print('playText');
+    TextToSpeech tts = TextToSpeech();
+
+    await tts.play(parsedString);
   }
 
   Color _getColorBg() {
