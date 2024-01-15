@@ -44,7 +44,7 @@ class _ChapterPageState extends State<ChapterPage> {
         return widget.book;
       }),
       // Set start point
-      epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
+      // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
     );
   }
 
@@ -157,6 +157,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         CustomImageView(
           color: ColorConstant.gray800,
           svgPath: ImageConstant.imgMusicIndigo900,
+          onTap: () {},
         ),
         SizedBox(width: 32),
         // Menu

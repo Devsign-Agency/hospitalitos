@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
     //   scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
     //   allowSharing: true,
     //   enableTts: true,
-    //   nightMode: true,
+    //   nightMode: false,
     // );
     // // get current locator
     // VocsyEpub.locatorStream.listen((locator) {
