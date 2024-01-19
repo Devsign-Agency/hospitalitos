@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/core/app_export.dart';
 
 import '../../widgets/widgets.dart';
@@ -30,8 +32,10 @@ class _BlogDetailState extends State<BlogDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final String params = ModalRoute.of(context)?.settings.arguments as String;
+    final dynamic params = ModalRoute.of(context)?.settings.arguments;
 
+final String parsedString = stripHtmlIfNeeded(params['content']['rendered']);
+print(parsedString);
     return SafeArea(
         child: Scaffold(
       body: CustomScrollView(
@@ -39,15 +43,15 @@ class _BlogDetailState extends State<BlogDetail> {
         slivers: [
           CustomAppBar(
             isExpanded: _isExpanded,
+            imgUrl: params['_embedded']['wp:featuredmedia'][0]['source_url'],
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            ...List.generate(3, (int index) {
+            ...List.generate(1, (int index) {
               return Padding(
                   padding: getPadding(all: 16),
-                  child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    style: AppStyle.txtNunitoSansRegular18Black900,
+                  child: Html(
+                    data: parsedString,
                   ));
             }),
           ]))
@@ -59,4 +63,28 @@ class _BlogDetailState extends State<BlogDetail> {
   bool get _isSliverAppBarExpanded {
     return _scrollController.hasClients && _scrollController.offset > (50);
   }
+}
+
+String removeAllHtmlTags(String htmlText) {
+
+  print(htmlText);
+    RegExp exp = RegExp(
+      r"<[^>]*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+    var separator = '\n';
+    final result = RegExp(r"<[^>]*>")
+               .allMatches(htmlText)
+               .map((e) => e.group(0))
+               .join(separator);
+
+    return result;
+  }
+
+String stripHtmlIfNeeded(String text) {
+  // The regular expression is simplified for an HTML tag (opening or
+  // closing) or an HTML escape. We might want to skip over such expressions
+  // when estimating the text directionality.
+  return text.replaceAll('<img .*?>/g',""); 
 }
