@@ -5,7 +5,9 @@ import '../../../../widgets/widgets.dart';
 import '../screens/screens.dart';
 
 class ArticleCard extends StatelessWidget {
-  const ArticleCard({super.key});
+  final String imgUrl;
+  final dynamic post;
+  const ArticleCard({super.key, required this.imgUrl, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ArticleCard extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(14),
             image: DecorationImage(
-                image: AssetImage('assets/images/img_image3.png'),
+                image: NetworkImage(imgUrl),
                 fit: BoxFit.cover),
           ),
           child: Container(
@@ -46,7 +48,7 @@ class ArticleCard extends StatelessWidget {
                       child: GestureDetector(
                           onTap: () => Navigator.pushNamed(
                               context, BlogDetail.route,
-                              arguments: 'detail'),
+                              arguments: post),
                           child: _ButtonRead())),
                 ],
               ),

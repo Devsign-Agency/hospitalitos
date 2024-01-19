@@ -5,14 +5,16 @@ import 'package:mobile_app/widgets/widgets.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool isExpanded;
+  
+  final String imgUrl;
 
-  const CustomAppBar({super.key, required this.isExpanded});
+  const CustomAppBar({super.key, required this.isExpanded, required this.imgUrl});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Color.fromARGB(255, 127, 100, 90),
-      expandedHeight: 200,
+      expandedHeight: 300,
       floating: false,
       pinned: true,
       title: isExpanded
@@ -22,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
         centerTitle: true,
         titlePadding: EdgeInsets.all(0),
         title: !isExpanded ? _FlexibleSpaceBarTitle() : null,
-        background: _FlexibleSpaceBarBackground(),
+        background: _FlexibleSpaceBarBackground(imgUrl: imgUrl),
       ),
       actions: [
         _ActionButton(),
@@ -54,15 +56,18 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _FlexibleSpaceBarBackground extends StatelessWidget {
+  final String imgUrl;
+
   const _FlexibleSpaceBarBackground({
     super.key,
+    required this.imgUrl
   });
 
   @override
   Widget build(BuildContext context) {
     return FadeInImage(
       placeholder: const AssetImage('assets/loading.gif'),
-      image: AssetImage('assets/images/img_image3.png'),
+      image:  NetworkImage(imgUrl),
       fit: BoxFit.cover,
     );
   }
@@ -82,11 +87,12 @@ class _FlexibleSpaceBarTitle extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        /*children: [
           Text('Título', style: AppStyle.txtNunitoSansSemiBold26WhiteA700),
           Text('Autor', style: AppStyle.txtNunitoSansRegular18WhiteA700),
           Text('DD/MM/AA', style: AppStyle.txtNunitoSansRegular18WhiteA700),
         ],
+        */
       ),
     );
   }

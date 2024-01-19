@@ -81,6 +81,24 @@ class _FormState extends State<_Form> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
 
+     String? _validatePassword(value) {
+    if (value == null || value.isEmpty) {
+      return 'El campo Password es obligatorio';
+    }
+    return null;
+  }
+
+  String? _validateUser(value) {
+    final RegExp regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (value == null || value.isEmpty) {
+      return 'El campo User es obligatorio';
+    } else if (!regExp.hasMatch(value)) {
+      return 'El campo User no tiene formato válido';
+    }
+    return null;
+  }
+
     return Column(
       children: [
         Padding(
@@ -119,12 +137,14 @@ class _FormState extends State<_Form> {
           controller: usernameController,
           svgPath: ImageConstant.imgUser,
           placeHolder: 'Usuario',
+          validator: _validateUser,
         ),
         _SecurityFormField(
           controller: passwordController,
           isObscureText: true,
           svgPath: ImageConstant.imgLock,
           placeHolder: 'Contraseña',
+          validator: _validatePassword,
         ),
         Align(
             alignment: Alignment.centerRight,
@@ -201,6 +221,9 @@ class _FormState extends State<_Form> {
     //   throw 'Could not launch https://www.facebook.com/login/';
     // }
   }
+
+
+   
 }
 
 class _SecurityFormField extends StatelessWidget {
@@ -210,6 +233,8 @@ class _SecurityFormField extends StatelessWidget {
   final String? svgPath;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? margin;
+  
+  final validator;
 
   _SecurityFormField(
       {required this.controller,
@@ -217,10 +242,12 @@ class _SecurityFormField extends StatelessWidget {
       this.focusNode,
       this.placeHolder = '',
       this.isObscureText = false,
+      this.validator,
       this.margin});
 
   @override
   Widget build(BuildContext context) {
+
     return CustomTextFormField(
         focusNode: focusNode,
         controller: controller,
@@ -230,6 +257,7 @@ class _SecurityFormField extends StatelessWidget {
         textInputType: TextInputType.visiblePassword,
         textInputAction: TextInputAction.done,
         isObscureText: isObscureText,
+        validator: validator,
         prefix: svgPath == null
             ? null
             : Container(
@@ -238,4 +266,11 @@ class _SecurityFormField extends StatelessWidget {
                     svgPath: svgPath, color: ColorConstant.gray600)),
         prefixConstraints: BoxConstraints(maxHeight: getVerticalSize(56)));
   }
+
+
+
+
+  
+     
+
 }

@@ -4,6 +4,10 @@ import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
+import 'package:wordpress_api/wordpress_api.dart' as wp;
+import 'package:wordpress_api/wordpress_api.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CardPreviewItemList extends StatelessWidget {
   final Future<List<EpubBook>> future;
@@ -39,6 +43,9 @@ class CardPreviewItemList extends StatelessWidget {
                     return SizedBox(width: 6);
                   } else {
                     EpubBook book = snapshot.data![index - 1];
+
+                    main();
+
                     Image image = Image.memory(
                         Uint8List.fromList(encodePng(book.CoverImage!)));
 
@@ -116,3 +123,20 @@ class _ViewedPreview extends StatelessWidget {
     );
   }
 }
+
+void main() async {
+  final api = wp.WordPressAPI('https://hospitalitosdelafe.org/');
+  final res = await api.posts.fetch();
+
+  for (final post in res.data) {
+    //print(post.yoast_head_json.title);
+  }
+  const url = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?_embed';
+  //const urlFetc =  `${this.url}`;
+
+  final response = await http.get(Uri.parse(url), headers: {"Accept": "application/json"});
+  var convertDatatoJson = jsonDecode(response.body);
+  print(convertDatatoJson);
+}
+
+
