@@ -251,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                       height: 48,
                       width: 48,
                       variant: IconButtonVariant.FillGray300,
-                      onTap: _playText,
+                      onTap: () => Navigator.pushNamed(context, 'sound-route'),
                       child: CustomImageView(
                         color: ColorConstant.gray800,
                         svgPath: ImageConstant.imgSearch,
