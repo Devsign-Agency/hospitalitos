@@ -267,10 +267,4 @@ class _SecurityFormField extends StatelessWidget {
         prefixConstraints: BoxConstraints(maxHeight: getVerticalSize(56)));
   }
 
-
-
-
-  
-     
-
 }
