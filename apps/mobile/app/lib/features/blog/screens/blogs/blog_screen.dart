@@ -1,34 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/blog/widgets/wp-api.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import '../../widgets/widgets.dart';
 
-class BlogScreen extends StatelessWidget {
-  static const String route = 'blog';
 
-  const BlogScreen({Key? key}) : super(key: key);
+
+class BlogScreen extends StatefulWidget {
+   static const String route = 'blog';
+  const BlogScreen({super.key});
 
   @override
+  State<BlogScreen> createState() => _BlogScreenState();
+}
+
+class _BlogScreenState extends State<BlogScreen> {
+
+  List<dynamic> posts = [];
+
+  @override
+  void initState() {
+    fetchWpPosts().then ((value) {
+              posts = value;
+              setState(() {
+                
+              });
+    });
+
+     super.initState();
+  }
+
+
+   @override
   Widget build(BuildContext context) {
-    List<String> articles = ['1', '2', '3', '4'];
 
     return SafeArea(
         child: Scaffold(
       body: Column(
-        children: [_ArticlesHeader(), _ArticlesList(articles: articles)],
+        children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
       ),
     ));
   }
 }
 
+
+
 class _ArticlesList extends StatelessWidget {
-  final List<String> articles;
+  final List<dynamic> posts;
 
   const _ArticlesList({
     super.key,
-    required this.articles,
+    required this.posts,
   });
+  
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +63,16 @@ class _ArticlesList extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView.separated(
             scrollDirection: Axis.vertical,
-            itemCount: 5,
+            itemCount: posts.length,
             separatorBuilder: (_, __) => SizedBox(height: 20),
             itemBuilder: (_, int index) {
-              return ArticleCard();
+              final item = posts[index];
+              print(index);
+              Map<dynamic, dynamic> wppost = item;
+
+              print(wppost['_embedded']['wp:featuredmedia'][0]['source_url']);
+              // var imageurl = wppost['_embedded']['wp:featuredmedia'][0];
+              return ArticleCard(imgUrl: wppost['_embedded']['wp:featuredmedia'][0]['source_url'], post: item);
             }),
       ),
     );
