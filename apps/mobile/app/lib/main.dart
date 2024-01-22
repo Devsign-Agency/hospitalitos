@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BibleService()),
         ChangeNotifierProvider(create: (_) => LiturgyService()),
         ChangeNotifierProvider(create: (_) => FavoriteService()),
+        ChangeNotifierProvider(create: (_) => PdfService()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -1,6 +1,7 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
 import 'package:mobile_app/shared/shared.dart';
@@ -42,15 +43,14 @@ class _MainScreenState extends State<BookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as EpubArguments;
-    final book = arguments.book;
-    final chapter = arguments.chapter;
+    final arguments = ModalRoute.of(context)!.settings.arguments as PdfViewer;
+    final book = arguments;
+    // final chapter = arguments.chapter;
 
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Scaffold(
-        body: ChapterPage(book: book!, chapter: chapter!),
+        body: ChapterPage(book: book!),
       ),
       //   child: EpubReader()
     );

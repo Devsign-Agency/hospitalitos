@@ -1,6 +1,7 @@
 export 'package:mobile_app/features/main/pages/home/widgets/preview_item_list.dart';
 export 'package:mobile_app/widgets/background.dart';
 export 'package:mobile_app/widgets/barInputSearch.dart';
+export 'package:mobile_app/widgets/card_preview_book_list.dart';
 export 'package:mobile_app/widgets/card_preview_item_list.dart';
 export 'package:mobile_app/widgets/custom_app_bar.dart';
 export 'package:mobile_app/widgets/custom_bottom_bar.dart';
@@ -15,4 +16,5 @@ export 'package:mobile_app/widgets/menu_options.dart';
 export 'package:mobile_app/widgets/modal_bottom_sheet.dart';
 export 'package:mobile_app/widgets/notification_empty_list.dart';
 export 'package:mobile_app/widgets/side_menu.dart';
+
 // export 'package:mobile_app/widgets/custom_bottom_bar.dart';
