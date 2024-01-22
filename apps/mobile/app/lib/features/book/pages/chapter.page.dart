@@ -292,8 +292,8 @@ class _ChapterPageState extends State<ChapterPage> {
         // _btnSection(),
         if (onAudioSound)
           DraggableScrollableSheet(
-            initialChildSize: .15,
-            minChildSize: .15,
+            initialChildSize: .14,
+            minChildSize: .14,
             maxChildSize: .4,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
@@ -333,7 +333,16 @@ class _ChapterPageState extends State<ChapterPage> {
                         // _inputSection(),
                         ttsState == TtsState.playing
                             ? _progressBar(end)
-                            : Text(""),
+                            : Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.only(
+                                    top: 5.0, left: 0.0, right: 50.0),
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Colors.red,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.green),
+                                  value: 0,
+                                )),
                         // _buildSliders()
                       ],
                     )
@@ -438,7 +447,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   Widget _progressBar(int end) => Container(
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
+      padding: EdgeInsets.only(top: 5.0, left: 0.0, right: 50.0),
       child: LinearProgressIndicator(
         backgroundColor: Colors.red,
         valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
