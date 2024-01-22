@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/blog/widgets/wp-api.dart';
+import 'package:mobile_app/features/main/router/main.router.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -34,13 +35,25 @@ class _BlogScreenState extends State<BlogScreen> {
 
    @override
   Widget build(BuildContext context) {
-
+    
     return SafeArea(
-        child: Scaffold(
+        child: posts.isNotEmpty?  Scaffold(
       body: Column(
         children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
       ),
-    ));
+    )
+    :
+    Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+              child: CircularProgressIndicator()
+          )
+       ],
+      ),
+    )
+    );
   }
 }
 
@@ -96,6 +109,9 @@ class _ArticlesHeader extends StatelessWidget {
             height: 48,
             width: 48,
             variant: IconButtonVariant.NoFill,
+            onTap: (){
+              Navigator.pushNamed(context, RouterMain.initialRoute);
+            },
             child: CustomImageView(
               color: ColorConstant.whiteA700,
               svgPath: ImageConstant.imgArrowleftGray800,
@@ -110,6 +126,9 @@ class _ArticlesHeader extends StatelessWidget {
             height: 48,
             width: 48,
             variant: IconButtonVariant.FillGray300,
+             onTap: () {
+              print('search something...');
+            },
             child: CustomImageView(
               color: ColorConstant.gray800,
               svgPath: ImageConstant.imgSearch,
