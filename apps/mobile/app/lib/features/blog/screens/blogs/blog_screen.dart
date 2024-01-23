@@ -37,21 +37,22 @@ class _BlogScreenState extends State<BlogScreen> {
   Widget build(BuildContext context) {
     
     return SafeArea(
-        child: posts.isNotEmpty?  Scaffold(
-      body: Column(
+        child:   Scaffold(
+      body: posts.isNotEmpty? Column(
         children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
-      ),
-    )
-    :
-    Scaffold(
-      body: Column(
+      )
+      
+      :
+       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
               child: CircularProgressIndicator()
           )
-       ],
-      ),
+        ]
+       )
+      ,
+    
     )
     );
   }
@@ -82,7 +83,6 @@ class _ArticlesList extends StatelessWidget {
               final item = posts[index];
               print(index);
               Map<dynamic, dynamic> wppost = item;
-
               print(wppost['_embedded']['wp:featuredmedia'][0]['source_url']);
               // var imageurl = wppost['_embedded']['wp:featuredmedia'][0];
               return ArticleCard(imgUrl: wppost['_embedded']['wp:featuredmedia'][0]['source_url'], post: item);
@@ -110,7 +110,7 @@ class _ArticlesHeader extends StatelessWidget {
             width: 48,
             variant: IconButtonVariant.NoFill,
             onTap: (){
-              Navigator.pushNamed(context, RouterMain.initialRoute);
+              Navigator.pop(context);
             },
             child: CustomImageView(
               color: ColorConstant.whiteA700,
