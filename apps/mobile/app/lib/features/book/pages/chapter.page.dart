@@ -41,6 +41,7 @@ class _ChapterPageState extends State<ChapterPage> {
   double rate = 0.5;
   bool isCurrentLanguageInstalled = false;
   int end = 0;
+  int positionLastWord = 0;
   late PdfViewerController _pdfViewerController;
   OverlayEntry? _overlayEntry;
 
@@ -99,6 +100,7 @@ class _ChapterPageState extends State<ChapterPage> {
       setState(() {
         print("Complete");
         ttsState = TtsState.stopped;
+        positionLastWord = 0;
       });
     });
 
@@ -134,8 +136,16 @@ class _ChapterPageState extends State<ChapterPage> {
 
     flutterTts.setProgressHandler(
         (String text, int startOffset, int endOffset, String word) {
+      print('text: $text');
+      print('startOffset: $startOffset');
+      print('endOffset: $endOffset');
+      print('word: $word');
       setState(() {
-        end = endOffset;
+        // int index = _newVoiceText!.indexOf(word);
+
+        // end = index + word.length;
+
+        end = endOffset + positionLastWord;
       });
     });
   }
@@ -173,6 +183,8 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Future _pause() async {
+    positionLastWord = end;
+
     var result = await flutterTts.pause();
     if (result == 1) setState(() => ttsState = TtsState.paused);
   }
@@ -217,6 +229,28 @@ class _ChapterPageState extends State<ChapterPage> {
     //Display the text.
     // _showResult(text);
     // print(text);
+
+    //Load the PDF document.
+    PdfDocument loadedDocument = PdfDocument(
+        inputBytes:
+            File('assets/pdf/G.A.E - 19 nov 2022.pdf').readAsBytesSync());
+
+    //Get the first page from the document.
+    PdfPage loadedPage = loadedDocument.pages[0];
+    //Create a PDF Template.
+    PdfTemplate template = loadedPage.createTemplate();
+    //Create a new PDF document.
+    PdfDocument document = PdfDocument();
+    //Add the page.
+    PdfPage page = document.pages.add();
+    //Create the graphics.
+    PdfGraphics graphics = page.graphics;
+    //Draw the template.
+    graphics.drawPdfTemplate(template, Offset(0, 0));
+    //Save and dispose of the PDF document.
+    File('Output.pdf').writeAsBytes(await document.save());
+    document.dispose();
+
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 
     _onChange(data!.text!);
@@ -276,6 +310,7 @@ class _ChapterPageState extends State<ChapterPage> {
           canShowPaginationDialog: true,
           pageSpacing: 2.0,
           key: _pdfViewerKey,
+          maxZoomLevel: 5,
           onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
             if (details.selectedText == null && _overlayEntry != null) {
               _overlayEntry!.remove();
@@ -286,15 +321,11 @@ class _ChapterPageState extends State<ChapterPage> {
           },
           controller: _pdfViewerController,
         ),
-        // _inputSection(),
-        // ttsState == TtsState.playing ? _progressBar(end) : Text("hola mundo"),
-        // _buildSliders(),
-        // _btnSection(),
         if (onAudioSound)
           DraggableScrollableSheet(
             initialChildSize: .14,
             minChildSize: .14,
-            maxChildSize: .4,
+            maxChildSize: .14,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -306,44 +337,42 @@ class _ChapterPageState extends State<ChapterPage> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Título',
-                                  style:
-                                      AppStyle.txtNunitoSansSemiBold20Black900,
-                                ),
-                                Text(
-                                  'Autor',
-                                  style:
-                                      AppStyle.txtNunitoSansSemiBold13Indigo900,
-                                ),
-                              ],
-                            ),
-                            _btnSection(),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Título',
+                                style: AppStyle.txtNunitoSansSemiBold20Black900,
+                              ),
+                              Text(
+                                'Autor',
+                                style:
+                                    AppStyle.txtNunitoSansSemiBold13Indigo900,
+                              ),
+                              // ttsState == TtsState.playing
+                              _progressBar(end),
+                              // : Container(
+                              //     // height: 100,
+                              //     width: double.infinity,
+                              //     alignment: Alignment.topCenter,
+                              //     padding:
+                              //         EdgeInsets.only(top: 5.0, right: 10),
+                              //     child: LinearProgressIndicator(
+                              //       backgroundColor:
+                              //           ColorConstant.indigo90033,
+                              //       valueColor:
+                              //           AlwaysStoppedAnimation<Color>(
+                              //               ColorConstant.indigo900),
+                              //       value: 0,
+                              //     )),
+                            ],
+                          ),
                         ),
-                        // _inputSection(),
-                        ttsState == TtsState.playing
-                            ? _progressBar(end)
-                            : Container(
-                                alignment: Alignment.topCenter,
-                                padding: EdgeInsets.only(
-                                    top: 5.0, left: 0.0, right: 50.0),
-                                child: LinearProgressIndicator(
-                                  backgroundColor: Colors.red,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.green),
-                                  value: 0,
-                                )),
-                        // _buildSliders()
+                        _btnSection(),
                       ],
                     )
                   ],
@@ -418,8 +447,8 @@ class _ChapterPageState extends State<ChapterPage> {
       String icon, String label, Function func) {
     return CustomIconButton(
       margin: getMargin(left: 8),
-      height: getSize(48),
-      width: getSize(48),
+      height: getSize(58),
+      width: getSize(58),
       variant: IconButtonVariant.FillIndigo,
       onTap: () => func(),
       child: CustomImageView(
@@ -445,14 +474,17 @@ class _ChapterPageState extends State<ChapterPage> {
     //     ]);
   }
 
-  Widget _progressBar(int end) => Container(
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 5.0, left: 0.0, right: 50.0),
-      child: LinearProgressIndicator(
-        backgroundColor: Colors.red,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-        value: end / _newVoiceText!.length,
-      ));
+  Widget _progressBar(int end) {
+    print('newVoiceText: $_newVoiceText');
+    return Container(
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.only(top: 5.0, right: 10),
+        child: LinearProgressIndicator(
+          backgroundColor: ColorConstant.indigo90033,
+          valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.indigo900),
+          value: end / _newVoiceText!.length,
+        ));
+  }
 
   void _handleChangeIndex(int index) {
     switch (index) {

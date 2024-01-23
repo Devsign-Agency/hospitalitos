@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
 
 import '../core/app_export.dart';
+import 'package:share_plus/share_plus.dart';
 
 class _LinkCard extends StatefulWidget {
   final String title;
@@ -48,11 +49,17 @@ class _LinkCardState extends State<_LinkCard> {
             height: 24,
             color: ColorConstant.gray200,
             svgPath: ImageConstant.imgArrowrightIndigo900,
-            onTap: () => showCustomToast(),
+            onTap: () => share(),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> share() async {
+    const urlPreview = 'https://www.filmaffinity.com/es/film866133.html';
+
+    await Share.share('check out my website https://example.com');
   }
 
   showCustomToast() {

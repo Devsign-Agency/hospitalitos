@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/profile/screens/screens.dart';
+import 'package:mobile_app/features/security/screens/login/login_screen.dart';
+import 'package:mobile_app/shared/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/custom_button.dart';
@@ -40,8 +43,12 @@ class ProfileMenuScreen extends StatelessWidget {
                     child: Text('Cancelar',
                         style: AppStyle.txtNunitoSansSemiBold16)),
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      final AuthService authService =
+                          Provider.of<AuthService>(context, listen: false);
+                      await authService.logout();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, LoginScreen.route);
                     },
                     child: Text('Aceptar',
                         style: AppStyle.txtNunitoSansSemiBold16)),
@@ -73,7 +80,7 @@ class ProfileMenuScreen extends StatelessWidget {
           padding: getPadding(left: 16, right: 16, bottom: 26),
           child: CustomButton(
               height: getVerticalSize(48),
-              text: 'Cerra Sesión',
+              text: 'Cerrar Sesión',
               margin: getMargin(top: 60),
               fontStyle: ButtonFontStyle.NunitoSansSemiBold16WhiteA700,
               variant: ButtonVariant.FillRed200,
