@@ -19,9 +19,8 @@ class ArticleCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(14),
-            image: DecorationImage(
-                image: NetworkImage(imgUrl),
-                fit: BoxFit.cover),
+            image:
+                DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover),
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -40,8 +39,13 @@ class ArticleCard extends StatelessWidget {
               padding: getPadding(all: 16),
               child: Stack(
                 children: [
-                  Positioned(top: 0, right: 0, child: _TimeRead()),
-                  Positioned(left: 0, bottom: 0, child: _TitleAndAuthor()),
+                  Positioned(top: 0, right: 0, child: _TimeRead(postData: post)),
+                  Positioned(
+                      left: 0,
+                      bottom: 0,
+                      child: _TitleAndAuthor(
+                        postData: post,
+                      )),
                   Positioned(
                       bottom: 0,
                       right: 0,
@@ -79,30 +83,55 @@ class _ButtonRead extends StatelessWidget {
 }
 
 class _TitleAndAuthor extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final postData;
   const _TitleAndAuthor({
     super.key,
+    this.postData,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
             alignment: Alignment.centerLeft,
-            child: Text('Title',
-                style: AppStyle.txtNunitoSansSemiBold20WhiteA700)),
+            child: SizedBox(
+              width: 260,
+              child: Text(postData['title']['rendered'],
+                  overflow: TextOverflow.fade,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: AppStyle.txtNunitoSansSemiBold20WhiteA700),
+            )),
         Align(
             alignment: Alignment.centerLeft,
-            child: Text('Author',
-                style: AppStyle.txtNunitoSansRegular14WhiteA700)),
+            child: Row(
+ 
+              children: [
+                SizedBox( width: 250, child: 
+                Text(
+                    postData['yoast_head_json']['twitter_misc']['Escrito por'].isNotEmpty
+                        ? postData['yoast_head_json']['twitter_misc']['Escrito por']
+                        : ' - ',
+                 
+                    style: AppStyle.txtNunitoSansRegular14WhiteA700),),
+              ],
+            )),
       ],
     );
   }
 }
 
 class _TimeRead extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final postData;
+
   const _TimeRead({
     super.key,
+    required this.postData
   });
 
   @override
@@ -119,7 +148,7 @@ class _TimeRead extends StatelessWidget {
           Color.fromRGBO(0, 0, 0, 0.3),
         ]),
       ),
-      child: Text('5 mins', style: AppStyle.txtNunitoSansSemiBold13WhiteA700),
+      child: Text(postData['yoast_head_json']['twitter_misc']['Tiempo de lectura'], style: AppStyle.txtNunitoSansSemiBold13WhiteA700),
     );
   }
 }

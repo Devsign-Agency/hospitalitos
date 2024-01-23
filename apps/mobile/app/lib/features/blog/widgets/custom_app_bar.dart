@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/core/constants/color.constant.dart';
 import 'package:mobile_app/core/theme/app.style.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool isExpanded;
   
   final String imgUrl;
 
-  const CustomAppBar({super.key, required this.isExpanded, required this.imgUrl});
+  final linkShare;
+
+  final title;
+
+  const CustomAppBar({super.key, required this.isExpanded, required this.imgUrl, required this.linkShare, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
       floating: false,
       pinned: true,
       title: isExpanded
-          ? Text('Título', style: AppStyle.txtNunitoSansSemiBold26WhiteA700)
+          ? Text(title, style: AppStyle.txtNunitoSansSemiBold26WhiteA700)
           : null,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
@@ -27,15 +32,18 @@ class CustomAppBar extends StatelessWidget {
         background: _FlexibleSpaceBarBackground(imgUrl: imgUrl),
       ),
       actions: [
-        _ActionButton(),
+        _ActionButton(linkShared: linkShare,),
       ],
     );
   }
 }
 
 class _ActionButton extends StatelessWidget {
+  final linkShared;
+
   const _ActionButton({
     super.key,
+    required this.linkShared
   });
 
   @override
@@ -46,12 +54,14 @@ class _ActionButton extends StatelessWidget {
           size: 24,
           color: ColorConstant.whiteA700,
         ),
-        onPressed: () => showModalBottomSheet(
-            backgroundColor: ColorConstant.gray50,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-            context: context,
-            builder: (context) => ModalBottomSheet()));
+        onPressed: () =>  share(linkShared));
+  }
+
+
+   Future<void> share(String url) async {
+    const urlPreview = 'https://www.filmaffinity.com/es/film866133.html';
+
+    await Share.share(url);
   }
 }
 

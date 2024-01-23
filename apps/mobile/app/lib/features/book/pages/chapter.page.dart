@@ -231,25 +231,25 @@ class _ChapterPageState extends State<ChapterPage> {
     // print(text);
 
     //Load the PDF document.
-    PdfDocument loadedDocument = PdfDocument(
-        inputBytes:
-            File('assets/pdf/G.A.E - 19 nov 2022.pdf').readAsBytesSync());
+    // PdfDocument loadedDocument = PdfDocument(
+    //     inputBytes:
+    //         File('assets/pdf/G.A.E - 19 nov 2022.pdf').readAsBytesSync());
 
-    //Get the first page from the document.
-    PdfPage loadedPage = loadedDocument.pages[0];
-    //Create a PDF Template.
-    PdfTemplate template = loadedPage.createTemplate();
-    //Create a new PDF document.
-    PdfDocument document = PdfDocument();
-    //Add the page.
-    PdfPage page = document.pages.add();
-    //Create the graphics.
-    PdfGraphics graphics = page.graphics;
-    //Draw the template.
-    graphics.drawPdfTemplate(template, Offset(0, 0));
-    //Save and dispose of the PDF document.
-    File('Output.pdf').writeAsBytes(await document.save());
-    document.dispose();
+    // //Get the first page from the document.
+    // PdfPage loadedPage = loadedDocument.pages[0];
+    // //Create a PDF Template.
+    // PdfTemplate template = loadedPage.createTemplate();
+    // //Create a new PDF document.
+    // PdfDocument document = PdfDocument();
+    // //Add the page.
+    // PdfPage page = document.pages.add();
+    // //Create the graphics.
+    // PdfGraphics graphics = page.graphics;
+    // //Draw the template.
+    // graphics.drawPdfTemplate(template, Offset(0, 0));
+    // //Save and dispose of the PDF document.
+    // File('Output.pdf').writeAsBytes(await document.save());
+    // document.dispose();
 
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 

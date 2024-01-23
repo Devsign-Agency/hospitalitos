@@ -34,8 +34,8 @@ class _BlogDetailState extends State<BlogDetail> {
   Widget build(BuildContext context) {
     final dynamic params = ModalRoute.of(context)?.settings.arguments;
 
-final String parsedString = stripHtmlIfNeeded(params['content']['rendered']);
-print(parsedString);
+    final String parsedString = stripHtmlIfNeeded(params['content']['rendered']);
+
     return SafeArea(
         child: Scaffold(
       body: CustomScrollView(
@@ -44,6 +44,8 @@ print(parsedString);
           CustomAppBar(
             isExpanded: _isExpanded,
             imgUrl: params['_embedded']['wp:featuredmedia'][0]['source_url'],
+            linkShare: params['link'],
+            title: params['title']['rendered']
           ),
           SliverList(
               delegate: SliverChildListDelegate([
@@ -52,7 +54,9 @@ print(parsedString);
                   padding: getPadding(all: 16),
                   child: Html(
                     data: parsedString,
-                  ));
+                  )
+                  
+                  );
             }),
           ]))
         ],
