@@ -499,8 +499,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.11.0"
-<<<<<<< HEAD
-=======
   mime:
     dependency: transitive
     description:
@@ -509,7 +507,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
->>>>>>> feature/clipboard
   nested:
     dependency: transitive
     description:
