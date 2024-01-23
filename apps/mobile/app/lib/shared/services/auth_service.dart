@@ -134,6 +134,7 @@ class AuthService with ChangeNotifier {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+
         handleLogin(response);
         isValid = true;
       }
@@ -181,3 +182,4 @@ class AuthService with ChangeNotifier {
     await googleSignin.disconnect();
   }
 }
+

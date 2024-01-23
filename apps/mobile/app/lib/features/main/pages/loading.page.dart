@@ -13,8 +13,26 @@ class LoadingPage extends StatelessWidget {
       body: FutureBuilder(
           future: checkLoginState(context),
           builder: (context, snapshot) {
-            return Center(
-              child: Text('Autenticando...'),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Text('Autenticando')],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: CircularProgressIndicator(),
+                    )
+                  ],
+                ),
+              ],
             );
           }),
     );
@@ -24,9 +42,11 @@ class LoadingPage extends StatelessWidget {
     final authService = Provider.of<AuthService>(context, listen: false);
     final authenticated = await authService.isLoggedIn();
     if (authenticated) {
-      if (context.mounted) Navigator.pushReplacementNamed(context, HomePage.route);
+      if (context.mounted)
+        Navigator.pushReplacementNamed(context, HomePage.route);
     } else {
-      if (context.mounted) Navigator.pushReplacementNamed(context, LoginScreen.route);
+      if (context.mounted)
+        Navigator.pushReplacementNamed(context, LoginScreen.route);
     }
   }
 }
