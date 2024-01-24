@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
 
@@ -44,7 +45,7 @@ class CardPreviewItemList extends StatelessWidget {
 
                     String title = book.Title!.trim();
                     return _ViewedPreview(
-                      onTap: () => {onTappedItem(context, book)},
+                      onTap: () => {onTap(context, book)},
                       backgroundImage: image,
                       progressValue: 0.0,
                       title: title,

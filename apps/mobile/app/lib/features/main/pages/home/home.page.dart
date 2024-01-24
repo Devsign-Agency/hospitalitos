@@ -1,12 +1,9 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
-import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/screens.dart';
-import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -14,7 +11,7 @@ import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -124,41 +121,19 @@ class _HomePageState extends State<HomePage> {
     return EpubDocument.openAssetFolder('/epubs');
   }
 
-  Future<List<SfPdfViewer>> fetchDataPdf() async {
-    return PdfService.openAssetFolder('/pdf');
-  }
-
   @override
   initState() {
     super.initState();
 
     final authService = Provider.of<AuthService>(context, listen: false);
-
     user = authService.user;
-  }
-
-  Future<List<PdfViewer>> getPdfVieverfromJson() async {
-    final pdfService = Provider.of<PdfService>(context, listen: false);
-
-    return pdfService.openAssetsFolderPdf();
   }
 
   void _onChangeTab(int index) {
     switch (index) {
       case 1:
         Navigator.of(context).pushNamed(CoursesScreen.route);
-        break;
-      case 2:
-        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-        break;
-      case 3:
-        Navigator.of(context).pushNamed(MainScreen.route);
-        break;
     }
-  }
-
-  void _onTap(PdfViewer pdf) {
-    Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -204,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                       height: 48,
                       width: 48,
                       variant: IconButtonVariant.FillGray300,
-                      onTap: () => Navigator.pushNamed(context, 'sound-route'),
+                      onTap: _playText,
                       child: CustomImageView(
                         color: ColorConstant.gray800,
                         svgPath: ImageConstant.imgSearch,
@@ -227,35 +202,77 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               // News Slider
-
-              CustomCard(
-                margin: getMargin(left: 14.0, right: 14.0, bottom: 8.0),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 14.0, right: 14.0, bottom: 10.0),
+                padding: const EdgeInsets.only(
+                    left: 16.0, right: 16.0, top: 10.0, bottom: 14.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(14)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(24, 39, 75, 0.08),
+                        offset: const Offset(0.0, 8.0),
+                        blurRadius: 18.0,
+                        spreadRadius: -6.0,
+                      ), //BoxSha
+                      BoxShadow(
+                        color: Color.fromRGBO(24, 39, 75, 0.08),
+                        offset: const Offset(0.0, 12.0),
+                        blurRadius: 42.0,
+                        spreadRadius: -4.0,
+                      ), //BoxShadow
+                    ]),
                 child: NewsSlider(
                   children: _slides,
                 ),
               ),
 
               // My Favorites
-              CustomCard(
-                margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
-                child: Row(
-                  children: [
-                    CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgFavorite,
-                        height: getSize(24),
-                        width: getSize(24),
-                        margin: getMargin(top: 4, bottom: 4)),
-                    SizedBox(width: 10),
-                    Text(
-                      'Mis Favoritos',
-                      style: AppStyle.txtNunitoSansSemiBold23,
-                    )
-                  ],
-                ),
-                onTapped: () =>
-                    Navigator.of(context).pushNamed(FavoriteListScreen.route),
-              ),
+              Container(
+                  margin: const EdgeInsets.only(
+                      left: 14.0, right: 14.0, bottom: 14.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 15.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(24, 39, 75, 0.08),
+                          offset: const Offset(0.0, 8.0),
+                          blurRadius: 18.0,
+                          spreadRadius: -6.0,
+                        ), //BoxSha
+                        BoxShadow(
+                          color: Color.fromRGBO(24, 39, 75, 0.08),
+                          offset: const Offset(0.0, 12.0),
+                          blurRadius: 42.0,
+                          spreadRadius: -4.0,
+                        ), //BoxShadow
+                      ]),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(FavoriteListScreen.route),
+                    child: Row(
+                      children: [
+                        CustomImageView(
+                            color: ColorConstant.gray800,
+                            svgPath: ImageConstant.imgFavorite,
+                            height: getSize(24),
+                            width: getSize(24),
+                            margin: getMargin(top: 4, bottom: 4)),
+                        SizedBox(width: 10),
+                        Text(
+                          'Mis Favoritos',
+                          style: AppStyle.txtNunitoSansSemiBold23,
+                        )
+                      ],
+                    ),
+                  )),
 
               // Recently viewed
               Column(
@@ -292,19 +309,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )),
-                  // CardPreviewItemList(
-                  //   future: fetchData(),
-                  //   onTappedItem: onTap,
-                  // ),
-                  // CardPreviewPdfList(
-                  //   future: fetchDataPdf(),
-                  //   onTappedItem: onTap,
-                  // ),
-
-                  CardPreviewBookList(
-                    future: getPdfVieverfromJson(),
-                    onTappedItem: _onTap,
-                  )
+                  CardPreviewItemList(
+                    future: fetchData(),
+                    onTappedItem: null,
+                  ),
                 ],
               ),
 
@@ -360,7 +368,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   _playText() async {
-    print('playText');
     TextToSpeech tts = TextToSpeech();
 
     await tts.play('Hola mundo, esto es una prueba de flutter.');
