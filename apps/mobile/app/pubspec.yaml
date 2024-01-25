@@ -66,6 +66,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^21.2.10
   wordpress_api: ^1.2.0
   share_plus: ^6.3.4
+  selectable: ^0.2.11
   
 dependency_overrides:
 
