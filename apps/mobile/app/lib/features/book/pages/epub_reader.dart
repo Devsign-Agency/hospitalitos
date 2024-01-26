@@ -63,8 +63,10 @@ class _EpubBookReaderState extends State<EpubBookReader> {
         ),
       ),
       // Show epub document
-      body: EpubView(
-        controller: _epubController,
+      body: SelectionArea(
+        child: EpubView(
+          controller: _epubController,
+        ),
       ),
       bottomNavigationBar: _CustomBottomNavigationBar(),
     );
