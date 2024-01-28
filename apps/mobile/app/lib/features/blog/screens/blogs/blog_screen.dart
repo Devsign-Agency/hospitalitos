@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/blog/screens/search/search_delegate.dart';
 import 'package:mobile_app/features/blog/widgets/wp-api.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 
@@ -90,13 +91,15 @@ class _ArticlesList extends StatelessWidget {
       ),
     );
   }
+
+  
 }
 
 class _ArticlesHeader extends StatelessWidget {
   const _ArticlesHeader({
     super.key,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -127,7 +130,7 @@ class _ArticlesHeader extends StatelessWidget {
             width: 48,
             variant: IconButtonVariant.FillGray300,
              onTap: () {
-              print('search something...');
+              showSearch(context: context, delegate: PostsSearchDelegate());
             },
             child: CustomImageView(
               color: ColorConstant.gray800,
