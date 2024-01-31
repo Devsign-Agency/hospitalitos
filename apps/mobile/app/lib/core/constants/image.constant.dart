@@ -21,6 +21,8 @@ class ImageConstant {
 
   static String imgFavWhite24x24 = 'assets/images/img_fav_white_24x24.svg';
 
+  static String imgArrowMedia = 'assets/images/img_arrow_media.svg';
+
   static String imgArrowupIndigo900 =
       'assets/images/img_arrowup_indigo_900.svg';
 

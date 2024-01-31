@@ -105,6 +105,8 @@ class CustomIconButton extends StatelessWidget {
         return ColorConstant.red200;
       case IconButtonVariant.FillGray50:
         return ColorConstant.gray50;
+      case IconButtonVariant.FillIndigo:
+        return ColorConstant.indigo900;
       default:
         return ColorConstant.amber300;
     }
@@ -158,6 +160,7 @@ class CustomIconButton extends StatelessWidget {
       case IconButtonVariant.FillRed50033:
       case IconButtonVariant.FillIndigo90033:
       case IconButtonVariant.FillDeeppurple5002:
+      case IconButtonVariant.FillIndigo:
         return null;
       default:
         return null;
@@ -187,4 +190,5 @@ enum IconButtonVariant {
   FillDeeppurple5002,
   FillYellow,
   FillGray50,
+  FillIndigo,
 }

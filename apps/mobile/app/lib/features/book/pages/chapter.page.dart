@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -17,11 +18,9 @@ import '../../../widgets/widgets.dart';
 
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
-  final EpubBook book;
-  final EpubChapter chapter;
+  final PdfViewer book;
 
-  const ChapterPage({Key? key, required this.book, required this.chapter})
-      : super(key: key);
+  const ChapterPage({Key? key, required this.book}) : super(key: key);
 
   @override
   State<ChapterPage> createState() => _ChapterPageState();
@@ -42,6 +41,9 @@ class _ChapterPageState extends State<ChapterPage> {
   double rate = 0.5;
   bool isCurrentLanguageInstalled = false;
   int end = 0;
+  int positionLastWord = 0;
+  late PdfViewerController _pdfViewerController;
+  OverlayEntry? _overlayEntry;
 
   String? _newVoiceText;
 
@@ -58,22 +60,24 @@ class _ChapterPageState extends State<ChapterPage> {
 
   @override
   void initState() {
+    _pdfViewerController = PdfViewerController();
+
     super.initState();
     initTts();
     // getTextFromEpubInstance();
 
-    _epubController = EpubController(
-      // Load document
+    // _epubController = EpubController(
+    //   // Load document
 
-      document: Future.delayed(
-          Duration(
-            milliseconds: 200,
-          ), () {
-        return widget.book;
-      }),
-      // Set start point
-      // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
-    );
+    //   document: Future.delayed(
+    //       Duration(
+    //         milliseconds: 200,
+    //       ), () {
+    //     return widget.book;
+    //   }),
+    //   // Set start point
+    //   // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
+    // );
   }
 
   initTts() {
@@ -96,6 +100,7 @@ class _ChapterPageState extends State<ChapterPage> {
       setState(() {
         print("Complete");
         ttsState = TtsState.stopped;
+        positionLastWord = 0;
       });
     });
 
@@ -131,8 +136,16 @@ class _ChapterPageState extends State<ChapterPage> {
 
     flutterTts.setProgressHandler(
         (String text, int startOffset, int endOffset, String word) {
+      print('text: $text');
+      print('startOffset: $startOffset');
+      print('endOffset: $endOffset');
+      print('word: $word');
       setState(() {
-        end = endOffset;
+        // int index = _newVoiceText!.indexOf(word);
+
+        // end = index + word.length;
+
+        end = endOffset + positionLastWord;
       });
     });
   }
@@ -155,10 +168,12 @@ class _ChapterPageState extends State<ChapterPage> {
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
-
+    ttsState = TtsState.playing;
     if (_newVoiceText != null) {
       await flutterTts.awaitSpeakCompletion(true);
-      await flutterTts.speak(_newVoiceText!);
+      var result = await flutterTts.speak(_newVoiceText!);
+      print("RESULT $result");
+      if (result == 1) setState(() => ttsState = TtsState.playing);
     }
   }
 
@@ -168,32 +183,10 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Future _pause() async {
+    positionLastWord = end;
+
     var result = await flutterTts.pause();
     if (result == 1) setState(() => ttsState = TtsState.paused);
-  }
-
-  getTextFromEpubInstance() async {
-    final byteData = await rootBundle.load('assets/epubs/book.epub');
-    Directory tempDir = await getTemporaryDirectory();
-
-    File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
-      ..createSync(recursive: true)
-      ..writeAsBytesSync(byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-    File _epubFile = File(tempVideo.path);
-    final contents = await _epubFile.readAsBytes();
-    EpubBookRef epub = await EpubReader.openBook(contents.toList());
-    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
-    List<String> htmlList = [];
-    for (var value in cont.values) {
-      htmlList.add(value.Content!);
-    }
-    var doc = parse(htmlList.join());
-    final String parsedString = parse(doc.body!.text).documentElement!.text;
-
-    print('text: $parsedString');
-    await _playText(parsedString);
   }
 
   _playText(parsedString) async {
@@ -224,9 +217,8 @@ class _ChapterPageState extends State<ChapterPage> {
 
   void _handleChangeStatusAudio(BuildContext context) async {
     onAudioSound = !onAudioSound;
-    // print(activeAudio);
     // PdfDocument document = PdfDocument(
-    //     inputBytes: await _readDocumentData('Herram iniciar PCC.pdf'));
+    //     inputBytes: await _readDocumentData('${widget.book.name}.pdf'));
 
     // //Create a new instance of the PdfTextExtractor.
     // PdfTextExtractor extractor = PdfTextExtractor(document);
@@ -234,20 +226,75 @@ class _ChapterPageState extends State<ChapterPage> {
     // //Extract all the text from the document.
     // String text = extractor.extractText();
 
-    // //Display the text.
-    // // _showResult(text);
+    //Display the text.
+    // _showResult(text);
+    // print(text);
 
-    // await _playText(text);
+    //Load the PDF document.
+    // PdfDocument loadedDocument = PdfDocument(
+    //     inputBytes:
+    //         File('assets/pdf/G.A.E - 19 nov 2022.pdf').readAsBytesSync());
 
-    displayDialogAndroid(context);
+    // //Get the first page from the document.
+    // PdfPage loadedPage = loadedDocument.pages[0];
+    // //Create a PDF Template.
+    // PdfTemplate template = loadedPage.createTemplate();
+    // //Create a new PDF document.
+    // PdfDocument document = PdfDocument();
+    // //Add the page.
+    // PdfPage page = document.pages.add();
+    // //Create the graphics.
+    // PdfGraphics graphics = page.graphics;
+    // //Draw the template.
+    // graphics.drawPdfTemplate(template, Offset(0, 0));
+    // //Save and dispose of the PDF document.
+    // File('Output.pdf').writeAsBytes(await document.save());
+    // document.dispose();
 
-    setState(() {});
+    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+
+    _onChange(data!.text!);
+
+    // setState(() {});
   }
+
+  // void _getClipboard() async {
+  //     setState(() {
+  //       _textValue = data.text;
+  //     });
+  //   }
 
   void _onChange(String text) {
     setState(() {
       _newVoiceText = text;
     });
+  }
+
+  void _showContextMenu(
+      BuildContext context, PdfTextSelectionChangedDetails details) {
+    final OverlayState overlayState = Overlay.of(context);
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: details.globalSelectedRegion!.center.dy - 55,
+        left: details.globalSelectedRegion!.bottomLeft.dx,
+        child: ElevatedButton(
+          onPressed: () {
+            if (details.selectedText != null) {
+              Clipboard.setData(ClipboardData(text: details.selectedText!));
+              print('Text copied to clipboard: ${details.selectedText}');
+              _pdfViewerController.clearSelection();
+            }
+          },
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            )),
+          ),
+          child: const Text('Copy', style: TextStyle(fontSize: 17)),
+        ),
+      ),
+    );
+    overlayState.insert(_overlayEntry!);
   }
 
   @override
@@ -259,20 +306,26 @@ class _ChapterPageState extends State<ChapterPage> {
       ),
       body: Stack(children: [
         SfPdfViewer.asset(
-          'assets/pdf/Herram iniciar PCC.pdf',
+          'assets/pdf/${widget.book.name}.pdf',
           canShowPaginationDialog: true,
           pageSpacing: 2.0,
           key: _pdfViewerKey,
+          maxZoomLevel: 5,
+          onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
+            if (details.selectedText == null && _overlayEntry != null) {
+              _overlayEntry!.remove();
+              _overlayEntry = null;
+            } else if (details.selectedText != null && _overlayEntry == null) {
+              _showContextMenu(context, details);
+            }
+          },
+          controller: _pdfViewerController,
         ),
-        // _inputSection(),
-        // ttsState == TtsState.playing ? _progressBar(end) : Text("hola mundo"),
-        // _buildSliders(),
-        // _btnSection(),
         if (onAudioSound)
           DraggableScrollableSheet(
-            initialChildSize: .15,
-            minChildSize: .15,
-            maxChildSize: .4,
+            initialChildSize: .14,
+            minChildSize: .14,
+            maxChildSize: .14,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -284,17 +337,42 @@ class _ChapterPageState extends State<ChapterPage> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Título',
-                          style: AppStyle.txtNunitoSansSemiBold20Black900,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Título',
+                                style: AppStyle.txtNunitoSansSemiBold20Black900,
+                              ),
+                              Text(
+                                'Autor',
+                                style:
+                                    AppStyle.txtNunitoSansSemiBold13Indigo900,
+                              ),
+                              // ttsState == TtsState.playing
+                              _progressBar(end),
+                              // : Container(
+                              //     // height: 100,
+                              //     width: double.infinity,
+                              //     alignment: Alignment.topCenter,
+                              //     padding:
+                              //         EdgeInsets.only(top: 5.0, right: 10),
+                              //     child: LinearProgressIndicator(
+                              //       backgroundColor:
+                              //           ColorConstant.indigo90033,
+                              //       valueColor:
+                              //           AlwaysStoppedAnimation<Color>(
+                              //               ColorConstant.indigo900),
+                              //       value: 0,
+                              //     )),
+                            ],
+                          ),
                         ),
-                        Text(
-                          'Autor',
-                          style: AppStyle.txtNunitoSansSemiBold13Indigo900,
-                        )
+                        _btnSection(),
                       ],
                     )
                   ],
@@ -318,60 +396,95 @@ class _ChapterPageState extends State<ChapterPage> {
       ));
 
   Widget _btnSection() {
+    print('TtsState: $ttsState');
     if (isAndroid) {
-      return Container(
-          padding: EdgeInsets.only(top: 50.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            _buildButtonColumn(Colors.green, Colors.greenAccent,
-                Icons.play_arrow, 'PLAY', _speak),
-            _buildButtonColumn(
-                Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
-          ]));
+      if (ttsState != TtsState.playing) {
+        print('Not playing: $ttsState');
+        return _buildButtonColumn(Colors.red, Colors.redAccent,
+            ImageConstant.imgArrowMedia, '', _speak);
+      } else {
+        print('Playing: $ttsState');
+        return _buildButtonColumn(Colors.red, Colors.redAccent,
+            ImageConstant.imgArrowdown, '', _pause);
+      }
+
+      // return CustomIconButton(
+      //                         margin: getMargin(left: 8),
+      //                         height: getSize(48),
+      //                         width: getSize(48),
+      //                         variant: IconButtonVariant.FillIndigo,
+      //                         onTap: () {},
+      //                         child: CustomImageView(
+      //                           svgPath: ImageConstant.imgArrowMedia,
+      //                         ),
+      //                       ),
+      // return Container(
+      //     padding: EdgeInsets.only(top: 50.0),
+      //     child:
+      //         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      //       _buildButtonColumn(Colors.green, Colors.greenAccent,
+      //           Icons.play_arrow, 'PLAY', _speak),
+      //       _buildButtonColumn(
+      //           Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
+      //     ]));
     } else {
-      return Container(
-          padding: EdgeInsets.only(top: 50.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            _buildButtonColumn(Colors.green, Colors.greenAccent,
-                Icons.play_arrow, 'PLAY', _speak),
-            _buildButtonColumn(
-                Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
-            _buildButtonColumn(
-                Colors.blue, Colors.blueAccent, Icons.pause, 'PAUSE', _pause),
-          ]));
+      return Container();
+      // return Container(
+      //     padding: EdgeInsets.only(top: 50.0),
+      //     child:
+      //         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      //       _buildButtonColumn(Colors.green, Colors.greenAccent,
+      //           Icons.play_arrow, 'PLAY', _speak),
+      //       _buildButtonColumn(
+      //           Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
+      //       _buildButtonColumn(
+      //           Colors.blue, Colors.blueAccent, Icons.pause, 'PAUSE', _pause),
+      //     ]));
     }
   }
 
-  Column _buildButtonColumn(Color color, Color splashColor, IconData icon,
-      String label, Function func) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-              icon: Icon(icon),
-              color: color,
-              splashColor: splashColor,
-              onPressed: () => func()),
-          Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              child: Text(label,
-                  style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                      color: color)))
-        ]);
+  CustomIconButton _buildButtonColumn(Color color, Color splashColor,
+      String icon, String label, Function func) {
+    return CustomIconButton(
+      margin: getMargin(left: 8),
+      height: getSize(58),
+      width: getSize(58),
+      variant: IconButtonVariant.FillIndigo,
+      onTap: () => func(),
+      child: CustomImageView(
+        svgPath: icon,
+      ),
+    );
+    // return Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       IconButton(
+    //           icon: Icon(icon),
+    //           color: color,
+    //           splashColor: splashColor,
+    //           onPressed: () => func()),
+    //       Container(
+    //           margin: const EdgeInsets.only(top: 8.0),
+    //           child: Text(label,
+    //               style: TextStyle(
+    //                   fontSize: 12.0,
+    //                   fontWeight: FontWeight.w400,
+    //                   color: color)))
+    //     ]);
   }
 
-  Widget _progressBar(int end) => Container(
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
-      child: LinearProgressIndicator(
-        backgroundColor: Colors.red,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-        value: end / _newVoiceText!.length,
-      ));
+  Widget _progressBar(int end) {
+    print('newVoiceText: $_newVoiceText');
+    return Container(
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.only(top: 5.0, right: 10),
+        child: LinearProgressIndicator(
+          backgroundColor: ColorConstant.indigo90033,
+          valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.indigo900),
+          value: end / _newVoiceText!.length,
+        ));
+  }
 
   void _handleChangeIndex(int index) {
     switch (index) {
@@ -455,24 +568,6 @@ class _ChapterPageState extends State<ChapterPage> {
             ],
           );
         });
-  }
-
-  void displayDialogAndroid(BuildContext context) {
-    DraggableScrollableSheet(
-      initialChildSize: .2,
-      minChildSize: .1,
-      maxChildSize: .6,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return Container(
-          margin: EdgeInsets.only(bottom: 10),
-          color: Colors.lightGreen[100],
-          child: ListView(
-            controller: scrollController,
-            children: [],
-          ),
-        );
-      },
-    );
   }
 }
 

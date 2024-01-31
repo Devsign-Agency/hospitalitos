@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:html/parser.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
@@ -16,10 +13,8 @@ import 'package:mobile_app/features/notification/screens/notifications/notificat
 import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:vocsy_epub_viewer/epub_viewer.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -129,12 +124,23 @@ class _HomePageState extends State<HomePage> {
     return EpubDocument.openAssetFolder('/epubs');
   }
 
+  Future<List<SfPdfViewer>> fetchDataPdf() async {
+    return PdfService.openAssetFolder('/pdf');
+  }
+
   @override
   initState() {
     super.initState();
 
     final authService = Provider.of<AuthService>(context, listen: false);
+
     user = authService.user;
+  }
+
+  Future<List<PdfViewer>> getPdfVieverfromJson() async {
+    final pdfService = Provider.of<PdfService>(context, listen: false);
+
+    return pdfService.openAssetsFolderPdf();
   }
 
   void _onChangeTab(int index) {
@@ -151,61 +157,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  onTap(context, EpubBook book) async {
-    dynamic path;
-//Get the epub into memory somehow
-    // String fileName = 'book.epub';
-    // String fullPath = path.join(Directory.current.path, fileName);
-    // var targetFile = new File(fullPath);
-    // List<int> bytes = await targetFile.readAsBytes();
-
-    // Directory directory = await getApplicationDocumentsDirectory();
-    // EpubReader.readBook();
-    // print(directory.path);
-    // dynamic other = rootBundle.load('assets/epubs/book.epub');
-    // // print(other);
-    // // File _epubFile = File('mobile/app/assets/epubs/book.epub');
-    // late dynamic book = EpubReader.readBook(other);
-    // print(book);
-    // final contents = await other.readAsBytes();
-    // EpubBookRef epub = await EpubReader.openBook(contents.toList());
-    // var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
-    // List<String> htmlList = [];
-    // for (var value in cont.values) {
-    //   htmlList.add(value.Content!);
-    // }
-    // var doc = parse(htmlList.join());
-    // final String parsedString = parse(doc.body!.text).documentElement!.text;
-    // print(parsedString);
-
-    // Book reader using the vocsy_epub library
-
-    // VocsyEpub.setConfig(
-    //   themeColor: Theme.of(context).primaryColor,
-    //   identifier: "iosBook",
-    //   scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-    //   allowSharing: true,
-    //   enableTts: true,
-    //   nightMode: false,
-    // );
-    // // get current locator
-    // VocsyEpub.locatorStream.listen((locator) {
-    //   print('LOCATOR: $locator');
-    // });
-    // await VocsyEpub.openAsset(
-    //   'assets/epubs/${book.Title}.epub',
-    //   lastLocation: EpubLocator.fromJson({
-    //     "bookId": "2239",
-    //     "href": "/OEBPS/ch06.xhtml",
-    //     "created": 1539934158390,
-    //     "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
-    //   }),
-    // );
-
-    // Book reader using the epub_book library
-
-    Navigator.pushNamed(context, 'book',
-        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+  void _onTap(PdfViewer pdf) {
+    Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -339,10 +292,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )),
-                  CardPreviewItemList(
-                    future: fetchData(),
-                    onTappedItem: onTap,
-                  ),
+                  // CardPreviewItemList(
+                  //   future: fetchData(),
+                  //   onTappedItem: onTap,
+                  // ),
+                  // CardPreviewPdfList(
+                  //   future: fetchDataPdf(),
+                  //   onTappedItem: onTap,
+                  // ),
+
+                  CardPreviewBookList(
+                    future: getPdfVieverfromJson(),
+                    onTappedItem: _onTap,
+                  )
                 ],
               ),
 

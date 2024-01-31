@@ -55,11 +55,13 @@ class _LinkCardState extends State<_LinkCard> {
       ),
     );
   }
- Future<void> share() async {
+
+  Future<void> share() async {
     const urlPreview = 'https://www.filmaffinity.com/es/film866133.html';
 
     await Share.share('https://example.com');
   }
+
   showCustomToast() {
     Widget toast = Container(
       width: double.infinity,
@@ -133,6 +135,4 @@ class ModalBottomSheet extends StatelessWidget {
       ),
     );
   }
-
- 
 }
