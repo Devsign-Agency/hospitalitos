@@ -33,7 +33,7 @@ class _BlogDetailState extends State<BlogDetail> {
   @override
   Widget build(BuildContext context) {
     final dynamic params = ModalRoute.of(context)?.settings.arguments;
-
+  
     final String parsedString = stripHtmlIfNeeded(params['content']['rendered']);
 
     return SafeArea(
@@ -52,8 +52,31 @@ class _BlogDetailState extends State<BlogDetail> {
             ...List.generate(1, (int index) {
               return Padding(
                   padding: getPadding(all: 16),
-                  child: Html(
-                    data: parsedString,
+                  child: Center(
+                    child: Html(
+                      data: parsedString,
+                      style: {
+                      "body": Style(
+                        margin: Margins.zero,
+                        padding: EdgeInsets.zero,
+                        fontSize: FontSize(17.0),
+                        lineHeight: LineHeight(1.4),
+                        fontFamily: 'Nunito Sans',
+                      ),
+                      "p": Style(
+                        padding: EdgeInsets.all(6),
+                        fontFamily: 'Nunito Sans',
+                        alignment: Alignment.centerRight // for text right 
+                      ),
+                      'strong': Style(
+                        fontSize: FontSize(20.0),
+                      ),
+                      'img': Style(
+                        height: Height(0) ,
+                        width: Width(0),
+                      )
+                    },
+                    ),
                   )
                   
                   );

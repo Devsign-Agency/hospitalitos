@@ -7,10 +7,8 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import '../../widgets/widgets.dart';
 
-
-
 class BlogScreen extends StatefulWidget {
-   static const String route = 'blog';
+  static const String route = 'blog';
   const BlogScreen({super.key});
 
   @override
@@ -18,48 +16,27 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
-
   List<dynamic> posts = [];
 
   @override
   void initState() {
-    fetchWpPosts().then ((value) {
-              posts = value;
-              setState(() {
-                
-              });
+    fetchWpPosts().then((value) {
+      posts = value;
+      setState(() {});
     });
 
-     super.initState();
+    super.initState();
   }
 
-
-   @override
+  @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
-        child:   Scaffold(
-      body: posts.isNotEmpty? Column(
-        children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
-      )
-      
-      :
-       Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-              child: CircularProgressIndicator()
-          )
-        ]
-       )
-      ,
-    
-    )
-    );
+        child: Scaffold(
+            body: Column(
+      children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
+    )));
   }
 }
-
-
 
 class _ArticlesList extends StatelessWidget {
   final List<dynamic> posts;
@@ -68,38 +45,61 @@ class _ArticlesList extends StatelessWidget {
     super.key,
     required this.posts,
   });
-  
- 
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView.separated(
-            scrollDirection: Axis.vertical,
-            itemCount: posts.length,
-            separatorBuilder: (_, __) => SizedBox(height: 20),
-            itemBuilder: (_, int index) {
-              final item = posts[index];
-              print(index);
-              Map<dynamic, dynamic> wppost = item;
-              print(wppost['_embedded']['wp:featuredmedia'][0]['source_url']);
-              // var imageurl = wppost['_embedded']['wp:featuredmedia'][0];
-              return ArticleCard(imgUrl: wppost['_embedded']['wp:featuredmedia'][0]['source_url'], post: item);
-            }),
+        child: posts.isNotEmpty
+            ? ListView.separated(
+                scrollDirection: Axis.vertical,
+                itemCount: posts.length,
+                separatorBuilder: (_, __) => SizedBox(height: 20),
+                itemBuilder: (_, int index) {
+                  final item = posts[index];
+                  print(index);
+                  Map<dynamic, dynamic> wppost = item;
+                  print(
+                      wppost['_embedded']['wp:featuredmedia'][0]['source_url']);
+                  // var imageurl = wppost['_embedded']['wp:featuredmedia'][0];
+               
+                  return ArticleCard(
+                      imgUrl: wppost['_embedded']['wp:featuredmedia'][0]
+                          ['source_url'],
+                      post: item);
+                })
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Text('Cargando posts')],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                  ),
+                ],
+              ),
       ),
     );
   }
-
-  
 }
 
 class _ArticlesHeader extends StatelessWidget {
   const _ArticlesHeader({
     super.key,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,7 +112,7 @@ class _ArticlesHeader extends StatelessWidget {
             height: 48,
             width: 48,
             variant: IconButtonVariant.NoFill,
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: CustomImageView(
@@ -129,7 +129,7 @@ class _ArticlesHeader extends StatelessWidget {
             height: 48,
             width: 48,
             variant: IconButtonVariant.FillGray300,
-             onTap: () {
+            onTap: () {
               showSearch(context: context, delegate: PostsSearchDelegate());
             },
             child: CustomImageView(
