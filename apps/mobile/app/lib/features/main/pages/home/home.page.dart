@@ -4,6 +4,7 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
+import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
@@ -15,6 +16,7 @@ import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:vocsy_epub_viewer/epub_viewer.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -158,7 +160,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onTap(PdfViewer pdf) {
-    Navigator.pushNamed(context, 'book', arguments: pdf);
+    Navigator.pushNamed(context, ReadToolsPage.route, arguments: pdf);
+    //Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -292,19 +295,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )),
-                  // CardPreviewItemList(
-                  //   future: fetchData(),
-                  //   onTappedItem: onTap,
-                  // ),
+                  CardPreviewItemList(
+                    future: fetchData(),
+                    onTappedItem: () {},
+                  ),
                   // CardPreviewPdfList(
                   //   future: fetchDataPdf(),
                   //   onTappedItem: onTap,
                   // ),
 
-                  CardPreviewBookList(
-                    future: getPdfVieverfromJson(),
-                    onTappedItem: _onTap,
-                  )
+                  // CardPreviewBookList(
+                  //   future: getPdfVieverfromJson(),
+                  //   onTappedItem: _onTap,
+                  // )
                 ],
               ),
 
@@ -344,6 +347,34 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            VocsyEpub.setConfig(
+              themeColor: Theme.of(context).primaryColor,
+              identifier: "iosBook",
+              scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+              allowSharing: true,
+              enableTts: true,
+              nightMode: false,
+            );
+            // get current locator
+            VocsyEpub.locatorStream.listen((locator) {
+              print('LOCATOR: $locator');
+            });
+            await VocsyEpub.openAsset(
+              'assets/epubs/G.A.E.epub',
+              lastLocation: EpubLocator.fromJson({
+                "bookId": "2239",
+                "href": "/OEBPS/ch06.xhtml",
+                "created": 1539934158390,
+                "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
+              }),
+            );
+            // Navigator.pushNamed(context, 'book',
+            //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+          },
+          child: Icon(Icons.music_note),
         ),
         bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
       ),

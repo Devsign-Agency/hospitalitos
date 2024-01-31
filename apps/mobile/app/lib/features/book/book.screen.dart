@@ -43,14 +43,15 @@ class _MainScreenState extends State<BookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as PdfViewer;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments;
     // final chapter = arguments.chapter;
 
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Scaffold(
-        body: ChapterPage(book: book!),
+        body: ReadToolsPage(),
       ),
       //   child: EpubReader()
     );

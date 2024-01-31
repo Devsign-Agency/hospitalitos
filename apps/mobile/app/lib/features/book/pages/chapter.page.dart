@@ -78,6 +78,32 @@ class _ChapterPageState extends State<ChapterPage> {
     //   // Set start point
     //   // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
     // );
+
+    getTextFromEpubInstance();
+  }
+
+  getTextFromEpubInstance() async {
+    final byteData = await rootBundle.load('assets/epubs/book.epub');
+    Directory tempDir = await getTemporaryDirectory();
+
+    File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
+      ..createSync(recursive: true)
+      ..writeAsBytesSync(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    File _epubFile = File(tempVideo.path);
+    final contents = await _epubFile.readAsBytes();
+    EpubBookRef epub = await EpubReader.openBook(contents.toList());
+    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    List<String> htmlList = [];
+    for (var value in cont.values) {
+      htmlList.add(value.Content!);
+    }
+    var doc = parse(htmlList.join());
+    final String parsedString = parse(doc.body!.text).documentElement!.text;
+
+    print('text: $parsedString');
+    await _playText(parsedString);
   }
 
   initTts() {
@@ -192,8 +218,8 @@ class _ChapterPageState extends State<ChapterPage> {
   _playText(parsedString) async {
     print('playText');
     TextToSpeech tts = TextToSpeech();
-
-    onAudioSound ? tts.play(parsedString) : tts.stop();
+    tts.play(parsedString);
+    // onAudioSound ? tts.play(parsedString) : tts.stop();
   }
 
   @override
@@ -310,6 +336,7 @@ class _ChapterPageState extends State<ChapterPage> {
           canShowPaginationDialog: true,
           pageSpacing: 2.0,
           key: _pdfViewerKey,
+          interactionMode: PdfInteractionMode.selection,
           maxZoomLevel: 5,
           onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
             if (details.selectedText == null && _overlayEntry != null) {

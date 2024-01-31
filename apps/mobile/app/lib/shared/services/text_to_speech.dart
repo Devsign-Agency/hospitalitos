@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:html/parser.dart';
 
-class TextToSpeech {
+enum TtsStates { playing, stopped, paused, continued }
+
+class TextToSpeech with ChangeNotifier {
   static FlutterTts? ftts;
   List<String> textToPlay = [];
   int index = 0;
   bool active = false;
+  TtsStates ttsState = TtsStates.stopped;
 
   TextToSpeech() {
     ftts ??= FlutterTts();
@@ -19,7 +23,12 @@ class TextToSpeech {
   }
 
   pause() async {
-    await ftts!.stop();
+    var result = await ftts!.stop();
+
+    if (result == 1) {
+      ttsState = TtsStates.paused;
+      notifyListeners();
+    }
   }
 
   stop() async {
@@ -43,7 +52,13 @@ class TextToSpeech {
       }
     });
 
-    await _speak(textToPlay[index]);
+    await ftts!.awaitSpeakCompletion(true);
+    var result = await _speak(textToPlay[index]);
+    print('result $result');
+    if (result == 1) {
+      ttsState = TtsStates.playing;
+      notifyListeners();
+    }
   }
 
   resume() async {

@@ -44,7 +44,7 @@ class CardPreviewItemList extends StatelessWidget {
 
                     String title = book.Title!.trim();
                     return _ViewedPreview(
-                      onTap: () => {onTappedItem(context, book)},
+                      onTap: () => {onTap(context, book)},
                       backgroundImage: image,
                       progressValue: 0.0,
                       title: title,
