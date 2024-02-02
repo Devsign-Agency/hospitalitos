@@ -28,19 +28,6 @@ class _MainScreenState extends State<BookScreen> {
   final TextToSpeech tts = TextToSpeech();
   bool playing = false;
 
-  void _onItemTapped(int index, BuildContext context, EpubBook book) {
-    switch (index) {
-      case 2:
-        Navigator.pushNamed(context, 'book/index',
-            arguments: EpubArguments(book: book));
-        break;
-      default:
-        setState(() {
-          selectedIndex = index;
-        });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -55,35 +42,5 @@ class _MainScreenState extends State<BookScreen> {
       ),
       //   child: EpubReader()
     );
-  }
-
-  _playText(EpubChapter? chapter) async {
-    if (chapter != null) {
-      String? content = chapter.HtmlContent;
-      if (content != null) {
-        setState(() {
-          playing = true;
-        });
-        await tts.play(content);
-      }
-    }
-  }
-
-  _pauseText() async {
-    await tts.pause();
-    setState(() {
-      playing = false;
-    });
-  }
-
-  _stopText() async {
-    await tts.pause();
-    setState(() {
-      playing = false;
-    });
-  }
-
-  onTapArrowleft12(BuildContext context) {
-    Navigator.pop(context);
   }
 }

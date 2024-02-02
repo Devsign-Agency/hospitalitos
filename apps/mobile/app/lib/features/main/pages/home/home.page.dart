@@ -1,6 +1,7 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
@@ -145,6 +146,12 @@ class _HomePageState extends State<HomePage> {
     return pdfService.openAssetsFolderPdf();
   }
 
+  Future<List<Book>> getBooks() async {
+    final bookService = Provider.of<BookService>(context, listen: false);
+
+    return bookService.getBooksFromJson();
+  }
+
   void _onChangeTab(int index) {
     switch (index) {
       case 1:
@@ -159,9 +166,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _onTap(PdfViewer pdf) {
-    Navigator.pushNamed(context, ReadToolsPage.route, arguments: pdf);
-    //Navigator.pushNamed(context, 'book', arguments: pdf);
+  void _onTap(Book book) {
+    Navigator.pushNamed(context, ReadToolsPage.route, arguments: book);
+    // Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -295,10 +302,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )),
-                  CardPreviewItemList(
-                    future: fetchData(),
-                    onTappedItem: () {},
+
+                  // Show epub list
+
+                  // CardPreviewItemList(
+                  //   future: fetchData(),
+                  //   onTappedItem: () {},
+                  // ),
+
+                  CardPreviewBooksList(
+                    future: getBooks(),
+                    onTappedItem: _onTap,
                   ),
+
                   // CardPreviewPdfList(
                   //   future: fetchDataPdf(),
                   //   onTappedItem: onTap,
@@ -348,52 +364,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            VocsyEpub.setConfig(
-              themeColor: Theme.of(context).primaryColor,
-              identifier: "iosBook",
-              scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-              allowSharing: true,
-              enableTts: true,
-              nightMode: false,
-            );
-            // get current locator
-            VocsyEpub.locatorStream.listen((locator) {
-              print('LOCATOR: $locator');
-            });
-            await VocsyEpub.openAsset(
-              'assets/epubs/G.A.E.epub',
-              lastLocation: EpubLocator.fromJson({
-                "bookId": "2239",
-                "href": "/OEBPS/ch06.xhtml",
-                "created": 1539934158390,
-                "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
-              }),
-            );
-            // Navigator.pushNamed(context, 'book',
-            //     arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
-          },
-          child: Icon(Icons.music_note),
-        ),
         bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
       ),
     );
-  }
-
-  _logout() async {
-    AuthService auth = Provider.of<AuthService>(context, listen: false);
-    await auth.googleSignOut();
-    if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
-          ModalRoute.withName(RouterMain.initialRoute));
-    }
-  }
-
-  _playText() async {
-    print('playText');
-    TextToSpeech tts = TextToSpeech();
-
-    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

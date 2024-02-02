@@ -6,6 +6,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
+import 'package:mobile_app/core/models/book.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../core/app_export.dart';
@@ -54,90 +55,6 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     //initTts();
 
     getTextFromEpubInstance();
-  }
-
-  initTts() {
-    flutterTts = FlutterTts();
-
-    _getLanguages();
-
-    if (isAndroid) {
-      _getEngines();
-    }
-
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print("Playing");
-        ttsState = TtsStates.playing;
-      });
-    });
-
-    flutterTts.setCompletionHandler(() {
-      setState(() {
-        print("Complete");
-        ttsState = TtsStates.stopped;
-        positionLastWord = 0;
-      });
-    });
-
-    flutterTts.setCancelHandler(() {
-      setState(() {
-        print("Cancel");
-        ttsState = TtsStates.stopped;
-      });
-    });
-
-    if (isWeb || isIOS) {
-      flutterTts.setPauseHandler(() {
-        setState(() {
-          print("Paused");
-          ttsState = TtsStates.paused;
-        });
-      });
-
-      flutterTts.setContinueHandler(() {
-        setState(() {
-          print("Continued");
-          ttsState = TtsStates.continued;
-        });
-      });
-    }
-
-    flutterTts.setErrorHandler((msg) {
-      setState(() {
-        print("error: $msg");
-        ttsState = TtsStates.stopped;
-      });
-    });
-
-    flutterTts.setProgressHandler(
-        (String text, int startOffset, int endOffset, String word) {
-      print('text: $text');
-      print('startOffset: $startOffset');
-      print('endOffset: $endOffset');
-      print('word: $word');
-      setState(() {
-        // int index = _newVoiceText!.indexOf(word);
-
-        // end = index + word.length;
-
-        end = endOffset + positionLastWord;
-      });
-    });
-  }
-
-  Future _getLanguages() async {
-    languages = await flutterTts.getLanguages;
-    if (languages != null) setState(() => languages);
-  }
-
-  Future _getEngines() async {
-    var engines = await flutterTts.getEngines;
-    if (engines != null) {
-      for (dynamic engine in engines) {
-        print(engine);
-      }
-    }
   }
 
   Future _speak() async {
@@ -205,6 +122,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    final Book book = arguments as Book;
+
     TextToSpeech ttsProviderr = Provider.of<TextToSpeech>(context);
 
     final actions = [
@@ -228,11 +148,11 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               SizedBox(height: 32),
               Container(
                 width: double.infinity,
-                height: 280,
+                height: 340,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     image: DecorationImage(
-                        image: AssetImage('assets/images/img_media.png'),
+                        image: AssetImage('assets/images/${book.image}'),
                         fit: BoxFit.cover)),
               ),
               SizedBox(height: 40),
@@ -244,9 +164,14 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Título',
-                          style: AppStyle.txtNunitoSansSemiBold26,
+                        SizedBox(
+                          width: 260,
+                          child: Text(
+                            '${book.name}',
+                            style: AppStyle.txtNunitoSansSemiBold26,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         Text(
                           'Autor',
@@ -267,6 +192,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: 30),
               _progressBar(30),
               SizedBox(height: 63),
               _btnSection(ttsProviderr),
@@ -289,10 +215,11 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       margin: getMargin(left: 8),
       height: getSize(58),
       width: getSize(58),
-      variant: IconButtonVariant.FillIndigo,
+      variant: IconButtonVariant.FillYellow,
       onTap: () => func(index, ttsProvider),
       child: CustomImageView(
         svgPath: icon,
+        color: ColorConstant.indigo900,
       ),
     );
   }

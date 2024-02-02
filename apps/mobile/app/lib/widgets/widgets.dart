@@ -2,6 +2,7 @@ export 'package:mobile_app/features/main/pages/home/widgets/preview_item_list.da
 export 'package:mobile_app/widgets/background.dart';
 export 'package:mobile_app/widgets/barInputSearch.dart';
 export 'package:mobile_app/widgets/card_preview_book_list.dart';
+export 'package:mobile_app/widgets/card_preview_books_list.dart';
 export 'package:mobile_app/widgets/card_preview_item_list.dart';
 export 'package:mobile_app/widgets/custom_app_bar.dart';
 export 'package:mobile_app/widgets/custom_bottom_bar.dart';

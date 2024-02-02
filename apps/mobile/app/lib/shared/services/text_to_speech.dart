@@ -25,6 +25,8 @@ class TextToSpeech with ChangeNotifier {
   pause() async {
     var result = await ftts!.stop();
 
+    ttsState = TtsStates.paused;
+    notifyListeners();
     if (result == 1) {
       ttsState = TtsStates.paused;
       notifyListeners();
@@ -41,24 +43,40 @@ class TextToSpeech with ChangeNotifier {
     active = true;
     textToPlay = _parseHtmlString(text);
 
-    ftts!.setCompletionHandler(() async {
-      if (index < textToPlay.length - 1) {
-        index++;
-        if (active) {
-          await _speak(textToPlay[index]);
-        }
-      } else {
-        active = false;
-      }
-    });
+    // ftts!.setCompletionHandler(() async {
+    //   if (index < textToPlay.length - 1) {
+    //     index++;
+    //     if (active) {
+    //       await _speak(textToPlay[index]);
+    //     }
+    //   } else {
+    //     active = false;
+    //   }
+    // });
 
     await ftts!.awaitSpeakCompletion(true);
-    var result = await _speak(textToPlay[index]);
-    print('result $result');
-    if (result == 1) {
-      ttsState = TtsStates.playing;
-      notifyListeners();
+
+    var count = text.length;
+    var max = 4000;
+    var loopCount = count ~/ max;
+
+    for (var i = 0; i <= loopCount; i++) {
+      if (i != loopCount) {
+        await ftts!.speak(text.substring(i * max, (i + 1) * max));
+      } else {
+        var end = (count - ((i * max)) + (i * max));
+        await ftts!.speak(text.substring(i * max, end));
+      }
     }
+
+    // var result = await _speak(textToPlay[index]);
+    ttsState = TtsStates.playing;
+    notifyListeners();
+    // print('result $result');
+    // if (result == 1) {
+    //   ttsState = TtsStates.playing;
+    //   notifyListeners();
+    // }
   }
 
   resume() async {

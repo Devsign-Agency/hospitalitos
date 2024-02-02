@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LiturgyService()),
         ChangeNotifierProvider(create: (_) => FavoriteService()),
         ChangeNotifierProvider(create: (_) => PdfService()),
-        ChangeNotifierProvider(create: (_) => TextToSpeech())
+        ChangeNotifierProvider(create: (_) => TextToSpeech()),
+        ChangeNotifierProvider(create: (_) => BookService()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
