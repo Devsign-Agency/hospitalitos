@@ -44,11 +44,12 @@ class _ChapterPageState extends State<ChapterPage> {
   int positionLastWord = 0;
   late PdfViewerController _pdfViewerController;
   OverlayEntry? _overlayEntry;
-
+  int i = 0;
   String? _newVoiceText;
-
+  List<String> sentences = [];
   TtsState ttsState = TtsState.stopped;
-
+  int _newVoiceTextLenght = 0;
+  String parsedEpubString = '';
   get isPlaying => ttsState == TtsState.playing;
   get isStopped => ttsState == TtsState.stopped;
   get isPaused => ttsState == TtsState.paused;
@@ -64,7 +65,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
     super.initState();
     initTts();
-    // getTextFromEpubInstance();
+    getTextFromEpubInstance();
 
     // _epubController = EpubController(
     //   // Load document
@@ -78,6 +79,29 @@ class _ChapterPageState extends State<ChapterPage> {
     //   // Set start point
     //   // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
     // );
+  }
+
+  buildAudioText(String newVoiceText) async {
+    var count = newVoiceText.length;
+    var max = 4000;
+    var loopCount = count ~/ max;
+
+    for (var i = 0; i <= loopCount; i++) {
+      if (i != loopCount) {
+        sentences.add(newVoiceText.substring(i * max, (i + 1) * max));
+        // await flutterTts
+        //     .speak(_newVoiceText!.substring(i * max, (i + 1) * max));
+      } else {
+        var end = (count - ((i * max)) + (i * max));
+        sentences.add(newVoiceText.substring(i * max, end));
+
+        // await flutterTts.speak(_newVoiceText!.substring(i * max, end));
+      }
+    }
+    _newVoiceTextLenght = loopCount;
+    _newVoiceText = sentences[i];
+    i++;
+    setState(() {});
   }
 
   initTts() {
@@ -100,7 +124,13 @@ class _ChapterPageState extends State<ChapterPage> {
       setState(() {
         print("Complete");
         ttsState = TtsState.stopped;
-        positionLastWord = 0;
+        i++;
+        if (i < _newVoiceTextLenght) {
+          _newVoiceText = sentences[i];
+          _speak();
+        } else {
+          positionLastWord = 0;
+        }
       });
     });
 
@@ -169,12 +199,12 @@ class _ChapterPageState extends State<ChapterPage> {
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
     ttsState = TtsState.playing;
-    if (_newVoiceText != null) {
-      await flutterTts.awaitSpeakCompletion(true);
-      var result = await flutterTts.speak(_newVoiceText!);
-      print("RESULT $result");
-      if (result == 1) setState(() => ttsState = TtsState.playing);
-    }
+    // if (newVoiceText) {
+    await flutterTts.awaitSpeakCompletion(true);
+    var result = await flutterTts.speak(_newVoiceText!);
+    print("RESULT $result");
+    if (result == 1) setState(() => ttsState = TtsState.playing);
+    // }
   }
 
   Future _stop() async {
@@ -251,11 +281,11 @@ class _ChapterPageState extends State<ChapterPage> {
     // File('Output.pdf').writeAsBytes(await document.save());
     // document.dispose();
 
-    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    // ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 
-    _onChange(data!.text!);
+    // _onChange(data!.text!);
 
-    // setState(() {});
+    setState(() {});
   }
 
   // void _getClipboard() async {
@@ -268,6 +298,39 @@ class _ChapterPageState extends State<ChapterPage> {
     setState(() {
       _newVoiceText = text;
     });
+  }
+
+  getTextFromEpubInstance() async {
+    final byteData = await rootBundle.load('assets/epubs/book.epub');
+    Directory tempDir = await getTemporaryDirectory();
+
+    File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
+      ..createSync(recursive: true)
+      ..writeAsBytesSync(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    File _epubFile = File(tempVideo.path);
+    final contents = await _epubFile.readAsBytes();
+    EpubBookRef epub = await EpubReader.openBook(contents.toList());
+    var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    List<String> htmlList = [];
+    for (var value in cont.values) {
+      htmlList.add(value.Content!);
+    }
+    var doc = parse(htmlList.join());
+    final String parsedString = parse(doc.body!.text).documentElement!.text;
+
+    // print('text: $parsedString');
+    parsedEpubString = parsedString;
+    print(parsedEpubString);
+    buildAudioText(parsedString);
+
+    // setState(() {
+    //   _newVoiceText = parsedString;
+
+    //   print(_newVoiceText);
+    // });
+    // // await _playText(parsedString);
   }
 
   void _showContextMenu(
@@ -407,40 +470,9 @@ class _ChapterPageState extends State<ChapterPage> {
         return _buildButtonColumn(Colors.red, Colors.redAccent,
             ImageConstant.imgArrowdown, '', _pause);
       }
-
-      // return CustomIconButton(
-      //                         margin: getMargin(left: 8),
-      //                         height: getSize(48),
-      //                         width: getSize(48),
-      //                         variant: IconButtonVariant.FillIndigo,
-      //                         onTap: () {},
-      //                         child: CustomImageView(
-      //                           svgPath: ImageConstant.imgArrowMedia,
-      //                         ),
-      //                       ),
-      // return Container(
-      //     padding: EdgeInsets.only(top: 50.0),
-      //     child:
-      //         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      //       _buildButtonColumn(Colors.green, Colors.greenAccent,
-      //           Icons.play_arrow, 'PLAY', _speak),
-      //       _buildButtonColumn(
-      //           Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
-      //     ]));
-    } else {
-      return Container();
-      // return Container(
-      //     padding: EdgeInsets.only(top: 50.0),
-      //     child:
-      //         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      //       _buildButtonColumn(Colors.green, Colors.greenAccent,
-      //           Icons.play_arrow, 'PLAY', _speak),
-      //       _buildButtonColumn(
-      //           Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
-      //       _buildButtonColumn(
-      //           Colors.blue, Colors.blueAccent, Icons.pause, 'PAUSE', _pause),
-      //     ]));
     }
+
+    return Container();
   }
 
   CustomIconButton _buildButtonColumn(Color color, Color splashColor,
@@ -455,34 +487,18 @@ class _ChapterPageState extends State<ChapterPage> {
         svgPath: icon,
       ),
     );
-    // return Column(
-    //     mainAxisSize: MainAxisSize.min,
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       IconButton(
-    //           icon: Icon(icon),
-    //           color: color,
-    //           splashColor: splashColor,
-    //           onPressed: () => func()),
-    //       Container(
-    //           margin: const EdgeInsets.only(top: 8.0),
-    //           child: Text(label,
-    //               style: TextStyle(
-    //                   fontSize: 12.0,
-    //                   fontWeight: FontWeight.w400,
-    //                   color: color)))
-    //     ]);
   }
 
   Widget _progressBar(int end) {
-    print('newVoiceText: $_newVoiceText');
+    // print('newVoiceText: $_newVoiceText $');
+    print('value ${end / parsedEpubString.length}');
     return Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(top: 5.0, right: 10),
         child: LinearProgressIndicator(
           backgroundColor: ColorConstant.indigo90033,
           valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.indigo900),
-          value: end / _newVoiceText!.length,
+          value: end / parsedEpubString.length,
         ));
   }
 
