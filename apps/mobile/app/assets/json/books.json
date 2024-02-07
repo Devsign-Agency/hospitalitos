@@ -3,22 +3,34 @@
         {
             "id": "0",
             "name": "GUÍA BÍBLICA, HF VI Edición completa",
-            "image": "guia_biblica.png"
+            "image": "guia_biblica.png",
+            "path": "GUÍA BíBLICA, HF VI Edición completa",
+            "author": "Héctor Pernía",
+            "date_publish": ""
         },
         {
             "id": "1",
-            "name": "Metodo para memorizar citas bíblicas",
-            "image": "metodo_para_memorizar.png"
+            "name": "Método para memorizar citas bíblicas",
+            "image": "metodo_para_memorizar.png",
+            "path": "metodo",
+            "author": "Héctor Pernía",
+            "date_publish": ""
         },
         {
             "id": "2",
-            "name": "G.A.E",
-            "image": "guia de auxilio espiritual.png"
+            "name": "Guía de Auxilio Espiritual",
+            "image": "guia de auxilio espiritual.png",
+            "path": "G.A.E",
+            "author": "Héctor Pernía",
+            "date_publish": ""
         },
         {
             "id": "3",
             "name": "Herram iniciar PCC",
-            "image": "herram_iniciar_PCC.png"
+            "image": "herram_iniciar_PCC.png",
+            "path": "Herram iniciar PCC",
+            "author": "Héctor Pernía",
+            "date_publish": ""
         }
     ]
 }

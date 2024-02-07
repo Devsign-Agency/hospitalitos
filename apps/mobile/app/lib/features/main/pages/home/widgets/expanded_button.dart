@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/core/constants/color.constant.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+
+import '../../../../../core/app_export.dart';
 
 class ExpandedButton extends StatelessWidget {
   final String icon;
@@ -22,7 +23,7 @@ class ExpandedButton extends StatelessWidget {
             child: Container(
                 margin: const EdgeInsets.only(bottom: 10.0),
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 25.0),
+                    horizontal: 12.0, vertical: 12.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: ColorConstant.whiteA700,
@@ -42,18 +43,19 @@ class ExpandedButton extends StatelessWidget {
                       ), //BoxShadow
                     ]),
                 child: CustomIconButton(
-                    height: 48,
-                    width: 48,
+                    height: 60,
+                    width: 60,
                     variant: IconButtonVariant.NoFill,
                     shape: IconButtonShape.CircleBorder24,
                     alignment: Alignment.center,
                     child: CustomImageView(
+                      color: ColorConstant.indigo900,
                       svgPath: icon,
                     ))),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 14),
+            style: AppStyle.txtNunitoSansSemiBold16,
           )
         ],
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/utils/size.utils.dart';
 
+import '../core/app_export.dart';
+
 class CardPreviewBooksList extends StatelessWidget {
   final Future<List<Book>> future;
   final onTappedItem;
@@ -13,7 +15,7 @@ class CardPreviewBooksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-        height: 190.0,
+        height: 205.0,
         width: double.infinity,
         child: FutureBuilder<List<Book>>(
           future: future,
@@ -74,7 +76,7 @@ class _ViewedPreview extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           child: Container(
             width: 144.0,
-            height: 160.0,
+            height: 200.0,
             margin: getMargin(right: 8),
             child: Column(
               children: [
@@ -85,12 +87,12 @@ class _ViewedPreview extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
                           image: AssetImage('assets/images/$backgroundImage'),
-                          fit: BoxFit.cover)),
+                          fit: BoxFit.fill)),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   title,
-                  style: TextStyle(),
+                  style: AppStyle.txtNunitoSansSemiBold16,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

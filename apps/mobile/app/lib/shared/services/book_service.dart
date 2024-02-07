@@ -11,10 +11,10 @@ class BookService with ChangeNotifier {
 
     final List<dynamic> items = data['books'];
 
-    List<Book> BookList = items.map((item) {
+    List<Book> bookList = items.map((item) {
       return Book.fromMap(item);
     }).toList();
 
-    return BookList;
+    return bookList;
   }
 }

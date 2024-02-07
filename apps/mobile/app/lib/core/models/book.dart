@@ -6,7 +6,7 @@ class Book {
     required this.name,
     required this.image,
     this.author,
-    this.publish,
+    this.datePublish,
     this.path,
   });
 
@@ -14,7 +14,7 @@ class Book {
   String name;
   String image;
   String? author;
-  String? publish;
+  String? datePublish;
   String? path;
 
   // factory Book.fromJson(Map<String, dynamic> json) => Book(
@@ -30,7 +30,7 @@ class Book {
         name: json['name'],
         image: json['image'],
         author: json['author'] ?? '',
-        publish: json['publish'] ?? '',
+        datePublish: json['date_publish'] ?? '',
         path: json['path'] ?? '',
       );
 }

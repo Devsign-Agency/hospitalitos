@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/constants/color.constant.dart';
+import 'package:mobile_app/core/theme/app.style.dart';
 import 'package:mobile_app/themes/light_variables.dart';
 
 class LightTheme {
@@ -15,9 +17,24 @@ class LightTheme {
     onBackground: LightVariables.onBackground,
   );
   static get theme => ThemeData(
-        colorScheme: colors,
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-        ),
-      );
+      colorScheme: colors,
+      appBarTheme: AppBarTheme(
+        color: ColorConstant.gray100,
+      ),
+      // sliderTheme: SliderThemeData(
+      //     activeTrackColor: ColorConstant.indigo900,
+      //     inactiveTrackColor: ColorConstant.indigo90033,
+      //     valueIndicatorColor: ColorConstant.purple50,
+      //     valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14WhiteA7001,
+      //     thumbColor: ColorConstant.purple200),
+      sliderTheme: SliderThemeData(
+          activeTrackColor: colors.primary,
+          inactiveTrackColor: ColorConstant.indigo90033,
+          valueIndicatorColor: ColorConstant.deepPurple5002,
+          valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14,
+          thumbColor: ColorConstant.whiteA700,
+          activeTickMarkColor: colors.primary,
+          inactiveTickMarkColor: ColorConstant.indigo90033),
+      progressIndicatorTheme:
+          ProgressIndicatorThemeData(color: ColorConstant.indigo900));
 }
