@@ -4,6 +4,7 @@ import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/features/book/pages/pages.dart';
 
 class CardPreviewItemList extends StatelessWidget {
   final Future<List<EpubBook>> future;
@@ -39,13 +40,14 @@ class CardPreviewItemList extends StatelessWidget {
                     return SizedBox(width: 6);
                   } else {
                     EpubBook book = snapshot.data![index - 1];
+                    print(book);
                     Image image = Image.memory(
                         Uint8List.fromList(encodePng(book.CoverImage!)));
 
                     String title = book.Title!.trim();
                     print(title);
                     return _ViewedPreview(
-                      onTap: () => {onTappedItem(context, book)},
+                      onTap: () => {onTap(context, book)},
                       backgroundImage: image,
                       progressValue: 0.0,
                       title: title,
@@ -64,7 +66,7 @@ class CardPreviewItemList extends StatelessWidget {
 
   onTap(context, EpubBook book) {
     print(book);
-    Navigator.pushNamed(context, 'book',
+    Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 }
