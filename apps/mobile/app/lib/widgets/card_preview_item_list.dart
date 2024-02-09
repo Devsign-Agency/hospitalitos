@@ -40,6 +40,7 @@ class CardPreviewItemList extends StatelessWidget {
                     return SizedBox(width: 6);
                   } else {
                     EpubBook book = snapshot.data![index - 1];
+                    print(book);
                     Image image = Image.memory(
                         Uint8List.fromList(encodePng(book.CoverImage!)));
 
@@ -64,7 +65,7 @@ class CardPreviewItemList extends StatelessWidget {
 
   onTap(context, EpubBook book) {
     print(book);
-    Navigator.pushNamed(context, ReadToolsPage.route,
+    Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 }

@@ -285,15 +285,15 @@ class _HomePageState extends State<HomePage> {
 
                 // Show epub list
 
-                // CardPreviewItemList(
-                //   future: fetchData(),
-                //   onTappedItem: () {},
-                // ),
-
-                CardPreviewBooksList(
-                  future: getBooks(),
-                  onTappedItem: _onTap,
+                CardPreviewItemList(
+                  future: fetchData(),
+                  onTappedItem: () {},
                 ),
+
+                // CardPreviewBooksList(
+                //   future: getBooks(),
+                //   onTappedItem: _onTap,
+                // ),
 
                 // CardPreviewPdfList(
                 //   future: fetchDataPdf(),

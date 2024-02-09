@@ -21,12 +21,7 @@ class LightTheme {
       appBarTheme: AppBarTheme(
         color: ColorConstant.gray100,
       ),
-      // sliderTheme: SliderThemeData(
-      //     activeTrackColor: ColorConstant.indigo900,
-      //     inactiveTrackColor: ColorConstant.indigo90033,
-      //     valueIndicatorColor: ColorConstant.purple50,
-      //     valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14WhiteA7001,
-      //     thumbColor: ColorConstant.purple200),
+      popupMenuTheme: PopupMenuThemeData(color: ColorConstant.whiteA700),
       sliderTheme: SliderThemeData(
           activeTrackColor: colors.primary,
           inactiveTrackColor: ColorConstant.indigo90033,

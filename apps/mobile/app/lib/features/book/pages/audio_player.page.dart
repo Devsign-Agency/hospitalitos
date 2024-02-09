@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:flutter/material.dart';
@@ -43,6 +44,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   List<String> sentences = [];
   TtsStates ttsState = TtsStates.stopped;
   late TextToSpeech ttsProvider;
+  String doc2 = """
+    <h1>Hola mundo</h1>
+  """;
+  String htmlContent = '';
   late Book book = Book(id: '', name: '', image: '');
   get isPlaying => ttsState == TtsStates.playing;
   get isStopped => ttsState == TtsStates.stopped;
@@ -71,7 +76,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     final arguments = ModalRoute.of(context)!.settings.arguments;
     book = arguments as Book;
 
-    getTextFromEpubInstance(book.name);
+    getTextFromEpubInstance(book.path!);
   }
 
   initTts() {
@@ -171,8 +176,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     setState(() {});
   }
 
-  getTextFromEpubInstance(String title) async {
-    final byteData = await rootBundle.load('assets/epubs/$title.epub');
+  getTextFromEpubInstance(String path) async {
+    final byteData = await rootBundle.load('assets/epubs/$path.epub');
     Directory tempDir = await getTemporaryDirectory();
 
     File tempVideo = File("${tempDir.path}/assets/my_video.mp4")
@@ -184,13 +189,23 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     final contents = await epubFile.readAsBytes();
     EpubBookRef epub = await EpubReader.openBook(contents.toList());
     var cont = await EpubReader.readTextContentFiles(epub.Content!.Html!);
+    var opt = await epub.getChapters();
+    var aux = await EpubReader.readChapters(opt);
+    print(aux);
     List<String> htmlList = [];
+    List<String> htmlList2 = [];
     for (var value in cont.values) {
+      // print(value);
       htmlList.add(value.Content!);
     }
     var doc = parse(htmlList.join());
     final String parsedString = parse(doc.body!.text).documentElement!.text;
 
+    htmlList2.add(aux[0].HtmlContent!);
+    htmlContent = aux[2].HtmlContent!;
+    var doc3 = parse(htmlList2.join());
+    print(parse(doc3.body!.text).documentElement!.text);
+    // doc2 = parse(doc3.body!.text).body!.innerHtml;
     parsedEpubString = parsedString;
     // parsedEpubString =
     //     'Uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catoce quince';
@@ -249,6 +264,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                       setRate, volume, rate),
                 ],
               ),
+              Text(doc2),
+              Container(
+                child: SelectionArea(child: Html(data: htmlContent)),
+              )
             ],
           ),
         ),
