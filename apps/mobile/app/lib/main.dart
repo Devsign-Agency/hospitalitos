@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Kaad App',
-          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,],
           supportedLocales: [const Locale('es')],
           initialRoute: RouterApp.initialRoute,
           routes: RouterApp.getRoutes(),

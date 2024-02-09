@@ -120,14 +120,11 @@ class PostsSearchDelegate extends SearchDelegate {
                           itemBuilder: (_, int index) {
                             final item = posts[index];
                             print(index);
-                            Map<dynamic, dynamic> wppost = item;
-                            print(wppost['_embedded']['wp:featuredmedia'][0]
-                                ['source_url']);
-                            var imageCard = 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
-                            
+                            Map wppost = item;
+                            var imageCard = safeMapSearch(wppost, ["_embedded","wp:featuredmedia",0,"source_url"]);;
+                            print(imageCard);
                             return ArticleCard(
-                                imgUrl: wppost['_embedded']['wp:featuredmedia']
-                                    [0]['source_url'],
+                                imgUrl: imageCard,
                                 post: item);
                           })
                       : Column(
@@ -157,4 +154,17 @@ class PostsSearchDelegate extends SearchDelegate {
 
  
   }
+
+
+  safeMapSearch(Map map, List keys) {
+  if (map[keys[0]] != null) {
+    if (keys.length == 1) {
+      return map[keys[0]];
+    }
+    List tmpList = List.from(keys);
+    tmpList.removeAt(0);
+    return safeMapSearch(map[keys[0]], tmpList);
+  }
+  return null;
+}
 }

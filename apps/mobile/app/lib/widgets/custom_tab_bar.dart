@@ -13,6 +13,7 @@ class CustomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBar(
       labelPadding: EdgeInsets.all(0),
+      labelColor: Colors.black12,
       controller: tabController,
       indicatorColor: ColorConstant.indigo900,
       dividerColor: ColorConstant.transparent,
