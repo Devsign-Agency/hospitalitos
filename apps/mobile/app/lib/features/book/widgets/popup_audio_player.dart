@@ -42,9 +42,9 @@ class PopupAudioPlayer extends StatelessWidget {
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
     return DraggableScrollableSheet(
-      initialChildSize: .18,
-      minChildSize: .18,
-      maxChildSize: .18,
+      initialChildSize: .16,
+      minChildSize: .16,
+      maxChildSize: .16,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -129,6 +129,7 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
         padding: EdgeInsets.only(top: 5.0, right: 10),
         child: LinearProgressIndicator(
           backgroundColor: backgroundColor,
+          color: ColorConstant.indigo900,
           valueColor: AlwaysStoppedAnimation<Color>(valueColor),
           value: end / max,
         ));

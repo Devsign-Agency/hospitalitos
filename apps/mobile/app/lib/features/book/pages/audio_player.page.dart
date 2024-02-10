@@ -264,10 +264,6 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                       setRate, volume, rate),
                 ],
               ),
-              Text(doc2),
-              Container(
-                child: SelectionArea(child: Html(data: htmlContent)),
-              )
             ],
           ),
         ),

@@ -4,17 +4,20 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/book/pages/index.page.dart';
+import 'package:mobile_app/features/main/pages/home/home.dart';
+import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 import '../../../core/app_export.dart';
-// import '../../../widgets/widgets.dart';
+import '../../../shared/shared.dart';
+import '../../../themes/themes.dart';
 import '../widgets/widgets.dart';
 
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
-  // final PdfViewer book;
 
   const ChapterPage({Key? key}) : super(key: key);
 
@@ -27,7 +30,6 @@ enum TtsStates { playing, stopped, paused, continued }
 class _ChapterPageState extends State<ChapterPage> {
   late EpubController _epubController;
   late EpubBook de;
-  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
   bool onAudioSound = false;
   late FlutterTts flutterTts;
   dynamic languages;
@@ -38,7 +40,6 @@ class _ChapterPageState extends State<ChapterPage> {
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
-  late PdfViewerController _pdfViewerController;
   OverlayEntry? _overlayEntry;
 
   String? _newVoiceText;
@@ -56,20 +57,12 @@ class _ChapterPageState extends State<ChapterPage> {
 
   @override
   void initState() {
-    _pdfViewerController = PdfViewerController();
-
     super.initState();
     initTts();
   }
 
   initTts() {
     flutterTts = FlutterTts();
-
-    _getLanguages();
-
-    if (isAndroid) {
-      _getEngines();
-    }
 
     flutterTts.setStartHandler(() {
       setState(() {
@@ -132,20 +125,6 @@ class _ChapterPageState extends State<ChapterPage> {
     });
   }
 
-  Future _getLanguages() async {
-    languages = await flutterTts.getLanguages;
-    if (languages != null) setState(() => languages);
-  }
-
-  Future _getEngines() async {
-    var engines = await flutterTts.getEngines;
-    if (engines != null) {
-      for (dynamic engine in engines) {
-        print(engine);
-      }
-    }
-  }
-
   Future _speak() async {
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
@@ -172,7 +151,7 @@ class _ChapterPageState extends State<ChapterPage> {
     flutterTts.stop();
   }
 
-  void _handleChangeStatusAudio(BuildContext context) async {
+  void _handleChangeStatusAudio() async {
     onAudioSound = !onAudioSound;
 
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
@@ -192,6 +171,10 @@ class _ChapterPageState extends State<ChapterPage> {
     });
   }
 
+  void _handleChangeBottomNavigationBar(int index) {
+    print('Handle change bottom navigation bar');
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -201,17 +184,86 @@ class _ChapterPageState extends State<ChapterPage> {
     final String bookTitle = book?.Title ?? '';
     final String bookAuthor = book?.Author ?? '';
 
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
+
+    final List<Map<String, dynamic>> menuOptions = [
+      {
+        'id': 0,
+        'name': 'Modo Noche',
+        'onTap': (context) {
+          ThemeProvider themeProvider =
+              Provider.of<ThemeProvider>(context, listen: false);
+          themeProvider.currentTheme == DarkTheme.theme
+              ? themeProvider.setLightMode()
+              : themeProvider.setDarkMode();
+        }
+      },
+      {'id': 1, 'name': 'Ajustar texto', 'onTap': (context) {}},
+      {'id': 2, 'name': 'Compartir', 'onTap': () {}},
+    ];
+
+    final actions = [
+      {
+        'icon': ImageConstant.imgMusicIndigo900,
+        'color': isDarkMode
+            ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
+            : ColorConstant.gray800,
+        'variant': !onAudioSound
+            ? IconButtonVariant.NoFill
+            : IconButtonVariant.OutlinePurple50,
+        'action': () => _handleChangeStatusAudio()
+      },
+    ];
+
+    final PopupMenuButton<int> popupMenuButton = PopupMenuButton<int>(
+        constraints: BoxConstraints(
+          minWidth: 200,
+        ),
+        offset: Offset(20, 60),
+        itemBuilder: (context) => [
+              ...menuOptions.map((item) => PopupMenuItem(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(item['name'],
+                          style: isDarkMode
+                              ? AppStyle.txtNunitoSansRegular18WhiteA700
+                              : AppStyle.txtNunitoSansRegular18Black900),
+                    ),
+                    onTap: () => item['onTap'](context),
+                  ))
+            ]);
+
     return Scaffold(
       appBar: CustomAppBar(
-        title: bookTitle,
-        audioActive: onAudioSound,
-        onChangeStatusAudio: _handleChangeStatusAudio,
-      ),
+          customTitle: Row(
+            children: [
+              CustomIconButton(
+                height: getSize(48),
+                width: getSize(48),
+                variant: IconButtonVariant.NoFill,
+                onTap: () {
+                  Navigator.popAndPushNamed(context, IndexPage.route);
+                },
+                child: CustomImageView(
+                  svgPath: ImageConstant.imgArrowleftGray900,
+                ),
+              ),
+              Text(bookTitle,
+                  style: isDarkMode
+                      ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                      : AppStyle.txtNunitoSansSemiBold26)
+            ],
+          ),
+          actions: actions,
+          hasPopupMenu: true,
+          hasCustomTitle: true,
+          popupMenuButton: popupMenuButton),
       body: Stack(children: [
         SingleChildScrollView(
           child: SelectionArea(
             onSelectionChanged: (SelectedContent? content) {
-              print('selected content ${content?.plainText}');
               if (content != null) {
                 Clipboard.setData(ClipboardData(text: content.plainText));
               }
@@ -232,63 +284,8 @@ class _ChapterPageState extends State<ChapterPage> {
               speak: _speak,
               pause: _pause)
       ]),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(onChangeIndex: _handleChangeIndex),
-    );
-  }
-
-  void _handleChangeIndex(int index) {
-    switch (index) {
-      case 2:
-        _pdfViewerKey.currentState?.openBookmarkView();
-
-        break;
-    }
-  }
-
-  Widget _buildSliders() {
-    return Column(
-      children: [_volume(), _pitch(), _rate()],
-    );
-  }
-
-  Widget _volume() {
-    return Slider(
-        value: volume,
-        onChanged: (newVolume) {
-          setState(() => volume = newVolume);
-        },
-        min: 0.0,
-        max: 1.0,
-        divisions: 10,
-        label: 'Volume: $volume');
-  }
-
-  Widget _pitch() {
-    return Slider(
-      value: pitch,
-      onChanged: (newPitch) {
-        setState(() => pitch = newPitch);
-      },
-      min: 0.5,
-      max: 2.0,
-      divisions: 15,
-      label: 'Pitch: $pitch',
-      activeColor: Colors.red,
-    );
-  }
-
-  Widget _rate() {
-    return Slider(
-      value: rate,
-      onChanged: (newRate) {
-        setState(() => rate = newRate);
-      },
-      min: 0.0,
-      max: 1.0,
-      divisions: 10,
-      label: 'Rate: $rate',
-      activeColor: Colors.green,
+      bottomNavigationBar: CustomBottomNavigationBar(
+          onChangeIndex: _handleChangeBottomNavigationBar),
     );
   }
 }

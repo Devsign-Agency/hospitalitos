@@ -21,23 +21,30 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? hideActions;
   final bool hasCustomTitle;
   final Widget? customTitle;
+  final bool hasPopupMenu;
+  final List<Map<String, dynamic>>? menuOptions;
+  final PopupMenuButton<int>? popupMenuButton;
 
-  const CustomAppBar(
-      {super.key,
-      this.backgroundColor = Colors.red,
-      this.textIconColor = Colors.red,
-      this.icon,
-      this.title = '',
-      this.menuItem,
-      this.height: kToolbarHeight,
-      this.hideBack = false,
-      this.actions,
-      this.leading,
-      this.bottom,
-      this.iconButtonVariant = IconButtonVariant.NoFill,
-      this.hideActions = false,
-      this.hasCustomTitle = false,
-      this.customTitle});
+  const CustomAppBar({
+    super.key,
+    this.backgroundColor = Colors.red,
+    this.textIconColor = Colors.red,
+    this.icon,
+    this.title = '',
+    this.menuItem,
+    this.height: kToolbarHeight,
+    this.hideBack = false,
+    this.actions,
+    this.leading,
+    this.bottom,
+    this.iconButtonVariant = IconButtonVariant.NoFill,
+    this.hideActions = false,
+    this.hasCustomTitle = false,
+    this.customTitle,
+    this.hasPopupMenu = false,
+    this.menuOptions,
+    this.popupMenuButton,
+  });
   @override
   Size get preferredSize => Size.fromHeight(height!);
 
@@ -51,7 +58,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: true,
       leading: leading,
-      // backgroundColor: backgroundColor,
       title: !hasCustomTitle
           ? Align(
               alignment: Alignment.centerLeft,
@@ -69,14 +75,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               margin: getMargin(left: 8),
               height: getSize(48),
               width: getSize(48),
-              variant: iconButtonVariant,
+              variant: item['variant'] ?? iconButtonVariant,
               onTap: item['action'],
               child: CustomImageView(
                 svgPath: item['icon'],
+                color: item['color'] ??
+                    (isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.gray800),
               ),
             ),
           ),
-        SizedBox(width: 16)
+        SizedBox(width: 16),
+        if (hasPopupMenu) popupMenuButton!
       ],
     );
   }

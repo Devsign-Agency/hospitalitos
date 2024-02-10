@@ -16,34 +16,6 @@ class IndexPage extends StatelessWidget {
     final book = arguments.book;
 
     return Scaffold(
-      // backgroundColor: ColorConstant.gray300,
-      // appBar: CustomAppBar(
-      //   height: getVerticalSize(
-      //     60,
-      //   ),
-      //   leadingWidth: 31,
-      //   leading: AppbarImage(
-      //       height: getSize(20),
-      //       width: getSize(20),
-      //       svgPath: ImageConstant.imgArrowleftGray900,
-      //       color: ColorConstant.gray900,
-      //       margin: getMargin(left: 7)),
-      //   title: AppbarSubtitle(
-      //     text: 'Índice',
-      //     margin: getMargin(
-      //       left: 18,
-      //     ),
-      //   ),
-      //   actions: [
-      //     AppbarImage(
-      //         height: getSize(24),
-      //         width: getSize(24),
-      //         svgPath: ImageConstant.imgSearch,
-      //         color: ColorConstant.gray900,
-      //         margin: getMargin(left: 7, right: 14)),
-      //   ],
-      // ) as PreferredSizeWidget,
-      // AppBar(title: Text(book!.Title!)),
       body: Center(
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
