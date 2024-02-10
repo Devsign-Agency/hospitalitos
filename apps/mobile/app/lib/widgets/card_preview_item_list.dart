@@ -64,7 +64,6 @@ class CardPreviewItemList extends StatelessWidget {
   // }
 
   onTap(context, EpubBook book) {
-    print(book);
     Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }

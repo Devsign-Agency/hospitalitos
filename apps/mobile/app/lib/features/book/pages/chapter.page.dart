@@ -244,7 +244,10 @@ class _ChapterPageState extends State<ChapterPage> {
                 width: getSize(48),
                 variant: IconButtonVariant.NoFill,
                 onTap: () {
-                  Navigator.popAndPushNamed(context, IndexPage.route);
+                  // Navigator.popAndPushNamed(context, IndexPage.route);
+                  Navigator.pushNamed(context, IndexPage.route,
+                      arguments: EpubArguments(
+                          book: book, chapter: book!.Chapters![0]));
                 },
                 child: CustomImageView(
                   svgPath: ImageConstant.imgArrowleftGray900,
