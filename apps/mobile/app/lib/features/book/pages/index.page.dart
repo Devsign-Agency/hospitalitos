@@ -21,12 +21,12 @@ class IndexPage extends StatelessWidget {
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) => ListTile(
                 
-                  title: Text(
+                 /* title: Text(
                     showTitle(book.Chapters![index].Title!, index, book!.Chapters!.length),
                     style: AppStyle.txtNunitoSansRegular14,
                
-                  ),
-                  subtitle: Text(book.Chapters![index + 1].Title!),
+                  ),*/
+                  subtitle: Text(book.Chapters![index].Title!),
                   onTap: () {
                     print(book);
                     Navigator.pop(context);
