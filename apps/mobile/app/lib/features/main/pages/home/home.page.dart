@@ -347,4 +347,23 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
     );
   }
+
+  _logout() async {
+    AuthService auth = Provider.of<AuthService>(context, listen: false);
+    await auth.googleSignOut();
+    if (context.mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
+          ModalRoute.withName(RouterMain.initialRoute));
+    }
+  }
+
+  _playText() async {
+    print('playText');
+    TextToSpeech tts = TextToSpeech();
+
+    await tts.play('Hola mundo, esto es una prueba de flutter.');
+  }
+
+
+  
 }

@@ -81,7 +81,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
           data: Theme.of(context).copyWith(
               colorScheme: ColorScheme.light(
             primary: ColorConstant.indigo900, // header background color
-            onPrimary: Colors.red, // header text color
+            onPrimary: Colors.white, // header text color
             onSurface: Colors.blue, // body text color
           )),
           // data: ThemeData.light().copyWith(

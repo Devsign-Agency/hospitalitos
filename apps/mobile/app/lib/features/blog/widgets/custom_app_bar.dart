@@ -19,17 +19,22 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Color.fromARGB(255, 127, 100, 90),
-      expandedHeight: 300,
-      floating: false,
+      expandedHeight: 305,
+      floating: true,
       pinned: true,
+      leading: BackButton(
+     color: Colors.white,
+   ),
       title: isExpanded
           ? Text(title, style: AppStyle.txtNunitoSansSemiBold26WhiteA700)
           : null,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: EdgeInsets.all(0),
+        
         title: !isExpanded ? _FlexibleSpaceBarTitle() : null,
-        background: _FlexibleSpaceBarBackground(imgUrl: imgUrl),
+        background: _FlexibleSpaceBarBackground(imgUrl: imgUrl,),
+        
       ),
       actions: [
         _ActionButton(linkShared: linkShare,),
@@ -78,7 +83,7 @@ class _FlexibleSpaceBarBackground extends StatelessWidget {
     return FadeInImage(
       placeholder: const AssetImage('assets/loading.gif'),
       image:  NetworkImage(imgUrl),
-      fit: BoxFit.cover,
+      fit: BoxFit.fill,
     );
   }
 }

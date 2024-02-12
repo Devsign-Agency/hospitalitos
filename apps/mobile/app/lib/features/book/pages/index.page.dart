@@ -20,10 +20,13 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) => ListTile(
-                  title: Text(
-                    book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-                  ),
+                
+                 /* title: Text(
+                    showTitle(book.Chapters![index].Title!, index, book!.Chapters!.length),
+                    style: AppStyle.txtNunitoSansRegular14,
+               
+                  ),*/
+                  subtitle: Text(book.Chapters![index].Title!),
                   onTap: () {
                     print(book);
                     Navigator.pop(context);
@@ -31,8 +34,17 @@ class IndexPage extends StatelessWidget {
                         arguments: EpubArguments(
                             book: book, chapter: book.Chapters![index]));
                   },
+                  
                 )),
       ),
     );
+  }
+
+  showTitle(String data, index, items){
+    print('title---------------- $data $index $items');
+    var textToShow = '';
+  
+  
+    return data;
   }
 }
