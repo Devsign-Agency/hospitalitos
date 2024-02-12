@@ -14,49 +14,6 @@ class ProfileMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void displayDialogAndroid(BuildContext context) {
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: ColorConstant.gray50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28)),
-              elevation: 5,
-              title: Text('¿Seguro que quieres cerrar sesión?',
-                  style: AppStyle.txtNunitoSansSemiBold23),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 10),
-                  Text(
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
-                      style: AppStyle.txtNunitoSansRegular16Gray900)
-                ],
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Cancelar',
-                        style: AppStyle.txtNunitoSansSemiBold16)),
-                TextButton(
-                    onPressed: () async {
-                      final AuthService authService =
-                          Provider.of<AuthService>(context, listen: false);
-                      await authService.logout();
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, LoginScreen.route);
-                    },
-                    child: Text('Aceptar',
-                        style: AppStyle.txtNunitoSansSemiBold16)),
-              ],
-            );
-          });
-    }
-
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Perfil',
@@ -88,6 +45,49 @@ class ProfileMenuScreen extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+  void displayDialogAndroid(BuildContext context) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: ColorConstant.whiteA700,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+            elevation: 5,
+            title: Text('¿Seguro que quieres cerrar sesión?',
+                style: AppStyle.txtNunitoSansSemiBold23),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 10),
+                Text(
+                    'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                    style: AppStyle.txtNunitoSansRegular16Gray900)
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancelar',
+                      style: AppStyle.txtNunitoSansSemiBold16)),
+              TextButton(
+                  onPressed: () async {
+                    final AuthService authService =
+                        Provider.of<AuthService>(context, listen: false);
+                    await authService.logout();
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, LoginScreen.route);
+                  },
+                  child:
+                      Text('Aceptar', style: AppStyle.txtNunitoSansSemiBold16)),
+            ],
+          );
+        });
   }
 }
 

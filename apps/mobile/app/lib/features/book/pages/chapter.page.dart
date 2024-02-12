@@ -8,7 +8,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/book/pages/index.page.dart';
-import 'package:mobile_app/features/main/pages/home/home.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import '../../../core/app_export.dart';
@@ -27,6 +26,22 @@ class ChapterPage extends StatefulWidget {
 
 enum TtsStates { playing, stopped, paused, continued }
 
+List<FontSize> fontSizes = [
+  FontSize.small,
+  FontSize.medium,
+  FontSize.larger,
+  FontSize.xLarge
+];
+
+class TextBook {
+  String fontFamily;
+  FontSize fontSize;
+  Color color;
+
+  TextBook(
+      {required this.fontFamily, required this.color, required this.fontSize});
+}
+
 class _ChapterPageState extends State<ChapterPage> {
   late EpubController _epubController;
   late EpubBook de;
@@ -34,13 +49,17 @@ class _ChapterPageState extends State<ChapterPage> {
   late FlutterTts flutterTts;
   dynamic languages;
   String? language;
-  double volume = 0.5;
-  double pitch = 1.0;
-  double rate = 0.5;
+  double volume = 1;
+  double pitch = 1;
+  double rate = 2;
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
   OverlayEntry? _overlayEntry;
+  TextBook textBook = TextBook(
+      fontFamily: 'fontFamily',
+      color: ColorConstant.indigo900,
+      fontSize: FontSize.medium);
 
   String? _newVoiceText;
 
@@ -175,6 +194,34 @@ class _ChapterPageState extends State<ChapterPage> {
     print('Handle change bottom navigation bar');
   }
 
+  setVolumen(double newFontSize) async {
+    setState(() {
+      final int value = (newFontSize).toInt();
+      print('VALUE: $value');
+      textBook.fontSize = fontSizes[value];
+      print('New fontSize $newFontSize');
+      // volume = newVolume;
+
+      // _speak();
+      // flutterTts.setVolume(volume);
+    });
+    // _pause();
+    // _speak();
+  }
+
+  setPitch(double newPitch) {
+    setState(() {
+      pitch = newPitch;
+    });
+  }
+
+  setRate(double newRate) async {
+    setState(() {
+      print('New rate $newRate');
+      rate = newRate;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -200,7 +247,23 @@ class _ChapterPageState extends State<ChapterPage> {
               : themeProvider.setDarkMode();
         }
       },
-      {'id': 1, 'name': 'Ajustar texto', 'onTap': (context) {}},
+      {
+        'id': 1,
+        'name': 'Ajustar texto',
+        'onTap': (context) {
+          showModalBottomSheet(
+              // backgroundColor: ColorConstant.gray50,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              context: context,
+              builder: (context) => PanelSettingTextBook(
+                  onSetVolumen: setVolumen,
+                  onSetPitch: setPitch,
+                  onSetRate: setRate,
+                  volume: volume,
+                  rate: rate));
+        }
+      },
       {'id': 2, 'name': 'Compartir', 'onTap': () {}},
     ];
 
@@ -244,7 +307,6 @@ class _ChapterPageState extends State<ChapterPage> {
                 width: getSize(48),
                 variant: IconButtonVariant.NoFill,
                 onTap: () {
-                  // Navigator.popAndPushNamed(context, IndexPage.route);
                   Navigator.pushNamed(context, IndexPage.route,
                       arguments: EpubArguments(
                           book: book, chapter: book!.Chapters![0]));
@@ -266,13 +328,16 @@ class _ChapterPageState extends State<ChapterPage> {
       body: Stack(children: [
         SingleChildScrollView(
           child: SelectionArea(
+            contextMenuBuilder: (context, selectable) {
+              return Container();
+            },
             onSelectionChanged: (SelectedContent? content) {
               if (content != null) {
                 Clipboard.setData(ClipboardData(text: content.plainText));
               }
             },
             child: Html(
-              style: {'body': Style(fontSize: FontSize.xLarge)},
+              style: {'body': Style(fontSize: textBook.fontSize)},
               data: chapter?.HtmlContent,
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class CustomSlider extends StatefulWidget {
   final Function onSetVolumen;
@@ -10,6 +11,7 @@ class CustomSlider extends StatefulWidget {
   final double min;
   final double max;
   final double value;
+  final int? divisions;
 
   CustomSlider(
       {super.key,
@@ -21,7 +23,8 @@ class CustomSlider extends StatefulWidget {
       required this.iconColor,
       required this.min,
       required this.max,
-      required this.value});
+      required this.value,
+      this.divisions = 10});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
@@ -44,6 +47,7 @@ class _CustomSliderState extends State<CustomSlider> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Text('data', style: TextStyle(fontSize: FontSize.),)
           Icon(
             widget.icon,
             size: 34,
@@ -66,9 +70,9 @@ class _CustomSliderState extends State<CustomSlider> {
                     setState(() {});
                     // widget.onSetVolumen(newVolume);
                   },
-                  min: 0.0,
-                  max: 1.0,
-                  divisions: 10,
+                  min: widget.min,
+                  max: widget.max,
+                  divisions: widget.divisions,
                   label: widget.indicator,
                 ),
               ],
