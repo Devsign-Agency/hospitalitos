@@ -328,8 +328,26 @@ class _ChapterPageState extends State<ChapterPage> {
       body: Stack(children: [
         SingleChildScrollView(
           child: SelectionArea(
-            contextMenuBuilder: (context, selectable) {
-              return Container();
+            contextMenuBuilder: (context, editableTextState) {
+              final List<ContextMenuButtonItem> buttonItems =
+                  editableTextState.contextMenuButtonItems;
+              buttonItems.insert(
+                2,
+                ContextMenuButtonItem(
+                  label: 'Escuchar',
+                  onPressed: () async {
+                    // debugPrint(selectedText);
+                    print('playText');
+                    // TextToSpeech tts = TextToSpeech();
+                    //   await tts.play(selectedText);
+                    // your "send email" code
+                  },
+                ),
+              );
+              return AdaptiveTextSelectionToolbar.buttonItems(
+                anchors: editableTextState.contextMenuAnchors,
+                buttonItems: buttonItems,
+              );
             },
             onSelectionChanged: (SelectedContent? content) {
               if (content != null) {

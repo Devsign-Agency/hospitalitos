@@ -67,7 +67,6 @@ dependencies:
   wordpress_api: ^1.2.0
   share_plus: ^6.3.4
   file_saver: ^0.2.6
-  document_file_save_plus: ^2.0.0
   permission_handler: ^11.0.1
   
 

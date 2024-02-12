@@ -13,7 +13,6 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import '../../widgets/widgets.dart';
 import 'package:dio/dio.dart';
-import 'package:file_saver/file_saver.dart';
 
 class BlogScreen extends StatefulWidget {
   static const String route = 'blog';
@@ -172,8 +171,6 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               var test = await getimagefilefromassets('/epubs/book.epub');
               print('-------------');
               print(test);
-
-              
             },
             child: CustomImageView(
               color: ColorConstant.gray800,
