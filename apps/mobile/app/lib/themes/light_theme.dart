@@ -17,19 +17,18 @@ class LightTheme {
     onBackground: LightVariables.onBackground,
   );
   static get theme => ThemeData(
-      colorScheme: colors,
-      appBarTheme: AppBarTheme(
-        color: ColorConstant.gray100,
-      ),
-      popupMenuTheme: PopupMenuThemeData(color: ColorConstant.whiteA700),
-      sliderTheme: SliderThemeData(
-          activeTrackColor: colors.primary,
-          inactiveTrackColor: ColorConstant.indigo90033,
-          valueIndicatorColor: ColorConstant.deepPurple5002,
-          valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14,
-          thumbColor: ColorConstant.whiteA700,
-          activeTickMarkColor: colors.primary,
-          inactiveTickMarkColor: ColorConstant.indigo90033),
-      progressIndicatorTheme:
-          ProgressIndicatorThemeData(color: ColorConstant.indigo900));
+        colorScheme: colors,
+        appBarTheme: AppBarTheme(
+          color: ColorConstant.gray100,
+        ),
+        popupMenuTheme: PopupMenuThemeData(color: ColorConstant.whiteA700),
+        sliderTheme: SliderThemeData(
+            activeTrackColor: colors.primary,
+            inactiveTrackColor: ColorConstant.indigo90033,
+            valueIndicatorColor: ColorConstant.deepPurple5002,
+            valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14,
+            thumbColor: ColorConstant.whiteA700,
+            activeTickMarkColor: colors.primary,
+            inactiveTickMarkColor: ColorConstant.indigo90033),
+      );
 }

@@ -30,7 +30,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Widget page;
-    print('Hola mundo');
     switch (selectedIndex) {
       case 0:
         page = HomePage();

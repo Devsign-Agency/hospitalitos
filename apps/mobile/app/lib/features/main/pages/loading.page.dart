@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/features/main/pages/home/home.dart';
 import 'package:mobile_app/features/security/screens/screens.dart';
 import 'package:mobile_app/shared/shared.dart';
@@ -28,7 +29,8 @@ class LoadingPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(20),
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                          color: ColorConstant.yellow100),
                     )
                   ],
                 ),

@@ -39,6 +39,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       currentIndex: _currentIndex,
       onTap: (int index) {
         _currentIndex = index;
+        widget.onChangeIndex(index);
         setState(() {});
       },
       type: BottomNavigationBarType.fixed,
@@ -48,7 +49,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           return BottomNavigationBarItem(
               label: '',
               icon: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 18),
+                padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: CustomImageView(
                   svgPath: bottomMenuList[index]['icon'],
                   height: getSize(24),
