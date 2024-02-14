@@ -16,6 +16,7 @@ class IndexPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
     var pos = findOcurrenceChapterArr(book);
+   makeDataToShow(book);
     print('epaleeee $pos');
     return Scaffold(
       appBar: CustomAppBar(
@@ -25,17 +26,18 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder:(context, index) {
+             if(pos.length > 0){
+
              
-              if(pos.length > 0){
+              if(valueArrMenor(index, pos)){
                return (comparateIndexPos(index, pos) ?  ListTile(
                 
-                 title: Text(
+                 title: comparateIndexPos(index, pos) ?  Text(
                    book.Chapters![index].Title!,
                     style: AppStyle.txtNunitoSansRegular16,
                
-                  )
+                  ): Container()
                   ,
-                   subtitle: Text(book.Chapters![index + 1].Title!),
                   onTap: () {
                     print(book);
                     Navigator.pop(context);
@@ -46,7 +48,8 @@ class IndexPage extends StatelessWidget {
                   
                 ) :
                  Container() );
-              }else{
+              }else 
+              if(valueArrMax(index, pos)){
                return ListTile(
                 
                  title: Text(
@@ -55,7 +58,7 @@ class IndexPage extends StatelessWidget {
                
                   )
                   ,
-                   subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
                   onTap: () {
                     print(book);
                     Navigator.pop(context);
@@ -67,6 +70,28 @@ class IndexPage extends StatelessWidget {
                 ); 
 
               }
+
+             }else{
+                return ListTile(
+                
+                 title: Text(
+                   book.Chapters![index].Title!,
+                    style: AppStyle.txtNunitoSansRegular16,
+               
+                  )
+                  ,
+                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                  onTap: () {
+                    print(book);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, ChapterPage.route,
+                        arguments: EpubArguments(
+                            book: book, chapter: book.Chapters![index]));
+                  },
+                  
+                ); 
+             }
+                
              
             },
             
@@ -103,7 +128,37 @@ class IndexPage extends StatelessWidget {
 
 
   return pos;
+  
+  
+  
   }
+
+  makeDataToShow(book){
+   var band = true;
+   var pos = [];
+    for(var i = 0 ; i < book!.Chapters!.length; i ++){
+
+      String mainString = book.Chapters![i].Title.toLowerCase();
+      String substring = "capítulo";
+
+     
+        if(mainString.contains(substring)){
+            band = false;
+            book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
+            
+        } 
+        
+      
+    }
+
+
+  return pos;
+  
+  
+  
+  }
+
+  
 
   comparateIndexPos(index, items){
     var band = false;
@@ -120,6 +175,17 @@ class IndexPage extends StatelessWidget {
       var band = false;
     for( var i = 0; i < items.length; i ++){
       if(items[i] < index){
+        band = true;
+      }
+    }
+
+    return band;
+  }
+
+   valueArrMax(index, items){
+      var band = false;
+    for( var i = 0; i < items.length; i ++){
+      if(items[i] > index){
         band = true;
       }
     }
