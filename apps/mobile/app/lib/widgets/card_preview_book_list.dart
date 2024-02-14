@@ -144,6 +144,7 @@ class CardPreviewBookList extends StatelessWidget {
                   ),
                   SizedBox(width: 12),
                   Text('${option['name']}',
+                  
                       style: AppStyle.txtNunitoSansSemiBold20Black900)
                 ],
               ),
@@ -161,8 +162,6 @@ class CardPreviewBookList extends StatelessWidget {
   }
 
   void displayDialogAndroid(BuildContext context, pdf) {
-    print('Hola mundo');
-
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -287,5 +286,5 @@ class _ViewedPreview extends StatelessWidget {
     await raf.close();
 
     return file;
-  }
+  } 
 }
