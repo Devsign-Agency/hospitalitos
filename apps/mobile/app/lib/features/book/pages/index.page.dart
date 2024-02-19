@@ -32,8 +32,8 @@ class IndexPage extends StatelessWidget {
                 //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
                 onTap: () {
                   print(book);
-                  Navigator.pop(context);
-                  Navigator.popAndPushNamed(context, ChapterPage.route,
+                  // Navigator.pop(context);
+                  Navigator.pushNamed(context, ChapterPage.route,
                       arguments: EpubArguments(
                           book: book, chapter: book.Chapters![index]));
                 },
