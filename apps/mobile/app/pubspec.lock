@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  catholic_liturgy:
+    dependency: "direct main"
+    description:
+      name: catholic_liturgy
+      sha256: "13885fe269fc1e4a0eddec846cd39a4f4bae3d8872bf5785cbbc857e6d8cae13"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.16"
   characters:
     dependency: transitive
     description:

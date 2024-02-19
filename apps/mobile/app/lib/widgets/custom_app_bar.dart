@@ -62,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                  margin: getMargin(bottom: 20),
+                  margin: getMargin(bottom: 10),
                   child: Text('$title',
                       style: isDarkTheme
                           ? AppStyle.txtNunitoSansSemiBold26WhiteA700
