@@ -15,7 +15,8 @@ class IndexPage extends StatelessWidget {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
-    var pos = findOcurrenceChapterArr(book);
+    var pos = [];
+    pos = findOcurrenceChapterArr(book);
    makeDataToShow(book);
     print('epaleeee $pos');
     return Scaffold(
@@ -26,52 +27,7 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder:(context, index) {
-             if(pos.length > 0){
-
-             
-              if(valueArrMenor(index, pos)){
-               return (comparateIndexPos(index, pos) ?  ListTile(
-                
-                 title: comparateIndexPos(index, pos) ?  Text(
-                   book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-               
-                  ): Container()
-                  ,
-                  onTap: () {
-                    print(book);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, ChapterPage.route,
-                        arguments: EpubArguments(
-                            book: book, chapter: book.Chapters![index]));
-                  },
-                  
-                ) :
-                 Container() );
-              }else 
-              if(valueArrMax(index, pos)){
-               return ListTile(
-                
-                 title: Text(
-                   book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-               
-                  )
-                  ,
-                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                  onTap: () {
-                    print(book);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, ChapterPage.route,
-                        arguments: EpubArguments(
-                            book: book, chapter: book.Chapters![index]));
-                  },
-                  
-                ); 
-
-              }
-
-             }else{
+           
                 return ListTile(
                 
                  title: Text(
@@ -93,7 +49,6 @@ class IndexPage extends StatelessWidget {
              }
                 
              
-            },
             
             
             
@@ -144,7 +99,7 @@ class IndexPage extends StatelessWidget {
      
         if(mainString.contains(substring)){
             band = false;
-            book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
+            //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
             
         } 
         
