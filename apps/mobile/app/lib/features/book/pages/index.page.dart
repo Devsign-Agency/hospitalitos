@@ -15,9 +15,7 @@ class IndexPage extends StatelessWidget {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
-    var pos = findOcurrenceChapterArr(book);
-   makeDataToShow(book);
-    print('epaleeee $pos');
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Indice',
@@ -25,145 +23,69 @@ class IndexPage extends StatelessWidget {
       body: Center(
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
-            itemBuilder:(context, index) {
-             if(pos.length > 0){
-
-             
-              if(valueArrMenor(index, pos)){
-               return (comparateIndexPos(index, pos) ?  ListTile(
-                
-                 title: comparateIndexPos(index, pos) ?  Text(
-                   book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-               
-                  ): Container()
-                  ,
-                  onTap: () {
-                    print(book);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, ChapterPage.route,
-                        arguments: EpubArguments(
-                            book: book, chapter: book.Chapters![index]));
-                  },
-                  
-                ) :
-                 Container() );
-              }else 
-              if(valueArrMax(index, pos)){
-               return ListTile(
-                
-                 title: Text(
-                   book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-               
-                  )
-                  ,
-                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                  onTap: () {
-                    print(book);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, ChapterPage.route,
-                        arguments: EpubArguments(
-                            book: book, chapter: book.Chapters![index]));
-                  },
-                  
-                ); 
-
-              }
-
-             }else{
-                return ListTile(
-                
-                 title: Text(
-                   book.Chapters![index].Title!,
-                    style: AppStyle.txtNunitoSansRegular16,
-               
-                  )
-                  ,
-                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                  onTap: () {
-                    print(book);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, ChapterPage.route,
-                        arguments: EpubArguments(
-                            book: book, chapter: book.Chapters![index]));
-                  },
-                  
-                ); 
-             }
-                
-             
-            },
-            
-            
-            
-            ),
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  book.Chapters![index].Title!,
+                  style: AppStyle.txtNunitoSansRegular16,
+                ),
+                //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                onTap: () {
+                  print(book);
+                  Navigator.pop(context);
+                  Navigator.popAndPushNamed(context, ChapterPage.route,
+                      arguments: EpubArguments(
+                          book: book, chapter: book.Chapters![index]));
+                },
+              );
+            }),
       ),
     );
   }
 
-  showTitle(String data, index, items){
+  showTitle(String data, index, items) {
     print('title---------------- $data $index $items');
     var textToShow = '';
-  
+
     return data;
   }
 
-  findOcurrenceChapterArr(book){
-   var band = true;
-   var pos = [];
-    for(var i = 0 ; i < book!.Chapters!.length; i ++){
-
+  findOcurrenceChapterArr(book) {
+    var band = true;
+    var pos = [];
+    for (var i = 0; i < book!.Chapters!.length; i++) {
       String mainString = book.Chapters![i].Title.toLowerCase();
       String substring = "capítulo";
 
-     
-        if(mainString.contains(substring)){
-            band = false;
-            pos.add(i);
-        } 
-        
-      
+      if (mainString.contains(substring)) {
+        band = false;
+        pos.add(i);
+      }
     }
 
-
-  return pos;
-  
-  
-  
+    return pos;
   }
 
-  makeDataToShow(book){
-   var band = true;
-   var pos = [];
-    for(var i = 0 ; i < book!.Chapters!.length; i ++){
-
+  makeDataToShow(book) {
+    var band = true;
+    var pos = [];
+    for (var i = 0; i < book!.Chapters!.length; i++) {
       String mainString = book.Chapters![i].Title.toLowerCase();
       String substring = "capítulo";
 
-     
-        if(mainString.contains(substring)){
-            band = false;
-            book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
-            
-        } 
-        
-      
+      if (mainString.contains(substring)) {
+        band = false;
+        //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
+      }
     }
 
-
-  return pos;
-  
-  
-  
+    return pos;
   }
 
-  
-
-  comparateIndexPos(index, items){
+  comparateIndexPos(index, items) {
     var band = false;
-    for( var i = 0; i < items.length; i ++){
-      if(items[i] == index){
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] == index) {
         band = true;
       }
     }
@@ -171,10 +93,10 @@ class IndexPage extends StatelessWidget {
     return band;
   }
 
-   valueArrMenor(index, items){
-      var band = false;
-    for( var i = 0; i < items.length; i ++){
-      if(items[i] < index){
+  valueArrMenor(index, items) {
+    var band = false;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] < index) {
         band = true;
       }
     }
@@ -182,10 +104,10 @@ class IndexPage extends StatelessWidget {
     return band;
   }
 
-   valueArrMax(index, items){
-      var band = false;
-    for( var i = 0; i < items.length; i ++){
-      if(items[i] > index){
+  valueArrMax(index, items) {
+    var band = false;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] > index) {
         band = true;
       }
     }

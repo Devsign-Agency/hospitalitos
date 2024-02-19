@@ -131,7 +131,7 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                   Image.memory(Uint8List.fromList(encodePng(item.CoverImage!)));
 
               return Padding(
-                padding: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.only(top: 9.0),
                 child: GestureDetector(
                   onTap: () { onTap(context, item);},
                   child: Container(
@@ -186,8 +186,9 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                                   ),
                                 ],
                               ),
-                              
-                              Column(
+                              Padding(padding: const EdgeInsets.only(right:6.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CustomIconButton(
                                     height: getSize(48),
@@ -203,6 +204,8 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                                
                                 ],
                               ),
+                              )
+                              ,
                             ],
                           ),
                         ),
