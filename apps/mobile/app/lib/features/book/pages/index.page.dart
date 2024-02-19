@@ -16,8 +16,8 @@ class IndexPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
     var pos = [];
-    pos = findOcurrenceChapterArr(book);
-   makeDataToShow(book);
+    //pos = findOcurrenceChapterArr(book);
+   //makeDataToShow(book);
     print('epaleeee $pos');
     return Scaffold(
       appBar: CustomAppBar(
