@@ -10,6 +10,7 @@ import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
+import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/features/main/pages/welcome/navigation.dart';
@@ -285,11 +286,16 @@ class _HomePageState extends State<HomePage> {
                               Text('Ver más',
                                   style: AppStyle
                                       .txtNunitoSansSemiBold16Indigo900),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightIndigo900,
-                                width: getSize(24),
-                                height: getSize(24),
-                                color: ColorConstant.indigo900,
+                              CustomIconButton(
+                                height: 48,
+                                width: 48,
+                                variant: IconButtonVariant.NoFill,
+                                child: CustomImageView(
+                                  color: ColorConstant.gray800,
+                                  svgPath: ImageConstant.imgArrowrightIndigo900,
+                                ),
+                                onTap: () =>
+                                    Navigator.of(context).pushNamed(ListSeeMore.route),
                               ),
                             ],
                           ),

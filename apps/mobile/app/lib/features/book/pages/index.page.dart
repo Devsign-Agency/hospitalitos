@@ -4,7 +4,8 @@ import 'package:mobile_app/features/book/pages/chapter.page.dart';
 import 'package:mobile_app/features/book/pages/chapter2.page.dart';
 import 'package:mobile_app/widgets/app_bar/appbar_image.dart';
 import 'package:mobile_app/widgets/app_bar/appbar_subtitle.dart';
-import 'package:mobile_app/widgets/app_bar/custom_app_bar.dart';
+
+import '../../../widgets/widgets.dart';
 
 class IndexPage extends StatelessWidget {
   static const String route = 'book/index';
@@ -14,19 +15,29 @@ class IndexPage extends StatelessWidget {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
-
+    var pos = findOcurrenceChapterArr(book);
+   makeDataToShow(book);
+    print('epaleeee $pos');
     return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Indice',
+      ),
       body: Center(
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
-            itemBuilder: (context, index) => ListTile(
+            itemBuilder:(context, index) {
+             if(pos.length > 0){
+
+             
+              if(valueArrMenor(index, pos)){
+               return (comparateIndexPos(index, pos) ?  ListTile(
                 
-                 /* title: Text(
-                    showTitle(book.Chapters![index].Title!, index, book!.Chapters!.length),
-                    style: AppStyle.txtNunitoSansRegular14,
+                 title: comparateIndexPos(index, pos) ?  Text(
+                   book.Chapters![index].Title!,
+                    style: AppStyle.txtNunitoSansRegular16,
                
-                  ),*/
-                  subtitle: Text(book.Chapters![index].Title!),
+                  ): Container()
+                  ,
                   onTap: () {
                     print(book);
                     Navigator.pop(context);
@@ -35,7 +46,58 @@ class IndexPage extends StatelessWidget {
                             book: book, chapter: book.Chapters![index]));
                   },
                   
-                )),
+                ) :
+                 Container() );
+              }else 
+              if(valueArrMax(index, pos)){
+               return ListTile(
+                
+                 title: Text(
+                   book.Chapters![index].Title!,
+                    style: AppStyle.txtNunitoSansRegular16,
+               
+                  )
+                  ,
+                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                  onTap: () {
+                    print(book);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, ChapterPage.route,
+                        arguments: EpubArguments(
+                            book: book, chapter: book.Chapters![index]));
+                  },
+                  
+                ); 
+
+              }
+
+             }else{
+                return ListTile(
+                
+                 title: Text(
+                   book.Chapters![index].Title!,
+                    style: AppStyle.txtNunitoSansRegular16,
+               
+                  )
+                  ,
+                   //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                  onTap: () {
+                    print(book);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, ChapterPage.route,
+                        arguments: EpubArguments(
+                            book: book, chapter: book.Chapters![index]));
+                  },
+                  
+                ); 
+             }
+                
+             
+            },
+            
+            
+            
+            ),
       ),
     );
   }
@@ -44,7 +106,90 @@ class IndexPage extends StatelessWidget {
     print('title---------------- $data $index $items');
     var textToShow = '';
   
-  
     return data;
+  }
+
+  findOcurrenceChapterArr(book){
+   var band = true;
+   var pos = [];
+    for(var i = 0 ; i < book!.Chapters!.length; i ++){
+
+      String mainString = book.Chapters![i].Title.toLowerCase();
+      String substring = "capítulo";
+
+     
+        if(mainString.contains(substring)){
+            band = false;
+            pos.add(i);
+        } 
+        
+      
+    }
+
+
+  return pos;
+  
+  
+  
+  }
+
+  makeDataToShow(book){
+   var band = true;
+   var pos = [];
+    for(var i = 0 ; i < book!.Chapters!.length; i ++){
+
+      String mainString = book.Chapters![i].Title.toLowerCase();
+      String substring = "capítulo";
+
+     
+        if(mainString.contains(substring)){
+            band = false;
+            book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
+            
+        } 
+        
+      
+    }
+
+
+  return pos;
+  
+  
+  
+  }
+
+  
+
+  comparateIndexPos(index, items){
+    var band = false;
+    for( var i = 0; i < items.length; i ++){
+      if(items[i] == index){
+        band = true;
+      }
+    }
+
+    return band;
+  }
+
+   valueArrMenor(index, items){
+      var band = false;
+    for( var i = 0; i < items.length; i ++){
+      if(items[i] < index){
+        band = true;
+      }
+    }
+
+    return band;
+  }
+
+   valueArrMax(index, items){
+      var band = false;
+    for( var i = 0; i < items.length; i ++){
+      if(items[i] > index){
+        band = true;
+      }
+    }
+
+    return band;
   }
 }

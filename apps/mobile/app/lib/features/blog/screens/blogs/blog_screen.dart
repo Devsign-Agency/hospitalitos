@@ -137,7 +137,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               Navigator.pop(context);
             },
             child: CustomImageView(
-              color: ColorConstant.whiteA700,
+              color: ColorConstant.gray800,
               svgPath: ImageConstant.imgArrowleftGray800,
             ),
           ),
@@ -158,7 +158,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               svgPath: ImageConstant.imgSearch,
             ),
           ),
-          CustomIconButton(
+          /*sCustomIconButton(
             height: 48,
             width: 48,
             variant: IconButtonVariant.FillGray300,
@@ -166,7 +166,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               print('download');
               var url = 'hospitalitos/apps/mobile/app/assets/epubs/book.epub';
               var filename = 'book.epub';
-              //download(url, filename);
+              
 
               var test = await getimagefilefromassets('/epubs/book.epub');
               print('-------------');
@@ -176,7 +176,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               color: ColorConstant.gray800,
               svgPath: ImageConstant.imgArrowdown,
             ),
-          ),
+          ),*/
         ],
       ),
     );
