@@ -216,7 +216,7 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
     List<dynamic> listTab = [];
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Title.toLowerCase() == query) {
+      if (data[i].Title.toLowerCase().contains(query) ) {
         listTab.add(data[i]);
       }
     }
