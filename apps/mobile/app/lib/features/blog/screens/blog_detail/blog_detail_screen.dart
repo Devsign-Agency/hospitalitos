@@ -69,7 +69,7 @@ class _BlogDetailState extends State<BlogDetail> {
                             debugPrint(selectedText);
                             print('playText');
                             TextToSpeech tts = TextToSpeech();
-                              await tts.play(selectedText);
+                            await tts.play(selectedText);
                             // your "send email" code
                           },
                         ),

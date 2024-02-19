@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/bible/screens/screens.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 
-class MainScreen extends StatelessWidget {
+class BibleMain extends StatefulWidget {
   static const String route = 'bible-router';
-  const MainScreen({Key? key}) : super(key: key);
+  const BibleMain({Key? key}) : super(key: key);
+
+  @override
+  State<BibleMain> createState() => _BibleMainState();
+}
+
+class _BibleMainState extends State<BibleMain> {
+  @override
+  void dispose() {
+    // STEP 3
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +26,7 @@ class MainScreen extends StatelessWidget {
         'action': () => {print('Search...')}
       },
     ];
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'La Biblia',
@@ -46,7 +57,8 @@ class MainScreen extends StatelessWidget {
 
             // Index
             CustomCard(
-                onTapped: () => Navigator.pushNamed(context, IndexScreen.route),
+                onTapped: () =>
+                    Navigator.of(context).pushReplacementNamed('/bible/index'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -68,9 +80,8 @@ class MainScreen extends StatelessWidget {
 
             // Saved pages
             CustomCard(
-                onTapped: () => Navigator.pushNamed(
-                    context, ChaptersScreen.route,
-                    arguments: 'instance-chapter'),
+                onTapped: () => Navigator.of(context)
+                    .pushReplacementNamed('/bible/chapters'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

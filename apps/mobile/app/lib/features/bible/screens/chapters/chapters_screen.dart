@@ -5,7 +5,7 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 
 class ChaptersScreen extends StatefulWidget {
-  static const String route = 'chapters-route';
+  static const String route = 'chapters';
   const ChaptersScreen({Key? key}) : super(key: key);
 
   @override
@@ -30,9 +30,19 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
       ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
       ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
     ];
-
     return Scaffold(
       appBar: CustomAppBar(
+        leading: CustomIconButton(
+          margin: getMargin(left: 8),
+          height: getSize(48),
+          width: getSize(48),
+          variant: IconButtonVariant.NoFill,
+          onTap: () => Navigator.of(context).pushReplacementNamed('/bible'),
+          child: CustomImageView(
+            svgPath: ImageConstant.imgArrowleftGray900,
+            color: ColorConstant.gray800,
+          ),
+        ),
         title: _isEditing ? 'Guardado' : 'Editar',
         backgroundColor: ColorConstant.gray50,
         iconButtonVariant: !_isEditing

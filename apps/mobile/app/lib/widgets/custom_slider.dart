@@ -3,7 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 
 class CustomSlider extends StatefulWidget {
   final Function onSetVolumen;
-  final IconData icon;
+  final IconData? icon;
   final String indicator;
   final String label;
   final TextStyle labelStyle;
@@ -16,7 +16,7 @@ class CustomSlider extends StatefulWidget {
   CustomSlider(
       {super.key,
       required this.onSetVolumen,
-      required this.icon,
+      this.icon,
       required this.indicator,
       required this.label,
       required this.labelStyle,
@@ -41,26 +41,24 @@ class _CustomSliderState extends State<CustomSlider> {
 
   @override
   Widget build(BuildContext context) {
-    print('volumen up: ${widget.value}');
     return SizedBox(
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Text('data', style: TextStyle(fontSize: FontSize.),)
-          Icon(
-            widget.icon,
-            size: 34,
-            color: widget.iconColor,
-          ),
+          if (widget.icon != null)
+            Icon(
+              widget.icon,
+              size: 34,
+              color: widget.iconColor,
+            ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 18),
-                  child: Text(widget.label, style: widget.labelStyle),
-                ),
+                Text(widget.label, style: widget.labelStyle),
+                SizedBox(height: 10),
                 Slider(
                   value: valueSlider,
                   onChanged: (newVolume) {
@@ -74,7 +72,7 @@ class _CustomSliderState extends State<CustomSlider> {
                   max: widget.max,
                   divisions: widget.divisions,
                   label: widget.indicator,
-                ),
+                )
               ],
             ),
           ),

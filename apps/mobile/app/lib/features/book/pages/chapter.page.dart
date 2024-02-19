@@ -7,9 +7,11 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../core/app_export.dart';
 import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
@@ -62,6 +64,8 @@ class _ChapterPageState extends State<ChapterPage> {
       fontSize: FontSize.medium);
 
   String? _newVoiceText;
+  CircleButtonModel selectedCircleButton =
+      CircleButtonModel(CircleButtonType.black, Colors.black);
 
   TtsState ttsState = TtsState.stopped;
 
@@ -168,21 +172,21 @@ class _ChapterPageState extends State<ChapterPage> {
   void dispose() {
     super.dispose();
     flutterTts.stop();
+    Clipboard.setData(ClipboardData(text: ''));
   }
 
   void _handleChangeStatusAudio() async {
+    ClipboardData? data;
     onAudioSound = !onAudioSound;
 
-    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    if (onAudioSound) {
+      data = await Clipboard.getData(Clipboard.kTextPlain);
+    } else {
+      Clipboard.setData(ClipboardData(text: ''));
+    }
 
-    _onChange(data!.text!);
+    data != null ? _onChange(data.text!) : _onChange('');
   }
-
-  // void _getClipboard() async {
-  //     setState(() {
-  //       _textValue = data.text;
-  //     });
-  //   }
 
   void _onChange(String text) {
     setState(() {
@@ -222,6 +226,26 @@ class _ChapterPageState extends State<ChapterPage> {
     });
   }
 
+  setColor(CircleButtonModel newCircleButton) {
+    print('color: $newCircleButton');
+    setState(() {
+      textBook.color = newCircleButton.color;
+      selectedCircleButton =
+          CircleButtonModel(newCircleButton.name, newCircleButton.color);
+    });
+  }
+
+  void handleSelectedContent(SelectedContent? selectedContent) {
+    if (selectedContent != null) {
+      ClipboardData data = ClipboardData(text: selectedContent.plainText);
+      Clipboard.setData(data);
+    }
+  }
+
+  Future<void> share(String value) async {
+    await Share.share(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -235,36 +259,53 @@ class _ChapterPageState extends State<ChapterPage> {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
-    final List<Map<String, dynamic>> menuOptions = [
-      {
-        'id': 0,
-        'name': 'Modo Noche',
-        'onTap': (context) {
-          ThemeProvider themeProvider =
-              Provider.of<ThemeProvider>(context, listen: false);
-          themeProvider.currentTheme == DarkTheme.theme
-              ? themeProvider.setLightMode()
-              : themeProvider.setDarkMode();
-        }
-      },
-      {
-        'id': 1,
-        'name': 'Ajustar texto',
-        'onTap': (context) {
-          showModalBottomSheet(
-              // backgroundColor: ColorConstant.gray50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              context: context,
-              builder: (context) => PanelSettingTextBook(
-                  onSetVolumen: setVolumen,
-                  onSetPitch: setPitch,
-                  onSetRate: setRate,
-                  volume: volume,
-                  rate: rate));
-        }
-      },
-      {'id': 2, 'name': 'Compartir', 'onTap': () {}},
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgEditGray800),
+      BottomNavigationMenu(icon: ImageConstant.imgBookmarkGray800),
+      BottomNavigationMenu(icon: ImageConstant.imgBookmark),
+      BottomNavigationMenu(icon: ImageConstant.imgShareGray50),
+    ];
+
+    final List<PopupMenuItemModel> menuOptions = [
+      PopupMenuItemModel(
+          id: 0,
+          title: 'Modo Noche',
+          onTappedItem: (context) {
+            ThemeProvider themeProvider =
+                Provider.of<ThemeProvider>(context, listen: false);
+            themeProvider.currentTheme == DarkTheme.theme
+                ? themeProvider.setLightMode()
+                : themeProvider.setDarkMode();
+          }),
+      PopupMenuItemModel(
+          id: 1,
+          title: 'Ajustar texto',
+          onTappedItem: (context) {
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                context: context,
+                builder: (context) => PanelSettingTextBook(
+                      onSetVolumen: setVolumen,
+                      onSetPitch: setPitch,
+                      onSetRate: setRate,
+                      volume: volume,
+                      rate: rate,
+                      onSetColor: setColor,
+                      selectedColor: selectedCircleButton.name,
+                    ));
+          }),
+      PopupMenuItemModel(
+          id: 2,
+          title: 'Compartir',
+          onTappedItem: (context) {
+            List<dynamic> htmlList = [];
+
+            String htmlContent = chapter!.HtmlContent!;
+            htmlList.add(htmlContent);
+            var doc3 = parse(htmlList.join());
+            share(parse(doc3.body!.text).documentElement!.text);
+          })
     ];
 
     final actions = [
@@ -280,6 +321,24 @@ class _ChapterPageState extends State<ChapterPage> {
       },
     ];
 
+    final List<ContextMenuButtonItem> menuButtonItems = [
+      ContextMenuButtonItem(
+        label: 'Escuchar',
+        onPressed: () async {
+          print('escuchar');
+          _handleChangeStatusAudio();
+        },
+      ),
+      ContextMenuButtonItem(
+          label: 'Compartir',
+          onPressed: () async {
+            ClipboardData? selectedContent =
+                await Clipboard.getData(Clipboard.kTextPlain);
+
+            if (selectedContent != null) share(selectedContent.text!);
+          })
+    ];
+
     final PopupMenuButton<int> popupMenuButton = PopupMenuButton<int>(
         constraints: BoxConstraints(
           minWidth: 200,
@@ -289,89 +348,68 @@ class _ChapterPageState extends State<ChapterPage> {
               ...menuOptions.map((item) => PopupMenuItem(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(item['name'],
+                      child: Text(item.title,
                           style: isDarkMode
                               ? AppStyle.txtNunitoSansRegular18WhiteA700
                               : AppStyle.txtNunitoSansRegular18Black900),
                     ),
-                    onTap: () => item['onTap'](context),
+                    onTap: () => item.onTappedItem(context),
                   ))
             ]);
 
     return Scaffold(
       appBar: CustomAppBar(
-          customTitle: Row(
-            children: [
-              CustomIconButton(
-                height: getSize(48),
-                width: getSize(48),
-                variant: IconButtonVariant.NoFill,
-                onTap: () {
-                  Navigator.pushNamed(context, IndexPage.route,
-                      arguments: EpubArguments(
-                          book: book, chapter: book!.Chapters![0]));
-                },
-                child: CustomImageView(
-                  svgPath: ImageConstant.imgArrowleftGray900,
-                ),
-              ),
-              Text(bookTitle,
-                  style: isDarkMode
-                      ? AppStyle.txtNunitoSansSemiBold26WhiteA700
-                      : AppStyle.txtNunitoSansSemiBold26)
-            ],
-          ),
+          leading: goBackButton(context, book, isDarkMode),
+          title: bookTitle,
           actions: actions,
           hasPopupMenu: true,
-          hasCustomTitle: true,
           popupMenuButton: popupMenuButton),
-      body: Stack(children: [
-        SingleChildScrollView(
-          child: SelectionArea(
-            contextMenuBuilder: (context, editableTextState) {
-              final List<ContextMenuButtonItem> buttonItems =
-                  editableTextState.contextMenuButtonItems;
-              buttonItems.insert(
-                2,
-                ContextMenuButtonItem(
-                  label: 'Escuchar',
-                  onPressed: () async {
-                    // debugPrint(selectedText);
-                    print('playText');
-                    // TextToSpeech tts = TextToSpeech();
-                    //   await tts.play(selectedText);
-                    // your "send email" code
-                  },
-                ),
-              );
-              return AdaptiveTextSelectionToolbar.buttonItems(
-                anchors: editableTextState.contextMenuAnchors,
-                buttonItems: buttonItems,
-              );
-            },
-            onSelectionChanged: (SelectedContent? content) {
-              if (content != null) {
-                Clipboard.setData(ClipboardData(text: content.plainText));
-              }
-            },
-            child: Html(
-              style: {'body': Style(fontSize: textBook.fontSize)},
-              data: chapter?.HtmlContent,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: CustomSelectionArea(
+              onSelectionChanged: handleSelectedContent,
+              menuButtonItems: menuButtonItems,
+              child: Html(
+                style: {
+                  'body':
+                      Style(fontSize: textBook.fontSize, color: textBook.color)
+                },
+                data: chapter?.HtmlContent,
+              ),
             ),
           ),
-        ),
-        if (onAudioSound)
-          PopupAudioPlayer(
-              bookTitle: bookTitle,
-              bookAuthor: bookAuthor,
-              end: end,
-              max: _newVoiceText!.length,
-              ttsState: ttsState,
-              speak: _speak,
-              pause: _pause)
-      ]),
+          if (onAudioSound)
+            PopupAudioPlayer(
+                bookTitle: bookTitle,
+                bookAuthor: bookAuthor,
+                end: end,
+                max: _newVoiceText!.length,
+                ttsState: ttsState,
+                speak: _speak,
+                pause: _pause)
+        ],
+      ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          onChangeIndex: _handleChangeBottomNavigationBar),
+          onChangeIndex: _handleChangeBottomNavigationBar,
+          bottomMenuList: bottomMenuList),
     );
   }
+
+  CustomIconButton goBackButton(
+          BuildContext context, EpubBook? book, bool isDarkMode) =>
+      CustomIconButton(
+        height: getSize(48),
+        width: getSize(48),
+        variant: IconButtonVariant.NoFill,
+        onTap: () {
+          Navigator.pushNamed(context, IndexPage.route,
+              arguments:
+                  EpubArguments(book: book, chapter: book!.Chapters![0]));
+        },
+        child: CustomImageView(
+          svgPath: ImageConstant.imgArrowleftGray900,
+          color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
+        ),
+      );
 }

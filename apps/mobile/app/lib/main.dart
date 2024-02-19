@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobile_app/router/router.dart';
+import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +46,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PdfService()),
         ChangeNotifierProvider(create: (_) => TextToSpeech()),
         ChangeNotifierProvider(create: (_) => BookService()),
+        ChangeNotifierProvider(create: (_) => BottomNavigationMainProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Kaad App',
-          localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,],
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           supportedLocales: [const Locale('es')],
           initialRoute: RouterApp.initialRoute,
           routes: RouterApp.getRoutes(),
