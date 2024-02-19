@@ -216,12 +216,34 @@ class _ListSeeMoreState extends State<ListSeeMore> {
             separatorBuilder: (_, __) => SizedBox(height: 8),
             itemCount: books.length,
           )
-        : NotificationEmptyList(
-            title: 'Esto se ve un poco vacio...',
-            message:
-                'Recuerda que puedes guardar tu contenido favorito para tenerlo siempre a la mano.',
-            label: 'Explorar contenido',
-          );
+        :  SizedBox(
+          height: 600,
+          child: Center(
+            child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [Text('Cargando libros')],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: CircularProgressIndicator(
+                              color: ColorConstant.yellow100),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+          ),
+        );
   }
 
   Future<List<Book>> getBooks() async {
