@@ -51,9 +51,9 @@ class _ChapterPageState extends State<ChapterPage> {
   late FlutterTts flutterTts;
   dynamic languages;
   String? language;
-  double volume = 1;
+  double volume = 0.5;
   double pitch = 1;
-  double rate = 2;
+  double rate = 0.5;
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
