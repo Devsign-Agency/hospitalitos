@@ -37,6 +37,17 @@ class _IndexScreenState extends State<IndexScreen>
     ];
     return Scaffold(
         appBar: CustomAppBar(
+          leading: CustomIconButton(
+            margin: getMargin(left: 8),
+            height: getSize(48),
+            width: getSize(48),
+            variant: IconButtonVariant.NoFill,
+            onTap: () => Navigator.of(context).pushReplacementNamed('/bible'),
+            child: CustomImageView(
+              svgPath: ImageConstant.imgArrowleftGray900,
+              color: ColorConstant.gray800,
+            ),
+          ),
           title: 'Índice',
           backgroundColor: ColorConstant.gray50,
           actions: [...actions],

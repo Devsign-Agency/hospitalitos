@@ -16,3 +16,11 @@ Future<List<dynamic>> fetchWpPosts() async {
 
 }
 
+Future<List<dynamic>> searchPostsWp(String query) async {
+  final url = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?_embed&fields=title,content.rendered&search=';
+
+  final urlTest = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?search=maria&exclude[0]=1392';
+  final response = await http.get(Uri.parse(urlTest+query), headers: {"Accept": "application/json"}, );
+  var convertDatatoJson = json.decode(response.body);
+  return convertDatatoJson;
+}

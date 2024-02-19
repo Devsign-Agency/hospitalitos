@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:mobile_app/core/app_export.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String route = '';
+  static const String route = 'main';
 
   MainScreen({Key? key, int? selectedIndex, ScrollController? mainController})
       : super(key: key);
@@ -52,12 +52,12 @@ class _MainScreenState extends State<MainScreen> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: ColorConstant.gray100,
-          bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
           body: SingleChildScrollView(
             child: Center(
               child: page,
             ),
           ),
+          // bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
         ),
       ),
       //   child: EpubReader()

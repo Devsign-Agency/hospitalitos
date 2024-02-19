@@ -178,7 +178,7 @@ class _CustomAppBar extends StatelessWidget {
             width: getSize(48),
             variant: IconButtonVariant.NoFill,
             child: CustomImageView(
-              color: ColorConstant.whiteA700,
+              color: ColorConstant.gray800,
               svgPath: !isEditing
                   ? ImageConstant.imgArrowleftGray800
                   : ImageConstant.imgCloseGray24x24,

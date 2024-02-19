@@ -66,6 +66,11 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^21.2.10
   wordpress_api: ^1.2.0
   share_plus: ^6.3.4
+  file_saver: ^0.2.6
+  permission_handler: ^11.0.1
+  catholic_liturgy: ^0.0.16
+
+  
   
 dependency_overrides:
 

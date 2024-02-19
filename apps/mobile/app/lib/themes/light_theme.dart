@@ -29,6 +29,7 @@ class LightTheme {
             valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14,
             thumbColor: ColorConstant.whiteA700,
             activeTickMarkColor: colors.primary,
+            overlayShape: SliderComponentShape.noOverlay,
             inactiveTickMarkColor: ColorConstant.indigo90033),
       );
 }

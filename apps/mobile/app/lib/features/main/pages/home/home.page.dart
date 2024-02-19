@@ -4,15 +4,20 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
+import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
+import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
+import 'package:mobile_app/features/main/pages/pages.dart';
+import 'package:mobile_app/features/main/pages/welcome/navigation.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
 import 'package:mobile_app/features/security/router/router.dart';
+import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -122,7 +127,8 @@ class _HomePageState extends State<HomePage> {
     ]),
   ];
   late User? user;
-
+  late BottomNavigationMainProvider bottomNavigationMain =
+      Provider.of<BottomNavigationMainProvider>(context, listen: false);
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
   }
@@ -136,15 +142,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     final authService = Provider.of<AuthService>(context, listen: false);
-
     user = authService.user;
   }
-
-  // Future<List<PdfViewer>> getPdfVieverfromJson() async {
-  //   final pdfService = Provider.of<PdfService>(context, listen: false);
-
-  //   return pdfService.openAssetsFolderPdf();
-  // }
 
   Future<List<Book>> getBooks() async {
     final bookService = Provider.of<BookService>(context, listen: false);
@@ -153,15 +152,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onChangeTab(int index) {
+    bottomNavigationMain!.setSelectedItem(index);
+
     switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomePage.route, (r) => false);
+        // Navigator.of(context).pushNamed(HomePage.route);
+        break;
       case 1:
-        Navigator.of(context).pushNamed(CoursesScreen.route);
+        Navigator.of(context).pushNamed('welcome');
         break;
       case 2:
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
         break;
       case 3:
-        Navigator.of(context).pushNamed(MainScreen.route);
+        Navigator.of(context).pushNamed(BibleScreen.route);
         break;
     }
   }
@@ -180,6 +186,15 @@ class _HomePageState extends State<HomePage> {
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
       },
     ];
+
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+    ];
+
     return Scaffold(
       appBar: CustomAppBar(
         customTitle: Row(
@@ -271,11 +286,16 @@ class _HomePageState extends State<HomePage> {
                               Text('Ver más',
                                   style: AppStyle
                                       .txtNunitoSansSemiBold16Indigo900),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightIndigo900,
-                                width: getSize(24),
-                                height: getSize(24),
-                                color: ColorConstant.indigo900,
+                              CustomIconButton(
+                                height: 48,
+                                width: 48,
+                                variant: IconButtonVariant.NoFill,
+                                child: CustomImageView(
+                                  color: ColorConstant.gray800,
+                                  svgPath: ImageConstant.imgArrowrightIndigo900,
+                                ),
+                                onTap: () =>
+                                    Navigator.of(context).pushNamed(ListSeeMore.route),
                               ),
                             ],
                           ),
@@ -289,21 +309,6 @@ class _HomePageState extends State<HomePage> {
                   future: fetchData(),
                   onTappedItem: () {},
                 ),
-
-                // CardPreviewBooksList(
-                //   future: getBooks(),
-                //   onTappedItem: _onTap,
-                // ),
-
-                // CardPreviewPdfList(
-                //   future: fetchDataPdf(),
-                //   onTappedItem: onTap,
-                // ),
-
-                // CardPreviewBookList(
-                //   future: getPdfVieverfromJson(),
-                //   onTappedItem: _onTap,
-                // )
               ],
             ),
 
@@ -344,7 +349,26 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        bottomMenuList: bottomMenuList,
+        onChangeIndex: _onChangeTab,
+      ),
     );
+  }
+
+  _logout() async {
+    AuthService auth = Provider.of<AuthService>(context, listen: false);
+    await auth.googleSignOut();
+    if (context.mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
+          ModalRoute.withName(RouterMain.initialRoute));
+    }
+  }
+
+  _playText() async {
+    print('playText');
+    TextToSpeech tts = TextToSpeech();
+
+    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

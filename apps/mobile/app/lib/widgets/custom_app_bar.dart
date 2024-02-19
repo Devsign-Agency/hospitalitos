@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool hasPopupMenu;
   final List<Map<String, dynamic>>? menuOptions;
   final PopupMenuButton<int>? popupMenuButton;
-
+  final bool? hasLeading;
   const CustomAppBar({
     super.key,
     this.backgroundColor = Colors.red,
@@ -44,6 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.hasPopupMenu = false,
     this.menuOptions,
     this.popupMenuButton,
+    this.hasLeading = false,
   });
   @override
   Size get preferredSize => Size.fromHeight(height!);
@@ -55,18 +56,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ThemeData currentTheme = themeProvider.currentTheme;
     bool isDarkTheme = currentTheme == DarkTheme.theme;
 
+    print('hasLeading $hasLeading');
     return AppBar(
-      automaticallyImplyLeading: true,
-      leading: leading,
+      // automaticallyImplyLeading: true,
+      leading: leading ??
+          (hasLeading != null && hasLeading!
+              ? CustomIconButton(
+                  margin: getMargin(left: 8),
+                  height: getSize(48),
+                  width: getSize(48),
+                  variant: IconButtonVariant.NoFill,
+                  onTap: () {
+                    print('onTapped leading');
+                    Navigator.of(context).pop();
+                  },
+                  child: CustomImageView(
+                    svgPath: ImageConstant.imgArrowleftGray900,
+                    color: ColorConstant.gray800,
+                  ),
+                )
+              : null),
       title: !hasCustomTitle
           ? Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                  margin: getMargin(bottom: 20),
-                  child: Text('$title',
-                      style: isDarkTheme
-                          ? AppStyle.txtNunitoSansSemiBold26WhiteA700
-                          : AppStyle.txtNunitoSansSemiBold26)))
+              child: Text('$title',
+                  style: isDarkTheme
+                      ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                      : AppStyle.txtNunitoSansSemiBold26))
           : customTitle,
       actions: [
         if (actions != null && !hideActions!)
