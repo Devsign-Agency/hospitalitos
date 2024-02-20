@@ -2,18 +2,13 @@ import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
-import 'package:mobile_app/core/models/pdf_viewer.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
-import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
-import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
-import 'package:mobile_app/features/main/pages/pages.dart';
-import 'package:mobile_app/features/main/pages/welcome/navigation.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
 import 'package:mobile_app/features/security/router/router.dart';
@@ -22,7 +17,8 @@ import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:vocsy_epub_viewer/epub_viewer.dart';
+
+import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -161,7 +157,7 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pushNamed(HomePage.route);
         break;
       case 1:
-        Navigator.of(context).pushNamed('welcome');
+        Navigator.of(context).pushNamed(CoursesScreen.route);
         break;
       case 2:
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
@@ -294,8 +290,8 @@ class _HomePageState extends State<HomePage> {
                                   color: ColorConstant.gray800,
                                   svgPath: ImageConstant.imgArrowrightIndigo900,
                                 ),
-                                onTap: () =>
-                                    Navigator.of(context).pushNamed(ListSeeMore.route),
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(ListSeeMore.route),
                               ),
                             ],
                           ),

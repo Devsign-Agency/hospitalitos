@@ -411,3 +411,112 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
       );
 }
+
+class IndexPage extends StatelessWidget {
+  static const String route = 'book/index';
+
+  @override
+  Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final book = arguments.book;
+
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Indice',
+      ),
+      body: Center(
+        child: ListView.builder(
+            itemCount: book!.Chapters!.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  book.Chapters![index].Title!,
+                  style: AppStyle.txtNunitoSansRegular16,
+                ),
+                //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                onTap: () {
+                  print(book);
+                  // Navigator.pop(context);
+                  Navigator.pushNamed(context, ChapterPage.route,
+                      arguments: EpubArguments(
+                          book: book, chapter: book.Chapters![index]));
+                },
+              );
+            }),
+      ),
+    );
+  }
+
+  showTitle(String data, index, items) {
+    print('title---------------- $data $index $items');
+    var textToShow = '';
+
+    return data;
+  }
+
+  findOcurrenceChapterArr(book) {
+    var band = true;
+    var pos = [];
+    for (var i = 0; i < book!.Chapters!.length; i++) {
+      String mainString = book.Chapters![i].Title.toLowerCase();
+      String substring = "capítulo";
+
+      if (mainString.contains(substring)) {
+        band = false;
+        pos.add(i);
+      }
+    }
+
+    return pos;
+  }
+
+  makeDataToShow(book) {
+    var band = true;
+    var pos = [];
+    for (var i = 0; i < book!.Chapters!.length; i++) {
+      String mainString = book.Chapters![i].Title.toLowerCase();
+      String substring = "capítulo";
+
+      if (mainString.contains(substring)) {
+        band = false;
+        //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
+      }
+    }
+
+    return pos;
+  }
+
+  comparateIndexPos(index, items) {
+    var band = false;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] == index) {
+        band = true;
+      }
+    }
+
+    return band;
+  }
+
+  valueArrMenor(index, items) {
+    var band = false;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] < index) {
+        band = true;
+      }
+    }
+
+    return band;
+  }
+
+  valueArrMax(index, items) {
+    var band = false;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] > index) {
+        band = true;
+      }
+    }
+
+    return band;
+  }
+}
