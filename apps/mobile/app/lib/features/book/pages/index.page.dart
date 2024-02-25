@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/features/book/pages/chapter.page.dart';
-import 'package:mobile_app/features/book/pages/chapter2.page.dart';
-import 'package:mobile_app/widgets/app_bar/appbar_image.dart';
-import 'package:mobile_app/widgets/app_bar/appbar_subtitle.dart';
 
 import '../../../widgets/widgets.dart';
 

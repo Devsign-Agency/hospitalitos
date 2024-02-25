@@ -47,6 +47,29 @@ class _BibleScreenState extends State<BibleScreen> {
     }
   }
 
+  Widget _getPage(BuildContext context) {
+    String? route = ModalRoute.of(context)?.settings.name;
+
+    print('route: $route');
+    Widget page;
+
+    switch (route) {
+      case '/bible':
+        page = BibleMain();
+        break;
+      case '/bible/chapters':
+        page = ChaptersScreen();
+        break;
+      case '/bible/index':
+        page = IndexScreen();
+        break;
+
+      default:
+        page = BibleMain();
+    }
+    return page;
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -61,6 +84,14 @@ class _BibleScreenState extends State<BibleScreen> {
         Provider.of<BottomNavigationMainProvider>(context, listen: false);
 
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('Bible'),
+      // ),
+
+      // body: Center(
+      //   child: _getPage(context),
+      // ),
+      // // body: Center(child: Text('Bible main')),
       body: Center(
           child: Navigator(
         key: GlobalKey(),

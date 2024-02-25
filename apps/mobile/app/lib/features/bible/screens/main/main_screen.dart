@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/bible/bible_screen.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
+import '../../../main/pages/home/home.dart';
 
 class BibleMain extends StatefulWidget {
   static const String route = 'bible-router';
@@ -57,8 +59,7 @@ class _BibleMainState extends State<BibleMain> {
 
             // Index
             CustomCard(
-                onTapped: () =>
-                    Navigator.of(context).pushReplacementNamed('/bible/index'),
+                onTapped: () => Navigator.of(context).pushNamed('/bible/index'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

@@ -4,14 +4,10 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
-import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
-import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
-import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
@@ -148,7 +144,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onChangeTab(int index) {
-    bottomNavigationMain!.setSelectedItem(index);
+    bottomNavigationMain.setSelectedItem(index);
 
     switch (index) {
       case 0:
@@ -166,11 +162,6 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pushNamed(BibleScreen.route);
         break;
     }
-  }
-
-  void _onTap(Book book) {
-    Navigator.pushNamed(context, ReadToolsPage.route, arguments: book);
-    // Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -350,21 +341,5 @@ class _HomePageState extends State<HomePage> {
         onChangeIndex: _onChangeTab,
       ),
     );
-  }
-
-  _logout() async {
-    AuthService auth = Provider.of<AuthService>(context, listen: false);
-    await auth.googleSignOut();
-    if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
-          ModalRoute.withName(RouterMain.initialRoute));
-    }
-  }
-
-  _playText() async {
-    print('playText');
-    TextToSpeech tts = TextToSpeech();
-
-    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

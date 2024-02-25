@@ -4,11 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
-import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -99,6 +97,8 @@ class _ChapterPageState extends State<ChapterPage> {
         print('Complete');
         ttsState = TtsState.stopped;
         positionLastWord = 0;
+        end = 0;
+        closePlayText();
       });
     });
 
@@ -188,6 +188,22 @@ class _ChapterPageState extends State<ChapterPage> {
     data != null ? _onChange(data.text!) : _onChange('');
   }
 
+  void closePlayText() {
+    onAudioSound = false;
+
+    setState(() {});
+  }
+
+  void openPlayText() async {
+    onAudioSound = true;
+    ClipboardData? data;
+    data = await Clipboard.getData(Clipboard.kTextPlain);
+
+    data != null ? _onChange(data.text!) : _onChange('');
+
+    _speak();
+  }
+
   void _onChange(String text) {
     setState(() {
       _newVoiceText = text;
@@ -221,13 +237,11 @@ class _ChapterPageState extends State<ChapterPage> {
 
   setRate(double newRate) async {
     setState(() {
-      print('New rate $newRate');
       rate = newRate;
     });
   }
 
   setColor(CircleButtonModel newCircleButton) {
-    print('color: $newCircleButton');
     setState(() {
       textBook.color = newCircleButton.color;
       selectedCircleButton =
@@ -317,7 +331,7 @@ class _ChapterPageState extends State<ChapterPage> {
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () => _handleChangeStatusAudio()
+        'action': () {}
       },
     ];
 
@@ -326,7 +340,7 @@ class _ChapterPageState extends State<ChapterPage> {
         label: 'Escuchar',
         onPressed: () async {
           print('escuchar');
-          _handleChangeStatusAudio();
+          openPlayText();
         },
       ),
       ContextMenuButtonItem(
@@ -370,12 +384,15 @@ class _ChapterPageState extends State<ChapterPage> {
             child: CustomSelectionArea(
               onSelectionChanged: handleSelectedContent,
               menuButtonItems: menuButtonItems,
-              child: Html(
-                style: {
-                  'body':
-                      Style(fontSize: textBook.fontSize, color: textBook.color)
-                },
-                data: chapter?.HtmlContent,
+              child: Padding(
+                padding: getPadding(left: 14, right: 14),
+                child: Html(
+                  style: {
+                    'body': Style(
+                        fontSize: textBook.fontSize, color: textBook.color)
+                  },
+                  data: chapter?.HtmlContent,
+                ),
               ),
             ),
           ),
@@ -410,113 +427,4 @@ class _ChapterPageState extends State<ChapterPage> {
           color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
         ),
       );
-}
-
-class IndexPage extends StatelessWidget {
-  static const String route = 'book/index';
-
-  @override
-  Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as EpubArguments;
-    final book = arguments.book;
-
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Indice',
-      ),
-      body: Center(
-        child: ListView.builder(
-            itemCount: book!.Chapters!.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  book.Chapters![index].Title!,
-                  style: AppStyle.txtNunitoSansRegular16,
-                ),
-                //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                onTap: () {
-                  print(book);
-                  // Navigator.pop(context);
-                  Navigator.pushNamed(context, ChapterPage.route,
-                      arguments: EpubArguments(
-                          book: book, chapter: book.Chapters![index]));
-                },
-              );
-            }),
-      ),
-    );
-  }
-
-  showTitle(String data, index, items) {
-    print('title---------------- $data $index $items');
-    var textToShow = '';
-
-    return data;
-  }
-
-  findOcurrenceChapterArr(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        pos.add(i);
-      }
-    }
-
-    return pos;
-  }
-
-  makeDataToShow(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
-      }
-    }
-
-    return pos;
-  }
-
-  comparateIndexPos(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] == index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMenor(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] < index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMax(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] > index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
 }

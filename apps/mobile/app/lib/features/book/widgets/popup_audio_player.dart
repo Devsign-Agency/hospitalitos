@@ -48,30 +48,34 @@ class PopupAudioPlayer extends StatelessWidget {
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          padding: getPadding(left: 16, right: 8, top: 8, bottom: 8),
+          padding: getPadding(left: 16, right: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: isDarkMode ? ColorConstant.gray80040 : ColorConstant.neutral,
           ),
-          child: ListView(
-            controller: scrollController,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _AudioPlayerTitleAndAuthor(
-                      bookTitle: bookTitle,
-                      bookAuthor: bookAuthor,
-                      end: end,
-                      max: max),
-                  _AudioPlayerButton(
-                    ttsState: ttsState,
-                    speak: speak,
-                    pause: pause,
-                  ),
-                ],
-              )
-            ],
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              controller: scrollController,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _AudioPlayerTitleAndAuthor(
+                        bookTitle: bookTitle,
+                        bookAuthor: bookAuthor,
+                        end: end,
+                        max: max),
+                    _AudioPlayerButton(
+                      ttsState: ttsState,
+                      speak: speak,
+                      pause: pause,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         );
       },
@@ -124,6 +128,10 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
   }
 
   Widget _progressBar(int end, Color valueColor, Color backgroundColor) {
+    var a = end / max;
+    print(a);
+    print('end: $end/ $max');
+    print('max: $max');
     return Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(top: 5.0, right: 10),
@@ -131,7 +139,7 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
           backgroundColor: backgroundColor,
           color: ColorConstant.indigo900,
           valueColor: AlwaysStoppedAnimation<Color>(valueColor),
-          value: end / max,
+          value: a.isNaN || a.isInfinite ? 0.0 : end / max,
         ));
   }
 }

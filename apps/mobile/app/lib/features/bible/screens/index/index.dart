@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/index/widgets/widgets.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 
 class IndexScreen extends StatefulWidget {
-  static const String route = 'index-route';
+  static const String route = 'bible/index';
 
   const IndexScreen({Key? key}) : super(key: key);
 
@@ -42,7 +41,7 @@ class _IndexScreenState extends State<IndexScreen>
             height: getSize(48),
             width: getSize(48),
             variant: IconButtonVariant.NoFill,
-            onTap: () => Navigator.of(context).pushReplacementNamed('/bible'),
+            onTap: () => Navigator.of(context).popAndPushNamed('/bible'),
             child: CustomImageView(
               svgPath: ImageConstant.imgArrowleftGray900,
               color: ColorConstant.gray800,

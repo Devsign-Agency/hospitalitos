@@ -55,10 +55,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     ThemeData currentTheme = themeProvider.currentTheme;
     bool isDarkTheme = currentTheme == DarkTheme.theme;
-
-    print('hasLeading $hasLeading');
     return AppBar(
-      // automaticallyImplyLeading: true,
+      automaticallyImplyLeading: true,
       leading: leading ??
           (hasLeading != null && hasLeading!
               ? CustomIconButton(

@@ -12,6 +12,7 @@ import 'package:mobile_app/widgets/custom_image_view.dart';
 import 'package:mobile_app/widgets/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../features/book/pages/index.page.dart';
 import 'modal_bottom_actiosn_epub.dart';
 
 class CardPreviewItemList extends StatelessWidget {
@@ -74,7 +75,7 @@ class CardPreviewItemList extends StatelessWidget {
                     ];
                     return _ViewedPreview(
                       onTap: () => {onTap(context, book)},
-                     /* onTap: () => {
+                      /* onTap: () => {
                         showModalBottomSheet(
                             backgroundColor: ColorConstant.gray50,
                             shape: RoundedRectangleBorder(
