@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:csslib/visitor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,8 @@ import '../../../core/app_export.dart';
 import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../widgets/widgets.dart';
+// import 'package:css_text/css_text.dart';
+import 'package:simple_html_css/simple_html_css.dart';
 
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
@@ -37,9 +40,17 @@ class TextBook {
   String fontFamily;
   FontSize fontSize;
   Color color;
+  double size;
+  double? margin;
+  LineHeight? lineHeight;
 
   TextBook(
-      {required this.fontFamily, required this.color, required this.fontSize});
+      {required this.fontFamily,
+      required this.color,
+      required this.fontSize,
+      this.margin,
+      required this.lineHeight,
+      required this.size});
 }
 
 class _ChapterPageState extends State<ChapterPage> {
@@ -52,13 +63,26 @@ class _ChapterPageState extends State<ChapterPage> {
   double volume = 0.5;
   double pitch = 1;
   double rate = 0.5;
+  double fontSize = 5.0;
+  double margin = 1.0;
+
+  Map<dynamic, dynamic> settingTextInitialValues = {
+    'fontSize': 5.0,
+    'margin': 1.0,
+    'lineHeight': 1.0,
+    'circleButtonType': CircleButtonType.black
+  };
+
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
-  OverlayEntry? _overlayEntry;
+
   TextBook textBook = TextBook(
       fontFamily: 'fontFamily',
-      color: ColorConstant.indigo900,
+      color: ColorConstant.black900,
+      size: 32.0,
+      margin: 14.0,
+      lineHeight: LineHeight.number(1.2),
       fontSize: FontSize.medium);
 
   String? _newVoiceText;
@@ -214,16 +238,23 @@ class _ChapterPageState extends State<ChapterPage> {
     print('Handle change bottom navigation bar');
   }
 
-  setVolumen(double newFontSize) async {
-    setState(() {
-      final int value = (newFontSize).toInt();
-      print('VALUE: $value');
-      textBook.fontSize = fontSizes[value];
-      print('New fontSize $newFontSize');
-      // volume = newVolume;
+  setFontSize(double newFontSize) async {
+    Map<dynamic, FontSize> fontsizes = {
+      '1.0': FontSize.xSmall,
+      '2.0': FontSize.xxSmall,
+      '3.0': FontSize.smaller,
+      '4.0': FontSize.small,
+      '5.0': FontSize.medium,
+      '6.0': FontSize.large,
+      '7.0': FontSize.larger,
+      '8.0': FontSize.xLarge,
+      '9.0': FontSize.xxLarge,
+    };
 
-      // _speak();
-      // flutterTts.setVolume(volume);
+    setState(() {
+      settingTextInitialValues['fontSize'] = newFontSize;
+      print(settingTextInitialValues['fontSize']);
+      textBook.fontSize = fontsizes[newFontSize.toString()]!;
     });
     // _pause();
     // _speak();
@@ -246,6 +277,36 @@ class _ChapterPageState extends State<ChapterPage> {
       textBook.color = newCircleButton.color;
       selectedCircleButton =
           CircleButtonModel(newCircleButton.name, newCircleButton.color);
+    });
+  }
+
+  setMargin(double value) {
+    Map<dynamic, double> marginValues = {
+      '1.0': 14.0,
+      '2.0': 18.0,
+      '3.0': 24.0,
+      '4.0': 28.0,
+      '5.0': 32.0,
+    };
+
+    setState(() {
+      settingTextInitialValues['margin'] = value;
+      textBook.margin = marginValues[value.toString()]!;
+    });
+  }
+
+  setLineHeight(double value) {
+    Map<dynamic, LineHeight> lineHeightValues = {
+      '1.0': LineHeight.number(1.2),
+      '2.0': LineHeight.number(1.4),
+      '3.0': LineHeight.number(1.6),
+      '4.0': LineHeight.number(1.8),
+      '5.0': LineHeight.number(2.0),
+    };
+
+    setState(() {
+      settingTextInitialValues['lineHeight'] = value;
+      textBook.lineHeight = lineHeightValues[value.toString()]!;
     });
   }
 
@@ -297,16 +358,21 @@ class _ChapterPageState extends State<ChapterPage> {
           onTappedItem: (context) {
             showModalBottomSheet(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      onSetVolumen: setVolumen,
+                      onSetFontSize: setFontSize,
+                      onSetMargin: setMargin,
+                      onSetLineHeight: setLineHeight,
                       onSetPitch: setPitch,
                       onSetRate: setRate,
-                      volume: volume,
-                      rate: rate,
+                      fontSize: settingTextInitialValues['fontSize'],
+                      margin: settingTextInitialValues['margin'],
+                      lineHeight: settingTextInitialValues['lineHeight'],
+                      selectedCircleButton: selectedCircleButton,
                       onSetColor: setColor,
-                      selectedColor: selectedCircleButton.name,
                     ));
           }),
       PopupMenuItemModel(
@@ -385,11 +451,18 @@ class _ChapterPageState extends State<ChapterPage> {
               onSelectionChanged: handleSelectedContent,
               menuButtonItems: menuButtonItems,
               child: Padding(
-                padding: getPadding(left: 14, right: 14),
+                // padding: getPadding(left: 14, right: 14),
+                padding:
+                    getPadding(left: textBook.margin, right: textBook.margin),
+
                 child: Html(
                   style: {
                     'body': Style(
-                        fontSize: textBook.fontSize, color: textBook.color)
+                        fontSize: textBook.fontSize,
+                        color: textBook.color,
+                        lineHeight: textBook.lineHeight,
+                        fontFamily:
+                            Theme.of(context).textTheme.titleLarge!.fontFamily)
                   },
                   data: chapter?.HtmlContent,
                 ),

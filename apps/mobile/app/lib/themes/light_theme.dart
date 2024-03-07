@@ -25,8 +25,8 @@ class LightTheme {
         sliderTheme: SliderThemeData(
             activeTrackColor: colors.primary,
             inactiveTrackColor: ColorConstant.indigo90033,
-            valueIndicatorColor: ColorConstant.deepPurple5002,
-            valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14,
+            valueIndicatorColor: ColorConstant.yellow100,
+            valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14WhiteA700,
             thumbColor: ColorConstant.whiteA700,
             activeTickMarkColor: colors.primary,
             overlayShape: SliderComponentShape.noOverlay,

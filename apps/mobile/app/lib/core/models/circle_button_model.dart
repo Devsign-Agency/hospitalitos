@@ -6,4 +6,14 @@ class CircleButtonModel {
   CircleButtonModel(this.name, this.color);
 }
 
-enum CircleButtonType { black, yellow, red, blue, green, purple, brown }
+enum CircleButtonType {
+  white,
+  black,
+  grey,
+  yellow,
+  red,
+  blue,
+  green,
+  purple,
+  brown
+}

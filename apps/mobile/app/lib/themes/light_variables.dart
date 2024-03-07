@@ -5,7 +5,7 @@ class LightVariables {
   static const Color seed = Colors.white;
   static const Color primary = Color.fromRGBO(255, 211, 80, 1); //
   static const Color onPrimary = Color.fromRGBO(33, 28, 89, 1); //
-  static const Color primaryContainer = Colors.white;
+  static const Color primaryContainer = Color.fromARGB(255, 173, 102, 102);
   static const Color onPrimaryContainer = Colors.black45;
   static const Color secondary = Colors.green; //
   static const Color onSecondary = Colors.red;

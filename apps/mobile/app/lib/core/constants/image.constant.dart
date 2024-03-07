@@ -259,7 +259,13 @@ class ImageConstant {
 
   static String imgMenuGray800 = 'assets/images/img_menu_gray_800.svg';
 
+  static String imgMathCase = 'assets/images/img_match_case.svg';
+
   static String imgHome = 'assets/images/img_home.svg';
+
+  static String imgHeadline = 'assets/images/img_headline.svg';
+
+  static String imgWidthFit = 'assets/images/img_width_fit.svg';
 
   static String imgBookmarkWhiteA700 =
       'assets/images/img_bookmark_white_a700.svg';

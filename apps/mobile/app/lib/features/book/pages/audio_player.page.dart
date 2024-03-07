@@ -414,7 +414,7 @@ class _PanelSettingsVoicePlayer extends StatelessWidget {
     return Column(
       children: [
         CustomSlider(
-            onSetVolumen: onSetVolumen,
+            onChange: onSetVolumen,
             icon: Icons.volume_up_rounded,
             indicator: 'Volumen',
             label: 'Volumen',
@@ -424,7 +424,7 @@ class _PanelSettingsVoicePlayer extends StatelessWidget {
             max: 1.0,
             value: volume),
         CustomSlider(
-            onSetVolumen: onSetRate,
+            onChange: onSetRate,
             icon: Icons.flash_on_rounded,
             indicator: 'Velocidad',
             label: 'Velocidad',

@@ -70,6 +70,9 @@ dependencies:
   permission_handler: ^11.0.1
   catholic_liturgy: ^0.0.16
   highlight_text: ^1.7.0
+  simple_html_css: ^4.0.0
+  flutter_xlider: ^3.5.0
+  css_text: ^3.0.0
 
   
   

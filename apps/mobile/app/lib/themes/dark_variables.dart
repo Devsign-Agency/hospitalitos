@@ -6,7 +6,7 @@ class DarkVariables {
   static const Color onPrimary = Color.fromARGB(255, 238, 235, 235); //
   static const Color primaryContainer = Colors.red;
   static const Color onPrimaryContainer = Colors.red;
-  static const Color secondary = Colors.yellowAccent; //
+  static const Color secondary = Color.fromRGBO(255, 211, 80, 1); //
   static const Color onSecondary = Colors.red;
   static const Color secondaryContainer = Colors.red;
   static const Color onSecondaryContainer = Colors.red;
