@@ -7,9 +7,9 @@ import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  final Function onChangeIndex;
+  final Function(int) onChangeIndex;
   final List<BottomNavigationMenu> bottomMenuList;
-  final int? currentIndex;
+  final int currentIndex;
 
   const CustomBottomNavigationBar({
     super.key,
@@ -32,11 +32,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     _currentIndex = widget.currentIndex!;
   }
 
-  void _onTappedItem(int index) {
-    _currentIndex = index;
-    widget.onChangeIndex(index);
-    setState(() {});
-  }
+  // void _onTappedItem(int index) {
+  //   _currentIndex = index;
+  //   widget.onChangeIndex(index);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
+    print('currentIndex $_currentIndex');
     return BottomNavigationBar(
-      currentIndex: _currentIndex,
+      currentIndex: widget.currentIndex,
       type: BottomNavigationBarType.fixed,
       items: List.generate(
         widget.bottomMenuList.length,
@@ -100,7 +101,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ));
         },
       ),
-      onTap: _onTappedItem,
+      onTap: widget.onChangeIndex,
     );
   }
 }

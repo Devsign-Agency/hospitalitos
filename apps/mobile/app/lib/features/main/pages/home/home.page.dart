@@ -239,14 +239,19 @@ class _HomePageState extends State<HomePage> {
                       width: getSize(24),
                       margin: getMargin(top: 4, bottom: 4)),
                   SizedBox(width: 10),
-                  Text(
-                    'Mis Favoritos',
-                    style: AppStyle.txtNunitoSansSemiBold23,
+                  Tooltip(
+                    message: 'En Desarrollo',
+                    triggerMode: TooltipTriggerMode.tap,
+                    child: Text(
+                      'Mis Favoritos',
+                      style: AppStyle.txtNunitoSansSemiBold23,
+                    ),
                   )
                 ],
               ),
-              onTapped: () =>
-                  Navigator.of(context).pushNamed(FavoriteListScreen.route),
+              onTapped: () {
+                //Navigator.of(context).pushNamed(FavoriteListScreen.route);
+              },
             ),
 
             // Recently viewed
@@ -317,11 +322,15 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ExpandedButton(
+                          message: 'En Desarrollo',
                           icon: ImageConstant.imgButtonalerts,
                           label: 'Lecturas'),
                       SizedBox(width: 14.0),
                       ExpandedButton(
-                          icon: ImageConstant.imgVolume, label: 'Oraciones'),
+                        icon: ImageConstant.imgVolume,
+                        label: 'Oraciones',
+                        message: 'En Desarrollo',
+                      ),
                       SizedBox(width: 14.0),
                       ExpandedButton(
                         icon: ImageConstant.imgVolumeIndigo900,

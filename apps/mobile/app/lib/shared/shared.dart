@@ -9,3 +9,4 @@ export './services/liturgy_service.dart';
 export './services/pdf_service.dart';
 export './services/refresh_token.service.dart';
 export './services/text_to_speech.dart';
+export './services/marker_service.dart';

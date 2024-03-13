@@ -15,7 +15,7 @@ class IndexPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Indice',
+        title: 'Índice',
       ),
       body: Center(
         child: ListView.builder(
@@ -24,7 +24,7 @@ class IndexPage extends StatelessWidget {
               return ListTile(
                 title: Text(
                   book.Chapters![index].Title!,
-                  style: AppStyle.txtNunitoSansRegular16,
+                  style: AppStyle.txtNunitoSansSemiBold20Gray900,
                 ),
                 //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
                 onTap: () {
