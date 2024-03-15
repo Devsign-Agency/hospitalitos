@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -66,7 +65,7 @@ class _ChapterPageState extends State<ChapterPage> {
   double fontSize = 5.0;
   double margin = 1.0;
 
-  Map<dynamic, dynamic> settingTextInitialValues = {
+  Map<String, dynamic> settingTextInitialValues = {
     'fontSize': 5.0,
     'margin': 1.0,
     'lineHeight': 1.0,
@@ -116,9 +115,6 @@ class _ChapterPageState extends State<ChapterPage> {
   @override
   void initState() {
     super.initState();
-
-    // Preferences.markerList = json.encode([]);
-    // Preferences.removeMarkerList();
     initTts();
 
     fToast = FToast();
@@ -222,19 +218,6 @@ class _ChapterPageState extends State<ChapterPage> {
     Clipboard.setData(ClipboardData(text: ''));
   }
 
-  void _handleChangeStatusAudio() async {
-    ClipboardData? data;
-    onAudioSound = !onAudioSound;
-
-    if (onAudioSound) {
-      data = await Clipboard.getData(Clipboard.kTextPlain);
-    } else {
-      Clipboard.setData(ClipboardData(text: ''));
-    }
-
-    data != null ? _onChange(data.text!) : _onChange('');
-  }
-
   void closePlayText() {
     onAudioSound = false;
 
@@ -310,28 +293,6 @@ class _ChapterPageState extends State<ChapterPage> {
     setState(() {});
   }
 
-  setFontSize(double newFontSize) async {
-    Map<dynamic, FontSize> fontsizes = {
-      '1.0': FontSize.xSmall,
-      '2.0': FontSize.xxSmall,
-      '3.0': FontSize.smaller,
-      '4.0': FontSize.small,
-      '5.0': FontSize.medium,
-      '6.0': FontSize.large,
-      '7.0': FontSize.larger,
-      '8.0': FontSize.xLarge,
-      '9.0': FontSize.xxLarge,
-    };
-
-    setState(() {
-      settingTextInitialValues['fontSize'] = newFontSize;
-      print(settingTextInitialValues['fontSize']);
-      textBook.fontSize = fontsizes[newFontSize.toString()]!;
-    });
-    // _pause();
-    // _speak();
-  }
-
   setPitch(double newPitch) {
     setState(() {
       pitch = newPitch;
@@ -341,44 +302,6 @@ class _ChapterPageState extends State<ChapterPage> {
   setRate(double newRate) async {
     setState(() {
       rate = newRate;
-    });
-  }
-
-  setColor(CircleButtonModel newCircleButton) {
-    setState(() {
-      textBook.color = newCircleButton.color;
-      selectedCircleButton =
-          CircleButtonModel(newCircleButton.name, newCircleButton.color);
-    });
-  }
-
-  setMargin(double value) {
-    Map<dynamic, double> marginValues = {
-      '1.0': 14.0,
-      '2.0': 18.0,
-      '3.0': 24.0,
-      '4.0': 28.0,
-      '5.0': 32.0,
-    };
-
-    setState(() {
-      settingTextInitialValues['margin'] = value;
-      textBook.margin = marginValues[value.toString()]!;
-    });
-  }
-
-  setLineHeight(double value) {
-    Map<dynamic, LineHeight> lineHeightValues = {
-      '1.0': LineHeight.number(1.2),
-      '2.0': LineHeight.number(1.4),
-      '3.0': LineHeight.number(1.6),
-      '4.0': LineHeight.number(1.8),
-      '5.0': LineHeight.number(2.0),
-    };
-
-    setState(() {
-      settingTextInitialValues['lineHeight'] = value;
-      textBook.lineHeight = lineHeightValues[value.toString()]!;
     });
   }
 
@@ -459,16 +382,15 @@ class _ChapterPageState extends State<ChapterPage> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      onSetFontSize: setFontSize,
-                      onSetMargin: setMargin,
-                      onSetLineHeight: setLineHeight,
-                      onSetPitch: setPitch,
-                      onSetRate: setRate,
-                      fontSize: settingTextInitialValues['fontSize'],
-                      margin: settingTextInitialValues['margin'],
-                      lineHeight: settingTextInitialValues['lineHeight'],
-                      selectedCircleButton: selectedCircleButton,
-                      onSetColor: setColor,
+                      initialValues: settingTextInitialValues,
+                      onChange: (dynamic event) {
+                        print(event);
+                        textBook.fontSize = event['fontSize'];
+                        textBook.lineHeight = event['lineHeight'];
+                        textBook.margin = event['margin'];
+                        textBook.color = event['color'];
+                        setState(() {});
+                      },
                     ));
           }),
       PopupMenuItemModel(
@@ -501,7 +423,6 @@ class _ChapterPageState extends State<ChapterPage> {
       ContextMenuButtonItem(
         label: 'Escuchar',
         onPressed: () async {
-          print('escuchar');
           openPlayText();
         },
       ),
@@ -539,31 +460,13 @@ class _ChapterPageState extends State<ChapterPage> {
           }),
     ];
 
-    final PopupMenuButton<int> popupMenuButton = PopupMenuButton<int>(
-        constraints: BoxConstraints(
-          minWidth: 200,
-        ),
-        offset: Offset(20, 60),
-        itemBuilder: (context) => [
-              ...menuOptions.map((item) => PopupMenuItem(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(item.title,
-                          style: isDarkMode
-                              ? AppStyle.txtNunitoSansRegular18WhiteA700
-                              : AppStyle.txtNunitoSansRegular18Black900),
-                    ),
-                    onTap: () => item.onTappedItem(context),
-                  ))
-            ]);
-
     return Scaffold(
       appBar: CustomAppBar(
           leading: goBackButton(context, book, isDarkMode),
           title: bookTitle,
           actions: actions,
           hasPopupMenu: true,
-          popupMenuButton: popupMenuButton),
+          popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -608,7 +511,7 @@ class _ChapterPageState extends State<ChapterPage> {
           ),
 
           // Page view chapter's markers
-          PageViewMarkerList(
+          PageViewBookmarks(
             markerList: markerService.getMarkerList(bookTitle, chapter),
             onTapped: _handleTapPageViewMarkerList,
             onDeleteMarker: (marker) {
@@ -618,43 +521,7 @@ class _ChapterPageState extends State<ChapterPage> {
           ),
 
           // Page view book's index
-          Center(
-            child: ListView.builder(
-                itemCount: book!.Chapters!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Container(
-                      padding: getPadding(left: 5),
-                      decoration: BoxDecoration(
-                          color: chapter!.Title == book.Chapters![index].Title!
-                              ? ColorConstant.yellow100.withOpacity(0.2)
-                              : ColorConstant.transparent,
-                          border: Border(
-                            left: BorderSide(
-                                color: ColorConstant.yellow100,
-                                width: chapter!.Title ==
-                                        book.Chapters![index].Title!
-                                    ? 4
-                                    : 0),
-                          )),
-                      child: Text(
-                        book.Chapters![index].Title!,
-                        style: chapter!.Title == book.Chapters![index].Title!
-                            ? AppStyle.txtNunitoSansSemiBold20Indigo900
-                            : AppStyle.txtNunitoSansSemiBold20Gray900,
-                      ),
-                    ),
-                    //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                    onTap: () {
-                      print(book);
-                      // Navigator.pop(context);
-                      Navigator.pushNamed(context, ChapterPage.route,
-                          arguments: EpubArguments(
-                              book: book, chapter: book.Chapters![index]));
-                    },
-                  );
-                }),
-          ),
+          PageViewIndex(book: book!, chapter: chapter!)
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -679,4 +546,24 @@ class _ChapterPageState extends State<ChapterPage> {
           color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
         ),
       );
+
+  PopupMenuButton<int> popupMenuButton(
+          List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
+      PopupMenuButton<int>(
+          constraints: BoxConstraints(
+            minWidth: 200,
+          ),
+          offset: Offset(20, 60),
+          itemBuilder: (context) => [
+                ...menuOptions.map((item) => PopupMenuItem(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(item.title,
+                            style: isDarkMode
+                                ? AppStyle.txtNunitoSansRegular18WhiteA700
+                                : AppStyle.txtNunitoSansRegular18Black900),
+                      ),
+                      onTap: () => item.onTappedItem(context),
+                    ))
+              ]);
 }

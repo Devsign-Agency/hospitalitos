@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/shared/services/bible_service.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
 
@@ -12,6 +14,10 @@ class TabBarViewChapters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: false);
+
+    print(bibleService.selectedBook.name);
     final boxShadow = [
       BoxShadow(
         color: Color.fromRGBO(24, 39, 75, 0.08),
@@ -33,16 +39,23 @@ class TabBarViewChapters extends StatelessWidget {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 5,
-            children: List.generate(amountOfChapters, (index) {
+            children: List.generate(bibleService.selectedBook.chapters.length,
+                (index) {
               return Center(
-                child: Text('$index',
-                    style: AppStyle.txtNunitoSansRegular18Gray900),
+                child: GestureDetector(
+                  onTap: () {
+                    bibleService.setSelectedVerses(
+                        bibleService.selectedBook.chapters[index].verses);
+                  },
+                  child: Text('$index',
+                      style: AppStyle.txtNunitoSansRegular18Gray900),
+                ),
               );
             }),
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height - 250,
+          top: MediaQuery.of(context).size.height - 350,
           left: 0,
           right: 0,
           child: GestureDetector(

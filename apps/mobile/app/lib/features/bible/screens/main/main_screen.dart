@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
+import 'package:mobile_app/shared/shared.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -22,6 +24,10 @@ class _BibleMainState extends State<BibleMain> {
 
   @override
   Widget build(BuildContext context) {
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: false);
+
+    bibleService.getBooks();
     final List<Map<String, dynamic>> actions = [
       {
         'icon': ImageConstant.imgSearch,

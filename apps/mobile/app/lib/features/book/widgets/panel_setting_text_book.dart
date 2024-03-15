@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/style.dart';
+import 'package:mobile_app/features/book/pages/chapter.page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app_export.dart';
@@ -7,29 +9,13 @@ import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 
 class PanelSettingTextBook extends StatefulWidget {
-  final Function onSetFontSize;
-  final Function onSetPitch;
-  final Function onSetRate;
-  final Function onSetMargin;
-  final Function onSetLineHeight;
-  final double fontSize;
-  final double margin;
-  final double lineHeight;
-  final CircleButtonModel selectedCircleButton;
-  final Function onSetColor;
+  final Map<String, dynamic> initialValues;
+  final void Function(dynamic) onChange;
 
   const PanelSettingTextBook({
     super.key,
-    required this.onSetFontSize,
-    required this.onSetPitch,
-    required this.onSetRate,
-    required this.fontSize,
-    required this.lineHeight,
-    required this.onSetColor,
-    required this.onSetMargin,
-    required this.margin,
-    required this.onSetLineHeight,
-    required this.selectedCircleButton,
+    required this.onChange,
+    required this.initialValues,
   });
 
   @override
@@ -37,20 +23,84 @@ class PanelSettingTextBook extends StatefulWidget {
 }
 
 class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
-  CircleButtonType selectedCircleButtonType = CircleButtonType.black;
+  CircleButtonType _selectedCircleButtonType = CircleButtonType.black;
+  Map<dynamic, dynamic> _setting = {};
+  final Map<dynamic, FontSize> fontSizes = {
+    '1.0': FontSize.xSmall,
+    '2.0': FontSize.xxSmall,
+    '3.0': FontSize.smaller,
+    '4.0': FontSize.small,
+    '5.0': FontSize.medium,
+    '6.0': FontSize.large,
+    '7.0': FontSize.larger,
+    '8.0': FontSize.xLarge,
+    '9.0': FontSize.xxLarge,
+  };
+
+  Map<dynamic, double> marginValues = {
+    '1.0': 14.0,
+    '2.0': 18.0,
+    '3.0': 24.0,
+    '4.0': 28.0,
+    '5.0': 32.0,
+  };
+
+  Map<dynamic, LineHeight> lineHeightValues = {
+    '1.0': LineHeight.number(1.2),
+    '2.0': LineHeight.number(1.4),
+    '3.0': LineHeight.number(1.6),
+    '4.0': LineHeight.number(1.8),
+    '5.0': LineHeight.number(2.0),
+  };
 
   @override
   initState() {
     super.initState();
-    selectedCircleButtonType = widget.selectedCircleButton.name;
+    print(widget.initialValues);
+    _setting = {
+      'fontSize': fontSizes[widget.initialValues['fontSize'].toString()],
+      'margin': marginValues[widget.initialValues['margin'].toString()],
+      'lineHeight':
+          lineHeightValues[widget.initialValues['lineHeight'].toString()],
+    };
+    _selectedCircleButtonType = CircleButtonType.black;
   }
 
-  void onTapped(CircleButtonType type) {}
+  // setColor(CircleButtonModel newCircleButton) {
+  //   setState(() {
+  //     selectedCircleButtonType = newCircleButton.name;
+  //     widget.onSetColor(newCircleButton);
+  //   });
+  // }
 
   setColor(CircleButtonModel newCircleButton) {
     setState(() {
-      selectedCircleButtonType = newCircleButton.name;
-      widget.onSetColor(newCircleButton);
+      _setting['color'] = newCircleButton.color;
+      widget.onChange(_setting);
+      _selectedCircleButtonType = newCircleButton.name;
+      // selectedCircleButton =
+      //     CircleButtonModel(newCircleButton.name, newCircleButton.color);
+    });
+  }
+
+  setFontSize(double newFontSize) async {
+    setState(() {
+      _setting['fontSize'] = fontSizes[newFontSize.toString()]!;
+      widget.onChange(_setting);
+    });
+  }
+
+  setMargin(double value) {
+    setState(() {
+      _setting['margin'] = marginValues[value.toString()]!;
+      widget.onChange(_setting);
+    });
+  }
+
+  setLineHeight(double value) {
+    setState(() {
+      _setting['lineHeight'] = lineHeightValues[value.toString()]!;
+      widget.onChange(_setting);
     });
   }
 
@@ -106,7 +156,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
               children: [
                 ...circleButtonList.map((circleButton) => _CircleButton(
                     item: circleButton,
-                    selected: circleButton.name == selectedCircleButtonType,
+                    selected: circleButton.name == _selectedCircleButtonType,
                     onTapped: setColor))
               ],
             ),
@@ -125,7 +175,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
 
             // Sizes section
             CustomSlider(
-                onChange: widget.onSetFontSize,
+                onChange: setFontSize,
                 indicator: 'Tamaño',
                 label: 'Texto',
                 labelStyle: labelStyle.copyWith(fontSize: 14),
@@ -135,9 +185,9 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 min: 1.0,
                 max: 9.0,
                 divisions: 8,
-                value: widget.fontSize),
+                value: widget.initialValues['fontSize']),
             CustomSlider(
-                onChange: widget.onSetMargin,
+                onChange: setMargin,
                 indicator: 'Tamaño',
                 label: 'Margen',
                 labelStyle: labelStyle.copyWith(fontSize: 14),
@@ -147,9 +197,9 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 min: 1.0,
                 max: 5.0,
                 divisions: 4,
-                value: widget.margin),
+                value: widget.initialValues['margin']),
             CustomSlider(
-                onChange: widget.onSetLineHeight,
+                onChange: setLineHeight,
                 indicator: 'Tamaño',
                 label: 'Interlineado',
                 labelStyle: labelStyle.copyWith(fontSize: 14),
@@ -159,7 +209,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 min: 1.0,
                 max: 5.0,
                 divisions: 4,
-                value: widget.lineHeight),
+                value: widget.initialValues['lineHeight']),
           ],
         ),
       ]),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../core/models/BookBible.dart';
+import '../../../../../shared/shared.dart';
 
 class TabBarViewBooks extends StatelessWidget {
   const TabBarViewBooks({
@@ -12,6 +15,9 @@ class TabBarViewBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: false);
+
     final boxShadow = [
       BoxShadow(
         color: Color.fromRGBO(24, 39, 75, 0.08),
@@ -29,21 +35,39 @@ class TabBarViewBooks extends StatelessWidget {
 
     return Stack(
       children: [
-        ListView(
-          shrinkWrap: true,
-          children: [
-            SizedBox(height: 19),
-            ...bookNames.map((e) => Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    e,
-                    style: AppStyle.txtNunitoSansRegular18Gray900,
+        FutureBuilder(
+          future: bibleService.getBooks(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<BookBible>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Si estamos cargando los datos, mostramos un indicador de carga
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              // Si hubo un error al cargar los datos, mostramos un mensaje de error
+              return Center(child: Text('Error al cargar los datos'));
+            } else {
+              // Si los datos se cargaron correctamente, los mostramos en un ListView
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (_, index) => Padding(
+                  padding: getPadding(left: 16, top: 16, right: 16, bottom: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      bibleService.setSelectedBook(snapshot.data![index]);
+                    },
+                    child: Text(
+                      snapshot.data![index].name,
+                      style: AppStyle.txtNunitoSansRegular18Gray900,
+                    ),
                   ),
-                ))
-          ],
+                ),
+              );
+            }
+          },
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height - 250,
+          top: MediaQuery.of(context).size.height - 350,
           left: 0,
           right: 0,
           child: Container(
