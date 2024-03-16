@@ -92,23 +92,19 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
   bool get isWeb => kIsWeb;
   int i = 0;
+  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     initTts();
 
-    // Scrollable.ensureVisible(GlobalObjectKey(12).currentContext!);
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Scrollable.ensureVisible(GlobalObjectKey(currentIndex).currentContext!);
+    });
     fToast = FToast();
     fToast?.init(context);
   }
-
-  // @override
-  // didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   Scrollable.ensureVisible(GlobalObjectKey(12).currentContext!);
-  // }
 
   initTts() {
     flutterTts = FlutterTts();
@@ -451,10 +447,18 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     List<Widget> versesList = [];
 
     int i = 1;
+    currentIndex = bibleService.verseNumber;
     verses.forEach((key, value) {
       versesList.add(Container(
           key: GlobalObjectKey(i),
-          padding: getPadding(),
+          padding: getPadding(left: 16, right: 16),
+          decoration: BoxDecoration(
+              border: Border(
+                  left: BorderSide(
+                      color: currentIndex == i
+                          ? ColorConstant.indigo900
+                          : ColorConstant.transparent,
+                      width: currentIndex == i ? 6.0 : 0.0))),
           child: Column(
             children: [
               RichText(
@@ -477,7 +481,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
     String title =
         '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}:${bibleService.verseNumber.toString()}';
-    // Scrollable.ensureVisible(GlobalObjectKey(12).currentContext!);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -499,7 +502,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   onSelectionChanged: handleSelectedContent,
                   menuButtonItems: menuButtonItems,
                   child: Padding(
-                      padding: getPadding(left: 16.0, right: 16.0),
+                      padding: getPadding(all: 0.0),
                       child: Column(
                         children: [...versesList],
                       )),
