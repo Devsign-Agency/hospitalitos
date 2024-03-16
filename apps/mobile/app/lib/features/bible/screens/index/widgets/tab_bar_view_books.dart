@@ -6,9 +6,11 @@ import '../../../../../core/models/BookBible.dart';
 import '../../../../../shared/shared.dart';
 
 class TabBarViewBooks extends StatelessWidget {
+  final Function onChangeTab;
   const TabBarViewBooks({
     super.key,
     required this.bookNames,
+    required this.onChangeTab,
   });
 
   final List<String> bookNames;
@@ -16,7 +18,7 @@ class TabBarViewBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
-        Provider.of<BibleService>(context, listen: false);
+        Provider.of<BibleService>(context, listen: true);
 
     final boxShadow = [
       BoxShadow(
@@ -56,9 +58,24 @@ class TabBarViewBooks extends StatelessWidget {
                     onTap: () {
                       bibleService.setSelectedBook(snapshot.data![index]);
                     },
-                    child: Text(
-                      snapshot.data![index].name,
-                      style: AppStyle.txtNunitoSansRegular18Gray900,
+                    child: Container(
+                      padding: getPadding(all: 10.0),
+                      decoration: BoxDecoration(
+                          color: snapshot.data![index].name ==
+                                  bibleService.selectedBook.name
+                              ? ColorConstant.yellow100.withOpacity(0.2)
+                              : null,
+                          border: snapshot.data![index].name ==
+                                  bibleService.selectedBook.name
+                              ? Border(
+                                  left: BorderSide(
+                                      width: 4.0,
+                                      color: ColorConstant.yellow100))
+                              : null),
+                      child: Text(
+                        snapshot.data![index].name,
+                        style: AppStyle.txtNunitoSansRegular18Gray900,
+                      ),
                     ),
                   ),
                 ),
@@ -70,18 +87,23 @@ class TabBarViewBooks extends StatelessWidget {
           top: MediaQuery.of(context).size.height - 350,
           left: 0,
           right: 0,
-          child: Container(
-            width: double.infinity,
-            height: getSize(48),
-            decoration: BoxDecoration(
-                color: ColorConstant.yellow100,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: boxShadow),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Siguiente',
-                style: AppStyle.txtNunitoSansSemiBold16,
+          child: GestureDetector(
+            onTap: () {
+              onChangeTab();
+            },
+            child: Container(
+              width: double.infinity,
+              height: getSize(48),
+              decoration: BoxDecoration(
+                  color: ColorConstant.yellow100,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: boxShadow),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Siguiente',
+                  style: AppStyle.txtNunitoSansSemiBold16,
+                ),
               ),
             ),
           ),

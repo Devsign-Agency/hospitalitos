@@ -30,6 +30,13 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
       ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
       ListViewFavoriteModel(id: '', title: 'Génesis 1:16'),
     ];
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+    ];
     return Scaffold(
       appBar: CustomAppBar(
         leading: CustomIconButton(
@@ -51,10 +58,16 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         // hideActions: _isEditing,
         actions: [...actions],
       ),
-      body: Column(children: [
-        // builds a list, but if it is empty it shows a notification message
-        _buildMainContent(chapterList)
-      ]),
+      body: Column(
+        children: [
+          // builds a list, but if it is empty it shows a notification message
+          _buildMainContent(chapterList)
+        ],
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 3,
+          onChangeIndex: (index) {},
+          bottomMenuList: bottomMenuList),
     );
   }
 

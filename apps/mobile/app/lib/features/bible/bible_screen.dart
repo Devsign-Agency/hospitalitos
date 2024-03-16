@@ -19,7 +19,7 @@ class BibleScreen extends StatefulWidget {
 class _BibleScreenState extends State<BibleScreen> {
   late BottomNavigationMainProvider bottomNavigationMain =
       Provider.of<BottomNavigationMainProvider>(context, listen: false);
-
+  bool hideBottomNavigator = true;
   @override
   void dispose() {
     // STEP 3
@@ -102,12 +102,22 @@ class _BibleScreenState extends State<BibleScreen> {
           switch (settings.name) {
             case '/bible':
               page = BibleMain();
+              // hideBottomNavigator = true;
               break;
             case '/bible/chapters':
               page = ChaptersScreen();
+              hideBottomNavigator = false;
               break;
             case '/bible/index':
               page = IndexScreen();
+              hideBottomNavigator = false;
+              break;
+            case '/bible/viewer':
+              print(settings.arguments!);
+              page = BookViewerScreen();
+              hideBottomNavigator = false;
+              // setState(() {});
+
               break;
 
             default:
@@ -119,10 +129,12 @@ class _BibleScreenState extends State<BibleScreen> {
           );
         },
       )),
-      bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: bottomNavigationMain.getSelectedItem,
-          onChangeIndex: _onChangeTab,
-          bottomMenuList: bottomMenuList),
+      bottomNavigationBar: hideBottomNavigator
+          ? CustomBottomNavigationBar(
+              currentIndex: bottomNavigationMain.getSelectedItem,
+              onChangeIndex: _onChangeTab,
+              bottomMenuList: bottomMenuList)
+          : null,
     );
   }
 }

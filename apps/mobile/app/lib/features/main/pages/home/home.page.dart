@@ -14,6 +14,7 @@ import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
@@ -159,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
         break;
       case 3:
-        Navigator.of(context).pushNamed(BibleScreen.route);
+        Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
   }

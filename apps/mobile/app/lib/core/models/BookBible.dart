@@ -16,12 +16,15 @@ class BookBible {
 }
 
 class Chapter {
+  String chapter;
   int ctdverses;
   Map<String, dynamic> verses;
 
-  Chapter({required this.ctdverses, required this.verses});
+  Chapter(
+      {required this.chapter, required this.ctdverses, required this.verses});
 
   factory Chapter.fromMap(Map<String, dynamic> json) => Chapter(
+        chapter: json['chapter'],
         ctdverses: json['ctd_verses'],
         verses: json['verses'],
       );

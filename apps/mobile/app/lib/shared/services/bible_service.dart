@@ -9,31 +9,15 @@ class BibleService extends ChangeNotifier {
     'Libros',
     'Capítulos',
     'Versículos',
-    'Tab'
   ];
-  static const List<String> bookNames = [
-    'Génesis',
-    'Éxodo',
-    'Levítico',
-    'Números',
-    'Deuteronomio',
-    'Josué',
-    'Jueces',
-    'Rut',
-    'Samuel I',
-    'Reyes I',
-    'Rut',
-    'Samuel I',
-    'Reyes I',
-    'Rut',
-    'Samuel I',
-    'Reyes I',
-  ];
+  static const List<String> bookNames = [];
   static const int amountOfChapters = 40;
   static const int amountOfVerses = 25;
   List<BookBible> books = [];
-  late BookBible selectedBook;
+  BookBible selectedBook = BookBible(name: '', chapters: []);
   late Map<String, dynamic> selectedVerses = {};
+  Chapter selectedChapter = Chapter(chapter: '0', ctdverses: 0, verses: {});
+  int verseNumber = 0;
 
   Future<List<BookBible>> getBooks() async {
     String response = await rootBundle.loadString('assets/json/bible.json');
@@ -46,7 +30,6 @@ class BibleService extends ChangeNotifier {
 
       books.add(book);
     });
-    print('libros: ${books.length}');
 
     return books;
   }
@@ -65,10 +48,22 @@ class BibleService extends ChangeNotifier {
     notifyListeners();
   }
 
+  setSelectedChapter(Chapter chapter) {
+    selectedChapter = chapter;
+
+    notifyListeners();
+  }
+
   setSelectedVerses(Map<String, dynamic> verses) {
     selectedVerses = verses;
 
     print(selectedVerses.length);
+
+    notifyListeners();
+  }
+
+  setVerseNumber(int value) {
+    verseNumber = value;
 
     notifyListeners();
   }

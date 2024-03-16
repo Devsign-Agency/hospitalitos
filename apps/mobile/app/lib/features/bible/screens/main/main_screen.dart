@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
+import 'package:mobile_app/features/bible/screens/chapters/chapters_screen.dart';
+import 'package:mobile_app/features/bible/screens/index/index.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,13 @@ class _BibleMainState extends State<BibleMain> {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+    ];
 
     bibleService.getBooks();
     final List<Map<String, dynamic>> actions = [
@@ -65,7 +74,8 @@ class _BibleMainState extends State<BibleMain> {
 
             // Index
             CustomCard(
-                onTapped: () => Navigator.of(context).pushNamed('/bible/index'),
+                onTapped: () =>
+                    Navigator.of(context).pushNamed(IndexScreen.route),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -87,8 +97,8 @@ class _BibleMainState extends State<BibleMain> {
 
             // Saved pages
             CustomCard(
-                onTapped: () => Navigator.of(context)
-                    .pushReplacementNamed('/bible/chapters'),
+                onTapped: () =>
+                    Navigator.of(context).pushNamed(ChaptersScreen.route),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -112,6 +122,10 @@ class _BibleMainState extends State<BibleMain> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 3,
+          onChangeIndex: (index) {},
+          bottomMenuList: bottomMenuList),
     );
   }
 }

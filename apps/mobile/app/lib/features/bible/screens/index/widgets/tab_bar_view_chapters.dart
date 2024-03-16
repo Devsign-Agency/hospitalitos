@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 
 class TabBarViewChapters extends StatelessWidget {
+  final Function onChangeTab;
   const TabBarViewChapters({
     super.key,
     required this.amountOfChapters,
+    required this.onChangeTab,
   });
 
   final int amountOfChapters;
@@ -15,7 +17,7 @@ class TabBarViewChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
-        Provider.of<BibleService>(context, listen: false);
+        Provider.of<BibleService>(context, listen: true);
 
     print(bibleService.selectedBook.name);
     final boxShadow = [
@@ -44,11 +46,22 @@ class TabBarViewChapters extends StatelessWidget {
               return Center(
                 child: GestureDetector(
                   onTap: () {
-                    bibleService.setSelectedVerses(
-                        bibleService.selectedBook.chapters[index].verses);
+                    bibleService.setSelectedChapter(
+                        bibleService.selectedBook.chapters[index]);
                   },
-                  child: Text('$index',
-                      style: AppStyle.txtNunitoSansRegular18Gray900),
+                  child: Container(
+                    padding: getPadding(all: 10.0),
+                    decoration: BoxDecoration(
+                      color: bibleService.selectedChapter.chapter ==
+                              (index + 1).toString()
+                          ? ColorConstant.yellow100.withOpacity(0.2)
+                          : null,
+                    ),
+                    child: Text(
+                      '${index + 1}',
+                      style: AppStyle.txtNunitoSansRegular18Gray900,
+                    ),
+                  ),
                 ),
               );
             }),
@@ -59,7 +72,7 @@ class TabBarViewChapters extends StatelessWidget {
           left: 0,
           right: 0,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () => onChangeTab(),
             child: Container(
               width: double.infinity,
               height: getSize(48),
