@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -56,6 +57,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
+  String selectedVerse = '';
 
   // TextBook textBook = TextBook(
   //     fontFamily: 'fontFamily',
@@ -381,8 +383,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           id: 2,
           title: 'Compartir',
           onTappedItem: (context) {
-            List<dynamic> htmlList = [];
-
             // String htmlContent = chapter!.HtmlContent!;
             // htmlList.add(htmlContent);
             // var doc3 = parse(htmlList.join());
@@ -448,29 +448,44 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
     int i = 1;
     currentIndex = bibleService.verseNumber;
+
+    Color borderColor =
+        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
     verses.forEach((key, value) {
       versesList.add(Container(
+          width: double.infinity,
           key: GlobalObjectKey(i),
           padding: getPadding(left: 16, right: 16),
           decoration: BoxDecoration(
               border: Border(
                   left: BorderSide(
                       color: currentIndex == i
-                          ? ColorConstant.indigo900
+                          ? borderColor
                           : ColorConstant.transparent,
                       width: currentIndex == i ? 6.0 : 0.0))),
           child: Column(
             children: [
-              RichText(
-                text: TextSpan(text: '', children: [
-                  TextSpan(
-                      text: '$i ',
-                      style: AppStyle.txtNunitoSansRegular14Black900),
-                  TextSpan(
-                      text: '$value',
-                      style: AppStyle.txtNunitoSansRegular18Black900)
-                ]),
-              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('$i ',
+                    style: isDarkMode
+                        ? AppStyle.txtNunitoSansRegular14WhiteA700
+                        : AppStyle.txtNunitoSansRegular14Black900),
+                Expanded(
+                  child: Text(
+                    '$value',
+                    style: isDarkMode
+                        ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
+                            backgroundColor: selectedVerse == key
+                                ? ColorConstant.yellow100
+                                : ColorConstant.transparent)
+                        : AppStyle.txtNunitoSansRegular18Black900.copyWith(
+                            decoration: TextDecoration.underline,
+                            backgroundColor: selectedVerse == key
+                                ? ColorConstant.yellow100
+                                : ColorConstant.transparent),
+                  ),
+                ),
+              ]),
               SizedBox(
                 height: 20,
               )
