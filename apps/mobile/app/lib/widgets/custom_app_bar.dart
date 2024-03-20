@@ -60,12 +60,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading ??
           (hasLeading != null && hasLeading!
               ? CustomIconButton(
-                  margin: getMargin(left: 8),
                   height: getSize(48),
                   width: getSize(48),
                   variant: IconButtonVariant.NoFill,
                   onTap: () {
-                    print('onTapped leading');
                     Navigator.of(context).pop();
                   },
                   child: CustomImageView(
@@ -100,7 +98,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-        SizedBox(width: 16),
+        // SizedBox(width: 10),
         if (hasPopupMenu) popupMenuButton!
       ],
     );

@@ -24,6 +24,16 @@ class _BibleMainState extends State<BibleMain> {
     super.dispose();
   }
 
+  handleChangeBottomNavigationBar(int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
@@ -124,7 +134,7 @@ class _BibleMainState extends State<BibleMain> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: 3,
-          onChangeIndex: (index) {},
+          onChangeIndex: handleChangeBottomNavigationBar,
           bottomMenuList: bottomMenuList),
     );
   }

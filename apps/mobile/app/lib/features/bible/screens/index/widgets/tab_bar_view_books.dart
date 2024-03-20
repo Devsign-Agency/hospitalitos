@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../core/models/BookBible.dart';
 import '../../../../../shared/shared.dart';
+import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewBooks extends StatelessWidget {
-  final Function onChangeTab;
+  final VoidCallback onChangeTab;
   const TabBarViewBooks({
     super.key,
     required this.bookNames,
@@ -19,21 +20,6 @@ class TabBarViewBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-
-    final boxShadow = [
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 12.0),
-        blurRadius: 32.0,
-        spreadRadius: -4.0,
-      ), //BoxSha
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 8.0),
-        blurRadius: 18.0,
-        spreadRadius: -6.0,
-      ), //BoxShadow
-    ];
 
     return Stack(
       children: [
@@ -56,7 +42,7 @@ class TabBarViewBooks extends StatelessWidget {
                   padding: getPadding(left: 16, top: 16, right: 16, bottom: 16),
                   child: GestureDetector(
                     onTap: () {
-                      bibleService.setSelectedBook(snapshot.data![index]);
+                      bibleService.selectedBook = snapshot.data![index];
                     },
                     child: Container(
                       padding: getPadding(all: 10.0),
@@ -87,26 +73,10 @@ class TabBarViewBooks extends StatelessWidget {
           top: MediaQuery.of(context).size.height - 350,
           left: 0,
           right: 0,
-          child: GestureDetector(
-            onTap: () {
-              onChangeTab();
-            },
-            child: Container(
-              width: double.infinity,
-              height: getSize(48),
-              decoration: BoxDecoration(
-                  color: ColorConstant.yellow100,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: boxShadow),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Siguiente',
-                  style: AppStyle.txtNunitoSansSemiBold16,
-                ),
-              ),
-            ),
-          ),
+          child: CustomButton(
+              height: getVerticalSize(48),
+              text: 'Siguiente',
+              onTap: bibleService.selectedBook.name != '' ? onChangeTab : null),
         ),
       ],
     );

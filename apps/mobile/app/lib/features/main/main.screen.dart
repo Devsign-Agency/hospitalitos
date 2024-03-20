@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/generator.page.dart';
 import 'package:mobile_app/features/favorite.page.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
         page = GeneratorPage();
         break;
       case 2:
-        page = FavoritePage();
+        page = BibleMain();
         break;
       case 3:
         page = Placeholder();

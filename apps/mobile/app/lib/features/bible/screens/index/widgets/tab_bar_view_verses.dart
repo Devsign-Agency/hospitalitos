@@ -4,8 +4,9 @@ import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../widgets/custom_button.dart';
 
-class TabBarViewVerses extends StatelessWidget {
+class TabBarViewVerses extends StatefulWidget {
   final Function onChangeTab;
   const TabBarViewVerses({
     super.key,
@@ -16,29 +17,37 @@ class TabBarViewVerses extends StatelessWidget {
   final int amountOfChapters;
 
   @override
+  State<TabBarViewVerses> createState() => _TabBarViewVersesState();
+}
+
+class _TabBarViewVersesState extends State<TabBarViewVerses> {
+  int startVerse = -1;
+  int endVerse = -1;
+
+  @override
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    final boxShadow = [
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 12.0),
-        blurRadius: 32.0,
-        spreadRadius: -4.0,
-      ), //BoxSha
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 8.0),
-        blurRadius: 18.0,
-        spreadRadius: -6.0,
-      ), //BoxShadow
-    ];
 
-    // List<Widget> verses = [];
+    bool getColor(int index) {
+      int startVerse = bibleService.startVerse;
+      int endVerse = bibleService.endVerse;
 
-    // int amountOfVerses;
+      if (startVerse == endVerse) {
+        return index == startVerse;
+      } else {
+        if (startVerse > 0 && endVerse > 0) {
+          return index >= startVerse && index <= endVerse;
+        } else {
+          return index == startVerse;
+        }
+      }
+    }
 
-    // bibleService.selectedVerses.forEach((key, value) {});
+    void next() {
+      Navigator.of(context).pushNamed(BookViewerScreen.route,
+          arguments: bibleService.selectedChapter.verses);
+    }
 
     return Stack(
       children: [
@@ -52,20 +61,34 @@ class TabBarViewVerses extends StatelessWidget {
               return Center(
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.pop(context);
+                    int startVerse = bibleService.startVerse;
+                    int endVerse = bibleService.endVerse;
 
-                    // Navigator.popAndPushNamed(context, BookViewerScreen.route,
-                    //     arguments: bibleService.selectedVerses);
-                    // bibleService.verseNumber = index + 1;
-                    // Navigator.of(context).pushNamed(BookViewerScreen.route,
-                    //     arguments: bibleService.selectedChapter.verses);
-                    bibleService.setVerseNumber(index + 1);
-                    // Navigator.popAndPushNamed(context, routeName)
+                    if (startVerse > 0 && endVerse > 0) {
+                      startVerse = index + 1;
+                      endVerse = -1;
+                    } else {
+                      if (startVerse > 0) {
+                        endVerse = index + 1;
+                        if (startVerse > endVerse) {
+                          final aux = startVerse;
+                          startVerse = endVerse;
+                          endVerse = aux;
+                        }
+                      } else {
+                        startVerse = index + 1;
+                      }
+                    }
+
+                    bibleService.startVerse = startVerse;
+                    bibleService.endVerse = endVerse;
+
+                    setState(() {});
                   },
                   child: Container(
                     padding: getPadding(all: 10.0),
                     decoration: BoxDecoration(
-                      color: bibleService.verseNumber == index + 1
+                      color: getColor(index + 1)
                           ? ColorConstant.yellow100.withOpacity(0.2)
                           : null,
                     ),
@@ -83,25 +106,10 @@ class TabBarViewVerses extends StatelessWidget {
           top: MediaQuery.of(context).size.height - 350,
           left: 0,
           right: 0,
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(BookViewerScreen.route,
-                arguments: bibleService.selectedChapter.verses),
-            child: Container(
-              width: double.infinity,
-              height: getSize(48),
-              decoration: BoxDecoration(
-                  color: ColorConstant.yellow100,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: boxShadow),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Aceptar',
-                  style: AppStyle.txtNunitoSansSemiBold16,
-                ),
-              ),
-            ),
-          ),
+          child: CustomButton(
+              height: getVerticalSize(48),
+              text: 'Aceptar',
+              onTap: bibleService.startVerse > 0 ? next : null),
         )
       ],
     );

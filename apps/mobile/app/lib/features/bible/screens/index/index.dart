@@ -83,6 +83,7 @@ class _IndexScreenState extends State<IndexScreen>
                   height: height * 0.8,
                   width: double.infinity,
                   child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: tabController,
                     children: [
                       // Books Tab
