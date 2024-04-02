@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
@@ -27,6 +30,19 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+}
+
+loadAsset() async {
+  await rootBundle
+      .loadString('assets/liturgia/sync/2024/mar/12/index.html')
+      .then((String contents) {
+        const HtmlEscape htmlEscape = HtmlEscape();
+        //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+    var text = htmlEscape.convert(contents);
+    print('--------------- $text');
+
+    //final reg = RegExp('(?=<div id="cuerpo" class="normal")|(?<=/div>)');
+  });
 }
 
 class _HomePageState extends State<HomePage> {
@@ -139,6 +155,7 @@ class _HomePageState extends State<HomePage> {
 
     final authService = Provider.of<AuthService>(context, listen: false);
     user = authService.user;
+    loadAsset();
   }
 
   Future<List<Book>> getBooks() async {
@@ -265,6 +282,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(horizontal: 14.0),
                     child: Row(
                       children: [
+                        
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(

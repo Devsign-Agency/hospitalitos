@@ -100,8 +100,13 @@ class CardPreviewItemList extends StatelessWidget {
   // }
 
   onTap(context, EpubBook book) {
+    // testData(book);
     Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+  }
+
+    testData(book){
+    print(book.Chapters.SubChapters > 0);
   }
 
   MyContent(epub) {
@@ -273,3 +278,4 @@ class _ViewedPreview extends StatelessWidget {
     );
   }
 }
+

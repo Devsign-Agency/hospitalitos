@@ -10,9 +10,10 @@ import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/app_export.dart';
-import '../../../../widgets/widgets.dart';
-import '../../widgets/widgets.dart';
 import 'package:dio/dio.dart';
+
+import '../../../../widgets/widgets.dart';
+import '../../widgets/article_card.dart';
 
 class BlogScreen extends StatefulWidget {
   static const String route = 'blog';
@@ -37,11 +38,22 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: Column(
-      children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
-    )));
+    return Scaffold(
+        appBar: CustomAppBar(
+          title: 'Blog',
+          actions: [
+            {
+              'icon': ImageConstant.imgSearch,
+              'action': () => {
+                    showSearch(
+                        context: context, delegate: PostsSearchDelegate())
+                  }
+            },
+          ],
+        ),
+        body: Column(
+          children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
+        ));
   }
 }
 
@@ -128,7 +140,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
       margin: const EdgeInsets.only(
           left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
       child: Row(
-        children: [
+        /*children: [
           CustomIconButton(
             height: 48,
             width: 48,
@@ -158,7 +170,7 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               svgPath: ImageConstant.imgSearch,
             ),
           ),
-          /*sCustomIconButton(
+          CustomIconButton(
             height: 48,
             width: 48,
             variant: IconButtonVariant.FillGray300,
@@ -176,8 +188,8 @@ class _ArticlesHeaderState extends State<_ArticlesHeader> {
               color: ColorConstant.gray800,
               svgPath: ImageConstant.imgArrowdown,
             ),
-          ),*/
-        ],
+          ),
+        ],*/
       ),
     );
   }

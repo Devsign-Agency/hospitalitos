@@ -24,20 +24,31 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  book.Chapters![index].Title!,
-                  style: AppStyle.txtNunitoSansRegular16,
-                ),
-                //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                onTap: () {
-                  print(book);
-                  // Navigator.pop(context);
-                  Navigator.pushNamed(context, ChapterPage.route,
-                      arguments: EpubArguments(
-                          book: book, chapter: book.Chapters![index]));
-                },
-              );
+                // Enumerating chapters
+book.Chapters?.forEach(( chapter) {
+          
+  // HTML content of current chapter
+  String? chapterHtmlContent = chapter.HtmlContent;
+
+});
+              print('hey ${book.Chapters![index]}');
+              return findOcurrenceChapterArr(book, index)
+                  ? ListTile(
+                     trailing: Icon(Icons.more_vert),
+                      title: Text(
+                        book.Chapters![index].Title!,
+                        style: AppStyle.txtNunitoSansRegular16,
+                      ),
+                      //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                      onTap: () {
+                        print(book);
+                        // Navigator.pop(context);
+                        Navigator.pushNamed(context, ChapterPage.route,
+                            arguments: EpubArguments(
+                                book: book, chapter: book.Chapters![index]));
+                      },
+                    )
+                  : Container();
             }),
       ),
     );
@@ -50,20 +61,26 @@ class IndexPage extends StatelessWidget {
     return data;
   }
 
-  findOcurrenceChapterArr(book) {
-    var band = true;
+  findOcurrenceChapterArr(book, index) {
+    var band = false;
     var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
+    
+    String mainString = book.Chapters[index].Title.toLowerCase();
+    String substring = "capítulo";
 
-      if (mainString.contains(substring)) {
-        band = false;
-        pos.add(i);
-      }
+    if (!mainString.contains(substring)) {
+      band = true;
+    }
+    if(index > 0){
+      var word = book.Chapters[index - 1].Title.toLowerCase().split(' ')[0] ;
+      print('epaleee $word');
+       if (word == 'capítulo') {
+      book.Title = 'Capítulo: ' + book.Title;
     }
 
-    return pos;
+    }
+   
+    return band;
   }
 
   makeDataToShow(book) {

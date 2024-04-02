@@ -420,7 +420,7 @@ class IndexPage extends StatelessWidget {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
-
+    var count = 0;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Indice',
@@ -429,20 +429,43 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  book.Chapters![index].Title!,
+              print('hey ${book.Chapters![index].SubChapters}');
+              var title = changeTitle(book.Chapters![index], index);
+              var title2 = 'Inicio : ${book.Chapters![index].Title}';
+
+              if (title != '' && index > 0) {
+                count++;
+              }
+              return title 
+                  ? ExpansionTile(
+                      title: Text(book.Chapters![index].Title!),
+                      children: [
+                        ListTile(
+                            title: Text(book.Chapters![index].Title!),
+                            onTap: () {
+                              // Navigator.pop(context);
+                              Navigator.pushNamed(context, ChapterPage.route,
+                                  arguments: EpubArguments(
+                                      book: book,
+                                      chapter: book.Chapters![index]));
+                            })
+                        //subChaptersMenu(book.Chapters![index].SubChapters, book)
+                      ],
+                    )
+                  : Container();
+
+              /* return title != ''? ListTile(
+                title: Text(title,
                   style: AppStyle.txtNunitoSansRegular16,
                 ),
-                //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+
                 onTap: () {
                   print(book);
                   // Navigator.pop(context);
                   Navigator.pushNamed(context, ChapterPage.route,
                       arguments: EpubArguments(
                           book: book, chapter: book.Chapters![index]));
-                },
-              );
+                },*/
             }),
       ),
     );
@@ -487,6 +510,24 @@ class IndexPage extends StatelessWidget {
     return pos;
   }
 
+  changeTitle(book, index) {
+    var title = book.Title;
+    var band = true;
+    print(title.toLowerCase().split(':')[0]);
+    if ((title.toLowerCase().split(':')[0].contains('capítulo') ||
+            title.toLowerCase().split(':')[0].contains('capitulo')) &&
+        book.SubChapters!.isEmpty) {
+      title = '';
+      band = false;
+    }
+
+
+
+    print('title $title');
+
+    return band;
+  }
+
   comparateIndexPos(index, items) {
     var band = false;
     for (var i = 0; i < items.length; i++) {
@@ -518,5 +559,25 @@ class IndexPage extends StatelessWidget {
     }
 
     return band;
+  }
+
+  subChaptersMenu(data, book) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return ListTile(
+              title: Text(
+                data[index].Title!,
+                style: AppStyle.txtNunitoSansRegular16,
+              ),
+              onTap: () {
+                // Navigator.pop(context);
+                Navigator.pushNamed(context, ChapterPage.route,
+                    arguments: EpubArguments(
+                        book: book, chapter: book.Chapter[index]));
+              });
+        },
+        itemCount: data.length);
   }
 }

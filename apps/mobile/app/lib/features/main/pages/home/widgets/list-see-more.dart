@@ -122,103 +122,109 @@ class _ListSeeMoreState extends State<ListSeeMore> {
         topLeft: Radius.circular(12), bottomLeft: Radius.circular(12));
 
     return chapterList.isNotEmpty
-        ? ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (_, int index) {
-              final item = chapterList[index];
-
-              Image image =
-                  Image.memory(Uint8List.fromList(encodePng(item.CoverImage!)));
-
-              return Padding(
-                padding: const EdgeInsets.only(top: 9.0),
-                child: GestureDetector(
-                  onTap: () { onTap(context, item);},
-                  child: Container(
-                    width: double.infinity,
-                    height: getSize(88),
-                    decoration: boxDecoration,
-                    child: Row(
-                      children: [
-                        // Image
-                        ClipRRect(
-                          borderRadius: borderRadius,
-                          /*child: CustomImageView(
-                            imagePath: image,
-                            width: getSize(132),
-                            height: double.infinity,
-                          ),*/
-              
-                          child: Row(
-                            children: [
-                              SizedBox.fromSize(
-                                size: Size.fromRadius(48), // Image radius
-                                child: Image.memory(
-                                    Uint8List.fromList(
-                                        encodePng(item.CoverImage!)),
-                                    fit: BoxFit.cover),
-                              ),
-                            ],
-                          ),
-                        ),
-              
-                        Flexible(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+        ? Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.separated(
+              shrinkWrap: true,
+               physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (_, int index) {
+                final item = chapterList[index];
+        
+                Image image =
+                    Image.memory(Uint8List.fromList(encodePng(item.CoverImage!)));
+        
+                return SafeArea(
+                  child: GestureDetector(
+                    onTap: () { onTap(context, item);},
+                    child: Container(
+                      width: double.infinity,
+                      height: getSize(100),
+                      decoration: boxDecoration,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            // Image
+                            ClipRRect(
+                              borderRadius: borderRadius,
+                              /*child: CustomImageView(
+                                imagePath: image,
+                                width: getSize(132),
+                                height: double.infinity,
+                              ),*/
+                                    
+                              child: Row(
                                 children: [
-                                  Container(  
-                                    width: 200,
-                                    child: Text(
-                                      item.Title,
-                                      style:
-                                          AppStyle.txtNunitoSansRegular16Gray9001,
-                                    ),
-                                  ),
-                                  Text(
-                                    item.Author,
-                                    style:
-                                        AppStyle.txtNunitoSansRegular14Gray9001,
+                                  SizedBox.fromSize(
+                                    size: Size.fromRadius(48), // Image radius
+                                    child: Image.memory(
+                                        Uint8List.fromList(
+                                            encodePng(item.CoverImage!)),
+                                        fit: BoxFit.cover),
                                   ),
                                 ],
                               ),
-                              Padding(padding: const EdgeInsets.only(right:6.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                                    
+                            Flexible(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CustomIconButton(
-                                    height: getSize(48),
-                                    width: getSize(48),
-                                    onTap: (){
-                                      getTextFromEpubInstance(index);
-                                    } ,
-                                    variant: IconButtonVariant.FillYellow,
-                                    child: CustomImageView(
-                                        color: ColorConstant.gray800,
-                                        svgPath: ImageConstant.imgDownloadGray30024x24),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(  
+                                        width: 200,
+                                        child: Text(
+                                          item.Title,
+                                          style:
+                                              AppStyle.txtNunitoSansRegular16Gray9001,
+                                        ),
+                                      ),
+                                      Text(
+                                        item.Author,
+                                        style:
+                                            AppStyle.txtNunitoSansRegular14Gray9001,
+                                      ),
+                                    ],
                                   ),
-                               
+                                  Padding(padding: const EdgeInsets.only(right:6.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CustomIconButton(
+                                        height: getSize(48),
+                                        width: getSize(48),
+                                        onTap: (){
+                                          getTextFromEpubInstance(index);
+                                        } ,
+                                        variant: IconButtonVariant.FillYellow,
+                                        child: CustomImageView(
+                                            color: ColorConstant.gray800,
+                                            svgPath: ImageConstant.imgDownloadGray30024x24),
+                                      ),
+                                   
+                                    ],
+                                  ),
+                                  )
+                                  ,
                                 ],
                               ),
-                              )
-                              ,
-                            ],
-                          ),
+                            ),
+                            // Content
+                          ],
                         ),
-                        // Content
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (_, __) => SizedBox(height: 8),
-            itemCount: books.length,
-          )
+                );
+              },
+              separatorBuilder: (_, __) => SizedBox(height: 5),
+              itemCount: books.length,
+            ),
+        )
         :  SizedBox(
           height: 600,
           child: Center(

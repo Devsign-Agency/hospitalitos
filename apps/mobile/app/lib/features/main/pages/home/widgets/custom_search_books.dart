@@ -228,8 +228,13 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
   }
 
   onTaped(context, EpubBook book) {
-    Navigator.pushNamed(context, IndexPage.route,
-        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+    testData(book);
+    /*Navigator.pushNamed(context, IndexPage.route,
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));*/
+  }
+
+  testData(book){
+    print(book.Chapters);
   }
 
   filter(_items, query) {
