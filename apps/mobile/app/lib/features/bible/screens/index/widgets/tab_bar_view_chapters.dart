@@ -27,13 +27,13 @@ class TabBarViewChapters extends StatelessWidget {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 5,
-            children: List.generate(bibleService.selectedBook.chapters.length,
-                (index) {
+            children: List.generate(amountOfChapters, (index) {
               return Center(
                 child: GestureDetector(
                   onTap: () {
                     bibleService.selectedChapter =
                         bibleService.selectedBook.chapters[index];
+                    onChangeTab();
                   },
                   child: Container(
                     padding: getPadding(all: 10.0),
@@ -53,17 +53,6 @@ class TabBarViewChapters extends StatelessWidget {
             }),
           ),
         ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 350,
-          left: 0,
-          right: 0,
-          child: CustomButton(
-              height: getVerticalSize(48),
-              text: 'Siguiente',
-              onTap: bibleService.selectedChapter.chapter != ''
-                  ? onChangeTab
-                  : null),
-        )
       ],
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
@@ -17,22 +18,31 @@ import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../book/widgets/widgets.dart';
 
-class BookViewerScreen extends StatefulWidget {
-  // final Map<String, dynamic> verses;
+class TextBook {
+  String fontFamily;
+  FontSize fontSize;
 
+  Color color;
+  double size;
+  double? margin;
+  LineHeight? lineHeight;
+
+  TextBook(
+      {required this.fontFamily,
+      required this.color,
+      required this.fontSize,
+      this.margin,
+      required this.lineHeight,
+      required this.size});
+}
+
+class BookViewerScreen extends StatefulWidget {
   static const String route = 'book_viewer';
   const BookViewerScreen({super.key});
 
   @override
   State<BookViewerScreen> createState() => _BookViewerScreenState();
 }
-
-// class _BookViewerScreenState extends State<BookViewerScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(child: Text('Book Viewer : ${widget.verses.length}'));
-//   }
-// }
 
 class _BookViewerScreenState extends State<BookViewerScreen> {
   bool onAudioSound = false;
@@ -49,7 +59,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     'fontSize': 5.0,
     'margin': 1.0,
     'lineHeight': 1.0,
-    'circleButtonType': CircleButtonType.black
+    'color': Colors.black
   };
 
   bool isCurrentLanguageInstalled = false;
@@ -57,13 +67,13 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   int positionLastWord = 0;
   String selectedVerse = '';
 
-  // TextBook textBook = TextBook(
-  //     fontFamily: 'fontFamily',
-  //     color: ColorConstant.black900,
-  //     size: 32.0,
-  //     margin: 14.0,
-  //     lineHeight: LineHeight.number(1.2),
-  //     fontSize: FontSize.medium);
+  TextBook textBook = TextBook(
+      fontFamily: 'fontFamily',
+      color: Colors.black,
+      size: 32.0,
+      margin: 14.0,
+      lineHeight: LineHeight.number(1.2),
+      fontSize: FontSize.medium);
 
   String? _newVoiceText;
   CircleButtonModel selectedCircleButton =
@@ -322,6 +332,22 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     );
   }
 
+  convertFontSizeToPx(FontSize fontSize) {}
+
+  String getTitle(BibleService bibleService) {
+    String title =
+        '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter},';
+
+    String rangeVerse = bibleService.startVerse == bibleService.endVerse ||
+            (bibleService.endVerse == -1)
+        ? '${bibleService.startVerse.toInt()}'
+        : '${bibleService.startVerse.toInt()}-${bibleService.endVerse.toInt()}';
+
+    title = '$title $rangeVerse';
+
+    return title;
+  }
+
   @override
   Widget build(BuildContext context) {
     final verses =
@@ -368,11 +394,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                 builder: (context) => PanelSettingTextBook(
                       initialValues: settingTextInitialValues,
                       onChange: (dynamic event) {
-                        print(event);
-                        // textBook.fontSize = event['fontSize'];
-                        // textBook.lineHeight = event['lineHeight'];
-                        // textBook.margin = event['margin'];
-                        // textBook.color = event['color'];
+                        print(event['fontSize']);
+                        textBook.fontSize = event['fontSize'];
+                        textBook.lineHeight = event['lineHeight'];
+                        textBook.margin = event['margin'];
+                        textBook.color = event['color'];
+                        // print(textBook.fontSize.value);
                         setState(() {});
                       },
                     ));
@@ -442,80 +469,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           }),
     ];
 
-    List<Widget> versesList = [];
-
-    int i = 1;
-    currentIndex = bibleService.verseNumber;
-
-    Color borderColor =
-        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
-    verses.forEach((key, value) {
-      int startVerse = bibleService.startVerse;
-      int endVerse = bibleService.endVerse;
-
-      if (endVerse == -1) {
-        endVerse = startVerse;
-      }
-
-      if (int.parse(key) >= startVerse && (int.parse(key) <= endVerse)) {
-        versesList.add(Container(
-            width: double.infinity,
-            key: GlobalObjectKey(i),
-            padding: getPadding(left: 16, right: 16),
-            decoration: BoxDecoration(
-                border: Border(
-                    left: BorderSide(
-                        color: currentIndex == i
-                            ? borderColor
-                            : ColorConstant.transparent,
-                        width: currentIndex == i ? 6.0 : 0.0))),
-            child: Column(
-              children: [
-                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('$i ',
-                      style: isDarkMode
-                          ? AppStyle.txtNunitoSansRegular14WhiteA700
-                          : AppStyle.txtNunitoSansRegular14Black900),
-                  Expanded(
-                    child: Text(
-                      '$value',
-                      style: isDarkMode
-                          ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
-                              backgroundColor: selectedVerse == key
-                                  ? ColorConstant.yellow100
-                                  : ColorConstant.transparent)
-                          : AppStyle.txtNunitoSansRegular18Black900.copyWith(
-                              // decoration: TextDecoration.underline,
-                              backgroundColor: selectedVerse == key
-                                  ? ColorConstant.yellow100
-                                  : ColorConstant.transparent),
-                    ),
-                  ),
-                ]),
-                SizedBox(
-                  height: 20,
-                )
-              ],
-            )));
-      }
-
-      i++;
-    });
-
-    String title =
-        '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter},';
-
-    String rangeVerse = bibleService.startVerse == bibleService.endVerse ||
-            (bibleService.endVerse == -1)
-        ? '${bibleService.startVerse.toInt()}'
-        : '${bibleService.startVerse.toInt()}-${bibleService.endVerse.toInt()}';
-
-    title = '$title $rangeVerse';
-
     return Scaffold(
       appBar: CustomAppBar(
           // leading: goBackButton(context, book, isDarkMode),
-          title: title,
+          title: getTitle(bibleService),
           actions: actions,
           hasPopupMenu: true,
           popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
@@ -534,13 +491,15 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   child: Padding(
                       padding: getPadding(all: 0.0),
                       child: Column(
-                        children: [...versesList],
+                        children: [
+                          ..._buildVerseList(bibleService, isDarkMode)
+                        ],
                       )),
                 ),
               ),
               if (onAudioSound)
                 PopupAudioPlayer(
-                    bookTitle: title,
+                    bookTitle: getTitle(bibleService),
                     bookAuthor: '',
                     end: end,
                     max: _newVoiceText!.length,
@@ -549,7 +508,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                     pause: _pause)
             ],
           ),
-
           // Page view chapter's markers
           PageViewBookmarks(
             markerList: markerService.getMarkerList('', {}),
@@ -558,12 +516,79 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          bibleService.addNewPage();
+        },
+        child: Icon(Icons.plus_one),
+      ),
 
       // bottomNavigationBar: CustomBottomNavigationBar(
       //     currentIndex: bottomNavigationBarCurrentIndex,
       //     onChangeIndex: (index) {},
       //     bottomMenuList: bottomMenuList),
     );
+  }
+
+  List<Widget> _buildVerseList(BibleService bibleService, bool isDarkMode) {
+    currentIndex = bibleService.verseNumber;
+    Color borderColor =
+        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
+    List<Widget> versesList = [];
+    Map<String, dynamic> selectedVerses = bibleService.selectedVerses;
+    int i = bibleService.startVerse;
+
+    selectedVerses.forEach((key, value) {
+      versesList.add(Container(
+          width: double.infinity,
+          key: GlobalObjectKey(i),
+          padding: getPadding(left: 16, right: 16),
+          decoration: BoxDecoration(
+              border: Border(
+                  left: BorderSide(
+                      color: currentIndex == i
+                          ? borderColor
+                          : ColorConstant.transparent,
+                      width: currentIndex == i ? 6.0 : 0.0))),
+          child: Column(
+            children: [
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('$i ',
+                    style: isDarkMode
+                        ? AppStyle.txtNunitoSansRegular14WhiteA700
+                        : AppStyle.txtNunitoSansRegular14Black900),
+                Expanded(
+                  child: Text(
+                    '$value',
+                    style: TextStyle(
+                      color: textBook.color,
+                      fontSize: textBook.fontSize.value,
+                      height: textBook.lineHeight!.size,
+                      // fontSize: convertFontSizeToPx(textBook.fontSize),
+                    ),
+                    // style: isDarkMode
+                    //     ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
+                    //         backgroundColor: selectedVerse == key
+                    //             ? ColorConstant.yellow100
+                    //             : ColorConstant.transparent)
+                    //     : AppStyle.txtNunitoSansRegular18Black900.copyWith(
+                    //         // decoration: TextDecoration.underline,
+                    //         backgroundColor: selectedVerse == key
+                    //             ? ColorConstant.yellow100
+                    //             : ColorConstant.transparent),
+                  ),
+                ),
+              ]),
+              SizedBox(
+                height: 20,
+              )
+            ],
+          )));
+
+      i++;
+    });
+
+    return versesList;
   }
 
   CustomIconButton goBackButton(
@@ -600,95 +625,4 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       onTap: () => item.onTappedItem(context),
                     ))
               ]);
-}
-
-class TabBarViewChapters extends StatelessWidget {
-  final Function onChangeTab;
-  const TabBarViewChapters({
-    super.key,
-    required this.amountOfChapters,
-    required this.onChangeTab,
-  });
-
-  final int amountOfChapters;
-
-  @override
-  Widget build(BuildContext context) {
-    BibleService bibleService =
-        Provider.of<BibleService>(context, listen: true);
-
-    print(bibleService.selectedBook.name);
-    final boxShadow = [
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 12.0),
-        blurRadius: 32.0,
-        spreadRadius: -4.0,
-      ), //BoxSha
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 8.0),
-        blurRadius: 18.0,
-        spreadRadius: -6.0,
-      ), //BoxShadow
-    ];
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          child: GridView.count(
-            physics: ScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 5,
-            children: List.generate(bibleService.selectedBook.chapters.length,
-                (index) {
-              return Center(
-                child: GestureDetector(
-                  onTap: () {
-                    bibleService.selectedChapter =
-                        bibleService.selectedBook.chapters[index];
-                  },
-                  child: Container(
-                    padding: getPadding(all: 10.0),
-                    decoration: BoxDecoration(
-                      color: bibleService.selectedChapter.chapter ==
-                              (index + 1).toString()
-                          ? ColorConstant.yellow100.withOpacity(0.2)
-                          : null,
-                    ),
-                    child: Text(
-                      '${index + 1}',
-                      style: AppStyle.txtNunitoSansRegular18Gray900,
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 350,
-          left: 0,
-          right: 0,
-          child: GestureDetector(
-            onTap: () => onChangeTab(),
-            child: Container(
-              width: double.infinity,
-              height: getSize(48),
-              decoration: BoxDecoration(
-                  color: ColorConstant.yellow100,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: boxShadow),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Siguiente',
-                  style: AppStyle.txtNunitoSansSemiBold16,
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
 }

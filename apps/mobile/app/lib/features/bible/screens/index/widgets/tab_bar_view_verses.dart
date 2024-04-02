@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
@@ -6,23 +7,14 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../widgets/custom_button.dart';
 
-class TabBarViewVerses extends StatefulWidget {
+class TabBarViewVerses extends StatelessWidget {
   final Function onChangeTab;
+  final int amountOfVerses;
   const TabBarViewVerses({
     super.key,
-    required this.amountOfChapters,
+    required this.amountOfVerses,
     required this.onChangeTab,
   });
-
-  final int amountOfChapters;
-
-  @override
-  State<TabBarViewVerses> createState() => _TabBarViewVersesState();
-}
-
-class _TabBarViewVersesState extends State<TabBarViewVerses> {
-  int startVerse = -1;
-  int endVerse = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +37,37 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
     }
 
     void next() {
+      bibleService.getVersesByRange(
+          bibleService.startVerse, bibleService.endVerse);
       Navigator.of(context).pushNamed(BookViewerScreen.route,
           arguments: bibleService.selectedChapter.verses);
+    }
+
+    void handleTappedItem(int index) {
+      int startVerse = bibleService.startVerse;
+      int endVerse = bibleService.endVerse;
+
+      if (startVerse > 0 && endVerse > 0) {
+        startVerse = index + 1;
+        endVerse = -1;
+      } else {
+        if (startVerse > 0) {
+          endVerse = index + 1;
+
+          if (startVerse > endVerse) {
+            final max = startVerse;
+            startVerse = endVerse;
+            endVerse = max;
+          }
+        } else {
+          startVerse = index + 1;
+        }
+      }
+
+      bibleService.startVerse = startVerse;
+      bibleService.endVerse = endVerse;
+
+      bibleService.setLastPage();
     }
 
     return Stack(
@@ -56,35 +77,10 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 5,
-            children: List.generate(bibleService.selectedChapter.verses.length,
-                (index) {
+            children: List.generate(amountOfVerses, (index) {
               return Center(
                 child: GestureDetector(
-                  onTap: () {
-                    int startVerse = bibleService.startVerse;
-                    int endVerse = bibleService.endVerse;
-
-                    if (startVerse > 0 && endVerse > 0) {
-                      startVerse = index + 1;
-                      endVerse = -1;
-                    } else {
-                      if (startVerse > 0) {
-                        endVerse = index + 1;
-                        if (startVerse > endVerse) {
-                          final aux = startVerse;
-                          startVerse = endVerse;
-                          endVerse = aux;
-                        }
-                      } else {
-                        startVerse = index + 1;
-                      }
-                    }
-
-                    bibleService.startVerse = startVerse;
-                    bibleService.endVerse = endVerse;
-
-                    setState(() {});
-                  },
+                  onTap: () => handleTappedItem(index),
                   child: Container(
                     padding: getPadding(all: 10.0),
                     decoration: BoxDecoration(
@@ -109,7 +105,9 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
           child: CustomButton(
               height: getVerticalSize(48),
               text: 'Aceptar',
-              onTap: bibleService.startVerse > 0 ? next : null),
+              onTap: bibleService.startVerse > 0 && bibleService.endVerse > 0
+                  ? next
+                  : null),
         )
       ],
     );

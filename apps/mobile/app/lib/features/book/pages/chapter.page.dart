@@ -69,7 +69,7 @@ class _ChapterPageState extends State<ChapterPage> {
     'fontSize': 5.0,
     'margin': 1.0,
     'lineHeight': 1.0,
-    'circleButtonType': CircleButtonType.black
+    'color': Colors.black
   };
 
   bool isCurrentLanguageInstalled = false;

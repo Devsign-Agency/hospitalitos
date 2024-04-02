@@ -24,6 +24,7 @@ class PanelSettingTextBook extends StatefulWidget {
 
 class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
   CircleButtonType _selectedCircleButtonType = CircleButtonType.black;
+  Color selectedColor = Colors.black;
   Map<dynamic, dynamic> _setting = {};
   final Map<dynamic, FontSize> fontSizes = {
     '1.0': FontSize.xSmall,
@@ -58,12 +59,14 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
     super.initState();
     print(widget.initialValues);
     _setting = {
+      'color': widget.initialValues['color'],
       'fontSize': fontSizes[widget.initialValues['fontSize'].toString()],
       'margin': marginValues[widget.initialValues['margin'].toString()],
       'lineHeight':
           lineHeightValues[widget.initialValues['lineHeight'].toString()],
     };
     _selectedCircleButtonType = CircleButtonType.black;
+    selectedColor = widget.initialValues['color'];
   }
 
   // setColor(CircleButtonModel newCircleButton) {
@@ -77,7 +80,8 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
     setState(() {
       _setting['color'] = newCircleButton.color;
       widget.onChange(_setting);
-      _selectedCircleButtonType = newCircleButton.name;
+      // _selectedCircleButtonType = newCircleButton.name;
+      selectedColor = newCircleButton.color;
       // selectedCircleButton =
       //     CircleButtonModel(newCircleButton.name, newCircleButton.color);
     });
@@ -156,7 +160,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
               children: [
                 ...circleButtonList.map((circleButton) => _CircleButton(
                     item: circleButton,
-                    selected: circleButton.name == _selectedCircleButtonType,
+                    selected: circleButton.color == selectedColor,
                     onTapped: setColor))
               ],
             ),

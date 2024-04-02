@@ -125,6 +125,7 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
             message:
                 'Recuerda que puedes guardar tu contenido favorito para tenerlo siempre a la mano.',
             label: 'Explorar contenido',
+            onTapped: () {},
           );
   }
 }

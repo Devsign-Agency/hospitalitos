@@ -98,7 +98,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-        // SizedBox(width: 10),
+        if (!hasPopupMenu) SizedBox(width: 10),
         if (hasPopupMenu) popupMenuButton!
       ],
     );

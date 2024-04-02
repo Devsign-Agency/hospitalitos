@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/index/widgets/widgets.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -21,22 +22,23 @@ class _IndexScreenState extends State<IndexScreen>
   @override
   void initState() {
     super.initState();
-    tabController =
-        TabController(length: BibleService.tabBarItems.length, vsync: this);
+    tabController = TabController(
+      length: BibleService.tabBarItems.length,
+      vsync: this,
+    );
   }
 
   handleChangeTab() {
-    print(tabController.index);
     if (tabController.index < 2) {
       tabController.index++;
-      // tabController.animateTo(tabController.index++);
     }
-    // setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: true);
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
       BottomNavigationMenu(
@@ -50,6 +52,7 @@ class _IndexScreenState extends State<IndexScreen>
         'action': () => {print('Search...')}
       },
     ];
+
     return Scaffold(
       appBar: CustomAppBar(
         leading: CustomIconButton(
@@ -88,17 +91,19 @@ class _IndexScreenState extends State<IndexScreen>
                     children: [
                       // Books Tab
                       TabBarViewBooks(
-                          bookNames: BibleService.bookNames,
+                          future: bibleService.getBooks(),
                           onChangeTab: handleChangeTab),
 
                       // Chapters Tab
                       TabBarViewChapters(
-                          amountOfChapters: BibleService.amountOfChapters,
+                          amountOfChapters:
+                              bibleService.selectedBook.chapters.length,
                           onChangeTab: handleChangeTab),
 
                       // Verses Tab
                       TabBarViewVerses(
-                          amountOfChapters: BibleService.amountOfVerses,
+                          amountOfVerses:
+                              bibleService.selectedChapter.verses.length,
                           onChangeTab: handleChangeTab),
                     ],
                   ),

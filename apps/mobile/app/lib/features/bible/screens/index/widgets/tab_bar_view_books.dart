@@ -4,17 +4,15 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../core/models/BookBible.dart';
 import '../../../../../shared/shared.dart';
-import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewBooks extends StatelessWidget {
   final VoidCallback onChangeTab;
+  final Future<List<BookBible>>? future;
   const TabBarViewBooks({
     super.key,
-    required this.bookNames,
     required this.onChangeTab,
+    required this.future,
   });
-
-  final List<String> bookNames;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +21,8 @@ class TabBarViewBooks extends StatelessWidget {
 
     return Stack(
       children: [
-        FutureBuilder(
-          future: bibleService.getBooks(),
+        FutureBuilder<List<BookBible>>(
+          future: future,
           builder:
               (BuildContext context, AsyncSnapshot<List<BookBible>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,6 +41,7 @@ class TabBarViewBooks extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       bibleService.selectedBook = snapshot.data![index];
+                      onChangeTab();
                     },
                     child: Container(
                       padding: getPadding(all: 10.0),
@@ -68,15 +67,6 @@ class TabBarViewBooks extends StatelessWidget {
               );
             }
           },
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 350,
-          left: 0,
-          right: 0,
-          child: CustomButton(
-              height: getVerticalSize(48),
-              text: 'Siguiente',
-              onTap: bibleService.selectedBook.name != '' ? onChangeTab : null),
         ),
       ],
     );
