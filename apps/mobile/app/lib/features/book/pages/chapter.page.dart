@@ -429,33 +429,9 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) {
-              print('hey ${book.Chapters![index].SubChapters}');
-              var title = changeTitle(book.Chapters![index], index);
-              var title2 = 'Inicio : ${book.Chapters![index].Title}';
-
-              if (title != '' && index > 0) {
-                count++;
-              }
-              return title 
-                  ? ExpansionTile(
-                      title: Text(book.Chapters![index].Title!),
-                      children: [
-                        ListTile(
-                            title: Text(book.Chapters![index].Title!),
-                            onTap: () {
-                              // Navigator.pop(context);
-                              Navigator.pushNamed(context, ChapterPage.route,
-                                  arguments: EpubArguments(
-                                      book: book,
-                                      chapter: book.Chapters![index]));
-                            })
-                        //subChaptersMenu(book.Chapters![index].SubChapters, book)
-                      ],
-                    )
-                  : Container();
-
-              /* return title != ''? ListTile(
-                title: Text(title,
+          
+              return ListTile(
+                title: Text(book.Chapters![index].Title!,
                   style: AppStyle.txtNunitoSansRegular16,
                 ),
 
@@ -465,7 +441,7 @@ class IndexPage extends StatelessWidget {
                   Navigator.pushNamed(context, ChapterPage.route,
                       arguments: EpubArguments(
                           book: book, chapter: book.Chapters![index]));
-                },*/
+                });
             }),
       ),
     );
@@ -581,3 +557,4 @@ class IndexPage extends StatelessWidget {
         itemCount: data.length);
   }
 }
+                                        
