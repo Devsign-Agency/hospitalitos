@@ -7,7 +7,7 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 
 class IndexScreen extends StatefulWidget {
-  static const String route = 'index-route';
+  static const String route = 'bible/index';
 
   const IndexScreen({Key? key}) : super(key: key);
 
@@ -22,73 +22,101 @@ class _IndexScreenState extends State<IndexScreen>
   @override
   void initState() {
     super.initState();
-    tabController =
-        TabController(length: BibleService.tabBarItems.length, vsync: this);
+    tabController = TabController(
+      length: BibleService.tabBarItems.length,
+      vsync: this,
+    );
+  }
+
+  handleChangeTab() {
+    if (tabController.index < 2) {
+      tabController.index++;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: true);
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+    ];
     final List<Map<String, dynamic>> actions = [
       {
         'icon': ImageConstant.imgSearch,
         'action': () => {print('Search...')}
       },
     ];
+
     return Scaffold(
-        appBar: CustomAppBar(
-          leading: CustomIconButton(
-            margin: getMargin(left: 8),
-            height: getSize(48),
-            width: getSize(48),
-            variant: IconButtonVariant.NoFill,
-            onTap: () => Navigator.of(context).pushReplacementNamed('/bible'),
-            child: CustomImageView(
-              svgPath: ImageConstant.imgArrowleftGray900,
-              color: ColorConstant.gray800,
-            ),
+      appBar: CustomAppBar(
+        leading: CustomIconButton(
+          margin: getMargin(left: 8),
+          height: getSize(48),
+          width: getSize(48),
+          variant: IconButtonVariant.NoFill,
+          onTap: () => Navigator.of(context).pop(),
+          child: CustomImageView(
+            svgPath: ImageConstant.imgArrowleftGray900,
+            color: ColorConstant.gray800,
           ),
-          title: 'Índice',
-          backgroundColor: ColorConstant.gray50,
-          actions: [...actions],
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  // Tab items
-                  CustomTabBar(
-                      tabController: tabController,
-                      items: BibleService.tabBarItems),
+        title: 'Índice',
+        backgroundColor: ColorConstant.gray50,
+        actions: [...actions],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                // Tab items
+                CustomTabBar(
+                    tabController: tabController,
+                    items: BibleService.tabBarItems),
 
-                  // TabBarView
-                  SizedBox(
-                    height: height * 0.8,
-                    width: double.infinity,
-                    child: TabBarView(
-                      controller: tabController,
-                      children: [
-                        // Books Tab
-                        TabBarViewBooks(bookNames: BibleService.bookNames),
+                // TabBarView
+                SizedBox(
+                  height: height * 0.8,
+                  width: double.infinity,
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: tabController,
+                    children: [
+                      // Books Tab
+                      TabBarViewBooks(
+                          future: bibleService.getBooks(),
+                          onChangeTab: handleChangeTab),
 
-                        // Chapters Tab
-                        TabBarViewChapters(
-                            amountOfChapters: BibleService.amountOfChapters),
+                      // Chapters Tab
+                      TabBarViewChapters(
+                          amountOfChapters:
+                              bibleService.selectedBook.chapters.length,
+                          onChangeTab: handleChangeTab),
 
-                        // Verses Tab
-                        TabBarViewVerses(
-                            amountOfChapters: BibleService.amountOfVerses),
-
-                        Text('Text 4'),
-                      ],
-                    ),
+                      // Verses Tab
+                      TabBarViewVerses(
+                          amountOfVerses:
+                              bibleService.selectedChapter.verses.length,
+                          onChangeTab: handleChangeTab),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 3,
+          onChangeIndex: (index) {},
+          bottomMenuList: bottomMenuList),
+    );
   }
 }

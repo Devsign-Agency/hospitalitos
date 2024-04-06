@@ -38,7 +38,7 @@ class _MainScreenState extends State<BookScreen> {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Scaffold(
-        body: ReadToolsPage(),
+        body: Text('Ebook'),
       ),
       //   child: EpubReader()
     );

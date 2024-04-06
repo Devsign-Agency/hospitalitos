@@ -55,19 +55,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     ThemeData currentTheme = themeProvider.currentTheme;
     bool isDarkTheme = currentTheme == DarkTheme.theme;
-
-    print('hasLeading $hasLeading');
     return AppBar(
-      // automaticallyImplyLeading: true,
+      automaticallyImplyLeading: true,
       leading: leading ??
           (hasLeading != null && hasLeading!
               ? CustomIconButton(
-                  margin: getMargin(left: 8),
                   height: getSize(48),
                   width: getSize(48),
                   variant: IconButtonVariant.NoFill,
                   onTap: () {
-                    print('onTapped leading');
                     Navigator.of(context).pop();
                   },
                   child: CustomImageView(
@@ -102,7 +98,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-        SizedBox(width: 16),
+        if (!hasPopupMenu) SizedBox(width: 10),
         if (hasPopupMenu) popupMenuButton!
       ],
     );

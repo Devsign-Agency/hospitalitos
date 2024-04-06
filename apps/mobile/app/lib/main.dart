@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TextToSpeech()),
         ChangeNotifierProvider(create: (_) => BookService()),
         ChangeNotifierProvider(create: (_) => BottomNavigationMainProvider()),
+        ChangeNotifierProvider(create: (_) => MarkerService()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -7,20 +7,17 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
-import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
-import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
-import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
@@ -165,7 +162,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onChangeTab(int index) {
-    bottomNavigationMain!.setSelectedItem(index);
+    bottomNavigationMain.setSelectedItem(index);
 
     switch (index) {
       case 0:
@@ -180,14 +177,9 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
         break;
       case 3:
-        Navigator.of(context).pushNamed(BibleScreen.route);
+        Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
-  }
-
-  void _onTap(Book book) {
-    Navigator.pushNamed(context, ReadToolsPage.route, arguments: book);
-    // Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
@@ -265,14 +257,19 @@ class _HomePageState extends State<HomePage> {
                       width: getSize(24),
                       margin: getMargin(top: 4, bottom: 4)),
                   SizedBox(width: 10),
-                  Text(
-                    'Mis Favoritos',
-                    style: AppStyle.txtNunitoSansSemiBold23,
+                  Tooltip(
+                    message: 'En Desarrollo',
+                    triggerMode: TooltipTriggerMode.tap,
+                    child: Text(
+                      'Mis Favoritos',
+                      style: AppStyle.txtNunitoSansSemiBold23,
+                    ),
                   )
                 ],
               ),
-              onTapped: () =>
-                  Navigator.of(context).pushNamed(FavoriteListScreen.route),
+              onTapped: () {
+                //Navigator.of(context).pushNamed(FavoriteListScreen.route);
+              },
             ),
 
             // Recently viewed
@@ -344,11 +341,15 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ExpandedButton(
+                          message: 'En Desarrollo',
                           icon: ImageConstant.imgButtonalerts,
                           label: 'Lecturas'),
                       SizedBox(width: 14.0),
                       ExpandedButton(
-                          icon: ImageConstant.imgVolume, label: 'Oraciones'),
+                        icon: ImageConstant.imgVolume,
+                        label: 'Oraciones',
+                        message: 'En Desarrollo',
+                      ),
                       SizedBox(width: 14.0),
                       ExpandedButton(
                         icon: ImageConstant.imgVolumeIndigo900,
@@ -368,21 +369,5 @@ class _HomePageState extends State<HomePage> {
         onChangeIndex: _onChangeTab,
       ),
     );
-  }
-
-  _logout() async {
-    AuthService auth = Provider.of<AuthService>(context, listen: false);
-    await auth.googleSignOut();
-    if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
-          ModalRoute.withName(RouterMain.initialRoute));
-    }
-  }
-
-  _playText() async {
-    print('playText');
-    TextToSpeech tts = TextToSpeech();
-
-    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

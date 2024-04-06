@@ -69,7 +69,15 @@ dependencies:
   file_saver: ^0.2.6
   permission_handler: ^11.0.1
   catholic_liturgy: ^0.0.16
+<<<<<<< HEAD
   modal_bottom_sheet: 3.0.0-pre
+=======
+  highlight_text: ^1.7.0
+  simple_html_css: ^4.0.0
+  flutter_xlider: ^3.5.0
+  css_text: ^3.0.0
+
+>>>>>>> 023372fda5b2de7166b149b82b8eb5bd9ab074ad
   
   
 dependency_overrides:

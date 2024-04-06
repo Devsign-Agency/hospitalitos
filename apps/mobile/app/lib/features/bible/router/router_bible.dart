@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
+import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:mobile_app/features/bible/screens/screens.dart';
 import 'package:mobile_app/router/menu_option.dart';
 
@@ -14,6 +15,8 @@ class RouterBible {
         {ChaptersScreen.route: (BuildContext context) => ChaptersScreen()});
     routes.addAll({IndexScreen.route: (BuildContext context) => IndexScreen()});
     routes.addAll({BibleScreen.route: (BuildContext context) => BibleScreen()});
+    routes.addAll(
+        {BookViewerScreen.route: (BuildContext context) => BookViewerScreen()});
 
     return routes;
   }

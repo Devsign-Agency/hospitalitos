@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  css_text:
+    dependency: "direct main"
+    description:
+      name: css_text
+      sha256: e893e1cc2ba4f9ef2422b30800eeb48cc5a681e8933edc5b7f9520ead3c5b333
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   csslib:
     dependency: "direct main"
     description:
@@ -395,6 +403,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_xlider:
+    dependency: "direct main"
+    description:
+      name: flutter_xlider
+      sha256: b83da229b8a2153adeefc5d9e08e0060689c8dc2187b30e3502cf67c1a6495be
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.5.0"
   fluttertoast:
     dependency: "direct main"
     description:
@@ -458,7 +474,19 @@ packages:
       sha256: "794f5494a945d6dd2654c52f979594ecd2558e5c82ce8272295ba371c93015e6"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "0.12.2+1"
+=======
+    version: "0.12.3+2"
+  highlight_text:
+    dependency: "direct main"
+    description:
+      name: highlight_text
+      sha256: "74806039a02e65e5aef9bb27c2df42b8694700c389ec75b733eb2ac53a84c606"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.7.0"
+>>>>>>> 023372fda5b2de7166b149b82b8eb5bd9ab074ad
   html:
     dependency: "direct main"
     description:
@@ -467,6 +495,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.2"
+  html_unescape:
+    dependency: transitive
+    description:
+      name: html_unescape
+      sha256: "15362d7a18f19d7b742ef8dcb811f5fd2a2df98db9f80ea393c075189e0b61e3"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   http:
     dependency: "direct main"
     description:
@@ -891,6 +927,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  simple_html_css:
+    dependency: "direct main"
+    description:
+      name: simple_html_css
+      sha256: af730b15c0b37c97a14b6aeceabe68128855c4630dc500030f3c3e176e8fc57f
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -18,6 +18,7 @@ import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../widgets/widgets.dart';
 
+
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
 
@@ -199,30 +200,31 @@ class _ChapterPageState extends State<ChapterPage> {
     print('Handle change bottom navigation bar $index');
 
     showMaterialModalBottomSheet(
-  context: context,
- builder: (BuildContext context) {
-  print('epale----- $context');
-                  return Container(
-                    height: 200,
-                    color: Colors.white,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'This is a BottomSheet',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();                   },
-                            child: Text('Close BottomSheet'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
- });
+        context: context,
+        builder: (BuildContext context) {
+          print('epale----- $context');
+          return Container(
+            height: 200,
+            color: Colors.white,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'This is a BottomSheet',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Close BottomSheet'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   setVolumen(double newFontSize) async {
@@ -488,7 +490,6 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                         Text('Autor: ${book.Author}')
                       ]),
                     )
-                
                   ],
                 ),
               ),
@@ -626,16 +627,14 @@ class ListChaptersOfBook extends StatelessWidget {
             return title != ''
                 ? ListTile(
                     title: Text(
-                    title,
+                      title,
                       style: AppStyle.txtNunitoSansRegular16,
                     ),
                     onTap: () {
                       // Navigator.pop(context);
-                      Navigator.pushNamed(
-                          context, ChapterPage.route,
+                      Navigator.pushNamed(context, ChapterPage.route,
                           arguments: EpubArguments(
-                              book: book,
-                              chapter: book?.Chapters![index]));
+                              book: book, chapter: book?.Chapters![index]));
                     })
                 : Container();
           }),

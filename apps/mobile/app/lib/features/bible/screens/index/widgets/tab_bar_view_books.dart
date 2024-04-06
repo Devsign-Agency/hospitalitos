@@ -1,66 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../core/models/BookBible.dart';
+import '../../../../../shared/shared.dart';
 
 class TabBarViewBooks extends StatelessWidget {
+  final VoidCallback onChangeTab;
+  final Future<List<BookBible>>? future;
   const TabBarViewBooks({
     super.key,
-    required this.bookNames,
+    required this.onChangeTab,
+    required this.future,
   });
-
-  final List<String> bookNames;
 
   @override
   Widget build(BuildContext context) {
-    final boxShadow = [
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 12.0),
-        blurRadius: 32.0,
-        spreadRadius: -4.0,
-      ), //BoxSha
-      BoxShadow(
-        color: Color.fromRGBO(24, 39, 75, 0.08),
-        offset: const Offset(0.0, 8.0),
-        blurRadius: 18.0,
-        spreadRadius: -6.0,
-      ), //BoxShadow
-    ];
+    BibleService bibleService =
+        Provider.of<BibleService>(context, listen: true);
 
     return Stack(
       children: [
-        ListView(
-          shrinkWrap: true,
-          children: [
-            SizedBox(height: 19),
-            ...bookNames.map((e) => Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    e,
-                    style: AppStyle.txtNunitoSansRegular18Gray900,
+        FutureBuilder<List<BookBible>>(
+          future: future,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<BookBible>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Si estamos cargando los datos, mostramos un indicador de carga
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              // Si hubo un error al cargar los datos, mostramos un mensaje de error
+              return Center(child: Text('Error al cargar los datos'));
+            } else {
+              // Si los datos se cargaron correctamente, los mostramos en un ListView
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (_, index) => Padding(
+                  padding: getPadding(left: 16, top: 16, right: 16, bottom: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      bibleService.selectedBook = snapshot.data![index];
+                      onChangeTab();
+                    },
+                    child: Container(
+                      padding: getPadding(all: 10.0),
+                      decoration: BoxDecoration(
+                          color: snapshot.data![index].name ==
+                                  bibleService.selectedBook.name
+                              ? ColorConstant.yellow100.withOpacity(0.2)
+                              : null,
+                          border: snapshot.data![index].name ==
+                                  bibleService.selectedBook.name
+                              ? Border(
+                                  left: BorderSide(
+                                      width: 4.0,
+                                      color: ColorConstant.yellow100))
+                              : null),
+                      child: Text(
+                        snapshot.data![index].name,
+                        style: AppStyle.txtNunitoSansRegular18Gray900,
+                      ),
+                    ),
                   ),
-                ))
-          ],
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 250,
-          left: 0,
-          right: 0,
-          child: Container(
-            width: double.infinity,
-            height: getSize(48),
-            decoration: BoxDecoration(
-                color: ColorConstant.yellow100,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: boxShadow),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Siguiente',
-                style: AppStyle.txtNunitoSansSemiBold16,
-              ),
-            ),
-          ),
+                ),
+              );
+            }
+          },
         ),
       ],
     );

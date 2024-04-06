@@ -29,7 +29,7 @@ class DarkTheme {
           backgroundColor: dark,
         ),
         sliderTheme: SliderThemeData(
-          activeTrackColor: colors.onPrimary,
+          activeTrackColor: colors.secondary,
           valueIndicatorColor: colors.onPrimary,
           valueIndicatorTextStyle: AppStyle.txtNunitoSansRegular14Black900,
           thumbColor: colors.onPrimary,

@@ -12,6 +12,7 @@ class CustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
+      isScrollable: false,
       labelPadding: EdgeInsets.all(0),
       labelColor: Colors.black12,
       controller: tabController,
