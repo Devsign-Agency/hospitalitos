@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/app_export.dart';
@@ -195,7 +196,33 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _handleChangeBottomNavigationBar(int index) {
-    print('Handle change bottom navigation bar');
+    print('Handle change bottom navigation bar $index');
+
+    showMaterialModalBottomSheet(
+  context: context,
+ builder: (BuildContext context) {
+  print('epale----- $context');
+                  return Container(
+                    height: 200,
+                    color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'This is a BottomSheet',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();                   },
+                            child: Text('Close BottomSheet'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+ });
   }
 
   setVolumen(double newFontSize) async {
@@ -412,8 +439,19 @@ class _ChapterPageState extends State<ChapterPage> {
       );
 }
 
-class IndexPage extends StatelessWidget {
+class IndexPage extends StatefulWidget {
   static const String route = 'book/index';
+  @override
+  State<IndexPage> createState() => _IndexPageState();
+}
+
+class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -423,26 +461,40 @@ class IndexPage extends StatelessWidget {
     var count = 0;
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Indice',
+        title: book?.Title!,
       ),
-      body: Center(
-        child: ListView.builder(
-            itemCount: book!.Chapters!.length,
-            itemBuilder: (context, index) {
-          
-              return ListTile(
-                title: Text(book.Chapters![index].Title!,
-                  style: AppStyle.txtNunitoSansRegular16,
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              // Tab items
+              CustomTabBar(
+                  tabController: tabController,
+                  items: IndexService.tabBarItems),
 
-                onTap: () {
-                  print(book);
-                  // Navigator.pop(context);
-                  Navigator.pushNamed(context, ChapterPage.route,
-                      arguments: EpubArguments(
-                          book: book, chapter: book.Chapters![index]));
-                });
-            }),
+              // TabBarView
+              SizedBox(
+                height: height * 0.8,
+                width: double.infinity,
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    // Books Tab
+                    ListChaptersOfBook(book: book),
+                    Center(
+                      child: Column(children: [
+                        Text('Titulo: ${book!.Title!}'),
+                        Text('Autor: ${book.Author}')
+                      ]),
+                    )
+                
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -496,8 +548,6 @@ class IndexPage extends StatelessWidget {
       title = '';
       band = false;
     }
-
-
 
     print('title $title');
 
@@ -557,4 +607,38 @@ class IndexPage extends StatelessWidget {
         itemCount: data.length);
   }
 }
-                                        
+
+class ListChaptersOfBook extends StatelessWidget {
+  const ListChaptersOfBook({
+    super.key,
+    required this.book,
+  });
+
+  final EpubBook? book;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ListView.builder(
+          itemCount: book!.Chapters!.length,
+          itemBuilder: (context, index) {
+            var title = (book?.Chapters![index].Title!).toString();
+            return title != ''
+                ? ListTile(
+                    title: Text(
+                    title,
+                      style: AppStyle.txtNunitoSansRegular16,
+                    ),
+                    onTap: () {
+                      // Navigator.pop(context);
+                      Navigator.pushNamed(
+                          context, ChapterPage.route,
+                          arguments: EpubArguments(
+                              book: book,
+                              chapter: book?.Chapters![index]));
+                    })
+                : Container();
+          }),
+    );
+  }
+}

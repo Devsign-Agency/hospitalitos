@@ -7,6 +7,8 @@ class BibleService extends ChangeNotifier {
     'Versículos',
     'Tab'
   ];
+
+  
   static const List<String> bookNames = [
     'Génesis',
     'Éxodo',

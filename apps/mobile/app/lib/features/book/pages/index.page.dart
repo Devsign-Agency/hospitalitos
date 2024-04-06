@@ -24,17 +24,15 @@ class IndexPage extends StatelessWidget {
         child: ListView.builder(
             itemCount: book!.Chapters!.length,
             itemBuilder: (context, index) {
-                // Enumerating chapters
-book.Chapters?.forEach(( chapter) {
-          
-  // HTML content of current chapter
-  String? chapterHtmlContent = chapter.HtmlContent;
-
-});
+              // Enumerating chapters
+              book.Chapters?.forEach((chapter) {
+                // HTML content of current chapter
+                String? chapterHtmlContent = chapter.HtmlContent;
+              });
               print('hey ${book.Chapters![index]}');
               return findOcurrenceChapterArr(book, index)
                   ? ListTile(
-                     trailing: Icon(Icons.more_vert),
+                      trailing: Icon(Icons.more_vert),
                       title: Text(
                         book.Chapters![index].Title!,
                         style: AppStyle.txtNunitoSansRegular16,
@@ -64,22 +62,21 @@ book.Chapters?.forEach(( chapter) {
   findOcurrenceChapterArr(book, index) {
     var band = false;
     var pos = [];
-    
+
     String mainString = book.Chapters[index].Title.toLowerCase();
     String substring = "capítulo";
 
     if (!mainString.contains(substring)) {
       band = true;
     }
-    if(index > 0){
-      var word = book.Chapters[index - 1].Title.toLowerCase().split(' ')[0] ;
+    if (index > 0) {
+      var word = book.Chapters[index - 1].Title.toLowerCase().split(' ')[0];
       print('epaleee $word');
-       if (word == 'capítulo') {
-      book.Title = 'Capítulo: ' + book.Title;
+      if (word == 'capítulo') {
+        book.Title = 'Capítulo: ' + book.Title;
+      }
     }
 
-    }
-   
     return band;
   }
 
