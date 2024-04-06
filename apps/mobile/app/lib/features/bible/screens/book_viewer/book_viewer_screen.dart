@@ -1,14 +1,9 @@
-import 'dart:io';
-
 import 'package:epub_view/epub_view.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -46,27 +41,13 @@ class BookViewerScreen extends StatefulWidget {
 
 class _BookViewerScreenState extends State<BookViewerScreen> {
   bool onAudioSound = false;
-  late FlutterTts flutterTts;
-  dynamic languages;
-  String? language;
-  double volume = 0.5;
-  double pitch = 1;
-  double rate = 0.5;
-  double fontSize = 5.0;
-  double margin = 1.0;
-
   Map<String, dynamic> settingTextInitialValues = {
     'fontSize': 5.0,
     'margin': 1.0,
     'lineHeight': 1.0,
     'color': Colors.black
   };
-
-  bool isCurrentLanguageInstalled = false;
-  int end = 0;
-  int positionLastWord = 0;
   String selectedVerse = '';
-
   TextBook textBook = TextBook(
       fontFamily: 'fontFamily',
       color: Colors.black,
@@ -79,225 +60,86 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
-  List<Map<dynamic, dynamic>> markerList = [];
-  List<Map<dynamic, dynamic>> markerListBook = [];
-  Map<dynamic, dynamic> marker = {};
-  double offsetScroll = 0;
   ScrollController scrollController =
       ScrollController(initialScrollOffset: 0.0);
-
-  int bottomNavigationBarCurrentIndex = 0;
 
   PageController pageController = PageController();
   FToast? fToast;
 
-  TtsState ttsState = TtsState.stopped;
+  int secuenceVerseIndex = 1;
+  Map<String, dynamic> verses = {};
+  bool playingVerses = false;
+  GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
 
-  get isPlaying => ttsState == TtsState.playing;
-  get isStopped => ttsState == TtsState.stopped;
-  get isPaused => ttsState == TtsState.paused;
-  get isContinued => ttsState == TtsState.continued;
-
-  bool get isIOS => !kIsWeb && Platform.isIOS;
-  bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  bool get isWeb => kIsWeb;
-  int i = 0;
-  int currentIndex = 0;
+  late void Function() myMethod = () {};
 
   @override
   void initState() {
     super.initState();
-    initTts();
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Scrollable.ensureVisible(GlobalObjectKey(currentIndex).currentContext!);
-    // });
     fToast = FToast();
     fToast?.init(context);
-  }
-
-  initTts() {
-    flutterTts = FlutterTts();
-
-    scrollController.addListener(() {
-      offsetScroll = scrollController.position.pixels;
-    });
-
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print('Playing');
-        ttsState = TtsState.playing;
-      });
-    });
-
-    flutterTts.setCompletionHandler(() {
-      setState(() {
-        print('Complete');
-        ttsState = TtsState.stopped;
-        positionLastWord = 0;
-        end = 0;
-        closePlayText();
-      });
-    });
-
-    flutterTts.setCancelHandler(() {
-      setState(() {
-        print('Cancel');
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    if (isWeb || isIOS) {
-      flutterTts.setPauseHandler(() {
-        setState(() {
-          print('Paused');
-          ttsState = TtsState.paused;
-        });
-      });
-
-      flutterTts.setContinueHandler(() {
-        setState(() {
-          print('Continued');
-          ttsState = TtsState.continued;
-        });
-      });
-    }
-
-    flutterTts.setErrorHandler((msg) {
-      setState(() {
-        print('error: $msg');
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    flutterTts.setProgressHandler(
-        (String text, int startOffset, int endOffset, String word) {
-      print('text: $text');
-      print('startOffset: $startOffset');
-      print('endOffset: $endOffset');
-      print('word: $word');
-      setState(() {
-        // int index = _newVoiceText!.indexOf(word);
-
-        // end = index + word.length;
-
-        end = endOffset + positionLastWord;
-      });
-    });
-  }
-
-  Future _speak() async {
-    await flutterTts.setVolume(volume);
-    await flutterTts.setSpeechRate(rate);
-    await flutterTts.setPitch(pitch);
-    ttsState = TtsState.playing;
-    if (_newVoiceText != null) {
-      await flutterTts.awaitSpeakCompletion(true);
-      var result = await flutterTts.speak(_newVoiceText!);
-      print('RESULT $result');
-      if (result == 1) setState(() => ttsState = TtsState.playing);
-    }
-  }
-
-  Future _pause() async {
-    positionLastWord = end;
-
-    var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
   }
 
   @override
   void dispose() {
     super.dispose();
-    flutterTts.stop();
+    // flutterTts.stop();
     Clipboard.setData(ClipboardData(text: ''));
   }
 
-  void closePlayText() {
-    onAudioSound = false;
-
-    setState(() {});
-  }
-
   void openPlayText() async {
-    onAudioSound = true;
-    ClipboardData? data;
-    data = await Clipboard.getData(Clipboard.kTextPlain);
+    ClipboardData? kTextPlain;
+    kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+    print('kTextPlain: ${kTextPlain?.text}');
+    setVoiceText(kTextPlain?.text ?? '');
+    setOnAudioSound(true);
 
-    data != null ? _onChange(data.text!) : _onChange('');
+    // data != null ? setVoiceText(data.text!) : setVoiceText('');
 
-    _speak();
+    // _speak();
   }
 
-  void _onChange(String text) {
+  void setVoiceText(String text) {
     setState(() {
       _newVoiceText = text;
     });
   }
 
-  void setScrollController(double offset) async {
-    scrollController.removeListener(() {});
-    scrollController = ScrollController(initialScrollOffset: offset);
-    if (scrollController.hasClients) {
-      await scrollController.animateTo(offset,
-          duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
-    }
-
-    scrollController.addListener(() {
-      offsetScroll = scrollController.position.pixels;
-    });
-    setState(() {});
-  }
-
-  void _handleTapPageViewMarkerList(double offset) {
-    bottomNavigationBarCurrentIndex = 0;
-
-    pageController.animateToPage(0,
-        duration: Duration(milliseconds: 500), curve: Curves.linear);
-
-    // scrollController.removeListener(() {});
-    setScrollController(offset);
-    setState(() {});
-  }
-
-  void _handleChangeBottomNavigationBar(int index, MarkerService markerService,
-      String bookTitle, dynamic chapter) async {
-    bottomNavigationBarCurrentIndex = index;
-    // List<Map<dynamic, dynamic>> jsonDecode =
-    //     json.decode(Preferences.markerList);
-
-    // int i = jsonDecode.firstWhere((element) => element['title'] == bookTitle);
-    if (index == 1) {
-      markerService.getMarkerList(bookTitle, chapter);
-    }
-
-    if (index == 3) {
-      List<dynamic> htmlList = [];
-
-      String htmlContent = chapter!.HtmlContent!;
-      htmlList.add(htmlContent);
-      var doc3 = parse(htmlList.join());
-      share(parse(doc3.body!.text).documentElement!.text);
-    }
-
-    if (index != 3) {
-      pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.linear);
-    }
-
-    setState(() {});
-  }
-
-  setPitch(double newPitch) {
+  void setOnAudioSound(bool value) {
     setState(() {
-      pitch = newPitch;
+      onAudioSound = value;
     });
   }
 
-  setRate(double newRate) async {
-    setState(() {
-      rate = newRate;
-    });
+  void playVerses(int start, int end) {
+    print('start: $start');
+    print('end: $end');
+
+    if (start <= end) {
+      // setOnAudioSound(true);
+      print('Secuencia $start');
+      Scrollable.ensureVisible(GlobalObjectKey(start).currentContext!);
+      setVoiceText(verses[start.toString()]);
+      // onAudioSound = true;
+      // myMethod.call();
+    } else {
+      playingVerses = false;
+      setVoiceText('');
+      setOnAudioSound(false);
+    }
+    secuenceVerseIndex = start + 1;
+  }
+
+  void handleButtonPlay(BibleService bibleService) {
+    setOnAudioSound(!onAudioSound);
+    playingVerses = !playingVerses;
+    onAudioSound
+        ? playVerses(int.parse(bibleService.selectedVerses.keys.first),
+            int.parse(verses.keys.last))
+        : setOnAudioSound(false);
+
+    setState(() {});
   }
 
   void handleSelectedContent(SelectedContent? selectedContent) {
@@ -307,11 +149,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     }
   }
 
-  Future<void> share(String value) async {
-    await Share.share(value);
-  }
-
-  showCustomToast(String message) {
+  void showCustomToast(String message) {
     Widget toast = Container(
       width: double.infinity,
       height: 48,
@@ -332,7 +170,9 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     );
   }
 
-  convertFontSizeToPx(FontSize fontSize) {}
+  Future<void> share(String value) async {
+    await Share.share(value);
+  }
 
   String getTitle(BibleService bibleService) {
     String title =
@@ -350,25 +190,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final verses =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
-    MarkerService markerService =
-        Provider.of<MarkerService>(context, listen: true);
-
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
 
-    final List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(icon: ImageConstant.imgEditGray800),
-      BottomNavigationMenu(icon: ImageConstant.imgBookmarkGray800),
-      BottomNavigationMenu(icon: ImageConstant.imgBookmark),
-      BottomNavigationMenu(icon: ImageConstant.imgShareGray50),
-    ];
+    verses = bibleService.selectedVerses;
 
     final List<PopupMenuItemModel> menuOptions = [
       PopupMenuItemModel(
@@ -415,7 +244,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           })
     ];
 
-    final actions = [
+    final appBarActions = [
       {
         'icon': ImageConstant.imgMusicIndigo900,
         'color': isDarkMode
@@ -424,7 +253,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () {}
+        'action': () => handleButtonPlay(bibleService),
       },
     ];
 
@@ -443,37 +272,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
             if (selectedContent != null) share(selectedContent.text!);
           }),
-      ContextMenuButtonItem(
-          label: 'Añadir a marcador',
-          onPressed: () async {
-            ClipboardData? selectedContent =
-                await Clipboard.getData(Clipboard.kTextPlain);
-
-            if (selectedContent != null) {
-              DateTime now = DateTime.now();
-              int year = now.year;
-              int month = now.month;
-              int day = now.day;
-              String date = '$day/$month/$year';
-
-              marker = {
-                'id': DateTime.now().toString(),
-                'text': selectedContent.text,
-                'offset': offsetScroll,
-                'date': date,
-              };
-
-              // markerService.addNewMarker(bookTitle, chapter, marker);
-            }
-            showCustomToast('Marcador guardado con éxito');
-          }),
     ];
 
     return Scaffold(
       appBar: CustomAppBar(
-          // leading: goBackButton(context, book, isDarkMode),
           title: getTitle(bibleService),
-          actions: actions,
+          actions: appBarActions,
           hasPopupMenu: true,
           popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
       body: PageView(
@@ -499,39 +303,42 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
               ),
               if (onAudioSound)
                 PopupAudioPlayer(
-                    bookTitle: getTitle(bibleService),
-                    bookAuthor: '',
-                    end: end,
-                    max: _newVoiceText!.length,
-                    ttsState: ttsState,
-                    speak: _speak,
-                    pause: _pause)
+                  key: globalKey,
+                  builder:
+                      (BuildContext context, void Function() methodFromChild) {
+                    myMethod = methodFromChild;
+                  },
+                  onCompletion: () {
+                    // setOnAudioSound(false);
+                    playingVerses
+                        ? playVerses(
+                            secuenceVerseIndex, int.parse(verses.keys.last))
+                        : setOnAudioSound(false);
+                  },
+                  onAudioSound: onAudioSound,
+                  voiceText: _newVoiceText!,
+                  bookTitle: getTitle(bibleService),
+                  bookAuthor: '',
+                )
             ],
           ),
           // Page view chapter's markers
-          PageViewBookmarks(
-            markerList: markerService.getMarkerList('', {}),
-            onTapped: _handleTapPageViewMarkerList,
-            onDeleteMarker: (marker) {},
-          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bibleService.addNewPage();
-        },
-        child: Icon(Icons.plus_one),
-      ),
-
-      // bottomNavigationBar: CustomBottomNavigationBar(
-      //     currentIndex: bottomNavigationBarCurrentIndex,
-      //     onChangeIndex: (index) {},
-      //     bottomMenuList: bottomMenuList),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: ColorConstant.indigo900,
+      //   onPressed: () {
+      //     bibleService.addNewPage();
+      //   },
+      //   child: Icon(
+      //     Icons.favorite_border_outlined,
+      //     color: ColorConstant.whiteA700,
+      //   ),
+      // ),
     );
   }
 
   List<Widget> _buildVerseList(BibleService bibleService, bool isDarkMode) {
-    currentIndex = bibleService.verseNumber;
     Color borderColor =
         isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
     List<Widget> versesList = [];
@@ -546,10 +353,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           decoration: BoxDecoration(
               border: Border(
                   left: BorderSide(
-                      color: currentIndex == i
+                      color: secuenceVerseIndex - 1 == i
                           ? borderColor
                           : ColorConstant.transparent,
-                      width: currentIndex == i ? 6.0 : 0.0))),
+                      width: secuenceVerseIndex - 1 == i ? 6.0 : 0.0))),
           child: Column(
             children: [
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
