@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/widgets/custom_card.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';

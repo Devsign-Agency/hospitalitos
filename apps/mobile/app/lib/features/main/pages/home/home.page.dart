@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
 
     final authService = Provider.of<AuthService>(context, listen: false);
     user = authService.user;
-    loadAsset();
+    //loadAsset();
   }
 
   Future<List<Book>> getBooks() async {

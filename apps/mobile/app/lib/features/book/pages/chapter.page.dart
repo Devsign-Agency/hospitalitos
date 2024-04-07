@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,7 +16,7 @@ import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../widgets/widgets.dart';
 
-
+// import 'package:css_text/css_text.dart';
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
 
@@ -36,7 +35,6 @@ List<FontSize> fontSizes = [
   FontSize.xLarge
 ];
 
-
 class TextBook {
   String fontFamily;
   FontSize fontSize;
@@ -53,6 +51,7 @@ class TextBook {
       required this.lineHeight,
       required this.size});
 }
+
 class _ChapterPageState extends State<ChapterPage> {
   late EpubController _epubController;
   late EpubBook de;
@@ -63,11 +62,21 @@ class _ChapterPageState extends State<ChapterPage> {
   double volume = 0.5;
   double pitch = 1;
   double rate = 0.5;
+  double fontSize = 5.0;
+  double margin = 1.0;
+
+  Map<String, dynamic> settingTextInitialValues = {
+    'fontSize': 5.0,
+    'margin': 1.0,
+    'lineHeight': 1.0,
+    'color': Colors.black
+  };
+
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
-  OverlayEntry? _overlayEntry;
- TextBook textBook = TextBook(
+
+  TextBook textBook = TextBook(
       fontFamily: 'fontFamily',
       color: ColorConstant.black900,
       size: 32.0,
@@ -79,19 +88,19 @@ class _ChapterPageState extends State<ChapterPage> {
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
-  int bottomNavigationBarCurrentIndex = 0;
-  TtsState ttsState = TtsState.stopped;
-
-
+  List<Map<dynamic, dynamic>> markerList = [];
+  List<Map<dynamic, dynamic>> markerListBook = [];
+  Map<dynamic, dynamic> marker = {};
   double offsetScroll = 0;
+  ScrollController scrollController =
+      ScrollController(initialScrollOffset: 0.0);
+
+  int bottomNavigationBarCurrentIndex = 0;
+
   PageController pageController = PageController();
   FToast? fToast;
-  Map<String, dynamic> settingTextInitialValues = {
-    'fontSize': 5.0,
-    'margin': 1.0,
-    'lineHeight': 1.0,
-    'color': Colors.black
-  };
+
+  TtsState ttsState = TtsState.stopped;
 
   get isPlaying => ttsState == TtsState.playing;
   get isStopped => ttsState == TtsState.stopped;
@@ -101,17 +110,23 @@ class _ChapterPageState extends State<ChapterPage> {
   bool get isIOS => !kIsWeb && Platform.isIOS;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
   bool get isWeb => kIsWeb;
-ScrollController scrollController =
-      ScrollController(initialScrollOffset: 0.0);
+  int i = 0;
 
   @override
   void initState() {
     super.initState();
     initTts();
+
+    fToast = FToast();
+    fToast?.init(context);
   }
 
   initTts() {
     flutterTts = FlutterTts();
+
+    scrollController.addListener(() {
+      offsetScroll = scrollController.position.pixels;
+    });
 
     flutterTts.setStartHandler(() {
       setState(() {
@@ -125,6 +140,8 @@ ScrollController scrollController =
         print('Complete');
         ttsState = TtsState.stopped;
         positionLastWord = 0;
+        end = 0;
+        closePlayText();
       });
     });
 
@@ -201,17 +218,20 @@ ScrollController scrollController =
     Clipboard.setData(ClipboardData(text: ''));
   }
 
-  void _handleChangeStatusAudio() async {
-    ClipboardData? data;
-    onAudioSound = !onAudioSound;
+  void closePlayText() {
+    onAudioSound = false;
 
-    if (onAudioSound) {
-      data = await Clipboard.getData(Clipboard.kTextPlain);
-    } else {
-      Clipboard.setData(ClipboardData(text: ''));
-    }
+    setState(() {});
+  }
+
+  void openPlayText() async {
+    onAudioSound = true;
+    ClipboardData? data;
+    data = await Clipboard.getData(Clipboard.kTextPlain);
 
     data != null ? _onChange(data.text!) : _onChange('');
+
+    _speak();
   }
 
   void _onChange(String text) {
@@ -233,11 +253,24 @@ ScrollController scrollController =
     });
     setState(() {});
   }
+
+  void _handleTapPageViewMarkerList(double offset) {
+    bottomNavigationBarCurrentIndex = 0;
+
+    pageController.animateToPage(0,
+        duration: Duration(milliseconds: 500), curve: Curves.linear);
+
+    // scrollController.removeListener(() {});
+    setScrollController(offset);
+    setState(() {});
+  }
+
   void _handleChangeBottomNavigationBar(int index, MarkerService markerService,
       String bookTitle, dynamic chapter) async {
     bottomNavigationBarCurrentIndex = index;
     // List<Map<dynamic, dynamic>> jsonDecode =
     //     json.decode(Preferences.markerList);
+          print('epeleee $index');
 
     // int i = jsonDecode.firstWhere((element) => element['title'] == bookTitle);
     if (index == 1) {
@@ -246,7 +279,6 @@ ScrollController scrollController =
 
     if (index == 3) {
       List<dynamic> htmlList = [];
-
       String htmlContent = chapter!.HtmlContent!;
       htmlList.add(htmlContent);
       var doc3 = parse(htmlList.join());
@@ -261,22 +293,6 @@ ScrollController scrollController =
     setState(() {});
   }
 
-
-  setVolumen(double newFontSize) async {
-    setState(() {
-      final int value = (newFontSize).toInt();
-      print('VALUE: $value');
-      textBook.fontSize = fontSizes[value];
-      print('New fontSize $newFontSize');
-      // volume = newVolume;
-
-      // _speak();
-      // flutterTts.setVolume(volume);
-    });
-    // _pause();
-    // _speak();
-  }
-
   setPitch(double newPitch) {
     setState(() {
       pitch = newPitch;
@@ -285,17 +301,7 @@ ScrollController scrollController =
 
   setRate(double newRate) async {
     setState(() {
-      print('New rate $newRate');
       rate = newRate;
-    });
-  }
-
-  setColor(CircleButtonModel newCircleButton) {
-    print('color: $newCircleButton');
-    setState(() {
-      textBook.color = newCircleButton.color;
-      selectedCircleButton =
-          CircleButtonModel(newCircleButton.name, newCircleButton.color);
     });
   }
 
@@ -309,21 +315,6 @@ ScrollController scrollController =
   Future<void> share(String value) async {
     await Share.share(value);
   }
-
-  @override
-  Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as EpubArguments;
-    final book = arguments.book;
-    final chapter = arguments.chapter;
-    final String bookTitle = book?.Title ?? '';
-    final String bookAuthor = book?.Author ?? '';
-
-    MarkerService markerService =
-        Provider.of<MarkerService>(context, listen: true);
-    ThemeProvider themeProvider =
-        Provider.of<ThemeProvider>(context, listen: false);
-    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
   showCustomToast(String message) {
     Widget toast = Container(
@@ -345,6 +336,23 @@ ScrollController scrollController =
       toastDuration: const Duration(seconds: 3),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final book = arguments.book;
+    final chapter = arguments.chapter;
+    final String bookTitle = book?.Title ?? '';
+    final String bookAuthor = book?.Author ?? '';
+
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
+
+    MarkerService markerService =
+        Provider.of<MarkerService>(context, listen: true);
+
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgEditGray800),
       BottomNavigationMenu(icon: ImageConstant.imgBookmarkGray800),
@@ -382,7 +390,7 @@ ScrollController scrollController =
                         textBook.margin = event['margin'];
                         textBook.color = event['color'];
                         setState(() {});
-                      }, selectedColor: CircleButtonType.blue,
+                      },
                     ));
           }),
       PopupMenuItemModel(
@@ -407,7 +415,7 @@ ScrollController scrollController =
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () => _handleChangeStatusAudio()
+        'action': () {}
       },
     ];
 
@@ -415,8 +423,7 @@ ScrollController scrollController =
       ContextMenuButtonItem(
         label: 'Escuchar',
         onPressed: () async {
-          print('escuchar');
-          _handleChangeStatusAudio();
+          openPlayText();
         },
       ),
       ContextMenuButtonItem(
@@ -426,27 +433,32 @@ ScrollController scrollController =
                 await Clipboard.getData(Clipboard.kTextPlain);
 
             if (selectedContent != null) share(selectedContent.text!);
-          })
-    ];
+          }),
+      ContextMenuButtonItem(
+          label: 'Añadir a marcador',
+          onPressed: () async {
+            ClipboardData? selectedContent =
+                await Clipboard.getData(Clipboard.kTextPlain);
 
-   PopupMenuButton<int> popupMenuButton(
-          List<PopupMenuItemModel> menuOptions, bool isDarkMode) => PopupMenuButton<int>(
-        constraints: BoxConstraints(
-          minWidth: 200,
-        ),
-        offset: Offset(20, 60),
-        itemBuilder: (context) => [
-              ...menuOptions.map((item) => PopupMenuItem(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(item.title,
-                          style: isDarkMode
-                              ? AppStyle.txtNunitoSansRegular18WhiteA700
-                              : AppStyle.txtNunitoSansRegular18Black900),
-                    ),
-                    onTap: () => item.onTappedItem(context),
-                  ))
-            ]);
+            if (selectedContent != null) {
+              DateTime now = DateTime.now();
+              int year = now.year;
+              int month = now.month;
+              int day = now.day;
+              String date = '$day/$month/$year';
+
+              marker = {
+                'id': DateTime.now().toString(),
+                'text': selectedContent.text,
+                'offset': offsetScroll,
+                'date': date,
+              };
+
+              markerService.addNewMarker(bookTitle, chapter, marker);
+            }
+            showCustomToast('Marcador guardado con éxito');
+          }),
+    ];
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -487,7 +499,7 @@ ScrollController scrollController =
                 ),
               ),
               if (onAudioSound)
-              PopupAudioPlayer(
+                PopupAudioPlayer(
                     onAudioSound: false,
                     voiceText: '',
                     bookTitle: bookTitle,
@@ -514,23 +526,14 @@ ScrollController scrollController =
           PageViewIndex(book: book!, chapter: chapter!)
         ],
       ),
-     bottomNavigationBar: CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: bottomNavigationBarCurrentIndex,
           onChangeIndex: (index) => _handleChangeBottomNavigationBar(
               index, markerService, bookTitle, chapter),
           bottomMenuList: bottomMenuList),
     );
   }
-  void _handleTapPageViewMarkerList(double offset) {
-    bottomNavigationBarCurrentIndex = 0;
 
-    pageController.animateToPage(0,
-        duration: Duration(milliseconds: 500), curve: Curves.linear);
-
-    // scrollController.removeListener(() {});
-    setScrollController(offset);
-    setState(() {});
-  }
   CustomIconButton goBackButton(
           BuildContext context, EpubBook? book, bool isDarkMode) =>
       CustomIconButton(
@@ -545,207 +548,26 @@ ScrollController scrollController =
           color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
         ),
       );
-}
 
-class IndexPage extends StatefulWidget {
-  static const String route = 'book/index';
-  @override
-  State<IndexPage> createState() => _IndexPageState();
-}
-
-class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
-  late TabController tabController;
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as EpubArguments;
-    final book = arguments.book;
-    var count = 0;
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: book?.Title!,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              // Tab items
-              CustomTabBar(
-                  tabController: tabController,
-                  items: IndexService.tabBarItems),
-
-              // TabBarView
-              SizedBox(
-                height: height * 0.8,
-                width: double.infinity,
-                child: TabBarView(
-                  controller: tabController,
-                  children: [
-                    // Books Tab
-                    ListChaptersOfBook(book: book),
-                    Center(
-                      child: Column(children: [
-                        Text('Titulo: ${book!.Title!}'),
-                        Text('Autor: ${book.Author}')
-                      ]),
-                    )
-                  ],
-                ),
-              ),
-            ],
+  PopupMenuButton<int> popupMenuButton(
+          List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
+      PopupMenuButton<int>(
+          constraints: BoxConstraints(
+            minWidth: 200,
           ),
-        ),
-      ),
-    );
-  }
-
-  showTitle(String data, index, items) {
-    print('title---------------- $data $index $items');
-    var textToShow = '';
-
-    return data;
-  }
-
-  findOcurrenceChapterArr(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        pos.add(i);
-      }
-    }
-
-    return pos;
-  }
-
-  makeDataToShow(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
-      }
-    }
-
-    return pos;
-  }
-
-  changeTitle(book, index) {
-    var title = book.Title;
-    var band = true;
-    print(title.toLowerCase().split(':')[0]);
-    if ((title.toLowerCase().split(':')[0].contains('capítulo') ||
-            title.toLowerCase().split(':')[0].contains('capitulo')) &&
-        book.SubChapters!.isEmpty) {
-      title = '';
-      band = false;
-    }
-
-    print('title $title');
-
-    return band;
-  }
-
-  comparateIndexPos(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] == index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMenor(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] < index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMax(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] > index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  subChaptersMenu(data, book) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return ListTile(
-              title: Text(
-                data[index].Title!,
-                style: AppStyle.txtNunitoSansRegular16,
-              ),
-              onTap: () {
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, ChapterPage.route,
-                    arguments: EpubArguments(
-                        book: book, chapter: book.Chapter[index]));
-              });
-        },
-        itemCount: data.length);
-  }
-}
-
-class ListChaptersOfBook extends StatelessWidget {
-  const ListChaptersOfBook({
-    super.key,
-    required this.book,
-  });
-
-  final EpubBook? book;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ListView.builder(
-          itemCount: book!.Chapters!.length,
-          itemBuilder: (context, index) {
-            var title = (book?.Chapters![index].Title!).toString();
-            return title != ''
-                ? ListTile(
-                    title: Text(
-                      title,
-                      style: AppStyle.txtNunitoSansRegular16,
-                    ),
-                    onTap: () {
-                      // Navigator.pop(context);
-                      Navigator.pushNamed(context, ChapterPage.route,
-                          arguments: EpubArguments(
-                              book: book, chapter: book?.Chapters![index]));
-                    })
-                : Container();
-          }),
-    );
-  }
+          offset: Offset(20, 60),
+          itemBuilder: (context) => [
+                ...menuOptions.map((item) => PopupMenuItem(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(item.title,
+                            style: isDarkMode
+                                ? AppStyle.txtNunitoSansRegular18WhiteA700
+                                : AppStyle.txtNunitoSansRegular18Black900),
+                      ),
+                      onTap: () => item.onTappedItem(context),
+                    ))
+              ]);
 }
 
 class PopupAudioPlayer extends StatefulWidget {
@@ -1059,3 +881,4 @@ class _AudioPlayerButton extends StatelessWidget {
     );
   }
 }
+

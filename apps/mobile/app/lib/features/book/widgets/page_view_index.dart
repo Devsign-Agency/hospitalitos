@@ -16,11 +16,12 @@ class PageViewIndex extends StatelessWidget {
       child: ListView.builder(
           itemCount: book.Chapters!.length,
           itemBuilder: (context, index) {
-            return ListTile(
+            var title = book.Chapters![index].Title! ;
+            return title != '' ? ListTile(
               title: Container(
                 padding: getPadding(left: 5),
                 decoration: BoxDecoration(
-                    color: chapter.Title == book.Chapters![index].Title!
+                    color: chapter.Title == book.Chapters![index].Title! + 'her'
                         ? ColorConstant.yellow100.withOpacity(0.2)
                         : ColorConstant.transparent,
                     border: Border(
@@ -30,12 +31,12 @@ class PageViewIndex extends StatelessWidget {
                               ? 4
                               : 0),
                     )),
-                child: Text(
-                  book.Chapters![index].Title!,
-                  style: chapter.Title == book.Chapters![index].Title!
-                      ? AppStyle.txtNunitoSansSemiBold20Indigo900
-                      : AppStyle.txtNunitoSansSemiBold20Gray900,
-                ),
+                child:  Text(
+                        book.Chapters![index].Title!,
+                        style: chapter.Title == book.Chapters![index].Title!
+                            ? AppStyle.txtNunitoSansSemiBold20Indigo900
+                            : AppStyle.txtNunitoSansSemiBold20Gray900,
+                      ),
               ),
               //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
               onTap: () {
@@ -45,7 +46,7 @@ class PageViewIndex extends StatelessWidget {
                     arguments: EpubArguments(
                         book: book, chapter: book.Chapters![index]));
               },
-            );
+            ):Container();
           }),
     );
   }

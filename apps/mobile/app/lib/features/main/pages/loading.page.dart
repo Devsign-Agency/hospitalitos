@@ -21,7 +21,12 @@ class LoadingPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [Text('Autenticando')],
+                  children: [Column(
+                    children: [
+                      Text('¡Te damos la bienvenida!'),
+                      Text('Acá podrás encontrar un espacio para conectar con tu fé.'),
+                    ],
+                  )],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -43,12 +48,13 @@ class LoadingPage extends StatelessWidget {
   Future checkLoginState(BuildContext context) async {
     final authService = Provider.of<AuthService>(context, listen: false);
     final authenticated = await authService.isLoggedIn();
-    if (authenticated) {
+     Navigator.pushReplacementNamed(context, HomePage.route);
+   /* if (authenticated) {
       if (context.mounted)
         Navigator.pushReplacementNamed(context, HomePage.route);
     } else {
       if (context.mounted)
         Navigator.pushReplacementNamed(context, LoginScreen.route);
-    }
+    }*/
   }
 }
