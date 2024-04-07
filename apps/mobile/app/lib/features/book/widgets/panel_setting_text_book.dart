@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/style.dart';
-import 'package:mobile_app/features/book/pages/chapter.page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app_export.dart';
@@ -23,7 +22,6 @@ class PanelSettingTextBook extends StatefulWidget {
 }
 
 class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
-  CircleButtonType _selectedCircleButtonType = CircleButtonType.black;
   Color selectedColor = Colors.black;
   Map<dynamic, dynamic> _setting = {};
   final Map<dynamic, FontSize> fontSizes = {
@@ -65,7 +63,6 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
       'lineHeight':
           lineHeightValues[widget.initialValues['lineHeight'].toString()],
     };
-    _selectedCircleButtonType = CircleButtonType.black;
     selectedColor = widget.initialValues['color'];
   }
 

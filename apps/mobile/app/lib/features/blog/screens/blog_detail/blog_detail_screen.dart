@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:html/parser.dart';
-import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/features/book/widgets/popup_audio_player.dart';
-import 'package:mobile_app/shared/services/text_to_speech.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:mobile_app/core/app_export.dart';
 import '../../widgets/widgets.dart';
 
 class BlogDetail extends StatefulWidget {
@@ -160,6 +158,7 @@ class _BlogDetailState extends State<BlogDetail> {
         slivers: [
           if (onAudioSound)
             PopupAudioPlayer(
+                voiceText
                 bookTitle: bookTitle,
                 bookAuthor: bookAuthor,
                 end: end,

@@ -87,6 +87,7 @@ class _BibleMainState extends State<BibleMain> {
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
 
+    bibleService.getBooks();
     bibleService.resetState();
 
     final List<Map<String, dynamic>> actions = [

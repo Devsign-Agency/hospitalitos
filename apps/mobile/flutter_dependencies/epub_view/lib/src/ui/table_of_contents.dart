@@ -28,7 +28,7 @@ class EpubViewTableOfContents extends StatelessWidget {
         valueListenable: controller.tableOfContentsListenable,
         builder: (_, data, child) {
           Widget content;
-
+           
           if (data.isNotEmpty) {
             content = ListView.builder(
               padding: padding,
@@ -37,8 +37,11 @@ class EpubViewTableOfContents extends StatelessWidget {
                   itemBuilder?.call(context, index, data[index], data.length) ??
                   ListTile(
                     title: Text(data[index].title!.trim()),
-                    onTap: () =>
-                        controller.scrollTo(index: data[index].startIndex),
+                    onTap: () =>{
+                         controller.scrollTo(index: data[index].startIndex),
+                    }
+                     
+                     
                   ),
               itemCount: data.length,
             );
