@@ -208,51 +208,54 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                           ),
 
                           Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 200,
-                                      child: Text(
-                                        item.Title,
-                                        style: AppStyle
-                                            .txtNunitoSansRegular16Gray9001,
-                                      ),
-                                    ),
-                                    Text(
-                                      item.Author,
-                                      style: AppStyle
-                                          .txtNunitoSansRegular14Gray9001,
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 6.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.only( right: 8.0, left: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      CustomIconButton(
-                                        height: getSize(48),
-                                        width: getSize(48),
-                                        onTap: () {
-                                          getTextFromEpubInstance(index);
-                                        },
-                                        variant: IconButtonVariant.FillYellow,
-                                        child: CustomImageView(
-                                            color: ColorConstant.gray800,
-                                            svgPath: ImageConstant
-                                                .imgDownloadGray30024x24),
+                                      Container(
+                                        width: 200,
+                                        child: Text(
+                                          item.Title,
+                                          style: AppStyle
+                                              .txtNunitoSansRegular16Gray9001,
+                                        ),
+                                      ),
+                                      Text(
+                                        item.Author,
+                                        style: AppStyle
+                                            .txtNunitoSansRegular14Gray9001,
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 6.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        CustomIconButton(
+                                          height: getSize(48),
+                                          width: getSize(48),
+                                          onTap: () {
+                                            getTextFromEpubInstance(index);
+                                          },
+                                          variant: IconButtonVariant.FillYellow,
+                                          child: CustomImageView(
+                                              color: ColorConstant.gray800,
+                                              svgPath: ImageConstant
+                                                  .imgDownloadGray30024x24),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
 

@@ -57,6 +57,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isDarkTheme = currentTheme == DarkTheme.theme;
     return AppBar(
       automaticallyImplyLeading: true,
+      bottomOpacity: 0.0,
+      elevation: 0.0,
       leading: leading ??
           (hasLeading != null && hasLeading!
               ? CustomIconButton(

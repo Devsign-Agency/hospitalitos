@@ -76,9 +76,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         'id': 0,
         'name': 'Modo Noche',
         'onTap': (context) {
-          ThemeProvider themeProvider =
+          /*ThemeProvider themeProvider =
               Provider.of<ThemeProvider>(context, listen: false);
-          themeProvider.setDarkMode();
+          themeProvider.setDarkMode();*/
         }
       },
       {

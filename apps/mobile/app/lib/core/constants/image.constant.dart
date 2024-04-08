@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ImageConstant {
   static String imgSearchGray80024x24 =
       'assets/images/img_search_gray_800_24x24.svg';
@@ -285,4 +287,6 @@ class ImageConstant {
   static String imageNotFound = 'assets/images/image_not_found.png';
 
   static String imgIniciodesesin = 'assets/images/img_iniciodesesin.png';
+
+  static String imgChurch = 'assets/images/church.svg';
 }

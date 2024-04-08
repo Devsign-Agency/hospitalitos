@@ -65,7 +65,7 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
               Container(
                 margin: EdgeInsets.all(10),
                 child: SizedBox(
-                  height: 300,
+                  height: height * 8,
                   width: double.infinity,
                   child: TabBarView(
                     controller: tabController,
@@ -287,17 +287,29 @@ class ListChaptersOfBook extends StatelessWidget {
           itemBuilder: (context, index) {
             var title = (book?.Chapters![index].Title!).toString();
             return title != ''
-                ? ListTile(
-                    title: Text(
-                      title,
-                      style: AppStyle.txtNunitoSansSemiBold20Gray900,
-                    ),
-                    onTap: () {
-                      // Navigator.pop(context);
-                      Navigator.pushNamed(context, ChapterPage.route,
-                          arguments: EpubArguments(
-                              book: book, chapter: book?.Chapters![index]));
-                    })
+                ? Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: ListTile(
+                    
+                      title: Container(
+                         decoration: BoxDecoration(
+                           border: Border(
+                        left: BorderSide(
+                            color: ColorConstant.yellow100,
+                      )),
+                         ),
+                        child: Text(
+                          title,
+                          style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                        ),
+                      ),
+                      onTap: () {
+                        // Navigator.pop(context);
+                        Navigator.pushNamed(context, ChapterPage.route,
+                            arguments: EpubArguments(
+                                book: book, chapter: book?.Chapters![index]));
+                      }),
+                )
                 : Container();
           }),
     );

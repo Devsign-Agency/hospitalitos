@@ -185,11 +185,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> actions = [
-      {'icon': ImageConstant.imgSearch, 'action': () => {}},
-      {
+      {'icon': ImageConstant.imgChurch, 'action': () => { _launchURL()}},
+      /*{
         'icon': ImageConstant.imgNotification,
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
-      },
+      }*/
     ];
 
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
-            CustomIconButton(
+            /*CustomIconButton(
               height: 48,
               width: 48,
               variant: IconButtonVariant.FillGray400,
@@ -213,10 +213,11 @@ class _HomePageState extends State<HomePage> {
                 svgPath: ImageConstant.imgUserGray800,
               ),
               onTap: () => Navigator.of(context).pushNamed('profile'),
-            ),
+            ),*/
             SizedBox(width: 10),
             Column(
-              children: [
+              children: 
+              [
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Buen día',
@@ -231,7 +232,7 @@ class _HomePageState extends State<HomePage> {
         ),
         hasCustomTitle: true,
         actions: actions,
-        iconButtonVariant: IconButtonVariant.FillGray300,
+        //iconButtonVariant: IconButtonVariant.FillGray300,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -370,4 +371,12 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  _launchURL() async {
+  const url = 'https://docs.google.com/forms/d/1RxTOvDl_i08qV5X_5AxZsUFhq7bZf7-V9gG8Cth0xa8/edit?usp=drivesdks';
+    final _url = Uri.parse(url);
+  if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) { // <--
+    throw Exception('Could not launch $_url');
+  }
+}
 }

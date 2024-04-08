@@ -270,7 +270,6 @@ class _ChapterPageState extends State<ChapterPage> {
     bottomNavigationBarCurrentIndex = index;
     // List<Map<dynamic, dynamic>> jsonDecode =
     //     json.decode(Preferences.markerList);
-          print('epeleee $index');
 
     // int i = jsonDecode.firstWhere((element) => element['title'] == bookTitle);
     if (index == 1) {
@@ -364,12 +363,13 @@ class _ChapterPageState extends State<ChapterPage> {
       PopupMenuItemModel(
           id: 0,
           title: 'Modo Noche',
-          onTappedItem: (context) {
+          onTappedItem: (context) {/*
             ThemeProvider themeProvider =
                 Provider.of<ThemeProvider>(context, listen: false);
             themeProvider.currentTheme == DarkTheme.theme
                 ? themeProvider.setLightMode()
                 : themeProvider.setDarkMode();
+                */
           }),
       PopupMenuItemModel(
           id: 1,

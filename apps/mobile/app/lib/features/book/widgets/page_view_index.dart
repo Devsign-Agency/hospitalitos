@@ -21,7 +21,7 @@ class PageViewIndex extends StatelessWidget {
               title: Container(
                 padding: getPadding(left: 5),
                 decoration: BoxDecoration(
-                    color: chapter.Title == book.Chapters![index].Title! + 'her'
+                    color: chapter.Title == book.Chapters![index].Title!
                         ? ColorConstant.yellow100.withOpacity(0.2)
                         : ColorConstant.transparent,
                     border: Border(

@@ -96,7 +96,7 @@ class PostsSearchDelegate extends SearchDelegate {
         child: Icon(Icons.article_outlined, color: Colors.black38, size: 100));
   }
 
-  @override
+  /*@override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
     //throw UnimplementedError();
@@ -155,6 +155,31 @@ class PostsSearchDelegate extends SearchDelegate {
  
   }
 
+*/
+
+Widget buildSuggestions(BuildContext context) {
+    var listToShow;
+      late List posts; 
+      fetchWpPosts().then((value) {
+      posts = value;
+    });
+    if (query.isNotEmpty)
+      listToShow = posts.where((e) => e.contains(query) && e.startsWith(query)).toList();
+    else
+      listToShow = posts;
+
+    return ListView.builder(
+      itemCount: listToShow.length,
+      itemBuilder: (_, i) {
+        var noun = listToShow[i];
+        return ListTile(
+          title: Text(noun),
+          onTap: () => close(context, noun),
+        );
+      },
+    );
+  }
+}
 
   safeMapSearch(Map map, List keys) {
   if (map[keys[0]] != null) {
@@ -166,5 +191,5 @@ class PostsSearchDelegate extends SearchDelegate {
     return safeMapSearch(map[keys[0]], tmpList);
   }
   return null;
-}
+
 }
