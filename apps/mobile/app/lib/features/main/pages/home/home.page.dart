@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
@@ -51,12 +52,26 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold20)),
+      Align(
+          widthFactor: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Text('Propio del Tiempo. Salterio II',
+              style: AppStyle.txtNunitoSansRegular14Gray900)),
+    ]),
+    Wrap(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -66,12 +81,12 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -81,12 +96,12 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -96,12 +111,12 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -111,27 +126,12 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
   ];
@@ -160,6 +160,17 @@ class _HomePageState extends State<HomePage> {
 
     return bookService.getBooksFromJson();
   }
+
+    getCurrentDate() {
+   var date = DateTime.now().toString();
+
+   var dateParse = DateTime.parse(date);
+
+   //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+  //final dateName = DateFormat('MEd').format(DateFormat("DD MMMM yyyy").parse(date));
+  final DateFormat format2 =  DateFormat.yMMMMd('es_ES') ;
+   return format2.format(DateTime.now()).split('de 2024')[0];
+}
 
   void _onChangeTab(int index) {
     bottomNavigationMain.setSelectedItem(index);
@@ -217,14 +228,15 @@ class _HomePageState extends State<HomePage> {
             SizedBox(width: 10),
             Column(
               children: 
+          
               [
                 Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.topLeft,
                     child: Text('Buen día',
                         style: AppStyle.txtNunitoSansSemiBold13Gray800)),
                 Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(user?.firstname ?? '',
+                    alignment: Alignment.topLeft,
+                    child: Text(getCurrentDate() ,
                         style: AppStyle.txtNunitoSansSemiBold23))
               ],
             ),
@@ -378,5 +390,7 @@ class _HomePageState extends State<HomePage> {
   if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) { // <--
     throw Exception('Could not launch $_url');
   }
+
+
 }
 }

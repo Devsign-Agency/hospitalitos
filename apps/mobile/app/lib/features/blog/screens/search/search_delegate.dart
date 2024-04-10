@@ -40,7 +40,7 @@ class PostsSearchDelegate extends SearchDelegate {
     // TODO: implement buildResults
     //throw UnimplementedError();
 
-     if (query.isEmpty) {
+    if (query.isEmpty) {
       return _emptyContainer();
     } else {
       return FutureBuilder(
@@ -75,7 +75,9 @@ class PostsSearchDelegate extends SearchDelegate {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [Text('No se encontraron coincidencias')],
+                              children: [
+                                Text('No se encontraron coincidencias')
+                              ],
                             ),
                           ],
                         ),
@@ -96,7 +98,7 @@ class PostsSearchDelegate extends SearchDelegate {
         child: Icon(Icons.article_outlined, color: Colors.black38, size: 100));
   }
 
-  /*@override
+  @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
     //throw UnimplementedError();
@@ -109,7 +111,7 @@ class PostsSearchDelegate extends SearchDelegate {
           builder: (_, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               final posts = snapshot.data;
-              return Expanded(
+              return Container(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: posts.isNotEmpty
@@ -119,13 +121,11 @@ class PostsSearchDelegate extends SearchDelegate {
                           separatorBuilder: (_, __) => SizedBox(height: 20),
                           itemBuilder: (_, int index) {
                             final item = posts[index];
+
                             print(index);
                             Map wppost = item;
-                            var imageCard = safeMapSearch(wppost, ["_embedded","wp:featuredmedia",0,"source_url"]);;
-                            print(imageCard);
-                            return ArticleCard(
-                                imgUrl: imageCard,
-                                post: item);
+
+                            return ArticleCard(imgUrl: item["_embedded"]["wp:featuredmedia"][0]["source_url"], post: item);
                           })
                       : Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +134,9 @@ class PostsSearchDelegate extends SearchDelegate {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [Text('No se encontraron coincidencias')],
+                              children: [
+                                Text('No se encontraron coincidencias')
+                              ],
                             ),
                           ],
                         ),
@@ -151,45 +153,23 @@ class PostsSearchDelegate extends SearchDelegate {
     /* final searchProvider = Provider.of<BlogProvider>(context, listen: false);
   
 */
-
- 
   }
-
-*/
-
-Widget buildSuggestions(BuildContext context) {
-    var listToShow;
-      late List posts; 
-      fetchWpPosts().then((value) {
-      posts = value;
-    });
-    if (query.isNotEmpty)
-      listToShow = posts.where((e) => e.contains(query) && e.startsWith(query)).toList();
-    else
-      listToShow = posts;
-
-    return ListView.builder(
-      itemCount: listToShow.length,
-      itemBuilder: (_, i) {
-        var noun = listToShow[i];
-        return ListTile(
-          title: Text(noun),
-          onTap: () => close(context, noun),
-        );
-      },
-    );
+    onSearchTextChanged(String text) async {
+  
+   
   }
-}
 
   safeMapSearch(Map map, List keys) {
-  if (map[keys[0]] != null) {
-    if (keys.length == 1) {
-      return map[keys[0]];
-    }
-    List tmpList = List.from(keys);
-    tmpList.removeAt(0);
-    return safeMapSearch(map[keys[0]], tmpList);
-  }
-  return null;
 
+    print('map $map');
+    /*if (map[keys[0]] != null) {
+      if (keys.length == 1) {
+        return map[keys[0]];
+      }
+      List tmpList = List.from(keys);
+      tmpList.removeAt(0);
+      return safeMapSearch(map[keys[0]], tmpList);
+    }*/
+    return null;
+  }
 }

@@ -16,11 +16,20 @@ Future<List<dynamic>> fetchWpPosts() async {
 
 }
 
-Future<List<dynamic>> searchPostsWp(String query) async {
+Future<List<Map<String, dynamic>>> searchPostsWp(String query) async {
   final url = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?_embed&fields=title,content.rendered&search=';
 
-  final urlTest = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?search=maria&exclude[0]=1392';
-  final response = await http.get(Uri.parse(urlTest+query), headers: {"Accept": "application/json"}, );
+  final urlTest = 'https://hospitalitosdelafe.org/wp-json/wp/v2/posts?_embed';
+  final response = await http.get(Uri.parse(urlTest), headers: {"Accept": "application/json"}, );
   var convertDatatoJson = json.decode(response.body);
-  return convertDatatoJson;
+
+  var listData = List<Map<String, dynamic>> .empty(growable: true);;
+   convertDatatoJson.forEach((userDetail) {
+    print('useDetail------- ${userDetail['title']['rendered']} ${userDetail['title']['rendered'].toString().contains(query)}');
+      if (userDetail['title']['rendered'].toLowerCase().contains(query.toLowerCase())){
+        listData.add(userDetail);
+      }
+        
+    });
+  return listData;
 }
