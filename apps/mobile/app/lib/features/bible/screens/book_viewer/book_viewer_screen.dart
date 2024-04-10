@@ -246,6 +246,20 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
     final appBarActions = [
       {
+        'icon': ImageConstant.imgFavorite,
+        'color': isDarkMode
+            ? ColorConstant.whiteA700
+            : ColorConstant.gray800,
+        'variant': !onAudioSound
+            ? IconButtonVariant.NoFill
+            : IconButtonVariant.OutlinePurple50,
+        'action': ()
+        {
+          bibleService.addNewPage();
+          showCustomToast('Página guardada en favoritos exitosamente');
+        },
+      },
+      {
         'icon': ImageConstant.imgMusicIndigo900,
         'color': isDarkMode
             ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
@@ -278,7 +292,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       appBar: CustomAppBar(
           title: getTitle(bibleService),
           actions: appBarActions,
-          hasPopupMenu: true,
+          hasPopupMenu: false,
           popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
       body: PageView(
         controller: pageController,

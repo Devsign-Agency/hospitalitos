@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +19,13 @@ class ChaptersScreen extends StatefulWidget {
 class _ChaptersScreenState extends State<ChaptersScreen> {
   bool _isEditing = false;
   late List<Map<String, dynamic>> actions = [];
+  FToast? fToast;
 
   @override
   void initState() {
     super.initState();
+    fToast = FToast();
+    fToast?.init(context);
     _initActions();
   }
 
@@ -43,10 +47,10 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
   void _initActions() {
     actions = [
-      {
-        'icon': ImageConstant.imgSearch,
-        'action': () => {print('Search...')}
-      },
+      // {
+      //   'icon': ImageConstant.imgSearch,
+      //   'action': () => {print('Search...')}
+      // },
       {
         'icon': ImageConstant.imgEdit,
         'action': () => {_changeModeView()}
@@ -81,6 +85,27 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
     Navigator.of(context).pushNamed(BookViewerScreen.route,
         arguments: bibleService.selectedChapter.verses);
+  }
+
+  showCustomToast(String message) {
+    Widget toast = Container(
+      width: double.infinity,
+      height: 48,
+      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: ColorConstant.black900ff,
+      ),
+      child: Text(
+        message,
+        style: AppStyle.txtRobotoRegular14Gray10002,
+      ),
+    );
+
+    fToast?.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+    );
   }
 
   @override
@@ -141,7 +166,9 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                   BibleService bibleService =
                       Provider.of<BibleService>(context, listen: false);
 
+
                   bibleService.deletePage(item.id);
+                      showCustomToast('Página eliminada exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),

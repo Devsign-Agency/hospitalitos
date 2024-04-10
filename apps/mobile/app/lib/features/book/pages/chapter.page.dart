@@ -360,17 +360,17 @@ class _ChapterPageState extends State<ChapterPage> {
     ];
 
     final List<PopupMenuItemModel> menuOptions = [
-      PopupMenuItemModel(
-          id: 0,
-          title: 'Modo Noche',
-          onTappedItem: (context) {/*
-            ThemeProvider themeProvider =
-                Provider.of<ThemeProvider>(context, listen: false);
-            themeProvider.currentTheme == DarkTheme.theme
-                ? themeProvider.setLightMode()
-                : themeProvider.setDarkMode();
-                */
-          }),
+      // PopupMenuItemModel(
+      //     id: 0,
+      //     title: 'Modo Noche',
+      //     onTappedItem: (context) {/*
+      //       ThemeProvider themeProvider =
+      //           Provider.of<ThemeProvider>(context, listen: false);
+      //       themeProvider.currentTheme == DarkTheme.theme
+      //           ? themeProvider.setLightMode()
+      //           : themeProvider.setDarkMode();
+      //           */
+      //     }),
       PopupMenuItemModel(
           id: 1,
           title: 'Ajustar texto',
