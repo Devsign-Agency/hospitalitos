@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
@@ -20,6 +19,7 @@ class TabBarViewVerses extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
+    bool isDarkTheme = bibleService.isDarkTheme;
 
     bool getColor(int index) {
       int startVerse = bibleService.startVerse;
@@ -90,7 +90,9 @@ class TabBarViewVerses extends StatelessWidget {
                     ),
                     child: Text(
                       '${index + 1}',
-                      style: AppStyle.txtNunitoSansRegular18Gray900,
+                      style: isDarkTheme
+                          ? AppStyle.txtNunitoSansRegular18WhiteA700
+                          : AppStyle.txtNunitoSansRegular18Gray900,
                     ),
                   ),
                 ),

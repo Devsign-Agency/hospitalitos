@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
+import '../../../main/pages/pages.dart';
 
 class IndexScreen extends StatefulWidget {
   static const String route = 'bible/index';
@@ -34,27 +35,45 @@ class _IndexScreenState extends State<IndexScreen>
     }
   }
 
+  handleChangeBottomNavigationBar(int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    final List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
-      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
-      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
-    ];
+    bool isDarkTheme = bibleService.isDarkTheme;
+
     final List<Map<String, dynamic>> actions = [
+      // {
+      //   'icon': ImageConstant.imgSearch,
+      //   'action': () => {print('Search...')}
+      // },
       {
-        'icon': ImageConstant.imgSearch,
-        'action': () => {print('Search...')}
+        'icon': ImageConstant.imgMoonIndigo,
+        'action': () {
+          bibleService.isDarkTheme = !bibleService.isDarkTheme;
+          print(bibleService.isDarkTheme);
+        }
       },
     ];
 
     return Scaffold(
+      backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray100,
       appBar: CustomAppBar(
+        customTitle: Text('Índice',
+            style: isDarkTheme
+                ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                : AppStyle.txtNunitoSansSemiBold26),
+        hasCustomTitle: true,
         leading: CustomIconButton(
           margin: getMargin(left: 8),
           height: getSize(48),
@@ -62,12 +81,15 @@ class _IndexScreenState extends State<IndexScreen>
           variant: IconButtonVariant.NoFill,
           onTap: () => Navigator.of(context).pop(),
           child: CustomImageView(
-            svgPath: ImageConstant.imgArrowleftGray900,
-            color: ColorConstant.gray800,
+            svgPath: isDarkTheme
+                ? ImageConstant.imgArrowleftGray900
+                : ImageConstant.imgArrowleftWhiteA700,
+            color:
+                isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
           ),
         ),
-        title: 'Índice',
-        backgroundColor: ColorConstant.gray50,
+        // title: 'Índice',
+        backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
         actions: [...actions],
       ),
       body: SafeArea(
@@ -78,6 +100,9 @@ class _IndexScreenState extends State<IndexScreen>
               children: [
                 // Tab items
                 CustomTabBar(
+                    indicatorColor:
+                        isDarkTheme ? ColorConstant.purple200 : null,
+                    labelColor: isDarkTheme ? ColorConstant.purple200 : null,
                     tabController: tabController,
                     items: BibleService.tabBarItems),
 
@@ -114,9 +139,11 @@ class _IndexScreenState extends State<IndexScreen>
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 3,
-          onChangeIndex: (index) {},
-          bottomMenuList: bottomMenuList),
+          backgroundColor:
+              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
+          currentIndex: 2,
+          onChangeIndex: handleChangeBottomNavigationBar,
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 }

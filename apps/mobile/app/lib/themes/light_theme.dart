@@ -21,6 +21,7 @@ class LightTheme {
         appBarTheme: AppBarTheme(
           color: ColorConstant.gray100,
         ),
+        tabBarTheme: TabBarTheme(indicatorColor: ColorConstant.indigo900),
         popupMenuTheme: PopupMenuThemeData(color: ColorConstant.whiteA700),
         sliderTheme: SliderThemeData(
             activeTrackColor: colors.primary,

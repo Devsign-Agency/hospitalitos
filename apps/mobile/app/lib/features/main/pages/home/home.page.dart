@@ -34,8 +34,8 @@ loadAsset() async {
   await rootBundle
       .loadString('assets/liturgia/sync/2024/mar/12/index.html')
       .then((String contents) {
-        const HtmlEscape htmlEscape = HtmlEscape();
-        //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+    const HtmlEscape htmlEscape = HtmlEscape();
+    //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
     var text = htmlEscape.convert(contents);
     print('--------------- $text');
 
@@ -52,7 +52,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold20)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold20)),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
@@ -81,7 +83,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
@@ -96,7 +99,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
@@ -111,7 +115,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
@@ -126,7 +131,8 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II', style: AppStyle.txtNunitoSansSemiBold13)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
@@ -161,16 +167,16 @@ class _HomePageState extends State<HomePage> {
     return bookService.getBooksFromJson();
   }
 
-    getCurrentDate() {
-   var date = DateTime.now().toString();
+  getCurrentDate() {
+    var date = DateTime.now().toString();
 
-   var dateParse = DateTime.parse(date);
+    var dateParse = DateTime.parse(date);
 
-   //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
-  //final dateName = DateFormat('MEd').format(DateFormat("DD MMMM yyyy").parse(date));
-  final DateFormat format2 =  DateFormat.yMMMMd('es_ES') ;
-   return format2.format(DateTime.now()).split('de 2024')[0];
-}
+    //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    //final dateName = DateFormat('MEd').format(DateFormat("DD MMMM yyyy").parse(date));
+    final DateFormat format2 = DateFormat.yMMMMd('es_ES');
+    return format2.format(DateTime.now()).split('de 2024')[0];
+  }
 
   void _onChangeTab(int index) {
     bottomNavigationMain.setSelectedItem(index);
@@ -184,10 +190,10 @@ class _HomePageState extends State<HomePage> {
       case 1:
         Navigator.of(context).pushNamed(CoursesScreen.route);
         break;
+      // case 2:
+      //   Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+      //   break;
       case 2:
-        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-        break;
-      case 3:
         Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
@@ -196,7 +202,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> actions = [
-      {'icon': ImageConstant.imgChurch, 'action': () => { _launchURL()}},
+      {
+        'icon': ImageConstant.imgChurch,
+        'action': () => {_launchURL()}
+      },
       /*{
         'icon': ImageConstant.imgNotification,
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
@@ -205,8 +214,8 @@ class _HomePageState extends State<HomePage> {
 
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      // BottomNavigationMenu(
+      //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
       BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
@@ -227,16 +236,14 @@ class _HomePageState extends State<HomePage> {
             ),*/
             SizedBox(width: 10),
             Column(
-              children: 
-          
-              [
+              children: [
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text('Buen día',
                         style: AppStyle.txtNunitoSansSemiBold13Gray800)),
                 Align(
                     alignment: Alignment.topLeft,
-                    child: Text(getCurrentDate() ,
+                    child: Text(getCurrentDate(),
                         style: AppStyle.txtNunitoSansSemiBold23))
               ],
             ),
@@ -292,7 +299,6 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(horizontal: 14.0),
                     child: Row(
                       children: [
-                        
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -385,12 +391,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchURL() async {
-  const url = 'https://docs.google.com/forms/d/1RxTOvDl_i08qV5X_5AxZsUFhq7bZf7-V9gG8Cth0xa8/edit?usp=drivesdks';
+    const url =
+        'https://docs.google.com/forms/d/1RxTOvDl_i08qV5X_5AxZsUFhq7bZf7-V9gG8Cth0xa8/edit?usp=drivesdks';
     final _url = Uri.parse(url);
-  if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) { // <--
-    throw Exception('Could not launch $_url');
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+      // <--
+      throw Exception('Could not launch $_url');
+    }
   }
-
-
-}
 }
