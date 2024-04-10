@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -10,178 +11,35 @@ import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 
-enum TtsState { playing, stopped, paused, continued }
+// enum TtsState { playing, stopped, paused, continued }
 
-typedef MyBuilder = void Function(
-    BuildContext context, void Function() methodFromChild);
+// typedef MyBuilder = void Function(
+//     BuildContext context, void Function() methodFromChild);
 
-class PopupAudioPlayer extends StatefulWidget {
-  final MyBuilder builder;
+class PopupAudioPlayer extends StatelessWidget {
   final String bookTitle;
   final String bookAuthor;
   final String voiceText;
-  final bool onAudioSound;
   final Function onCompletion;
 
-  const PopupAudioPlayer(
-      {super.key,
-      required this.bookTitle,
-      required this.bookAuthor,
-      required this.voiceText,
-      required this.onAudioSound,
-      required this.onCompletion,
-      required this.builder});
-
-  @override
-  State<PopupAudioPlayer> createState() => PopupAudioPlayerState();
-}
-
-class PopupAudioPlayerState extends State<PopupAudioPlayer> {
-  late FlutterTts flutterTts;
-  dynamic languages;
-  String? language;
-  double volume = 0.5;
-  double pitch = 1;
-  double rate = 0.5;
-  int end = 0;
-  int positionLastWord = 0;
-  TtsState ttsState = TtsState.stopped;
-  get isPlaying => ttsState == TtsState.playing;
-  get isStopped => ttsState == TtsState.stopped;
-  get isPaused => ttsState == TtsState.paused;
-  get isContinued => ttsState == TtsState.continued;
-
-  bool get isIOS => !kIsWeb && Platform.isIOS;
-  bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  bool get isWeb => kIsWeb;
-
-  @override
-  void initState() {
-    super.initState();
-    initTts();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    flutterTts.stop();
-  }
-
-  @override
-  didChangeDependencies() {
-    print('DID change dependencies');
-    super.didChangeDependencies();
-    sspeak();
-  }
-
-  @override
-  didUpdateWidget(covariant oldWidget) {
-    print('did update widget ');
-    super.didUpdateWidget(oldWidget);
-    print(oldWidget.voiceText);
-
-    if (widget.voiceText != oldWidget.voiceText) {
-      sspeak();
-    }
-  }
-
-  void initTts() {
-    flutterTts = FlutterTts();
-
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print('Playing');
-        ttsState = TtsState.playing;
-      });
-    });
-
-    flutterTts.setCompletionHandler(() {
-      setState(() {
-        print('Complete');
-        ttsState = TtsState.stopped;
-        // positionLastWord = 0;
-        // end = 0;
-        widget.onCompletion();
-        // if (playingVerses) {
-        //   playVerses();
-        // } else {
-        //   closePlayText();
-        // }
-      });
-    });
-
-    flutterTts.setCancelHandler(() {
-      setState(() {
-        print('Cancel');
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    if (isWeb || isIOS) {
-      flutterTts.setPauseHandler(() {
-        setState(() {
-          print('Paused');
-          ttsState = TtsState.paused;
-        });
-      });
-
-      flutterTts.setContinueHandler(() {
-        setState(() {
-          print('Continued');
-          ttsState = TtsState.continued;
-        });
-      });
-    }
-
-    flutterTts.setErrorHandler((msg) {
-      setState(() {
-        print('error: $msg');
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    flutterTts.setProgressHandler(
-        (String text, int startOffset, int endOffset, String word) {
-      print('text: $text');
-      print('startOffset: $startOffset');
-      print('endOffset: $endOffset');
-      print('word: $word');
-      print('positionLastWord');
-
-      setState(() {
-        // int index = widget.voiceText!.indexOf(word);
-        // end = index + word.length;
-        end = endOffset + positionLastWord;
-      });
-    });
-  }
-
-  Future sspeak() async {
-    print('voice text: ${widget.voiceText}');
-    await flutterTts.setVolume(volume);
-    await flutterTts.setSpeechRate(rate);
-    await flutterTts.setPitch(pitch);
-    ttsState = TtsState.playing;
-    if (widget.voiceText != null) {
-      await flutterTts.awaitSpeakCompletion(true);
-      var result = await flutterTts.speak(widget.voiceText);
-      if (result == 1) setState(() => ttsState = TtsState.playing);
-    }
-  }
-
-  Future _pause() async {
-    positionLastWord = end;
-
-    var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
-  }
+  const PopupAudioPlayer({
+    super.key,
+    required this.bookTitle,
+    required this.bookAuthor,
+    required this.voiceText,
+    required this.onCompletion,
+  });
 
   @override
   Widget build(BuildContext context) {
+    TextToSpeech ttsProvider =
+        Provider.of<TextToSpeech>(context, listen: false);
+
+    ttsProvider.init();
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
-    widget.builder.call(context, sspeak);
+    // widget.builder.call(context, sspeak);
     return DraggableScrollableSheet(
       initialChildSize: .16,
       minChildSize: .16,
@@ -204,15 +62,10 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _AudioPlayerTitleAndAuthor(
-                        bookTitle: widget.bookTitle,
-                        bookAuthor: widget.bookAuthor,
-                        end: end,
-                        max: widget.voiceText.length),
-                    _AudioPlayerButton(
-                      ttsState: ttsState,
-                      speak: sspeak,
-                      pause: _pause,
-                    ),
+                        bookTitle: bookTitle,
+                        bookAuthor: bookAuthor,
+                        max: ttsProvider.text.length),
+                    _AudioPlayerButton(),
                   ],
                 )
               ],
@@ -227,14 +80,12 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
 class _AudioPlayerTitleAndAuthor extends StatelessWidget {
   final String bookTitle;
   final String bookAuthor;
-  final int end;
   final int max;
 
   const _AudioPlayerTitleAndAuthor(
       {super.key,
       required this.bookTitle,
       required this.bookAuthor,
-      required this.end,
       required this.max});
 
   @override
@@ -246,6 +97,7 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
         isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
     Color backgroundColorBar =
         isDarkMode ? ColorConstant.gray100 : ColorConstant.indigo90033;
+
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,54 +114,108 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
                 ? AppStyle.txtNunitoSansSemiBold13WhiteA700
                 : AppStyle.txtNunitoSansSemiBold13Indigo900,
           ),
-          _progressBar(end, colorBar, backgroundColorBar),
+          _AudioPlayerProgressBar(
+              valueColor: colorBar,
+              backgroundColor: backgroundColorBar,
+              max: max)
         ],
       ),
     );
   }
+}
 
-  Widget _progressBar(int end, Color valueColor, Color backgroundColor) {
-    var a = end / max;
-    // print(a);
-    // print('end: $end/ $max');
-    // print('max: $max');
+class _AudioPlayerProgressBar extends StatefulWidget {
+  final Color valueColor;
+  final Color backgroundColor;
+  final int max;
+
+  const _AudioPlayerProgressBar(
+      {super.key,
+      required this.valueColor,
+      required this.backgroundColor,
+      required this.max});
+
+  @override
+  State<_AudioPlayerProgressBar> createState() =>
+      _AudioPlayerProgressBarState();
+}
+
+class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
+  StreamController<int> streamController = StreamController<int>();
+  late TextToSpeech ttsProvider;
+
+  FlutterTts? ftts;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
+      print('Hola');
+
+      await ttsProvider.streamController.close();
+      streamController = ttsProvider.streamController;
+
+      ttsProvider.ftts!.setCompletionHandler(() {
+        print('COMPLETIOOOOOOOOOOOON');
+      });
+    });
+  }
+
+  @override
+  dispose() {
+    print('DISPOSE');
+    // ttsProvider.unsubscription();
+    ttsProvider.cancel();
+    streamController.close();
+    ttsProvider.closeStream();
+    super.dispose();
+    // streamController.done;
+    // ttsProvider.streamController.done;
+    // ttsProvider.streamController.close();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
+    int end = ttsProvider.end;
+    var value = end / widget.max;
+
     return Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(top: 5.0, right: 10),
         child: LinearProgressIndicator(
-          backgroundColor: backgroundColor,
+          backgroundColor: widget.backgroundColor,
           color: ColorConstant.indigo900,
-          valueColor: AlwaysStoppedAnimation<Color>(valueColor),
-          value: a.isNaN || a.isInfinite ? 0.0 : end / max,
+          valueColor: AlwaysStoppedAnimation<Color>(widget.valueColor),
+          value: value.isNaN || value.isInfinite
+              ? 0.0
+              : ttsProvider.end / widget.max,
         ));
   }
 }
 
 class _AudioPlayerButton extends StatelessWidget {
-  final TtsState ttsState;
-  final Function speak;
-  final Function pause;
-
   bool get isIOS => !kIsWeb && Platform.isIOS;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
   bool get isWeb => kIsWeb;
 
-  const _AudioPlayerButton(
-      {super.key,
-      required this.ttsState,
-      required this.speak,
-      required this.pause});
+  const _AudioPlayerButton({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
+    TextToSpeech ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
 
-    return _btnSection(isDarkMode);
+    return _btnSection(isDarkMode, ttsProvider);
   }
 
-  Widget _btnSection(bool isDarkMode) {
+  Widget _btnSection(bool isDarkMode, TextToSpeech ttsProvider) {
     IconButtonVariant variant = isDarkMode
         ? IconButtonVariant.OutlinePurple50
         : IconButtonVariant.FillIndigo;
@@ -317,12 +223,13 @@ class _AudioPlayerButton extends StatelessWidget {
         isDarkMode ? ColorConstant.indigo900 : ColorConstant.whiteA700;
 
     if (isAndroid) {
-      if (ttsState != TtsState.playing) {
-        return _buildButtonColumn(
-            colorIcon, ImageConstant.imgArrowMedia, '', speak, variant);
+      if (ttsProvider.ttsState != TtsStates.playing) {
+        return _buildButtonColumn(colorIcon, ImageConstant.imgArrowMedia, '',
+            ttsProvider.play, variant);
       } else {
-        return _buildButtonColumn(
-            colorIcon, ImageConstant.imgArrowdown, '', pause, variant);
+        // ttsProvider.positionLastWord = end;
+        return _buildButtonColumn(colorIcon, ImageConstant.imgArrowdown, '',
+            ttsProvider.pause, variant);
       }
     } else {
       return Container();

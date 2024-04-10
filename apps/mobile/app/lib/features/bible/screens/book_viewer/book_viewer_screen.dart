@@ -56,7 +56,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       lineHeight: LineHeight.number(1.2),
       fontSize: FontSize.medium);
 
-  String? _newVoiceText;
+  String _newVoiceText = '';
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
@@ -69,7 +69,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   int secuenceVerseIndex = 1;
   Map<String, dynamic> verses = {};
   bool playingVerses = false;
-  GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
+  // GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
 
   late void Function() myMethod = () {};
 
@@ -261,7 +261,22 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       ContextMenuButtonItem(
         label: 'Escuchar',
         onPressed: () async {
-          openPlayText();
+          // openPlayText();
+          TextToSpeech ttsProvider =
+              Provider.of<TextToSpeech>(context, listen: false);
+
+          ClipboardData? kTextPlain;
+          kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+          ttsProvider.text = kTextPlain?.text ?? '';
+          print(kTextPlain?.text);
+          _newVoiceText = kTextPlain?.text ?? '';
+          onAudioSound = true;
+
+          // ttsProvider.ftts!.setCompletionHandler(() {
+          //   print('COMPLETIIIIIIION');
+          // });
+
+          setState(() {});
         },
       ),
       ContextMenuButtonItem(
@@ -303,20 +318,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
               ),
               if (onAudioSound)
                 PopupAudioPlayer(
-                  key: globalKey,
-                  builder:
-                      (BuildContext context, void Function() methodFromChild) {
-                    myMethod = methodFromChild;
-                  },
                   onCompletion: () {
                     // setOnAudioSound(false);
-                    playingVerses
-                        ? playVerses(
-                            secuenceVerseIndex, int.parse(verses.keys.last))
-                        : setOnAudioSound(false);
+                    // playingVerses
+                    //     ? playVerses(
+                    //         secuenceVerseIndex, int.parse(verses.keys.last))
+                    //     : setOnAudioSound(false);
                   },
-                  onAudioSound: onAudioSound,
-                  voiceText: _newVoiceText!,
+                  voiceText: _newVoiceText,
                   bookTitle: getTitle(bibleService),
                   bookAuthor: '',
                 )

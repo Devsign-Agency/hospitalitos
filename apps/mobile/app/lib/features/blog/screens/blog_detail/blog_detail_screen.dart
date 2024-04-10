@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:html/parser.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/shared/services/text_to_speech.dart';
 
@@ -69,7 +68,7 @@ class _BlogDetailState extends State<BlogDetail> {
                             debugPrint(selectedText);
                             print('playText');
                             TextToSpeech tts = TextToSpeech();
-                            await tts.play(selectedText);
+                            await tts.play();
                             // your "send email" code
                           },
                         ),

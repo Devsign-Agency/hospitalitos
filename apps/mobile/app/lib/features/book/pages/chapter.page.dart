@@ -100,12 +100,12 @@ class _ChapterPageState extends State<ChapterPage> {
   PageController pageController = PageController();
   FToast? fToast;
 
-  TtsState ttsState = TtsState.stopped;
+  TtsStates ttsState = TtsStates.stopped;
 
-  get isPlaying => ttsState == TtsState.playing;
-  get isStopped => ttsState == TtsState.stopped;
-  get isPaused => ttsState == TtsState.paused;
-  get isContinued => ttsState == TtsState.continued;
+  get isPlaying => ttsState == TtsStates.playing;
+  get isStopped => ttsState == TtsStates.stopped;
+  get isPaused => ttsState == TtsStates.paused;
+  get isContinued => ttsState == TtsStates.continued;
 
   bool get isIOS => !kIsWeb && Platform.isIOS;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
@@ -131,14 +131,14 @@ class _ChapterPageState extends State<ChapterPage> {
     flutterTts.setStartHandler(() {
       setState(() {
         print('Playing');
-        ttsState = TtsState.playing;
+        ttsState = TtsStates.playing;
       });
     });
 
     flutterTts.setCompletionHandler(() {
       setState(() {
         print('Complete');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
         positionLastWord = 0;
         end = 0;
         closePlayText();
@@ -148,7 +148,7 @@ class _ChapterPageState extends State<ChapterPage> {
     flutterTts.setCancelHandler(() {
       setState(() {
         print('Cancel');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
       });
     });
 
@@ -156,14 +156,14 @@ class _ChapterPageState extends State<ChapterPage> {
       flutterTts.setPauseHandler(() {
         setState(() {
           print('Paused');
-          ttsState = TtsState.paused;
+          ttsState = TtsStates.paused;
         });
       });
 
       flutterTts.setContinueHandler(() {
         setState(() {
           print('Continued');
-          ttsState = TtsState.continued;
+          ttsState = TtsStates.continued;
         });
       });
     }
@@ -171,7 +171,7 @@ class _ChapterPageState extends State<ChapterPage> {
     flutterTts.setErrorHandler((msg) {
       setState(() {
         print('error: $msg');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
       });
     });
 
@@ -195,12 +195,12 @@ class _ChapterPageState extends State<ChapterPage> {
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
-    ttsState = TtsState.playing;
+    ttsState = TtsStates.playing;
     if (_newVoiceText != null) {
       await flutterTts.awaitSpeakCompletion(true);
       var result = await flutterTts.speak(_newVoiceText!);
       print('RESULT $result');
-      if (result == 1) setState(() => ttsState = TtsState.playing);
+      if (result == 1) setState(() => ttsState = TtsStates.playing);
     }
   }
 
@@ -208,7 +208,7 @@ class _ChapterPageState extends State<ChapterPage> {
     positionLastWord = end;
 
     var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
+    if (result == 1) setState(() => ttsState = TtsStates.paused);
   }
 
   @override
@@ -575,7 +575,7 @@ class PopupAudioPlayer extends StatefulWidget {
   final String bookAuthor;
   final int end;
   final int max;
-  final TtsState ttsState;
+  final TtsStates ttsState;
   final Function speak;
   final Function pause;
   final String voiceText;
@@ -606,11 +606,11 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
   double rate = 0.5;
   int end = 0;
   int positionLastWord = 0;
-  TtsState ttsState = TtsState.stopped;
-  get isPlaying => ttsState == TtsState.playing;
-  get isStopped => ttsState == TtsState.stopped;
-  get isPaused => ttsState == TtsState.paused;
-  get isContinued => ttsState == TtsState.continued;
+  TtsStates ttsState = TtsStates.stopped;
+  get isPlaying => ttsState == TtsStates.playing;
+  get isStopped => ttsState == TtsStates.stopped;
+  get isPaused => ttsState == TtsStates.paused;
+  get isContinued => ttsState == TtsStates.continued;
 
   bool get isIOS => !kIsWeb && Platform.isIOS;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
@@ -638,14 +638,14 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
     flutterTts.setStartHandler(() {
       setState(() {
         print('Playing');
-        ttsState = TtsState.playing;
+        ttsState = TtsStates.playing;
       });
     });
 
     flutterTts.setCompletionHandler(() {
       setState(() {
         print('Complete');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
         // positionLastWord = 0;
         // end = 0;
 
@@ -660,7 +660,7 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
     flutterTts.setCancelHandler(() {
       setState(() {
         print('Cancel');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
       });
     });
 
@@ -668,14 +668,14 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
       flutterTts.setPauseHandler(() {
         setState(() {
           print('Paused');
-          ttsState = TtsState.paused;
+          ttsState = TtsStates.paused;
         });
       });
 
       flutterTts.setContinueHandler(() {
         setState(() {
           print('Continued');
-          ttsState = TtsState.continued;
+          ttsState = TtsStates.continued;
         });
       });
     }
@@ -683,7 +683,7 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
     flutterTts.setErrorHandler((msg) {
       setState(() {
         print('error: $msg');
-        ttsState = TtsState.stopped;
+        ttsState = TtsStates.stopped;
       });
     });
 
@@ -701,11 +701,11 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
-    ttsState = TtsState.playing;
+    ttsState = TtsStates.playing;
     if (widget.voiceText != null) {
       await flutterTts.awaitSpeakCompletion(true);
       var result = await flutterTts.speak(widget.voiceText);
-      if (result == 1) setState(() => ttsState = TtsState.playing);
+      if (result == 1) setState(() => ttsState = TtsStates.playing);
     }
   }
 
@@ -713,7 +713,7 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
     // positionLastWord = end;
 
     var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
+    if (result == 1) setState(() => ttsState = TtsStates.paused);
   }
 
   @override
@@ -826,7 +826,7 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
 }
 
 class _AudioPlayerButton extends StatelessWidget {
-  final TtsState ttsState;
+  final TtsStates ttsState;
   final Function speak;
   final Function pause;
 
@@ -857,7 +857,7 @@ class _AudioPlayerButton extends StatelessWidget {
         isDarkMode ? ColorConstant.indigo900 : ColorConstant.whiteA700;
 
     if (isAndroid) {
-      if (ttsState != TtsState.playing) {
+      if (ttsState != TtsStates.playing) {
         return _buildButtonColumn(
             colorIcon, ImageConstant.imgArrowMedia, '', speak, variant);
       } else {
