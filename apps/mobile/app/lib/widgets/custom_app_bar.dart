@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? hasLeading;
   const CustomAppBar({
     super.key,
-    this.backgroundColor = Colors.red,
+    this.backgroundColor,
     this.textIconColor = Colors.red,
     this.icon,
     this.title = '',
@@ -56,6 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ThemeData currentTheme = themeProvider.currentTheme;
     bool isDarkTheme = currentTheme == DarkTheme.theme;
     return AppBar(
+      backgroundColor: backgroundColor,
       automaticallyImplyLeading: true,
       bottomOpacity: 0.0,
       elevation: 0.0,

@@ -5,14 +5,26 @@ import 'package:flutter/services.dart';
 import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/shared/preferences.dart';
 
+import '../../core/app_export.dart';
+
 class BibleService extends ChangeNotifier {
   static const List<String> tabBarItems = [
     'Libros',
     'Capítulos',
     'Versículos',
   ];
+
+  static List<BottomNavigationMenu> bottomMenuList = [
+    BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+    // BottomNavigationMenu(
+    //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+    BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+    BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+  ];
+
   List<BookBible> books = [];
   BookBible _selectedBook = BookBible(name: '', chapters: []);
+  bool _isDarkTheme = false;
   Map<String, dynamic> _selectedVerses = {};
   Chapter _selectedChapter = Chapter(chapter: '', ctdverses: 0, verses: {});
   int verseNumber = 0;
@@ -24,6 +36,13 @@ class BibleService extends ChangeNotifier {
   Map<String, dynamic> get selectedVerses => _selectedVerses;
   int get startVerse => _startVerse;
   int get endVerse => _endVerse;
+  bool get isDarkTheme => _isDarkTheme;
+
+  set isDarkTheme(bool value) {
+    _isDarkTheme = value;
+
+    notifyListeners();
+  }
 
   set selectedBook(BookBible book) {
     _selectedBook = book;
@@ -145,8 +164,11 @@ class BibleService extends ChangeNotifier {
       endIndex = startIndex;
     }
 
-    final Map<String, dynamic> filteredMap = { for (var k in _selectedChapter.verses.keys.where(
-            (k) => int.parse(k) >= startIndex && int.parse(k) <= endIndex)) k : _selectedChapter.verses[k] };
+    final Map<String, dynamic> filteredMap = {
+      for (var k in _selectedChapter.verses.keys
+          .where((k) => int.parse(k) >= startIndex && int.parse(k) <= endIndex))
+        k: _selectedChapter.verses[k]
+    };
 
     filteredMap.forEach((k, v) => print('key: $k, value: $v'));
     selectedVerses = filteredMap;

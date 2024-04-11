@@ -12,6 +12,7 @@ import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../book/widgets/widgets.dart';
+import '../../../main/pages/pages.dart';
 
 class TextBook {
   String fontFamily;
@@ -188,14 +189,24 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     return title;
   }
 
+  handleChangeBottomNavigationBar(int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
-
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
+    bool isDarkTheme = bibleService.isDarkTheme;
 
     verses = bibleService.selectedVerses;
 
@@ -223,7 +234,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                 builder: (context) => PanelSettingTextBook(
                       initialValues: settingTextInitialValues,
                       onChange: (dynamic event) {
-                        print(event['fontSize']);
                         textBook.fontSize = event['fontSize'];
                         textBook.lineHeight = event['lineHeight'];
                         textBook.margin = event['margin'];
@@ -247,14 +257,11 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     final appBarActions = [
       {
         'icon': ImageConstant.imgFavorite,
-        'color': isDarkMode
-            ? ColorConstant.whiteA700
-            : ColorConstant.gray800,
+        'color': isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray800,
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': ()
-        {
+        'action': () {
           bibleService.addNewPage();
           showCustomToast('Página guardada en favoritos exitosamente');
         },
@@ -289,10 +296,31 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray100,
       appBar: CustomAppBar(
-          title: getTitle(bibleService),
+          hasCustomTitle: true,
+          customTitle: Text(getTitle(bibleService),
+              style: isDarkTheme
+                  ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                  : AppStyle.txtNunitoSansSemiBold26),
           actions: appBarActions,
           hasPopupMenu: false,
+          leading: CustomIconButton(
+              margin: getMargin(left: 8),
+              height: getSize(48),
+              width: getSize(48),
+              variant: IconButtonVariant.NoFill,
+              onTap: () => Navigator.of(context).pop(),
+              child: CustomImageView(
+                svgPath: isDarkTheme
+                    ? ImageConstant.imgArrowleftGray900
+                    : ImageConstant.imgArrowleftWhiteA700,
+                color: isDarkTheme
+                    ? ColorConstant.whiteA700
+                    : ColorConstant.gray800,
+              )),
+          backgroundColor:
+              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
           popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
       body: PageView(
         controller: pageController,
@@ -310,7 +338,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       padding: getPadding(all: 0.0),
                       child: Column(
                         children: [
-                          ..._buildVerseList(bibleService, isDarkMode)
+                          ..._buildVerseList(bibleService, isDarkTheme)
                         ],
                       )),
                 ),
@@ -339,16 +367,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           // Page view chapter's markers
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: ColorConstant.indigo900,
-      //   onPressed: () {
-      //     bibleService.addNewPage();
-      //   },
-      //   child: Icon(
-      //     Icons.favorite_border_outlined,
-      //     color: ColorConstant.whiteA700,
-      //   ),
-      // ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          backgroundColor:
+              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
+          currentIndex: 2,
+          onChangeIndex: handleChangeBottomNavigationBar,
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 
@@ -379,25 +403,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                         ? AppStyle.txtNunitoSansRegular14WhiteA700
                         : AppStyle.txtNunitoSansRegular14Black900),
                 Expanded(
-                  child: Text(
-                    '$value',
-                    style: TextStyle(
-                      color: textBook.color,
-                      fontSize: textBook.fontSize.value,
-                      height: textBook.lineHeight!.size,
-                      // fontSize: convertFontSizeToPx(textBook.fontSize),
-                    ),
-                    // style: isDarkMode
-                    //     ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
-                    //         backgroundColor: selectedVerse == key
-                    //             ? ColorConstant.yellow100
-                    //             : ColorConstant.transparent)
-                    //     : AppStyle.txtNunitoSansRegular18Black900.copyWith(
-                    //         // decoration: TextDecoration.underline,
-                    //         backgroundColor: selectedVerse == key
-                    //             ? ColorConstant.yellow100
-                    //             : ColorConstant.transparent),
-                  ),
+                  child: Text('$value',
+                      style: isDarkMode
+                          ? AppStyle.txtNunitoSansRegular18WhiteA700
+                          : AppStyle.txtNunitoSansRegular18Black900),
                 ),
               ]),
               SizedBox(

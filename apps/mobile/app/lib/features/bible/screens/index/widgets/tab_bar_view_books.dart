@@ -18,6 +18,7 @@ class TabBarViewBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
+    bool isDarkTheme = bibleService.isDarkTheme;
 
     return Stack(
       children: [
@@ -59,7 +60,9 @@ class TabBarViewBooks extends StatelessWidget {
                               : null),
                       child: Text(
                         snapshot.data![index].name,
-                        style: AppStyle.txtNunitoSansRegular18Gray900,
+                        style: isDarkTheme
+                            ? AppStyle.txtNunitoSansRegular18WhiteA700
+                            : AppStyle.txtNunitoSansRegular18Gray900,
                       ),
                     ),
                   ),

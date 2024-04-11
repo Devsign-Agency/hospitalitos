@@ -10,12 +10,14 @@ class CustomBottomNavigationBar extends StatefulWidget {
   final Function(int) onChangeIndex;
   final List<BottomNavigationMenu> bottomMenuList;
   final int currentIndex;
+  final Color? backgroundColor;
 
   const CustomBottomNavigationBar({
     super.key,
     required this.onChangeIndex,
     required this.bottomMenuList,
     this.currentIndex = 0,
+    this.backgroundColor,
   });
 
   @override
@@ -45,9 +47,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
-    print('currentIndex $_currentIndex');
     return BottomNavigationBar(
       currentIndex: widget.currentIndex,
+      backgroundColor: widget.backgroundColor,
       type: BottomNavigationBarType.fixed,
       items: List.generate(
         widget.bottomMenuList.length,

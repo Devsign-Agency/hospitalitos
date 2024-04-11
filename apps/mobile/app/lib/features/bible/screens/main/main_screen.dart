@@ -79,22 +79,15 @@ class _BibleMainState extends State<BibleMain> {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
-    final List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
-      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
-      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
-    ];
 
     bibleService.getBooks();
     bibleService.resetState();
 
     final List<Map<String, dynamic>> actions = [
-      {
-        'icon': ImageConstant.imgSearch,
-        'action': () => {print('Search...')}
-      },
+      // {
+      //   'icon': ImageConstant.imgSearch,
+      //   'action': () => {print('Search...')}
+      // },
     ];
 
     return Scaffold(
@@ -181,9 +174,9 @@ class _BibleMainState extends State<BibleMain> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 3,
+          currentIndex: 2,
           onChangeIndex: handleChangeBottomNavigationBar,
-          bottomMenuList: bottomMenuList),
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 }
