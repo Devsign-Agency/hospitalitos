@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
           child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular14Gray900)),
     ]),
+    /*
     Wrap(children: [
       Align(
           alignment: Alignment.centerLeft,
@@ -140,6 +141,7 @@ class _HomePageState extends State<HomePage> {
           child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
+    */
   ];
   late User? user;
   late BottomNavigationMainProvider bottomNavigationMain =
