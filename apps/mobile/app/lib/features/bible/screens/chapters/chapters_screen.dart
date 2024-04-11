@@ -116,8 +116,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     final List<ListViewFavoriteModel> chapterList = [];
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      /*BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),*/
       BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
