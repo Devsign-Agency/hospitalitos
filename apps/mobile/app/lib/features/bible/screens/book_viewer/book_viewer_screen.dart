@@ -257,7 +257,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     final appBarActions = [
       {
         'icon': ImageConstant.imgFavorite,
-        'color': isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray800,
+        'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
@@ -268,7 +268,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       },
       {
         'icon': ImageConstant.imgMusicIndigo900,
-        'color': isDarkMode
+        'color': isDarkTheme
             ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
             : ColorConstant.gray800,
         'variant': !onAudioSound

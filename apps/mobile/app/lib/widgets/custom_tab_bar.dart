@@ -19,7 +19,6 @@ class CustomTabBar extends StatelessWidget {
     return TabBar(
       isScrollable: false,
       labelPadding: EdgeInsets.all(0),
-      // labelColor: Colors.black12,
       labelColor: labelColor,
       controller: tabController,
       indicatorColor: indicatorColor,
@@ -38,7 +37,6 @@ class CustomTabBar extends StatelessWidget {
         ...items.map((item) => Tab(
                 child: Text(
               item,
-              // style: AppStyle.txtNunitoSa,
             )))
       ],
     );

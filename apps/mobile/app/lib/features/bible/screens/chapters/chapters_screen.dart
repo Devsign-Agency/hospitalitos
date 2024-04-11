@@ -114,13 +114,6 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         Provider.of<BibleService>(context, listen: true);
 
     final List<ListViewFavoriteModel> chapterList = [];
-    final List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      /*BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),*/
-      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
-      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
-    ];
 
     List<dynamic> pages = bibleService.getPageList();
 
@@ -147,9 +140,9 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 3,
+          currentIndex: 2,
           onChangeIndex: (index) {},
-          bottomMenuList: bottomMenuList),
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 
@@ -166,9 +159,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                   BibleService bibleService =
                       Provider.of<BibleService>(context, listen: false);
 
-
                   bibleService.deletePage(item.id);
-                      showCustomToast('Página eliminada exitosamente');
+                  showCustomToast('Página eliminada exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),
