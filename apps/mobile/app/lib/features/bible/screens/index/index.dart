@@ -59,6 +59,7 @@ class _IndexScreenState extends State<IndexScreen>
       // },
       {
         'icon': ImageConstant.imgMoonIndigo,
+        'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
         'action': () {
           bibleService.isDarkTheme = !bibleService.isDarkTheme;
           print(bibleService.isDarkTheme);
