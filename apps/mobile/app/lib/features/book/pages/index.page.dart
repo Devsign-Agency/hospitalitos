@@ -58,6 +58,8 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
             children: [
               // Tab items
               CustomTabBar(
+                
+                  labelColor: Colors.black,
                   tabController: tabController,
                   items: IndexService.tabBarItems),
 
@@ -72,7 +74,7 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                     children: [
                       // Books Tab
                       ListChaptersOfBook(book: book),
-                  
+
                       SizedBox(
                         height: 100,
                         width: 600,
@@ -102,10 +104,12 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                          SizedBox(
+                                        SizedBox(
                                           width: 220,
                                           child: Text(
                                             'Titulo:',
@@ -121,12 +125,11 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                                                 .txtNunitoSansRegular18Gray9001,
                                           ),
                                         ),
-                                         SizedBox(
-                                          width:10,
+                                        SizedBox(
+                                          width: 10,
                                           height: 10,
-                                          
                                         ),
-                                         SizedBox(
+                                        SizedBox(
                                           width: 220,
                                           child: Text(
                                             'Autor:',
@@ -135,7 +138,7 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         SizedBox(
-                                           width: 220,
+                                          width: 220,
                                           child: Text(
                                             book!.Author!,
                                             style: AppStyle
@@ -288,28 +291,27 @@ class ListChaptersOfBook extends StatelessWidget {
             var title = (book?.Chapters![index].Title!).toString();
             return title != ''
                 ? Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: ListTile(
-                    
-                      title: Container(
-                         decoration: BoxDecoration(
-                           border: Border(
-                        left: BorderSide(
-                            color: ColorConstant.yellow100,
-                      )),
-                         ),
-                        child: Text(
-                          title,
-                          style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListTile(
+                        title: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                                left: BorderSide(
+                              color: ColorConstant.yellow100,
+                            )),
+                          ),
+                          child: Text(
+                            title,
+                            style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                          ),
                         ),
-                      ),
-                      onTap: () {
-                        // Navigator.pop(context);
-                        Navigator.pushNamed(context, ChapterPage.route,
-                            arguments: EpubArguments(
-                                book: book, chapter: book?.Chapters![index]));
-                      }),
-                )
+                        onTap: () {
+                          // Navigator.pop(context);
+                          Navigator.pushNamed(context, ChapterPage.route,
+                              arguments: EpubArguments(
+                                  book: book, chapter: book?.Chapters![index]));
+                        }),
+                  )
                 : Container();
           }),
     );
