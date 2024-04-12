@@ -69,14 +69,12 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
 
   @override
   didChangeDependencies() {
-    print('DID change dependencies');
     super.didChangeDependencies();
     sspeak();
   }
 
   @override
   didUpdateWidget(covariant oldWidget) {
-    print('did update widget ');
     super.didUpdateWidget(oldWidget);
     print(oldWidget.voiceText);
 
@@ -142,22 +140,15 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
 
     flutterTts.setProgressHandler(
         (String text, int startOffset, int endOffset, String word) {
-      print('text: $text');
-      print('startOffset: $startOffset');
-      print('endOffset: $endOffset');
-      print('word: $word');
-      print('positionLastWord');
-
       setState(() {
-        // int index = widget.voiceText!.indexOf(word);
-        // end = index + word.length;
-        end = endOffset + positionLastWord;
+        if (ttsState != TtsState.paused) {
+          end = endOffset + positionLastWord;
+        }
       });
     });
   }
 
   Future sspeak() async {
-    print('voice text: ${widget.voiceText}');
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);

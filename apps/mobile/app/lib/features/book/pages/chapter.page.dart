@@ -16,7 +16,6 @@ import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../widgets/widgets.dart';
 
-// import 'package:css_text/css_text.dart';
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
 
@@ -53,8 +52,6 @@ class TextBook {
 }
 
 class _ChapterPageState extends State<ChapterPage> {
-  late EpubController _epubController;
-  late EpubBook de;
   bool onAudioSound = false;
   late FlutterTts flutterTts;
   dynamic languages;
@@ -84,7 +81,7 @@ class _ChapterPageState extends State<ChapterPage> {
       lineHeight: LineHeight.number(1.2),
       fontSize: FontSize.medium);
 
-  String? _newVoiceText;
+  String _newVoiceText = '';
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
@@ -96,7 +93,7 @@ class _ChapterPageState extends State<ChapterPage> {
       ScrollController(initialScrollOffset: 0.0);
 
   int bottomNavigationBarCurrentIndex = 0;
-
+  int max = 0;
   PageController pageController = PageController();
   FToast? fToast;
 
@@ -111,7 +108,10 @@ class _ChapterPageState extends State<ChapterPage> {
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
   bool get isWeb => kIsWeb;
   int i = 0;
-
+  int sentencesCount = 0;
+  List<String> sentences = [];
+  String parsedString = '';
+  int previouEndOffset = 0;
   @override
   void initState() {
     super.initState();
@@ -119,6 +119,28 @@ class _ChapterPageState extends State<ChapterPage> {
 
     fToast = FToast();
     fToast?.init(context);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+
+    dynamic htmlContent = parse(arguments.chapter!.HtmlContent);
+
+    parsedString = parse(htmlContent.body!.text).documentElement!.text;
+    // print(parsedString);
+
+    //fragmentNewVoiceText(parsedString.substring(0, 1600));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    flutterTts.stop();
+    Clipboard.setData(ClipboardData(text: ''));
   }
 
   initTts() {
@@ -130,18 +152,30 @@ class _ChapterPageState extends State<ChapterPage> {
 
     flutterTts.setStartHandler(() {
       setState(() {
-        print('Playing');
         ttsState = TtsState.playing;
       });
     });
 
     flutterTts.setCompletionHandler(() {
       setState(() {
-        print('Complete');
         ttsState = TtsState.stopped;
-        positionLastWord = 0;
-        end = 0;
-        closePlayText();
+        // positionLastWord = 0;
+        // end = 0;
+        // closePlayText();
+
+        i++;
+        if (i < sentencesCount) {
+          _newVoiceText = sentences[i];
+          positionLastWord = end;
+          _speak();
+        } else {
+          setState(() {
+            i = 0;
+            end = 0;
+            positionLastWord = 0;
+            _newVoiceText = sentences[i];
+          });
+        }
       });
     });
 
@@ -156,6 +190,7 @@ class _ChapterPageState extends State<ChapterPage> {
       flutterTts.setPauseHandler(() {
         setState(() {
           print('Paused');
+
           ttsState = TtsState.paused;
         });
       });
@@ -177,16 +212,11 @@ class _ChapterPageState extends State<ChapterPage> {
 
     flutterTts.setProgressHandler(
         (String text, int startOffset, int endOffset, String word) {
-      print('text: $text');
-      print('startOffset: $startOffset');
-      print('endOffset: $endOffset');
-      print('word: $word');
       setState(() {
-        // int index = _newVoiceText!.indexOf(word);
-
-        // end = index + word.length;
-
-        end = endOffset + positionLastWord;
+        if (ttsState != TtsState.paused) {
+          previouEndOffset = endOffset;
+          end = endOffset + positionLastWord;
+        }
       });
     });
   }
@@ -205,17 +235,13 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Future _pause() async {
-    positionLastWord = end;
-
     var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    flutterTts.stop();
-    Clipboard.setData(ClipboardData(text: ''));
+    if (result == 1) {
+      setState(() {
+        ttsState = TtsState.paused;
+        positionLastWord = end;
+      });
+    }
   }
 
   void closePlayText() {
@@ -225,13 +251,18 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void openPlayText() async {
-    onAudioSound = true;
     ClipboardData? data;
     data = await Clipboard.getData(Clipboard.kTextPlain);
 
-    data != null ? _onChange(data.text!) : _onChange('');
+    fragmentNewVoiceText(data!.text!);
 
-    _speak();
+    onAudioSound = true;
+
+    // data != null ? _onChange(data.text!) : _onChange('');
+
+    max = data.text!.length;
+    _onChange(data.text!);
+    // _speak();
   }
 
   void _onChange(String text) {
@@ -336,6 +367,44 @@ class _ChapterPageState extends State<ChapterPage> {
     );
   }
 
+  fragmentNewVoiceText(String newVoiceText) async {
+    var count = newVoiceText.length;
+    var max = 4000;
+    var loopCount = count ~/ max;
+
+    sentences = [];
+
+    if (newVoiceText.length >= max) {
+      for (var i = 0; i < loopCount; i++) {
+        if (i != loopCount) {
+          sentences.add(newVoiceText.substring(i * max, (i + 1) * max));
+        } else {
+          var end = (count - ((i * max)) * (i * max));
+          sentences.add(newVoiceText.substring(i * max, end));
+        }
+      }
+      var total = 0;
+
+      for (var text in sentences) {
+        total = total + text.length;
+      }
+
+      if (total < newVoiceText.length) {
+        sentences
+            .add(newVoiceText.substring(total - 1, newVoiceText.length - 1));
+        loopCount++;
+      }
+    } else {
+      loopCount++;
+      sentences.add(newVoiceText.substring(0, newVoiceText.length - 1));
+    }
+
+    sentencesCount = loopCount;
+    _newVoiceText = sentences[i];
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -415,7 +484,17 @@ class _ChapterPageState extends State<ChapterPage> {
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () {}
+        'action': () {
+          if (!onAudioSound) {
+            fragmentNewVoiceText(parsedString.substring(0, 1600));
+            i = 0;
+            _newVoiceText = sentences[i];
+            max = parsedString.length;
+          }
+          setState(() {
+            onAudioSound = !onAudioSound;
+          });
+        }
       },
     ];
 
@@ -500,12 +579,12 @@ class _ChapterPageState extends State<ChapterPage> {
               ),
               if (onAudioSound)
                 PopupAudioPlayer(
-                    onAudioSound: false,
-                    voiceText: '',
+                    onAudioSound: onAudioSound,
+                    voiceText: _newVoiceText,
                     bookTitle: bookTitle,
                     bookAuthor: bookAuthor,
                     end: end,
-                    max: _newVoiceText!.length,
+                    max: max,
                     ttsState: ttsState,
                     speak: _speak,
                     pause: _pause)
@@ -622,99 +701,99 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
 
     print('INIT AUDIO PLAYER WIDGET');
 
-    initTts();
+    // initTts();
   }
 
   @override
   didChangeDependencies() {
     print('DID change dependencies');
     super.didChangeDependencies();
-    sspeak();
+    // sspeak();
   }
 
-  void initTts() {
-    flutterTts = FlutterTts();
+  // void initTts() {
+  //   flutterTts = FlutterTts();
 
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print('Playing');
-        ttsState = TtsState.playing;
-      });
-    });
+  //   flutterTts.setStartHandler(() {
+  //     setState(() {
+  //       print('Playing');
+  //       ttsState = TtsState.playing;
+  //     });
+  //   });
 
-    flutterTts.setCompletionHandler(() {
-      setState(() {
-        print('Complete');
-        ttsState = TtsState.stopped;
-        // positionLastWord = 0;
-        // end = 0;
+  //   flutterTts.setCompletionHandler(() {
+  //     setState(() {
+  //       print('Complete');
+  //       ttsState = TtsState.stopped;
+  //       // positionLastWord = 0;
+  //       // end = 0;
 
-        // if (playingVerses) {
-        //   playVerses();
-        // } else {
-        //   closePlayText();
-        // }
-      });
-    });
+  //       // if (playingVerses) {
+  //       //   playVerses();
+  //       // } else {
+  //       //   closePlayText();
+  //       // }
+  //     });
+  //   });
 
-    flutterTts.setCancelHandler(() {
-      setState(() {
-        print('Cancel');
-        ttsState = TtsState.stopped;
-      });
-    });
+  //   flutterTts.setCancelHandler(() {
+  //     setState(() {
+  //       print('Cancel');
+  //       ttsState = TtsState.stopped;
+  //     });
+  //   });
 
-    if (isWeb || isIOS) {
-      flutterTts.setPauseHandler(() {
-        setState(() {
-          print('Paused');
-          ttsState = TtsState.paused;
-        });
-      });
+  //   if (isWeb || isIOS) {
+  //     flutterTts.setPauseHandler(() {
+  //       setState(() {
+  //         print('Paused');
+  //         ttsState = TtsState.paused;
+  //       });
+  //     });
 
-      flutterTts.setContinueHandler(() {
-        setState(() {
-          print('Continued');
-          ttsState = TtsState.continued;
-        });
-      });
-    }
+  //     flutterTts.setContinueHandler(() {
+  //       setState(() {
+  //         print('Continued');
+  //         ttsState = TtsState.continued;
+  //       });
+  //     });
+  //   }
 
-    flutterTts.setErrorHandler((msg) {
-      setState(() {
-        print('error: $msg');
-        ttsState = TtsState.stopped;
-      });
-    });
+  //   flutterTts.setErrorHandler((msg) {
+  //     setState(() {
+  //       print('error: $msg');
+  //       ttsState = TtsState.stopped;
+  //     });
+  //   });
 
-    flutterTts.setProgressHandler(
-        (String text, int startOffset, int endOffset, String word) {
-      setState(() {
-        // int index = widget.voiceText!.indexOf(word);
-        // end = index + word.length;
-        end = endOffset + positionLastWord;
-      });
-    });
-  }
+  //   flutterTts.setProgressHandler(
+  //       (String text, int startOffset, int endOffset, String word) {
+  //     setState(() {
+  //       // int index = widget.voiceText!.indexOf(word);
+  //       // end = index + word.length;
+  //       end = endOffset + positionLastWord;
+  //     });
+  //   });
+  // }
 
-  Future sspeak() async {
-    await flutterTts.setVolume(volume);
-    await flutterTts.setSpeechRate(rate);
-    await flutterTts.setPitch(pitch);
-    ttsState = TtsState.playing;
-    if (widget.voiceText != null) {
-      await flutterTts.awaitSpeakCompletion(true);
-      var result = await flutterTts.speak(widget.voiceText);
-      if (result == 1) setState(() => ttsState = TtsState.playing);
-    }
-  }
+  // Future sspeak() async {
+  //   await flutterTts.setVolume(volume);
+  //   await flutterTts.setSpeechRate(rate);
+  //   await flutterTts.setPitch(pitch);
+  //   ttsState = TtsState.playing;
+  //   if (widget.voiceText != null) {
+  //     await flutterTts.awaitSpeakCompletion(true);
+  //     var result = await flutterTts.speak(widget.voiceText);
+  //     if (result == 1) setState(() => ttsState = TtsState.playing);
+  //   }
+  // }
 
-  Future _pause() async {
-    // positionLastWord = end;
+  // Future _pause() async {
+  //   // positionLastWord = end;
 
-    var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
-  }
+  //   var result = await flutterTts.pause();
+  //   if (result == 1) setState(() => ttsState = TtsState.paused);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -746,12 +825,12 @@ class PopupAudioPlayerState extends State<PopupAudioPlayer> {
                     _AudioPlayerTitleAndAuthor(
                         bookTitle: widget.bookTitle,
                         bookAuthor: widget.bookAuthor,
-                        end: end,
-                        max: widget.voiceText.length),
+                        end: widget.end,
+                        max: widget.max),
                     _AudioPlayerButton(
-                      ttsState: ttsState,
-                      speak: sspeak,
-                      pause: _pause,
+                      ttsState: widget.ttsState,
+                      speak: widget.speak,
+                      pause: widget.pause,
                     ),
                   ],
                 )
