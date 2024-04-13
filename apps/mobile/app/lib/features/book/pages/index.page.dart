@@ -12,6 +12,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 
 import '../../../../core/app_export.dart';
@@ -58,7 +60,6 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
             children: [
               // Tab items
               CustomTabBar(
-                
                   labelColor: Colors.black,
                   tabController: tabController,
                   items: IndexService.tabBarItems),
@@ -292,28 +293,73 @@ class ListChaptersOfBook extends StatelessWidget {
             return title != ''
                 ? Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: ListTile(
-                        title: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                              color: ColorConstant.yellow100,
-                            )),
-                          ),
-                          child: Text(
-                            title,
-                            style: AppStyle.txtNunitoSansSemiBold20Gray900,
-                          ),
+                    child: book?.Chapters![index].SubChapters.length >0 ? ExpansionTile(
+                      title: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(
+                            color: ColorConstant.yellow100,
+                          )),
                         ),
+                        child: Text(
+                          title,
+                          style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                        ),
+                      ),
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: book.Chapters![index].SubChapters.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              var subtititle = book
+                                  .Chapters![index].SubChapters[i].Title!
+                                  .toString();
+                              return ListTile(
+                                onTap: () {
+                                  var sub = book.Chapters![index].SubChapters;
+
+                                  Navigator.pushNamed(
+                                      context, ChapterPage.route,
+                                      arguments: EpubArguments(
+                                          book: book,
+                                          chapter: book.Chapters![index]
+                                              .SubChapters[i]));
+                                },
+                                title: Title(
+                                    color: ColorConstant.amber300,
+                                    child: Text(subtititle)),
+                              );
+                            })
+                      ] 
+                    )
+                      : 
+                      ListTile(
+                        title: Text((book?.Chapters![index].Title!).toString(),
+                        style: AppStyle.txtNunitoSansSemiBold20Gray900),
                         onTap: () {
-                          // Navigator.pop(context);
+                          
                           Navigator.pushNamed(context, ChapterPage.route,
                               arguments: EpubArguments(
                                   book: book, chapter: book?.Chapters![index]));
                         }),
-                  )
+                    )
                 : Container();
           }),
     );
+  }
+
+  listSubMenuBook(subChapters) {
+    if (subChapters.isEmpty) {
+      return ListView.builder(
+        itemCount: subChapters.length,
+        itemBuilder: (BuildContext context, int index) {
+          var title = subChapters[index].Title!;
+
+          ListTile(title: title);
+        },
+      );
+    }
   }
 }
