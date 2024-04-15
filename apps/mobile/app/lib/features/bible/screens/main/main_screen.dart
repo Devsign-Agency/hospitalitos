@@ -32,8 +32,8 @@ class _BibleMainState extends State<BibleMain> {
     }
   }
 
-  String getPathPage() {
-    String lastPage = '';
+  String getLastPage() {
+    String lastPage = '- - - - - -';
     if (Preferences.lastPage.isNotEmpty) {
       final List<String> paths = Preferences.lastPage.split('/');
 
@@ -109,7 +109,7 @@ class _BibleMainState extends State<BibleMain> {
               children: [
                 Text('Última Lectura',
                     style: AppStyle.txtNunitoSansSemiBold13Gray200),
-                Text(getPathPage(), style: AppStyle.txtNunitoSansSemiBold23),
+                Text(getLastPage(), style: AppStyle.txtNunitoSansSemiBold23),
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
