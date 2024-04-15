@@ -11,16 +11,11 @@ import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 
-// enum TtsState { playing, stopped, paused, continued }
-
-// typedef MyBuilder = void Function(
-//     BuildContext context, void Function() methodFromChild);
-
 class PopupAudioPlayer extends StatelessWidget {
   final String bookTitle;
   final String bookAuthor;
   final String voiceText;
-  final Function onCompletion;
+  final VoidCallback? onCompletion;
 
   const PopupAudioPlayer({
     super.key,
@@ -35,7 +30,12 @@ class PopupAudioPlayer extends StatelessWidget {
     TextToSpeech ttsProvider =
         Provider.of<TextToSpeech>(context, listen: false);
 
+    ttsProvider.text = voiceText;
+
     ttsProvider.init();
+    ttsProvider.completion = onCompletion;
+
+    print('Mounted reproductor');
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
@@ -154,26 +154,22 @@ class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
       // ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
       print('Hola');
 
-      await ttsProvider.streamController.close();
-      streamController = ttsProvider.streamController;
+      // await ttsProvider.streamController.close();
+      // streamController = ttsProvider.streamController;
 
-      ttsProvider.ftts!.setCompletionHandler(() {
-        print('COMPLETIOOOOOOOOOOOON');
-      });
+      // ttsProvider.ftts!.setCompletionHandler(() {
+      //   print('COMPLETIOOOOOOOOOOOON');
+      // });
     });
   }
 
   @override
   dispose() {
     print('DISPOSE');
-    // ttsProvider.unsubscription();
+
     ttsProvider.cancel();
-    streamController.close();
-    ttsProvider.closeStream();
+
     super.dispose();
-    // streamController.done;
-    // ttsProvider.streamController.done;
-    // ttsProvider.streamController.close();
   }
 
   @override
@@ -191,7 +187,7 @@ class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
           valueColor: AlwaysStoppedAnimation<Color>(widget.valueColor),
           value: value.isNaN || value.isInfinite
               ? 0.0
-              : ttsProvider.end / widget.max,
+              : ttsProvider.end / ttsProvider.text.length,
         ));
   }
 }

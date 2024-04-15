@@ -1,40 +1,29 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:html/parser.dart';
 
 enum TtsStates { playing, stopped, paused, continued }
 
 class TextToSpeech with ChangeNotifier {
-  FlutterTts? ftts;
+  static FlutterTts? ftts;
   List<String> textToPlay = [];
-  int index = 0;
-  bool active = false;
   TtsStates ttsState = TtsStates.stopped;
   int positionLastWord = 0;
   int end = 0;
-  StreamController<int> streamController = StreamController();
+  VoidCallback? completion;
+  int loopCount = 0;
+  int loopIndex = 0;
   TextToSpeech() {
     ftts ??= FlutterTts();
   }
 
   String text = '';
 
-  Stream<int> get streamControllere => streamController.stream;
-  closeStream() async {
-    streamController.done;
-    await streamController.close().then((value) => print('termino : $value'));
-  }
-
   init() async {
-    ftts!.stop();
-    ftts ??= FlutterTts();
-
     await ftts!.setLanguage('es-VE');
     await ftts!.setSpeechRate(0.5); //speed of speech
     await ftts!.setVolume(1.0); //volume of speech
     await ftts!.setPitch(1); //pitc of sound
+
     end = positionLastWord = 0;
 
     ftts!.setStartHandler(() {
@@ -52,22 +41,26 @@ class TextToSpeech with ChangeNotifier {
     });
 
     ftts!.setCompletionHandler(() {
-      ttsState = TtsStates.stopped;
-      end = positionLastWord = 0;
       print('COMPLETION');
+
+      loopIndex++;
+      if (loopIndex < loopCount) {
+        positionLastWord = end;
+        play();
+      } else {
+        loopIndex = end = positionLastWord = 0;
+        ttsState = TtsStates.stopped;
+        if (completion != null) {
+          completion!();
+        }
+      }
       notifyListeners();
     });
   }
 
-  void unsubscription() {
-    streamController.close();
-  }
-
   pause() async {
     var result = await ftts!.pause();
-
-    // ttsState = TtsStates.paused;
-    // notifyListeners();
+    print('pause result: $result');
     if (result == 1) {
       positionLastWord = end;
       ttsState = TtsStates.paused;
@@ -75,91 +68,69 @@ class TextToSpeech with ChangeNotifier {
     }
   }
 
-  continuePlay() async {}
-
   cancel() async {
-    await ftts!.stop();
+    end = positionLastWord = loopCount = loopIndex = 0;
+    textToPlay = [];
+    loopCount = 0;
+    stop();
   }
 
   stop() async {
-    active = false;
-    textToPlay = [];
-    await ftts!.pause();
+    var result = await ftts!.stop();
+    print('STOP');
+    ttsState = TtsStates.paused;
   }
 
   play() async {
-    active = true;
-    // textToPlay = _parseHtmlString(text);
+    textToPlay = _splitText(text);
 
-    // ftts!.setCompletionHandler(() async {
-    //   if (index < textToPlay.length - 1) {
-    //     index++;
-    //     if (active) {
-    //       await _speak(textToPlay[index]);
-    //     }
-    //   } else {
-    //     active = false;
-    //   }
-    // });
-
-    //  await flutterTts.setVolume(volume);
-    // await flutterTts.setSpeechRate(rate);
-    // -await flutterTts.setPitch(pitch);
-
+    loopCount = textToPlay.length;
+    ttsState = TtsStates.playing;
     await ftts!.awaitSpeakCompletion(true);
 
-    // var count = text.length;
-    // var max = 4000;
-    // var loopCount = count ~/ max;
+    var result = await ftts!.speak(textToPlay[loopIndex]);
 
-    // for (var i = 0; i <= loopCount; i++) {
-    //   if (i != loopCount) {
-    //     await ftts!.speak(text.substring(i * max, (i + 1) * max));
-    //   } else {
-    //     var end = (count - ((i * max)) + (i * max));
-    //     await ftts!.speak(text.substring(i * max, end));
-    //   }
-    // }
-
-    // var result = await _speak(textToPlay[index]);
-    ttsState = TtsStates.playing;
-    ftts!.speak(text);
+    if (result == 1) ttsState = TtsStates.playing;
 
     notifyListeners();
-    // print('result $result');
-    // if (result == 1) {
-    //   ttsState = TtsStates.playing;
-    //   notifyListeners();
-    // }
   }
 
   resume() async {
     await ftts!.pause();
   }
 
-  _speak(String text) async {
-    await ftts!.speak(text);
-  }
+  List<String> _splitText(String text) {
+    var count = text.length;
+    var max = 2000;
+    var loopCount = count ~/ max;
+    List<String> sentences = [];
 
-  List<String> _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString =
-        parse(document.body!.text).documentElement!.text;
+    sentences = [];
 
-    List<String> parsed = [];
-
-    final count = parsedString.length;
-    const max = 2000;
-    final loopCount = count ~/ max;
-
-    for (var i = 0; i <= loopCount; i++) {
-      if (i != loopCount) {
-        parsed.add(parsedString.substring(i * max, (i + 1) * max));
-      } else {
-        var end = (count - ((i * max)) + (i * max));
-        parsed.add(parsedString.substring(i * max, end));
+    if (count >= max) {
+      for (var i = 0; i < loopCount; i++) {
+        if (i != loopCount) {
+          sentences.add(text.substring(i * max, (i + 1) * max));
+        } else {
+          var end = (count - ((i * max)) * (i * max));
+          sentences.add(text.substring(i * max, end));
+        }
       }
+      var total = 0;
+
+      for (var text in sentences) {
+        total = total + text.length;
+      }
+
+      if (total < text.length) {
+        sentences.add(text.substring(total - 1, text.length - 1));
+        loopCount++;
+      }
+    } else {
+      loopCount++;
+      sentences.add(text.substring(0, text.length - 1));
     }
-    return parsed;
+
+    return sentences;
   }
 }
