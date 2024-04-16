@@ -4,7 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/shared/services/text_to_speech.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../widgets/popup_audio_player.dart';
 import '../../widgets/widgets.dart';
 
 class BlogDetail extends StatefulWidget {
@@ -18,7 +20,10 @@ class BlogDetail extends StatefulWidget {
 class _BlogDetailState extends State<BlogDetail> {
   var _scrollController = ScrollController();
   bool _isExpanded = false;
+  bool onAudioSound = false;
+  String newVoiceText = '';
   FToast? fToast;
+
   @override
   void initState() {
     _scrollController.addListener(() {
@@ -52,60 +57,86 @@ class _BlogDetailState extends State<BlogDetail> {
           SliverList(
               delegate: SliverChildListDelegate([
             ...List.generate(1, (int index) {
-              return Padding(
-                  padding: getPadding(all: 16),
-                  child: SelectionArea(
-                    onSelectionChanged: (value) {
-                      selectedText = value?.plainText ?? "";
-                    },
-                    contextMenuBuilder: (context, editableTextState) {
-                      final List<ContextMenuButtonItem> buttonItems =
-                          editableTextState.contextMenuButtonItems;
-                      buttonItems.insert(
-                        2,
-                        ContextMenuButtonItem(
-                          label: 'Escuchar',
-                          onPressed: () async {
-                            debugPrint(selectedText);
-                            print('playText');
-                            TextToSpeech tts = TextToSpeech();
-                            await tts.play(selectedText);
-                            // your "send email" code
-                          },
-                        ),
-                      );
-                      return AdaptiveTextSelectionToolbar.buttonItems(
-                        anchors: editableTextState.contextMenuAnchors,
-                        buttonItems: buttonItems,
-                      );
-                    },
-                    child: Center(
-                      child: Html(
-                        data: parsedString,
-                        style: {
-                          "body": Style(
-                            margin: Margins.zero,
-                            padding: EdgeInsets.zero,
-                            fontSize: FontSize(17.0),
-                            lineHeight: LineHeight(1.4),
-                            fontFamily: 'Nunito Sans',
-                          ),
-                          "p": Style(
-                              padding: EdgeInsets.all(6),
-                              fontFamily: 'Nunito Sans',
-                              alignment: Alignment.centerRight // for text right
-                              ),
-                          'strong': Style(
-                            fontSize: FontSize(20.0),
-                          ),
-                          'img': Style(
-                            height: Height(0),
-                            width: Width(0),
-                          )
+              return Stack(
+                children: [
+                  Padding(
+                      padding: getPadding(all: 16),
+                      child: SelectionArea(
+                        onSelectionChanged: (value) {
+                          selectedText = value?.plainText ?? "";
                         },
-                      ),
-                    ),
-                  ));
+                        contextMenuBuilder: (context, editableTextState) {
+                          final List<ContextMenuButtonItem> buttonItems =
+                              editableTextState.contextMenuButtonItems;
+                          buttonItems.insert(
+                            2,
+                            ContextMenuButtonItem(
+                              label: 'Escuchar',
+                              onPressed: () async {
+                                TextToSpeech ttsProvider =
+                                    Provider.of<TextToSpeech>(context,
+                                        listen: false);
+
+                                ttsProvider.text = selectedText;
+
+                                ttsProvider.init();
+
+                                ttsProvider.play();
+                                // debugPrint(selectedText);
+                                print('playText');
+                                // TextToSpeech tts = TextToSpeech();
+                                // await tts.play(selectedText);
+                                // your "send email" code
+
+                                // setState(() {
+                                //   newVoiceText = selectedText;
+                                //   onAudioSound = !onAudioSound;
+                                // });
+                              },
+                            ),
+                          );
+                          return AdaptiveTextSelectionToolbar.buttonItems(
+                            anchors: editableTextState.contextMenuAnchors,
+                            buttonItems: buttonItems,
+                          );
+                        },
+                        child: Center(
+                          child: Html(
+                            data: parsedString,
+                            style: {
+                              "body": Style(
+                                margin: Margins.zero,
+                                padding: EdgeInsets.zero,
+                                fontSize: FontSize(17.0),
+                                lineHeight: LineHeight(1.4),
+                                fontFamily: 'Nunito Sans',
+                              ),
+                              "p": Style(
+                                  padding: EdgeInsets.all(6),
+                                  fontFamily: 'Nunito Sans',
+                                  alignment:
+                                      Alignment.centerRight // for text right
+                                  ),
+                              'strong': Style(
+                                fontSize: FontSize(20.0),
+                              ),
+                              'img': Style(
+                                height: Height(0),
+                                width: Width(0),
+                              )
+                            },
+                          ),
+                        ),
+                      )),
+                  // if (onAudioSound)
+                  //   PopupAudioPlayer(
+                  //     voiceText: newVoiceText,
+                  //     bookTitle: '',
+                  //     bookAuthor: '',
+                  //     onCompletion: () {},
+                  //   )
+                ],
+              );
             }),
           ]))
         ],
@@ -136,4 +167,3 @@ String stripHtmlIfNeeded(String text) {
   // when estimating the text directionality.
   return text.replaceAll('<img .*?>/g', "");
 }
-

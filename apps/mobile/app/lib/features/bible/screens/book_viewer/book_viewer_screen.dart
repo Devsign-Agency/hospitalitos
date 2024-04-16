@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -12,7 +14,6 @@ import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../book/widgets/widgets.dart';
-import '../../../main/pages/pages.dart';
 
 class TextBook {
   String fontFamily;
@@ -57,7 +58,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       lineHeight: LineHeight.number(1.2),
       fontSize: FontSize.medium);
 
-  String? _newVoiceText;
+  String _newVoiceText = '';
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
@@ -67,10 +68,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   PageController pageController = PageController();
   FToast? fToast;
 
-  int secuenceVerseIndex = 1;
+  int secuenceVerseIndex = 0;
   Map<String, dynamic> verses = {};
   bool playingVerses = false;
-  GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
+  int currentIndex = 0;
+  VoidCallback? onCompletion;
+  // GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
 
   late void Function() myMethod = () {};
 
@@ -85,20 +88,15 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   @override
   void dispose() {
     super.dispose();
-    // flutterTts.stop();
     Clipboard.setData(ClipboardData(text: ''));
   }
 
   void openPlayText() async {
     ClipboardData? kTextPlain;
     kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
-    print('kTextPlain: ${kTextPlain?.text}');
+
     setVoiceText(kTextPlain?.text ?? '');
     setOnAudioSound(true);
-
-    // data != null ? setVoiceText(data.text!) : setVoiceText('');
-
-    // _speak();
   }
 
   void setVoiceText(String text) {
@@ -114,32 +112,41 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   }
 
   void playVerses(int start, int end) {
-    print('start: $start');
-    print('end: $end');
+    setState(() {
+      _newVoiceText = verses[start.toString()];
+      secuenceVerseIndex = start;
+      Scrollable.ensureVisible(
+          GlobalObjectKey(secuenceVerseIndex).currentContext!);
+    });
 
-    if (start <= end) {
-      // setOnAudioSound(true);
-      print('Secuencia $start');
-      Scrollable.ensureVisible(GlobalObjectKey(start).currentContext!);
-      setVoiceText(verses[start.toString()]);
-      // onAudioSound = true;
-      // myMethod.call();
-    } else {
-      playingVerses = false;
-      setVoiceText('');
-      setOnAudioSound(false);
-    }
-    secuenceVerseIndex = start + 1;
+    onCompletion = () {
+      secuenceVerseIndex = secuenceVerseIndex + 1;
+      if (secuenceVerseIndex <= end) {
+        Scrollable.ensureVisible(
+            GlobalObjectKey(secuenceVerseIndex).currentContext!);
+
+        _newVoiceText = verses[secuenceVerseIndex.toString()];
+
+        setState(() {});
+      } else {
+        playingVerses = false;
+        setOnAudioSound(false);
+      }
+    };
   }
 
   void handleButtonPlay(BibleService bibleService) {
     setOnAudioSound(!onAudioSound);
     playingVerses = !playingVerses;
-    onAudioSound
-        ? playVerses(int.parse(bibleService.selectedVerses.keys.first),
-            int.parse(verses.keys.last))
-        : setOnAudioSound(false);
 
+    if (onAudioSound) {
+      playVerses(int.parse(bibleService.selectedVerses.keys.first),
+          int.parse(verses.keys.last));
+    } else {
+      onCompletion = null;
+      secuenceVerseIndex = 0;
+      setOnAudioSound(false);
+    }
     setState(() {});
   }
 
@@ -151,19 +158,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   }
 
   void showCustomToast(String message) {
-    Widget toast = Container(
-      width: double.infinity,
-      height: 48,
-      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorConstant.black900ff,
-      ),
-      child: Text(
-        message,
-        style: AppStyle.txtRobotoRegular14Gray10002,
-      ),
-    );
+    Widget toast = FttToast(text: message);
 
     fToast?.showToast(
       child: toast,
@@ -189,21 +184,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     return title;
   }
 
-  handleChangeBottomNavigationBar(int index) {
-    switch (index) {
-      case 0:
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()),
-            (Route<dynamic> route) => false);
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    ThemeProvider themeProvider =
-        Provider.of<ThemeProvider>(context, listen: false);
-    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
     bool isDarkTheme = bibleService.isDarkTheme;
@@ -234,6 +216,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                 builder: (context) => PanelSettingTextBook(
                       initialValues: settingTextInitialValues,
                       onChange: (dynamic event) {
+                        print(event['fontSize']);
                         textBook.fontSize = event['fontSize'];
                         textBook.lineHeight = event['lineHeight'];
                         textBook.margin = event['margin'];
@@ -258,9 +241,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       {
         'icon': ImageConstant.imgFavorite,
         'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-        'variant': !onAudioSound
-            ? IconButtonVariant.NoFill
-            : IconButtonVariant.OutlinePurple50,
         'action': () {
           bibleService.addNewPage();
           showCustomToast('Página guardada en favoritos exitosamente');
@@ -282,7 +262,13 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       ContextMenuButtonItem(
         label: 'Escuchar',
         onPressed: () async {
-          openPlayText();
+          ClipboardData? kTextPlain;
+          kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+
+          _newVoiceText = kTextPlain?.text ?? '';
+          onAudioSound = true;
+
+          setState(() {});
         },
       ),
       ContextMenuButtonItem(
@@ -298,30 +284,28 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     return Scaffold(
       backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray100,
       appBar: CustomAppBar(
-          hasCustomTitle: true,
-          customTitle: Text(getTitle(bibleService),
-              style: isDarkTheme
-                  ? AppStyle.txtNunitoSansSemiBold26WhiteA700
-                  : AppStyle.txtNunitoSansSemiBold26),
-          actions: appBarActions,
-          hasPopupMenu: false,
-          leading: CustomIconButton(
-              margin: getMargin(left: 8),
-              height: getSize(48),
-              width: getSize(48),
-              variant: IconButtonVariant.NoFill,
-              onTap: () => Navigator.of(context).pop(),
-              child: CustomImageView(
-                svgPath: isDarkTheme
-                    ? ImageConstant.imgArrowleftGray900
-                    : ImageConstant.imgArrowleftWhiteA700,
-                color: isDarkTheme
-                    ? ColorConstant.whiteA700
-                    : ColorConstant.gray800,
-              )),
-          backgroundColor:
-              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
-          popupMenuButton: popupMenuButton(menuOptions, isDarkMode)),
+        hasCustomTitle: true,
+        customTitle: Text(getTitle(bibleService),
+            style: isDarkTheme
+                ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                : AppStyle.txtNunitoSansSemiBold26),
+        actions: appBarActions,
+        leading: CustomIconButton(
+          margin: getMargin(left: 8),
+          height: getSize(48),
+          width: getSize(48),
+          variant: IconButtonVariant.NoFill,
+          onTap: () => Navigator.of(context).pop(),
+          child: CustomImageView(
+            svgPath: isDarkTheme
+                ? ImageConstant.imgArrowleftGray900
+                : ImageConstant.imgArrowleftWhiteA700,
+            color:
+                isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
+          ),
+        ),
+        backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
+      ),
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -345,20 +329,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
               ),
               if (onAudioSound)
                 PopupAudioPlayer(
-                  key: globalKey,
-                  builder:
-                      (BuildContext context, void Function() methodFromChild) {
-                    myMethod = methodFromChild;
-                  },
-                  onCompletion: () {
-                    // setOnAudioSound(false);
-                    playingVerses
-                        ? playVerses(
-                            secuenceVerseIndex, int.parse(verses.keys.last))
-                        : setOnAudioSound(false);
-                  },
-                  onAudioSound: onAudioSound,
-                  voiceText: _newVoiceText!,
+                  onCompletion: onCompletion,
+                  voiceText: _newVoiceText,
                   bookTitle: getTitle(bibleService),
                   bookAuthor: '',
                 )
@@ -367,12 +339,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           // Page view chapter's markers
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-          backgroundColor:
-              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
-          currentIndex: 2,
-          onChangeIndex: handleChangeBottomNavigationBar,
-          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 
@@ -391,10 +357,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           decoration: BoxDecoration(
               border: Border(
                   left: BorderSide(
-                      color: secuenceVerseIndex - 1 == i
+                      color: secuenceVerseIndex == i
                           ? borderColor
                           : ColorConstant.transparent,
-                      width: secuenceVerseIndex - 1 == i ? 6.0 : 0.0))),
+                      width: secuenceVerseIndex == i ? 6.0 : 0.0))),
           child: Column(
             children: [
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -403,10 +369,18 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                         ? AppStyle.txtNunitoSansRegular14WhiteA700
                         : AppStyle.txtNunitoSansRegular14Black900),
                 Expanded(
-                  child: Text('$value',
-                      style: isDarkMode
-                          ? AppStyle.txtNunitoSansRegular18WhiteA700
-                          : AppStyle.txtNunitoSansRegular18Black900),
+                  child: Text(
+                    '$value',
+                    style: isDarkMode
+                        ? AppStyle.txtNunitoSansRegular18WhiteA700
+                        : AppStyle.txtNunitoSansRegular18Gray900,
+                    // style: TextStyle(
+                    //   color: textBook.color,
+                    //   fontSize: textBook.fontSize.value,
+                    //   height: textBook.lineHeight!.size,
+                    //   // fontSize: convertFontSizeToPx(textBook.fontSize),
+                    // ),
+                  ),
                 ),
               ]),
               SizedBox(

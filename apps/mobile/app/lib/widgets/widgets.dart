@@ -13,6 +13,7 @@ export 'package:mobile_app/widgets/custom_selection_area.dart';
 export 'package:mobile_app/widgets/custom_slider.dart';
 export 'package:mobile_app/widgets/custom_tab_bar.dart';
 export 'package:mobile_app/widgets/epub/epub_reader.dart';
+export 'package:mobile_app/widgets/ftt_toast.dart';
 export 'package:mobile_app/widgets/list_collapse_items.dart';
 export 'package:mobile_app/widgets/list_view_item_favorite.dart';
 export 'package:mobile_app/widgets/menu_options.dart';
