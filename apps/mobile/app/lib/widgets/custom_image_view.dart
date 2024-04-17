@@ -48,7 +48,7 @@ class CustomImageView extends StatelessWidget {
       this.margin,
       this.border,
       this.placeHolder = 'assets/images/image_not_found.png',
-      this.blendMode = BlendMode.dst});
+      this.blendMode = BlendMode.srcIn});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class CustomImageView extends StatelessWidget {
           width: width,
           fit: fit ?? BoxFit.contain,
           colorFilter: ColorFilter.mode(
-              color == null ? Colors.blue : color!, blendMode!),
+              color == null ? Colors.black : color!, blendMode!),
         ),
       );
     } else if (file != null && file!.path.isNotEmpty) {

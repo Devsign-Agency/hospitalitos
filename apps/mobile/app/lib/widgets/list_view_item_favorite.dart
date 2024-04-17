@@ -9,6 +9,7 @@ class ListViewItemFavorite extends StatelessWidget {
   final bool? hasImage;
   final List<ListViewFavoriteModel> items;
   final Function? onTappedItem;
+  final Function? onRemoveItem;
 
   const ListViewItemFavorite({
     super.key,
@@ -16,6 +17,7 @@ class ListViewItemFavorite extends StatelessWidget {
     required this.isEditing,
     required this.items,
     this.onTappedItem,
+    this.onRemoveItem,
   });
 
   @override
@@ -33,58 +35,63 @@ class ListViewItemFavorite extends StatelessWidget {
       itemBuilder: (_, int index) {
         final item = items[index];
 
-        return GestureDetector(
-          onTap: onTappedItem != null ? () => onTappedItem!(item) : null,
-          child: Container(
-            width: double.infinity,
-            height: getSize(88),
-            decoration: boxDecoration,
-            child: Row(
-              children: [
-                // Image
-                if (hasImage != null && hasImage!)
-                  ClipRRect(
-                    borderRadius: borderRadius,
-                    child: CustomImageView(
-                      imagePath: item.image != null
-                          ? 'assets/images/${item.image}'
-                          : 'assets/images/img_media.png',
-                      width: getSize(132),
-                      height: double.infinity,
-                    ),
+        return Container(
+          width: double.infinity,
+          height: getSize(88),
+          decoration: boxDecoration,
+          child: Row(
+            children: [
+              // Image
+              if (hasImage != null && hasImage!)
+                ClipRRect(
+                  borderRadius: borderRadius,
+                  child: CustomImageView(
+                    imagePath: item.image != null
+                        ? 'assets/images/${item.image}'
+                        : 'assets/images/img_media.png',
+                    width: getSize(132),
+                    height: double.infinity,
                   ),
-                // Content
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
+                ),
+              // Content
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: onTappedItem != null
+                            ? () => onTappedItem!(item)
+                            : null,
+                        child: Text(
                           item.title,
                           style: AppStyle.txtNunitoSansSemiBold20Black900,
                         ),
-                        CustomIconButton(
-                          height: getSize(48),
-                          width: getSize(48),
-                          variant: !isEditing
-                              ? IconButtonVariant.FillYellow
-                              : IconButtonVariant.FillRed50033,
-                          child: CustomImageView(
-                            color: !isEditing
-                                ? ColorConstant.gray800
-                                : ColorConstant.red500,
-                            svgPath: !isEditing
-                                ? ImageConstant.imgPlayIndigo900
-                                : ImageConstant.imgTrashRed500,
-                          ),
+                      ),
+                      CustomIconButton(
+                        onTap: isEditing && onTappedItem != null
+                            ? () => onRemoveItem!(item)
+                            : () => onTappedItem!(item),
+                        height: getSize(48),
+                        width: getSize(48),
+                        variant: !isEditing
+                            ? IconButtonVariant.FillYellow
+                            : IconButtonVariant.FillRed50033,
+                        child: CustomImageView(
+                          color: !isEditing
+                              ? ColorConstant.gray800
+                              : ColorConstant.red500,
+                          svgPath: !isEditing
+                              ? ImageConstant.imgPlayIndigo900
+                              : ImageConstant.imgTrashRed500,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         );
       },

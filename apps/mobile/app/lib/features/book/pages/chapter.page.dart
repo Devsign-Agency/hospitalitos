@@ -1,47 +1,81 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:mobile_app/core/models/pdf_viewer.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
-import 'package:mobile_app/themes/dark_theme.dart';
+import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../core/app_export.dart';
 import '../../../shared/shared.dart';
-import '../../../widgets/widgets.dart';
+import '../../../themes/themes.dart';
+import '../widgets/widgets.dart';
 
+// import 'package:css_text/css_text.dart';
 class ChapterPage extends StatefulWidget {
   static const String route = 'book/chapter';
-  final PdfViewer book;
 
-  const ChapterPage({Key? key, required this.book}) : super(key: key);
+  const ChapterPage({Key? key}) : super(key: key);
 
   @override
   State<ChapterPage> createState() => _ChapterPageState();
 }
 
-enum TtsState { playing, stopped, paused, continued }
+enum TtsStates { playing, stopped, paused, continued }
+
+List<FontSize> fontSizes = [
+  FontSize.small,
+  FontSize.medium,
+  FontSize.larger,
+  FontSize.xLarge
+];
+
+class TextBook {
+  String fontFamily;
+  FontSize fontSize;
+  Color color;
+  double size;
+  double? margin;
+  LineHeight? lineHeight;
+  CircleButtonModel circle;
+
+  TextBook(
+      {required this.fontFamily,
+      required this.color,
+      required this.fontSize,
+      this.margin,
+      required this.lineHeight,
+      required this.circle,
+      required this.size});
+}
 
 class _ChapterPageState extends State<ChapterPage> {
   late EpubController _epubController;
   late EpubBook de;
-  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
   bool onAudioSound = false;
   late FlutterTts flutterTts;
   dynamic languages;
   String? language;
   double volume = 0.5;
-  double pitch = 1.0;
+  double pitch = 1;
   double rate = 0.5;
+  double fontSize = 5.0;
+  double margin = 1.0;
+
+  Map<String, dynamic> settingTextInitialValues = {
+    'fontSize': 5.0,
+    'margin': 1.0,
+    'lineHeight': 1.0,
+    'color': Colors.black
+  };
+
   bool isCurrentLanguageInstalled = false;
   int end = 0;
   int positionLastWord = 0;
+<<<<<<< HEAD
   late PdfViewerController _pdfViewerController;
   OverlayEntry? _overlayEntry;
   int i = 0;
@@ -54,33 +88,52 @@ class _ChapterPageState extends State<ChapterPage> {
   get isStopped => ttsState == TtsState.stopped;
   get isPaused => ttsState == TtsState.paused;
   get isContinued => ttsState == TtsState.continued;
+=======
 
-  bool get isIOS => !kIsWeb && Platform.isIOS;
-  bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  bool get isWeb => kIsWeb;
+  TextBook textBook = TextBook(
+      fontFamily: 'fontFamily',
+      color: ColorConstant.black900,
+      size: 32.0,
+      margin: 14.0,
+      lineHeight: LineHeight.number(1.2),
+      circle: CircleButtonModel(CircleButtonType.white, Colors.white),
+      fontSize: FontSize.medium);
+
+  String _newVoiceText = '';
+  CircleButtonModel selectedCircleButton =
+      CircleButtonModel(CircleButtonType.black, Colors.black);
+
+  List<Map<dynamic, dynamic>> markerList = [];
+  List<Map<dynamic, dynamic>> markerListBook = [];
+  Map<dynamic, dynamic> marker = {};
+  double offsetScroll = 0;
+  ScrollController scrollController =
+      ScrollController(initialScrollOffset: 0.0);
+>>>>>>> feat/subchapters
+
+  int bottomNavigationBarCurrentIndex = 0;
+
+  PageController pageController = PageController();
+  FToast? fToast;
+
+  int i = 0;
+  String parsedString = '';
+  bool isDarkMode = false;
 
   @override
   void initState() {
-    _pdfViewerController = PdfViewerController();
-
     super.initState();
+<<<<<<< HEAD
     initTts();
     getTextFromEpubInstance();
+=======
+>>>>>>> feat/subchapters
 
-    // _epubController = EpubController(
-    //   // Load document
-
-    //   document: Future.delayed(
-    //       Duration(
-    //         milliseconds: 200,
-    //       ), () {
-    //     return widget.book;
-    //   }),
-    //   // Set start point
-    //   // epubCfi: 'epubcfi(/6/6[chapter-2]!/4/2/1612)',
-    // );
+    fToast = FToast();
+    fToast?.init(context);
   }
 
+<<<<<<< HEAD
   buildAudioText(String newVoiceText) async {
     var count = newVoiceText.length;
     var max = 4000;
@@ -106,9 +159,16 @@ class _ChapterPageState extends State<ChapterPage> {
 
   initTts() {
     flutterTts = FlutterTts();
+=======
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+>>>>>>> feat/subchapters
 
-    _getLanguages();
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
 
+<<<<<<< HEAD
     if (isAndroid) {
       _getEngines();
     }
@@ -224,35 +284,32 @@ class _ChapterPageState extends State<ChapterPage> {
     TextToSpeech tts = TextToSpeech();
 
     onAudioSound ? tts.play(parsedString) : tts.stop();
+=======
+    parsedString = _parseDocumentToString(arguments.chapter!);
+>>>>>>> feat/subchapters
   }
 
   @override
   void dispose() {
     super.dispose();
-    flutterTts.stop();
+
+    Clipboard.setData(ClipboardData(text: ''));
   }
 
-  void _handleOnAudio() {}
+  void closePlayText() {
+    onAudioSound = false;
 
-  Color _getColorBg() {
-    PdfDocument document = PdfDocument();
-
-    ThemeProvider themeProvider =
-        Provider.of<ThemeProvider>(context, listen: false);
-
-    return themeProvider.currentTheme != DarkTheme.theme
-        ? Colors.white
-        : Color(0xff1C1B1F);
+    setState(() {});
   }
 
-  void _handleChangeStatusAudio(BuildContext context) async {
-    onAudioSound = !onAudioSound;
-    // PdfDocument document = PdfDocument(
-    //     inputBytes: await _readDocumentData('${widget.book.name}.pdf'));
+  void openPlayText() async {
+    onAudioSound = true;
+    ClipboardData? data;
+    data = await Clipboard.getData(Clipboard.kTextPlain);
 
-    // //Create a new instance of the PdfTextExtractor.
-    // PdfTextExtractor extractor = PdfTextExtractor(document);
+    data != null ? _onChange(data.text!) : _onChange('');
 
+<<<<<<< HEAD
     // //Extract all the text from the document.
     // String text = extractor.extractText();
 
@@ -286,13 +343,10 @@ class _ChapterPageState extends State<ChapterPage> {
     // _onChange(data!.text!);
 
     setState(() {});
+=======
+    // _speak();
+>>>>>>> feat/subchapters
   }
-
-  // void _getClipboard() async {
-  //     setState(() {
-  //       _textValue = data.text;
-  //     });
-  //   }
 
   void _onChange(String text) {
     setState(() {
@@ -300,6 +354,7 @@ class _ChapterPageState extends State<ChapterPage> {
     });
   }
 
+<<<<<<< HEAD
   getTextFromEpubInstance() async {
     final byteData = await rootBundle.load('assets/epubs/book.epub');
     Directory tempDir = await getTemporaryDirectory();
@@ -358,106 +413,81 @@ class _ChapterPageState extends State<ChapterPage> {
       ),
     );
     overlayState.insert(_overlayEntry!);
+=======
+  void setScrollController(double offset) async {
+    scrollController.removeListener(() {});
+    scrollController = ScrollController(initialScrollOffset: offset);
+    if (scrollController.hasClients) {
+      await scrollController.animateTo(offset,
+          duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
+    }
+
+    scrollController.addListener(() {
+      offsetScroll = scrollController.position.pixels;
+    });
+    setState(() {});
+>>>>>>> feat/subchapters
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _CustomAppBar(
-        audioActive: onAudioSound,
-        onChangeStatusAudio: _handleChangeStatusAudio,
-      ),
-      body: Stack(children: [
-        SfPdfViewer.asset(
-          'assets/pdf/${widget.book.name}.pdf',
-          canShowPaginationDialog: true,
-          pageSpacing: 2.0,
-          key: _pdfViewerKey,
-          maxZoomLevel: 5,
-          onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
-            if (details.selectedText == null && _overlayEntry != null) {
-              _overlayEntry!.remove();
-              _overlayEntry = null;
-            } else if (details.selectedText != null && _overlayEntry == null) {
-              _showContextMenu(context, details);
-            }
-          },
-          controller: _pdfViewerController,
-        ),
-        if (onAudioSound)
-          DraggableScrollableSheet(
-            initialChildSize: .14,
-            minChildSize: .14,
-            maxChildSize: .14,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                padding: getPadding(left: 16, right: 8, top: 8, bottom: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: ColorConstant.gray400,
-                ),
-                child: ListView(
-                  controller: scrollController,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Título',
-                                style: AppStyle.txtNunitoSansSemiBold20Black900,
-                              ),
-                              Text(
-                                'Autor',
-                                style:
-                                    AppStyle.txtNunitoSansSemiBold13Indigo900,
-                              ),
-                              // ttsState == TtsState.playing
-                              _progressBar(end),
-                              // : Container(
-                              //     // height: 100,
-                              //     width: double.infinity,
-                              //     alignment: Alignment.topCenter,
-                              //     padding:
-                              //         EdgeInsets.only(top: 5.0, right: 10),
-                              //     child: LinearProgressIndicator(
-                              //       backgroundColor:
-                              //           ColorConstant.indigo90033,
-                              //       valueColor:
-                              //           AlwaysStoppedAnimation<Color>(
-                              //               ColorConstant.indigo900),
-                              //       value: 0,
-                              //     )),
-                            ],
-                          ),
-                        ),
-                        _btnSection(),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            },
-          )
-      ]),
-      bottomNavigationBar:
-          _CustomBottomNavigationBar(onChangeIndex: _handleChangeIndex),
+  void _handleTapPageViewMarkerList(double offset) {
+    bottomNavigationBarCurrentIndex = 0;
+
+    pageController.animateToPage(0,
+        duration: Duration(milliseconds: 500), curve: Curves.linear);
+
+    // scrollController.removeListener(() {});
+    setScrollController(offset);
+    setState(() {});
+  }
+
+  void _handleChangeBottomNavigationBar(int index, MarkerService markerService,
+      String bookTitle, dynamic chapter) async {
+    bottomNavigationBarCurrentIndex = index;
+    // List<Map<dynamic, dynamic>> jsonDecode =
+    //     json.decode(Preferences.markerList);
+
+    // int i = jsonDecode.firstWhere((element) => element['title'] == bookTitle);
+    if (index == 1) {
+      markerService.getMarkerList(bookTitle, chapter);
+    }
+
+    if (index == 3) {
+      _shareDocument(chapter);
+    }
+
+    if (index != 3) {
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.linear);
+    }
+
+    setState(() {});
+  }
+
+  void handleSelectedContent(SelectedContent? selectedContent) {
+    if (selectedContent != null) {
+      ClipboardData data = ClipboardData(text: selectedContent.plainText);
+      Clipboard.setData(data);
+    }
+  }
+
+  void showCustomToast(String message) {
+    fToast?.showToast(
+      child: FttToast(text: message),
+      toastDuration: const Duration(seconds: 3),
     );
   }
 
-  Widget _inputSection() => Container(
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
-      child: TextField(
-        onChanged: (String value) {
-          _onChange(value);
-        },
-      ));
+  void _handleChangeSetting(dynamic event) {
+    print('event: $event');
+    textBook.fontSize = event['fontSize'];
+    textBook.lineHeight = event['lineHeight'];
+    textBook.margin = event['margin'];
+    textBook.color = Colors.white;
+    // textBook.circle = event['circle'];
+    setState(() {});
+  }
 
+<<<<<<< HEAD
   Widget _btnSection() {
     print('TtsState: $ttsState');
     if (isAndroid) {
@@ -613,143 +643,277 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(height!);
 
+=======
+  String _parseDocumentToString(EpubChapter? chapter) {
+    dynamic htmlContent = parse(chapter!.HtmlContent!);
+
+    return parse(htmlContent.body!.text).documentElement!.text;
+  }
+
+  void _share(String value) async {
+    await Share.share(value);
+  }
+
+  void _shareDocument(EpubChapter? chapter) async {
+    String parsedString = _parseDocumentToString(chapter);
+
+    _share(parsedString);
+  }
+
+  Color getTextColor(CircleButtonType type) {
+    Color color;
+    if (type == CircleButtonType.black ||
+        (type == CircleButtonType.grey) ||
+        (type == CircleButtonType.brown) ||
+        (type == CircleButtonType.red)) {
+      color = ColorConstant.whiteA700;
+    } else {
+      color = ColorConstant.black900;
+    }
+
+    return color;
+  }
+
+>>>>>>> feat/subchapters
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> menuItems = [
-      {
-        'id': 0,
-        'name': 'Modo Noche',
-        'onTap': (context) {
-          ThemeProvider themeProvider =
-              Provider.of<ThemeProvider>(context, listen: false);
-          themeProvider.currentTheme == DarkTheme.theme
-              ? themeProvider.setLightMode()
-              : themeProvider.setDarkMode();
-        }
-      },
-      {'id': 1, 'name': 'Ajustar texto', 'onTap': (context) {}},
-      {'id': 2, 'name': 'Compartir', 'onTap': onShareBook},
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final book = arguments.book;
+    final chapter = arguments.chapter;
+    final String bookTitle = book?.Title ?? '';
+    final String bookAuthor = book?.Author ?? '';
+
+    MarkerService markerService =
+        Provider.of<MarkerService>(context, listen: true);
+
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgEditGray800),
+      BottomNavigationMenu(icon: ImageConstant.imgBookmarkGray800),
+      BottomNavigationMenu(icon: ImageConstant.imgBookmark),
+      BottomNavigationMenu(icon: ImageConstant.imgShareGray50),
     ];
 
-    return AppBar(
-      // backgroundColor: ColorConstant.gray50,
-      title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26)),
-      actions: [
-        CustomIconButton(
-          margin: getMargin(left: 8),
-          height: getSize(48),
-          width: getSize(48),
-          variant: !audioActive
-              ? IconButtonVariant.NoFill
-              : IconButtonVariant.FillIndigo90033,
-          onTap: () {
-            onChangeStatusAudio(context);
-          },
-          child: CustomImageView(
-            svgPath: ImageConstant.imgMusicIndigo900,
-          ),
-        ),
+    final List<PopupMenuItemModel> menuOptions = [
+      PopupMenuItemModel(
+          id: 0,
+          title: 'Modo Noche',
+          onTappedItem: (context) {
+            setState(() {
+              isDarkMode = !isDarkMode;
+            });
+          }),
+      PopupMenuItemModel(
+          id: 1,
+          title: 'Ajustar texto',
+          onTappedItem: (context) {
+            showModalBottomSheet(
+                backgroundColor: isDarkMode
+                    ? ColorConstant.gray80040
+                    : ColorConstant.whiteA700,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                context: context,
+                builder: (context) => PanelSettingTextBook(
+                      isDarkMode: isDarkMode,
+                      initialValues: settingTextInitialValues,
+                      onChange: _handleChangeSetting,
+                    ));
+          }),
+      PopupMenuItemModel(
+          id: 2,
+          title: 'Compartir',
+          onTappedItem: (context) {
+            _shareDocument(chapter);
+          })
+    ];
 
-        SizedBox(width: 32),
-        // Menu
-        PopupMenuButton<int>(
+    final actions = [
+      {
+        'icon': ImageConstant.imgMusicIndigo900,
+        'color': isDarkMode
+            ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
+            : ColorConstant.gray800,
+        'variant': !onAudioSound
+            ? IconButtonVariant.NoFill
+            : IconButtonVariant.OutlinePurple50,
+        'action': () {
+          setState(() {
+            onAudioSound = !onAudioSound;
+            _newVoiceText = parsedString;
+          });
+        }
+      },
+    ];
+
+    final List<ContextMenuButtonItem> menuButtonItems = [
+      ContextMenuButtonItem(
+        label: 'Escuchar',
+        onPressed: () async {
+          openPlayText();
+        },
+      ),
+      ContextMenuButtonItem(
+          label: 'Compartir',
+          onPressed: () async {
+            ClipboardData? selectedContent =
+                await Clipboard.getData(Clipboard.kTextPlain);
+
+            if (selectedContent != null) _share(selectedContent.text!);
+          }),
+      ContextMenuButtonItem(
+          label: 'Añadir a marcador',
+          onPressed: () async {
+            ClipboardData? selectedContent =
+                await Clipboard.getData(Clipboard.kTextPlain);
+
+            if (selectedContent != null) {
+              DateTime now = DateTime.now();
+              int year = now.year;
+              int month = now.month;
+              int day = now.day;
+              String date = '$day/$month/$year';
+
+              marker = {
+                'id': DateTime.now().toString(),
+                'text': selectedContent.text,
+                'offset': offsetScroll,
+                'date': date,
+              };
+
+              markerService.addNewMarker(bookTitle, chapter, marker);
+            }
+            showCustomToast('Marcador guardado con éxito');
+          }),
+    ];
+
+    return Scaffold(
+      backgroundColor:
+          isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
+      appBar: CustomAppBar(
+          hasCustomTitle: true,
+          customTitle: Text(bookTitle,
+              style: AppStyle.txtNunitoSansSemiBold26WhiteA700.copyWith(
+                  color: isDarkMode
+                      ? ColorConstant.whiteA700
+                      : ColorConstant.black900)),
+          backgroundColor:
+              isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
+          leading: _goBackButton(context, book, isDarkMode),
+          title: bookTitle,
+          actions: actions,
+          hasPopupMenu: true,
+          popupMenuButton: _popupMenuButton(menuOptions, isDarkMode)),
+      body: PageView(
+        controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          // Page view book viewer
+          Stack(
+            children: [
+              SingleChildScrollView(
+                controller: scrollController,
+                child: CustomSelectionArea(
+                  onSelectionChanged: handleSelectedContent,
+                  menuButtonItems: menuButtonItems,
+                  child: Padding(
+                    padding: getPadding(
+                        left: textBook.margin, right: textBook.margin),
+                    child: Html(
+                      style: {
+                        'body': Style(
+                            fontSize: textBook.fontSize,
+                            color: isDarkMode
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.black900,
+                            lineHeight: textBook.lineHeight,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .fontFamily)
+                      },
+                      data: chapter?.HtmlContent,
+                    ),
+                  ),
+                ),
+              ),
+              if (onAudioSound)
+                PopupAudioPlayer(
+                  voiceText: _newVoiceText,
+                  bookTitle: bookTitle,
+                  bookAuthor: bookAuthor,
+                  onCompletion: () {},
+                )
+            ],
+          ),
+
+          // Page view chapter's markers
+          PageViewBookmarks(
+            isDarkMode: isDarkMode,
+            markerList: markerService.getMarkerList(bookTitle, chapter),
+            onTapped: _handleTapPageViewMarkerList,
+            onDeleteMarker: (marker) {
+              markerService.deleteMarker(bookTitle, chapter, marker);
+              showCustomToast('Marcador eliminado con éxito');
+            },
+          ),
+
+          // Page view book's index
+          PageViewIndex(
+            book: book!,
+            chapter: chapter!,
+            isDarkMode: isDarkMode,
+          )
+        ],
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          backgroundColor:
+              isDarkMode ? ColorConstant.gray80040 : ColorConstant.gray100,
+          currentIndex: bottomNavigationBarCurrentIndex,
+          onChangeIndex: (index) => _handleChangeBottomNavigationBar(
+              index, markerService, bookTitle, chapter),
+          bottomMenuList: bottomMenuList),
+    );
+  }
+
+  CustomIconButton _goBackButton(
+          BuildContext context, EpubBook? book, bool isDarkMode) =>
+      CustomIconButton(
+        height: getSize(48),
+        width: getSize(48),
+        variant: IconButtonVariant.NoFill,
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: CustomImageView(
+          svgPath: ImageConstant.imgArrowleftGray900,
+          color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
+        ),
+      );
+
+  PopupMenuButton<int> _popupMenuButton(
+          List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
+      PopupMenuButton<int>(
+          iconColor:
+              isDarkMode ? ColorConstant.whiteA700 : ColorConstant.black900,
+          color: isDarkMode ? ColorConstant.gray30002 : ColorConstant.gray100,
           constraints: BoxConstraints(
             minWidth: 200,
           ),
           offset: Offset(20, 60),
-          color: Colors.white,
           itemBuilder: (context) => [
-            ...menuItems.map((item) => PopupMenuItem(
-                  value: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(item['name'],
-                        style: AppStyle.txtNunitoSansRegular18Black900),
-                  ),
-                  onTap: () => item['onTap'](context),
-                ))
-          ],
-          onSelected: (int index) {},
-        )
-      ],
-    );
-  }
-
-  void onShareBook(context) => showModalBottomSheet(
-      // backgroundColor: ColorConstant.gray50,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      context: context,
-      builder: (context) => ModalBottomSheet());
-}
-
-class _CustomBottomNavigationBar extends StatefulWidget {
-  final Function onChangeIndex;
-
-  const _CustomBottomNavigationBar({
-    super.key,
-    required this.onChangeIndex,
-  });
-
-  @override
-  State<_CustomBottomNavigationBar> createState() =>
-      _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState
-    extends State<_CustomBottomNavigationBar> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Map<dynamic, dynamic>> items = [
-      {'id': 0, 'name': '', 'image': ImageConstant.imgEditGray800},
-      {'id': 1, 'name': '', 'image': ImageConstant.imgBookmarkGray800},
-      {'id': 2, 'name': '', 'image': ImageConstant.imgBookmark},
-      {'id': 3, 'name': '', 'image': ImageConstant.imgShareGray50},
-    ];
-    return BottomNavigationBar(
-        // type: BottomNavigationBarType.shifting,
-        backgroundColor: ColorConstant.gray50,
-        currentIndex: _currentIndex,
-        onTap: _changeCurrentIndex,
-        items: [
-          ...items.map((item) => BottomNavigationBarItem(
-                label: '',
-                icon: _BottomNavigationBarItemIcon(
-                    image: item['image'],
-                    isSelected: item['id'] == _currentIndex),
-              ))
-        ]);
-  }
-
-  void _changeCurrentIndex(int index) {
-    _currentIndex = index;
-    widget.onChangeIndex(index);
-    setState(() {});
-  }
-}
-
-class _BottomNavigationBarItemIcon extends StatelessWidget {
-  final String image;
-  final bool isSelected;
-
-  const _BottomNavigationBarItemIcon({
-    super.key,
-    required this.image,
-    required this.isSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomIconButton(
-      height: 48,
-      width: 48,
-      variant: isSelected
-          ? IconButtonVariant.FillIndigo90033
-          : IconButtonVariant.NoFill,
-      child: CustomImageView(color: ColorConstant.indigo900, svgPath: image),
-    );
-  }
+                ...menuOptions.map((item) => PopupMenuItem(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(item.title,
+                              style: AppStyle.txtNunitoSansRegular18WhiteA700
+                                  .copyWith(
+                                      color: isDarkMode
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.black900))),
+                      onTap: () => item.onTappedItem(context),
+                    ))
+              ]);
 }

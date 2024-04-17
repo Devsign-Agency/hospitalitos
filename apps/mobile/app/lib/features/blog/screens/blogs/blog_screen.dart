@@ -1,11 +1,19 @@
+import 'dart:io';
+
+import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/features/blog/screens/search/search_delegate.dart';
 import 'package:mobile_app/features/blog/widgets/wp-api.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/app_export.dart';
+import 'package:dio/dio.dart';
+
 import '../../../../widgets/widgets.dart';
-import '../../widgets/widgets.dart';
+import '../../widgets/article_card.dart';
 
 class BlogScreen extends StatefulWidget {
   static const String route = 'blog';
@@ -30,11 +38,22 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: Column(
-      children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
-    )));
+    return Scaffold(
+        appBar: CustomAppBar(
+          title: 'Blog',
+          actions: [
+            {
+              'icon': ImageConstant.imgSearch,
+              'action': () => {
+                    showSearch(
+                        context: context, delegate: PostsSearchDelegate())
+                  }
+            },
+          ],
+        ),
+        body: Column(
+          children: [_ArticlesHeader(), _ArticlesList(posts: posts)],
+        ));
   }
 }
 
@@ -63,7 +82,7 @@ class _ArticlesList extends StatelessWidget {
                   print(
                       wppost['_embedded']['wp:featuredmedia'][0]['source_url']);
                   // var imageurl = wppost['_embedded']['wp:featuredmedia'][0];
-               
+
                   return ArticleCard(
                       imgUrl: wppost['_embedded']['wp:featuredmedia'][0]
                           ['source_url'],
@@ -95,10 +114,24 @@ class _ArticlesList extends StatelessWidget {
   }
 }
 
-class _ArticlesHeader extends StatelessWidget {
+class _ArticlesHeader extends StatefulWidget {
   const _ArticlesHeader({
     super.key,
   });
+
+  @override
+  State<_ArticlesHeader> createState() => _ArticlesHeaderState();
+}
+
+class _ArticlesHeaderState extends State<_ArticlesHeader> {
+  final imgUrl =
+      "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4";
+  bool downloading = false;
+  var progressString = "";
+  final platform = MethodChannel('my_channel');
+  bool loading = false;
+  Dio dio = Dio();
+  String filePath = "";
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +140,7 @@ class _ArticlesHeader extends StatelessWidget {
       margin: const EdgeInsets.only(
           left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
       child: Row(
-        children: [
+        /*children: [
           CustomIconButton(
             height: 48,
             width: 48,
@@ -116,7 +149,7 @@ class _ArticlesHeader extends StatelessWidget {
               Navigator.pop(context);
             },
             child: CustomImageView(
-              color: ColorConstant.whiteA700,
+              color: ColorConstant.gray800,
               svgPath: ImageConstant.imgArrowleftGray800,
             ),
           ),
@@ -137,8 +170,74 @@ class _ArticlesHeader extends StatelessWidget {
               svgPath: ImageConstant.imgSearch,
             ),
           ),
-        ],
+          CustomIconButton(
+            height: 48,
+            width: 48,
+            variant: IconButtonVariant.FillGray300,
+            onTap: () async {
+              print('download');
+              var url = 'hospitalitos/apps/mobile/app/assets/epubs/book.epub';
+              var filename = 'book.epub';
+              
+
+              var test = await getimagefilefromassets('/epubs/book.epub');
+              print('-------------');
+              print(test);
+            },
+            child: CustomImageView(
+              color: ColorConstant.gray800,
+              svgPath: ImageConstant.imgArrowdown,
+            ),
+          ),
+        ],*/
       ),
     );
+  }
+
+  Future download(String url, String filename) async {
+    /*rootBundle.loadString('assets/epubs/book.epub').then((String contents) {
+      print('--------------- $contents');
+    });*/
+
+    var savePath = '/storage/emulated/0/Download/$filename';
+    var dio = Dio();
+    dio.interceptors.add(LogInterceptor());
+
+    try {
+      var response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          receiveTimeout: 0,
+        ),
+      );
+      var file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      debugPrint((received / total * 100).toStringAsFixed(0) + '%');
+    }
+  }
+
+  Future<File> getimagefilefromassets(String path) async {
+    final bytedata = await rootBundle.load('assets$path');
+    final buffer = bytedata.buffer;
+    Directory tempdir = await getTemporaryDirectory();
+    String temppath = tempdir.path;
+    var filepath =
+        temppath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
+    return File(filepath).writeAsBytes(
+        buffer.asUint8List(bytedata.offsetInBytes, bytedata.lengthInBytes));
   }
 }

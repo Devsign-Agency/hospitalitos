@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/features/main/pages/home/home.dart';
 import 'package:mobile_app/features/security/screens/screens.dart';
 import 'package:mobile_app/shared/shared.dart';
@@ -20,7 +21,12 @@ class LoadingPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [Text('Autenticando')],
+                  children: [Column(
+                    children: [
+                      Text('¡Te damos la bienvenida!'),
+                      Text('Acá podrás encontrar un espacio para conectar con tu fé.'),
+                    ],
+                  )],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -28,7 +34,8 @@ class LoadingPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(20),
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                          color: ColorConstant.yellow100),
                     )
                   ],
                 ),
@@ -41,12 +48,13 @@ class LoadingPage extends StatelessWidget {
   Future checkLoginState(BuildContext context) async {
     final authService = Provider.of<AuthService>(context, listen: false);
     final authenticated = await authService.isLoggedIn();
-    if (authenticated) {
+     Navigator.pushReplacementNamed(context, HomePage.route);
+   /* if (authenticated) {
       if (context.mounted)
         Navigator.pushReplacementNamed(context, HomePage.route);
     } else {
       if (context.mounted)
         Navigator.pushReplacementNamed(context, LoginScreen.route);
-    }
+    }*/
   }
 }

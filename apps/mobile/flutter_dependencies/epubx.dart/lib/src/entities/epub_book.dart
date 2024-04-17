@@ -17,6 +17,8 @@ class EpubBook {
 
   @override
   int get hashCode {
+
+    print('chapters---- $Chapters');
     var objects = [
       Title.hashCode,
       Author.hashCode,

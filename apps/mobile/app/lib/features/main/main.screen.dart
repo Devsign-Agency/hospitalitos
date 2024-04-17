@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
 import 'package:mobile_app/features/generator.page.dart';
 import 'package:mobile_app/features/favorite.page.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
-import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_app/core/app_export.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String route = '';
+  static const String route = 'main';
 
   MainScreen({Key? key, int? selectedIndex, ScrollController? mainController})
       : super(key: key);
@@ -30,7 +30,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Widget page;
-    print('Hola mundo');
     switch (selectedIndex) {
       case 0:
         page = HomePage();
@@ -39,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
         page = GeneratorPage();
         break;
       case 2:
-        page = FavoritePage();
+        page = BibleMain();
         break;
       case 3:
         page = Placeholder();
@@ -53,12 +52,12 @@ class _MainScreenState extends State<MainScreen> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: ColorConstant.gray100,
-          bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
           body: SingleChildScrollView(
             child: Center(
               child: page,
             ),
           ),
+          // bottomNavigationBar: CustomBottomBar(onChanged: _onItemTapped),
         ),
       ),
       //   child: EpubReader()

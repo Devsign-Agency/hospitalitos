@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/book/book.screen.dart';
+import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
-import 'package:mobile_app/features/book/pages/sound.page.dart';
 import 'package:mobile_app/router/menu_option.dart';
 
 class RouterBook {
@@ -15,7 +15,8 @@ class RouterBook {
     routes.addAll({
       BookScreen.route: (BuildContext context) => BookScreen(),
       IndexPage.route: (BuildContext context) => IndexPage(),
-      SoundScreen.route: (BuildContext context) => SoundScreen(),
+      ChapterPage.route: (BuildContext context) => ChapterPage(),
+      AudioPlayerScreen.route: (BuildContext context) => AudioPlayerScreen(),
     });
 
     for (final option in menuOptions) {

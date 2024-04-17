@@ -90,11 +90,13 @@ class EpubReader {
     result.Content = await readContent(epubBookRef.Content!);
     result.CoverImage = await epubBookRef.readCover();
     var chapterRefs = await epubBookRef.getChapters();
+
+    
     result.Chapters = await readChapters(chapterRefs);
     print(result);
     return result;
   }
-
+  
   static Future<EpubContent> readContent(EpubContentRef contentRef) async {
     var result = EpubContent();
     result.Html = await readTextContentFiles(contentRef.Html!);

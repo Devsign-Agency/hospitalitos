@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/main/pages/welcome/contact.page.dart';
+import 'package:mobile_app/features/main/pages/welcome/message.page.dart';
+import 'package:mobile_app/features/main/pages/welcome/navigation.dart';
 import 'package:mobile_app/shared/providers/providers.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/shared/preferences.dart';
@@ -32,18 +35,31 @@ class WelcomeScreen extends StatelessWidget {
         ),
         body: Background(
           child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                  const Text('hola mundo'),
-                  ElevatedButton(
-                    child: const Text('go to Home'),
-                    onPressed: () =>
-                        Navigator.popAndPushNamed(context, HomePage.route),
-                  ),
-            ]),
-          ),
+              width: double.infinity,
+              child: Navigator(
+                key: Navigation.welcomeState,
+                initialRoute: '',
+                onGenerateRoute: (RouteSettings settings) {
+                  Widget page;
+
+                  switch (settings.name) {
+                    case '/':
+                      page = MessagePage();
+                      break;
+                    case '/welcome/contact':
+                      page = ContactPage();
+                      break;
+
+                    default:
+                      page = MessagePage();
+                  }
+
+                  return PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        page,
+                  );
+                },
+              )),
         ));
   }
 }

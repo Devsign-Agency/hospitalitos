@@ -18,6 +18,7 @@ class ChapterReader {
     navigationPoints.forEach((EpubNavigationPoint navigationPoint) {
       String? contentFileName;
       String? anchor;
+      print('navigationPoint $navigationPoint ');
       var contentSourceAnchorCharIndex =
           navigationPoint.Content!.Source!.indexOf('#');
       if (contentSourceAnchorCharIndex == -1) {
@@ -30,7 +31,10 @@ class ChapterReader {
             .substring(contentSourceAnchorCharIndex + 1);
       }
       contentFileName = Uri.decodeFull(contentFileName!);
+  
+        print('content file..... $contentFileName');
       EpubTextContentFileRef? htmlContentFileRef;
+      print('navigationPoint $htmlContentFileRef ');
       if (!bookRef.Content!.Html!.containsKey(contentFileName)) {
         throw Exception(
             'Incorrect EPUB manifest: item with href = \"$contentFileName\" is missing.');

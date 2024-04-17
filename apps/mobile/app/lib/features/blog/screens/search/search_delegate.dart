@@ -40,7 +40,7 @@ class PostsSearchDelegate extends SearchDelegate {
     // TODO: implement buildResults
     //throw UnimplementedError();
 
-     if (query.isEmpty) {
+    if (query.isEmpty) {
       return _emptyContainer();
     } else {
       return FutureBuilder(
@@ -75,7 +75,9 @@ class PostsSearchDelegate extends SearchDelegate {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [Text('No se encontraron coincidencias')],
+                              children: [
+                                Text('No se encontraron coincidencias')
+                              ],
                             ),
                           ],
                         ),
@@ -109,7 +111,7 @@ class PostsSearchDelegate extends SearchDelegate {
           builder: (_, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               final posts = snapshot.data;
-              return Expanded(
+              return Container(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: posts.isNotEmpty
@@ -119,16 +121,11 @@ class PostsSearchDelegate extends SearchDelegate {
                           separatorBuilder: (_, __) => SizedBox(height: 20),
                           itemBuilder: (_, int index) {
                             final item = posts[index];
+
                             print(index);
-                            Map<dynamic, dynamic> wppost = item;
-                            print(wppost['_embedded']['wp:featuredmedia'][0]
-                                ['source_url']);
-                            var imageCard = 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
-                            
-                            return ArticleCard(
-                                imgUrl: wppost['_embedded']['wp:featuredmedia']
-                                    [0]['source_url'],
-                                post: item);
+                            Map wppost = item;
+
+                            return ArticleCard(imgUrl: item["_embedded"]["wp:featuredmedia"][0]["source_url"], post: item);
                           })
                       : Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +134,9 @@ class PostsSearchDelegate extends SearchDelegate {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [Text('No se encontraron coincidencias')],
+                              children: [
+                                Text('No se encontraron coincidencias')
+                              ],
                             ),
                           ],
                         ),
@@ -154,7 +153,23 @@ class PostsSearchDelegate extends SearchDelegate {
     /* final searchProvider = Provider.of<BlogProvider>(context, listen: false);
   
 */
+  }
+    onSearchTextChanged(String text) async {
+  
+   
+  }
 
- 
+  safeMapSearch(Map map, List keys) {
+
+    print('map $map');
+    /*if (map[keys[0]] != null) {
+      if (keys.length == 1) {
+        return map[keys[0]];
+      }
+      List tmpList = List.from(keys);
+      tmpList.removeAt(0);
+      return safeMapSearch(map[keys[0]], tmpList);
+    }*/
+    return null;
   }
 }

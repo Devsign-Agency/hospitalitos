@@ -1,20 +1,25 @@
+import 'dart:convert';
+
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/core/models/pdf_viewer.dart';
+import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
-import 'package:mobile_app/features/bible/screens/main/main_screen.dart';
+import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
-import 'package:mobile_app/features/library/screens/screens.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
-import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
-import 'package:mobile_app/features/security/router/router.dart';
+import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import '../../../bible/screens/screens.dart';
+import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -23,6 +28,19 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+}
+
+loadAsset() async {
+  await rootBundle
+      .loadString('assets/liturgia/sync/2024/mar/12/index.html')
+      .then((String contents) {
+    const HtmlEscape htmlEscape = HtmlEscape();
+    //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+    var text = htmlEscape.convert(contents);
+    print('--------------- $text');
+
+    //final reg = RegExp('(?=<div id="cuerpo" class="normal")|(?<=/div>)');
+  });
 }
 
 class _HomePageState extends State<HomePage> {
@@ -34,12 +52,29 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold20)),
+      Align(
+          widthFactor: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Text('Propio del Tiempo. Salterio II',
+              style: AppStyle.txtNunitoSansRegular14Gray900)),
+    ]),
+    /*
+    Wrap(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          child:
+              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -49,12 +84,13 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -64,12 +100,13 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -79,12 +116,13 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
     Wrap(children: [
@@ -94,32 +132,20 @@ class _HomePageState extends State<HomePage> {
               Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
       Align(
           alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
+          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+              style: AppStyle.txtNunitoSansSemiBold13)),
       SizedBox(height: 8.0),
       Align(
           widthFactor: double.infinity,
           alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
+          child: Text('Propio del Tiempo. Salterio II',
               style: AppStyle.txtNunitoSansRegular18Gray900)),
     ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('08 de enero', style: AppStyle.txtNunitoSansSemiBold26)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Del propio del día. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
+    */
   ];
   late User? user;
-
+  late BottomNavigationMainProvider bottomNavigationMain =
+      Provider.of<BottomNavigationMainProvider>(context, listen: false);
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
   }
@@ -133,236 +159,246 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     final authService = Provider.of<AuthService>(context, listen: false);
-
     user = authService.user;
+    //loadAsset();
   }
 
-  Future<List<PdfViewer>> getPdfVieverfromJson() async {
-    final pdfService = Provider.of<PdfService>(context, listen: false);
+  Future<List<Book>> getBooks() async {
+    final bookService = Provider.of<BookService>(context, listen: false);
 
-    return pdfService.openAssetsFolderPdf();
+    return bookService.getBooksFromJson();
+  }
+
+  getCurrentDate() {
+    var date = DateTime.now().toString();
+
+    var dateParse = DateTime.parse(date);
+
+    //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    //final dateName = DateFormat('MEd').format(DateFormat("DD MMMM yyyy").parse(date));
+    final DateFormat format2 = DateFormat.yMMMMd('es_ES');
+    return format2.format(DateTime.now()).split('de 2024')[0];
   }
 
   void _onChangeTab(int index) {
+    bottomNavigationMain.setSelectedItem(index);
+
     switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomePage.route, (r) => false);
+        // Navigator.of(context).pushNamed(HomePage.route);
+        break;
       case 1:
         Navigator.of(context).pushNamed(CoursesScreen.route);
         break;
+      // case 2:
+      //   Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+      //   break;
       case 2:
-        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-        break;
-      case 3:
-        Navigator.of(context).pushNamed(MainScreen.route);
+        Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
-  }
-
-  void _onTap(PdfViewer pdf) {
-    Navigator.pushNamed(context, 'book', arguments: pdf);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Header
-              Container(
-                margin: const EdgeInsets.only(
-                    left: 14.0, right: 14.0, top: 8.0, bottom: 24.0),
-                child: Row(
-                  children: [
-                    CustomIconButton(
-                      height: 48,
-                      width: 48,
-                      variant: IconButtonVariant.FillGray400,
-                      child: CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgUserGray800,
-                      ),
-                      onTap: () => Navigator.of(context).pushNamed('profile'),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Buen día',
-                                style:
-                                    AppStyle.txtNunitoSansSemiBold13Gray800)),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(user?.firstname ?? '',
-                                style: AppStyle.txtNunitoSansSemiBold23))
-                      ],
-                    )),
-                    SizedBox(width: 10),
-                    CustomIconButton(
-                      height: 48,
-                      width: 48,
-                      variant: IconButtonVariant.FillGray300,
-                      onTap: () => Navigator.pushNamed(context, 'sound-route'),
-                      child: CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgSearch,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    CustomIconButton(
-                      height: 48,
-                      width: 48,
-                      variant: IconButtonVariant.FillGray300,
-                      // onTap: _logout,
-                      child: CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgNotification,
-                      ),
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(NotificationsScreen.route),
-                    ),
-                  ],
-                ),
-              ),
-              // News Slider
+    List<Map<String, dynamic>> actions = [
+      {
+        'icon': ImageConstant.imgChurch,
+        'action': () => {_launchURL()}
+      },
+      /*{
+        'icon': ImageConstant.imgNotification,
+        'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
+      }*/
+    ];
 
-              CustomCard(
-                margin: getMargin(left: 14.0, right: 14.0, bottom: 8.0),
-                child: NewsSlider(
-                  children: _slides,
-                ),
-              ),
+    final List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+      // BottomNavigationMenu(
+      //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+    ];
 
-              // My Favorites
-              CustomCard(
-                margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
-                child: Row(
-                  children: [
-                    CustomImageView(
-                        color: ColorConstant.gray800,
-                        svgPath: ImageConstant.imgFavorite,
-                        height: getSize(24),
-                        width: getSize(24),
-                        margin: getMargin(top: 4, bottom: 4)),
-                    SizedBox(width: 10),
-                    Text(
+    return Scaffold(
+      appBar: CustomAppBar(
+        customTitle: Row(
+          children: [
+            /*CustomIconButton(
+              height: 48,
+              width: 48,
+              variant: IconButtonVariant.FillGray400,
+              child: CustomImageView(
+                color: ColorConstant.gray800,
+                svgPath: ImageConstant.imgUserGray800,
+              ),
+              onTap: () => Navigator.of(context).pushNamed('profile'),
+            ),*/
+            SizedBox(width: 10),
+            Column(
+              children: [
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Buen día',
+                        style: AppStyle.txtNunitoSansSemiBold13Gray800)),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(getCurrentDate(),
+                        style: AppStyle.txtNunitoSansSemiBold23))
+              ],
+            ),
+          ],
+        ),
+        hasCustomTitle: true,
+        actions: actions,
+        //iconButtonVariant: IconButtonVariant.FillGray300,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // News Slider
+            CustomCard(
+              margin:
+                  getMargin(left: 14.0, right: 14.0, bottom: 8.0, top: 18.0),
+              child: NewsSlider(
+                children: _slides,
+              ),
+            ),
+
+            // My Favorites
+            CustomCard(
+              margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
+              child: Row(
+                children: [
+                  CustomImageView(
+                      color: ColorConstant.gray800,
+                      svgPath: ImageConstant.imgFavorite,
+                      height: getSize(24),
+                      width: getSize(24),
+                      margin: getMargin(top: 4, bottom: 4)),
+                  SizedBox(width: 10),
+                  Tooltip(
+                    message: 'En Desarrollo',
+                    triggerMode: TooltipTriggerMode.tap,
+                    child: Text(
                       'Mis Favoritos',
                       style: AppStyle.txtNunitoSansSemiBold23,
-                    )
-                  ],
-                ),
-                onTapped: () =>
-                    Navigator.of(context).pushNamed(FavoriteListScreen.route),
-              ),
-
-              // Recently viewed
-              Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14.0),
-                      child: Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Visto recientemente',
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtNunitoSansSemiBold23,
-                            ),
-                          ),
-                          Spacer(),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Row(
-                              children: [
-                                Text('Ver más',
-                                    style: AppStyle
-                                        .txtNunitoSansSemiBold16Indigo900),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgArrowrightIndigo900,
-                                  width: getSize(24),
-                                  height: getSize(24),
-                                  color: ColorConstant.indigo900,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
-                  // CardPreviewItemList(
-                  //   future: fetchData(),
-                  //   onTappedItem: onTap,
-                  // ),
-                  // CardPreviewPdfList(
-                  //   future: fetchDataPdf(),
-                  //   onTappedItem: onTap,
-                  // ),
-
-                  CardPreviewBookList(
-                    future: getPdfVieverfromJson(),
-                    onTappedItem: _onTap,
-                  )
-                ],
-              ),
-
-              // Daily activities
-              Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(left: 14.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Actividades diarias',
-                            style: TextStyle(fontSize: 18)),
-                      )),
-                  SizedBox(height: 14),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 14.0, right: 14.0, bottom: 14.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ExpandedButton(
-                            icon: ImageConstant.imgButtonalerts,
-                            label: 'Lecturas'),
-                        SizedBox(width: 14.0),
-                        ExpandedButton(
-                            icon: ImageConstant.imgVolume, label: 'Oraciones'),
-                        SizedBox(width: 14.0),
-                        ExpandedButton(
-                          icon: ImageConstant.imgVolumeIndigo900,
-                          label: 'Blog',
-                          route: 'blog',
-                        )
-                      ],
                     ),
                   )
                 ],
-              )
-            ],
-          ),
+              ),
+              onTapped: () {
+                //Navigator.of(context).pushNamed(FavoriteListScreen.route);
+              },
+            ),
+
+            // Recently viewed
+            Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 14.0),
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Visto recientemente',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: AppStyle.txtNunitoSansSemiBold23,
+                          ),
+                        ),
+                        Spacer(),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                            children: [
+                              Text('Ver más',
+                                  style: AppStyle
+                                      .txtNunitoSansSemiBold16Indigo900),
+                              CustomIconButton(
+                                height: 48,
+                                width: 48,
+                                variant: IconButtonVariant.NoFill,
+                                child: CustomImageView(
+                                  color: ColorConstant.gray800,
+                                  svgPath: ImageConstant.imgArrowrightIndigo900,
+                                ),
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(ListSeeMore.route),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+
+                // Show epub list
+
+                CardPreviewItemList(
+                  future: fetchData(),
+                  onTappedItem: () {},
+                ),
+              ],
+            ),
+
+            // Daily activities
+            Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(left: 14.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Actividades diarias',
+                          style: AppStyle.txtNunitoSansSemiBold23),
+                    )),
+                SizedBox(height: 14),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 14.0, right: 14.0, bottom: 14.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ExpandedButton(
+                          message: 'En Desarrollo',
+                          icon: ImageConstant.imgButtonalerts,
+                          label: 'Lecturas'),
+                      SizedBox(width: 14.0),
+                      ExpandedButton(
+                        icon: ImageConstant.imgVolume,
+                        label: 'Oraciones',
+                        message: 'En Desarrollo',
+                      ),
+                      SizedBox(width: 14.0),
+                      ExpandedButton(
+                        icon: ImageConstant.imgVolumeIndigo900,
+                        label: 'Blog',
+                        route: 'blog',
+                      )
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
         ),
-        bottomNavigationBar: CustomBottomBar(onChanged: _onChangeTab),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        bottomMenuList: bottomMenuList,
+        onChangeIndex: _onChangeTab,
       ),
     );
   }
 
-  _logout() async {
-    AuthService auth = Provider.of<AuthService>(context, listen: false);
-    await auth.googleSignOut();
-    if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(RouterSecurity.initialRoute,
-          ModalRoute.withName(RouterMain.initialRoute));
+  _launchURL() async {
+    const url =
+        'https://docs.google.com/forms/d/1RxTOvDl_i08qV5X_5AxZsUFhq7bZf7-V9gG8Cth0xa8/edit?usp=drivesdks';
+    final _url = Uri.parse(url);
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+      // <--
+      throw Exception('Could not launch $_url');
     }
-  }
-
-  _playText() async {
-    print('playText');
-    TextToSpeech tts = TextToSpeech();
-
-    await tts.play('Hola mundo, esto es una prueba de flutter.');
   }
 }

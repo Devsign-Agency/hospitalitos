@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ImageConstant {
   static String imgSearchGray80024x24 =
       'assets/images/img_search_gray_800_24x24.svg';
@@ -13,6 +15,8 @@ class ImageConstant {
 
   static String imgFaceEmogi = 'assets/images/img_face_emogi.svg';
 
+  static String imgSettings = 'assets/images/img_settings.svg';
+
   static String imgMediaVideo = 'assets/images/img_media_video.svg';
 
   static String imgVideo24x24 = 'assets/images/img_video_24x24.svg';
@@ -22,6 +26,8 @@ class ImageConstant {
   static String imgFavWhite24x24 = 'assets/images/img_fav_white_24x24.svg';
 
   static String imgArrowMedia = 'assets/images/img_arrow_media.svg';
+
+  static String imgMoonIndigo = 'assets/images/img_moon_indigo_48x48.svg';
 
   static String imgArrowupIndigo900 =
       'assets/images/img_arrowup_indigo_900.svg';
@@ -255,7 +261,13 @@ class ImageConstant {
 
   static String imgMenuGray800 = 'assets/images/img_menu_gray_800.svg';
 
+  static String imgMathCase = 'assets/images/img_match_case.svg';
+
   static String imgHome = 'assets/images/img_home.svg';
+
+  static String imgHeadline = 'assets/images/img_headline.svg';
+
+  static String imgWidthFit = 'assets/images/img_width_fit.svg';
 
   static String imgBookmarkWhiteA700 =
       'assets/images/img_bookmark_white_a700.svg';
@@ -275,4 +287,6 @@ class ImageConstant {
   static String imageNotFound = 'assets/images/image_not_found.png';
 
   static String imgIniciodesesin = 'assets/images/img_iniciodesesin.png';
+
+  static String imgChurch = 'assets/images/church.svg';
 }

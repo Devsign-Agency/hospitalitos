@@ -17,18 +17,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            extendBody: true,
-            extendBodyBehindAppBar: true,
-            backgroundColor: ColorConstant.gray100,
-            resizeToAvoidBottomInset: false,
-            body: SecurityScreen(
-                title: '¡Te damos la bienvenida!',
-                subTitle:
-                    'Acá podrás encontrar un espacio para conectar con tu fé.',
-                header: _Header(),
-                child: _Form())));
+    return Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        backgroundColor: ColorConstant.gray100,
+        resizeToAvoidBottomInset: false,
+        body: SecurityScreen(
+            title: '¡Te damos la bienvenida!',
+            subTitle:
+                'Acá podrás encontrar un espacio para conectar con tu fé.',
+            header: _Header(),
+            child: _Form()));
   }
 }
 
@@ -38,7 +37,7 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: getPadding(top: 24),
+        padding: getPadding(top: 50),
         child: OutlineGradientButton(
             padding: EdgeInsets.only(
                 left: getHorizontalSize(1),

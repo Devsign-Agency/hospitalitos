@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/shared/providers/theme_provider.dart';
+import 'package:mobile_app/themes/dark_theme.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../core/app_export.dart';
 
@@ -16,35 +19,70 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? bottom;
   final IconButtonVariant? iconButtonVariant;
   final bool? hideActions;
-
-  const CustomAppBar(
-      {super.key,
-      this.backgroundColor = Colors.red,
-      this.textIconColor = Colors.red,
-      this.icon,
-      this.title = '',
-      this.menuItem,
-      this.height: kToolbarHeight,
-      this.hideBack = false,
-      this.actions,
-      this.leading,
-      this.bottom,
-      this.iconButtonVariant = IconButtonVariant.NoFill,
-      this.hideActions = false});
+  final bool hasCustomTitle;
+  final Widget? customTitle;
+  final bool hasPopupMenu;
+  final List<Map<String, dynamic>>? menuOptions;
+  final PopupMenuButton<int>? popupMenuButton;
+  final bool? hasLeading;
+  const CustomAppBar({
+    super.key,
+    this.backgroundColor,
+    this.textIconColor = Colors.red,
+    this.icon,
+    this.title = '',
+    this.menuItem,
+    this.height: kToolbarHeight,
+    this.hideBack = false,
+    this.actions,
+    this.leading,
+    this.bottom,
+    this.iconButtonVariant = IconButtonVariant.NoFill,
+    this.hideActions = false,
+    this.hasCustomTitle = false,
+    this.customTitle,
+    this.hasPopupMenu = false,
+    this.menuOptions,
+    this.popupMenuButton,
+    this.hasLeading = false,
+  });
   @override
   Size get preferredSize => Size.fromHeight(height!);
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    ThemeData currentTheme = themeProvider.currentTheme;
+    bool isDarkTheme = currentTheme == DarkTheme.theme;
     return AppBar(
-      automaticallyImplyLeading: true,
-      leading: leading,
       backgroundColor: backgroundColor,
-      title: Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-              margin: getMargin(bottom: 20),
-              child: Text('$title', style: AppStyle.txtNunitoSansSemiBold26))),
+      automaticallyImplyLeading: true,
+      bottomOpacity: 0.0,
+      elevation: 0.0,
+      leading: leading ??
+          (hasLeading != null && hasLeading!
+              ? CustomIconButton(
+                  height: getSize(48),
+                  width: getSize(48),
+                  variant: IconButtonVariant.NoFill,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: CustomImageView(
+                    svgPath: ImageConstant.imgArrowleftGray900,
+                    color: ColorConstant.gray800,
+                  ),
+                )
+              : null),
+      title: !hasCustomTitle
+          ? Align(
+              alignment: Alignment.centerLeft,
+              child: Text('$title',
+                  style: isDarkTheme
+                      ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                      : AppStyle.txtNunitoSansSemiBold26))
+          : customTitle,
       actions: [
         if (actions != null && !hideActions!)
           ...actions!.map(
@@ -52,14 +90,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               margin: getMargin(left: 8),
               height: getSize(48),
               width: getSize(48),
-              variant: iconButtonVariant,
+              variant: item['variant'] ?? iconButtonVariant,
               onTap: item['action'],
               child: CustomImageView(
                 svgPath: item['icon'],
+                color: item['color'] ??
+                    (isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.gray800),
               ),
             ),
           ),
-        SizedBox(width: 16)
+        if (!hasPopupMenu) SizedBox(width: 10),
+        if (hasPopupMenu) popupMenuButton!
       ],
     );
   }

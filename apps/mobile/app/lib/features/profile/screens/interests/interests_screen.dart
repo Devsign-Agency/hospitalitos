@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/blog/screens/search/search_delegate.dart';
+import 'package:mobile_app/features/book/widgets/custom_search_delegate.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
@@ -49,7 +51,7 @@ class _InterestScreenState extends State<InterestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Intereses',
+        title: 'Intereses test search',
         backgroundColor: ColorConstant.gray50,
       ),
       body: SingleChildScrollView(
@@ -59,7 +61,12 @@ class _InterestScreenState extends State<InterestScreen> {
 
           // Search
           BarInputSearch(
-            onChange: _handleChangeValue,
+            onChange: () async {
+              await showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
           ),
 
           // list of categories
@@ -95,6 +102,10 @@ class _ListCategory extends StatelessWidget {
             })));
   }
 }
+
+onTap(context) {
+              showSearch(context: context, delegate: PostsSearchDelegate());
+            }
 
 class _Preferences extends StatelessWidget {
   final int maxQty;

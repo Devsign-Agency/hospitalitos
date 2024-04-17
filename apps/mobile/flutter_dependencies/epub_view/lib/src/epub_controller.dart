@@ -83,6 +83,12 @@ class EpubController {
       [],
       (acc, next) {
         index += 1;
+        print('acc $acc  ${next.Title}');
+        /*if(next.Title.contains('capitulo')){
+
+        }*/
+
+      
         acc.add(EpubViewChapter(next.Title, _getChapterStartIndex(index)));
         for (final subChapter in next.SubChapters!) {
           index += 1;
