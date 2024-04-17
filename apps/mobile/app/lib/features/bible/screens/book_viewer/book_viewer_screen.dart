@@ -214,6 +214,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
+                      isDarkMode: isDarkTheme,
                       initialValues: settingTextInitialValues,
                       onChange: (dynamic event) {
                         print(event['fontSize']);

@@ -7,8 +7,13 @@ import '../../../core/app_export.dart';
 class PageViewIndex extends StatelessWidget {
   final EpubBook book;
   final EpubChapter chapter;
+  final bool isDarkMode;
 
-  const PageViewIndex({super.key, required this.book, required this.chapter});
+  const PageViewIndex(
+      {super.key,
+      required this.book,
+      required this.chapter,
+      required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
@@ -16,37 +21,40 @@ class PageViewIndex extends StatelessWidget {
       child: ListView.builder(
           itemCount: book.Chapters!.length,
           itemBuilder: (context, index) {
-            var title = book.Chapters![index].Title! ;
-            return title != '' ? ListTile(
-              title: Container(
-                padding: getPadding(left: 5),
-                decoration: BoxDecoration(
-                    color: chapter.Title == book.Chapters![index].Title!
-                        ? ColorConstant.yellow100.withOpacity(0.2)
-                        : ColorConstant.transparent,
-                    border: Border(
-                      left: BorderSide(
-                          color: ColorConstant.yellow100,
-                          width: chapter.Title == book.Chapters![index].Title!
-                              ? 4
-                              : 0),
-                    )),
-                child:  Text(
-                        book.Chapters![index].Title!,
-                        style: chapter.Title == book.Chapters![index].Title!
-                            ? AppStyle.txtNunitoSansSemiBold20Indigo900
-                            : AppStyle.txtNunitoSansSemiBold20Gray900,
-                      ),
-              ),
-              //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-              onTap: () {
-                print(book);
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, ChapterPage.route,
-                    arguments: EpubArguments(
-                        book: book, chapter: book.Chapters![index]));
-              },
-            ):Container();
+            var title = book.Chapters![index].Title!;
+            return title != ''
+                ? ListTile(
+                    title: Container(
+                      padding: getPadding(left: 5),
+                      decoration: BoxDecoration(
+                          color: chapter.Title == book.Chapters![index].Title!
+                              ? ColorConstant.yellow100.withOpacity(0.2)
+                              : ColorConstant.transparent,
+                          border: Border(
+                            left: BorderSide(
+                                color: ColorConstant.yellow100,
+                                width: chapter.Title ==
+                                        book.Chapters![index].Title!
+                                    ? 4
+                                    : 0),
+                          )),
+                      child: Text(book.Chapters![index].Title!,
+                          style: AppStyle.txtNunitoSansSemiBold20Indigo900
+                              .copyWith(
+                                  color: isDarkMode
+                                      ? ColorConstant.whiteA700
+                                      : ColorConstant.black900)),
+                    ),
+                    //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
+                    onTap: () {
+                      print(book);
+                      // Navigator.pop(context);
+                      Navigator.pushNamed(context, ChapterPage.route,
+                          arguments: EpubArguments(
+                              book: book, chapter: book.Chapters![index]));
+                    },
+                  )
+                : Container();
           }),
     );
   }

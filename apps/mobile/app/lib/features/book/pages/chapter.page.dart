@@ -40,6 +40,7 @@ class TextBook {
   double size;
   double? margin;
   LineHeight? lineHeight;
+  CircleButtonModel circle;
 
   TextBook(
       {required this.fontFamily,
@@ -47,6 +48,7 @@ class TextBook {
       required this.fontSize,
       this.margin,
       required this.lineHeight,
+      required this.circle,
       required this.size});
 }
 
@@ -80,6 +82,7 @@ class _ChapterPageState extends State<ChapterPage> {
       size: 32.0,
       margin: 14.0,
       lineHeight: LineHeight.number(1.2),
+      circle: CircleButtonModel(CircleButtonType.white, Colors.white),
       fontSize: FontSize.medium);
 
   String _newVoiceText = '';
@@ -100,6 +103,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   int i = 0;
   String parsedString = '';
+  bool isDarkMode = false;
 
   @override
   void initState() {
@@ -122,7 +126,7 @@ class _ChapterPageState extends State<ChapterPage> {
   @override
   void dispose() {
     super.dispose();
-    flutterTts.stop();
+
     Clipboard.setData(ClipboardData(text: ''));
   }
 
@@ -211,11 +215,12 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _handleChangeSetting(dynamic event) {
-    print(event);
+    print('event: $event');
     textBook.fontSize = event['fontSize'];
     textBook.lineHeight = event['lineHeight'];
     textBook.margin = event['margin'];
-    textBook.color = event['color'];
+    textBook.color = Colors.white;
+    // textBook.circle = event['circle'];
     setState(() {});
   }
 
@@ -235,6 +240,20 @@ class _ChapterPageState extends State<ChapterPage> {
     _share(parsedString);
   }
 
+  Color getTextColor(CircleButtonType type) {
+    Color color;
+    if (type == CircleButtonType.black ||
+        (type == CircleButtonType.grey) ||
+        (type == CircleButtonType.brown) ||
+        (type == CircleButtonType.red)) {
+      color = ColorConstant.whiteA700;
+    } else {
+      color = ColorConstant.black900;
+    }
+
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -243,10 +262,6 @@ class _ChapterPageState extends State<ChapterPage> {
     final chapter = arguments.chapter;
     final String bookTitle = book?.Title ?? '';
     final String bookAuthor = book?.Author ?? '';
-
-    ThemeProvider themeProvider =
-        Provider.of<ThemeProvider>(context, listen: false);
-    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
     MarkerService markerService =
         Provider.of<MarkerService>(context, listen: true);
@@ -259,28 +274,29 @@ class _ChapterPageState extends State<ChapterPage> {
     ];
 
     final List<PopupMenuItemModel> menuOptions = [
-      // PopupMenuItemModel(
-      //     id: 0,
-      //     title: 'Modo Noche',
-      //     onTappedItem: (context) {/*
-      //       ThemeProvider themeProvider =
-      //           Provider.of<ThemeProvider>(context, listen: false);
-      //       themeProvider.currentTheme == DarkTheme.theme
-      //           ? themeProvider.setLightMode()
-      //           : themeProvider.setDarkMode();
-      //           */
-      //     }),
+      PopupMenuItemModel(
+          id: 0,
+          title: 'Modo Noche',
+          onTappedItem: (context) {
+            setState(() {
+              isDarkMode = !isDarkMode;
+            });
+          }),
       PopupMenuItemModel(
           id: 1,
           title: 'Ajustar texto',
           onTappedItem: (context) {
             showModalBottomSheet(
+                backgroundColor: isDarkMode
+                    ? ColorConstant.gray80040
+                    : ColorConstant.whiteA700,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
+                      isDarkMode: isDarkMode,
                       initialValues: settingTextInitialValues,
                       onChange: _handleChangeSetting,
                     ));
@@ -353,7 +369,17 @@ class _ChapterPageState extends State<ChapterPage> {
     ];
 
     return Scaffold(
+      backgroundColor:
+          isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
       appBar: CustomAppBar(
+          hasCustomTitle: true,
+          customTitle: Text(bookTitle,
+              style: AppStyle.txtNunitoSansSemiBold26WhiteA700.copyWith(
+                  color: isDarkMode
+                      ? ColorConstant.whiteA700
+                      : ColorConstant.black900)),
+          backgroundColor:
+              isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
           leading: _goBackButton(context, book, isDarkMode),
           title: bookTitle,
           actions: actions,
@@ -378,7 +404,9 @@ class _ChapterPageState extends State<ChapterPage> {
                       style: {
                         'body': Style(
                             fontSize: textBook.fontSize,
-                            color: textBook.color,
+                            color: isDarkMode
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.black900,
                             lineHeight: textBook.lineHeight,
                             fontFamily: Theme.of(context)
                                 .textTheme
@@ -402,6 +430,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
           // Page view chapter's markers
           PageViewBookmarks(
+            isDarkMode: isDarkMode,
             markerList: markerService.getMarkerList(bookTitle, chapter),
             onTapped: _handleTapPageViewMarkerList,
             onDeleteMarker: (marker) {
@@ -411,10 +440,16 @@ class _ChapterPageState extends State<ChapterPage> {
           ),
 
           // Page view book's index
-          PageViewIndex(book: book!, chapter: chapter!)
+          PageViewIndex(
+            book: book!,
+            chapter: chapter!,
+            isDarkMode: isDarkMode,
+          )
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
+          backgroundColor:
+              isDarkMode ? ColorConstant.gray80040 : ColorConstant.gray100,
           currentIndex: bottomNavigationBarCurrentIndex,
           onChangeIndex: (index) => _handleChangeBottomNavigationBar(
               index, markerService, bookTitle, chapter),
@@ -440,6 +475,9 @@ class _ChapterPageState extends State<ChapterPage> {
   PopupMenuButton<int> _popupMenuButton(
           List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
       PopupMenuButton<int>(
+          iconColor:
+              isDarkMode ? ColorConstant.whiteA700 : ColorConstant.black900,
+          color: isDarkMode ? ColorConstant.gray30002 : ColorConstant.gray100,
           constraints: BoxConstraints(
             minWidth: 200,
           ),
@@ -447,12 +485,13 @@ class _ChapterPageState extends State<ChapterPage> {
           itemBuilder: (context) => [
                 ...menuOptions.map((item) => PopupMenuItem(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(item.title,
-                            style: isDarkMode
-                                ? AppStyle.txtNunitoSansRegular18WhiteA700
-                                : AppStyle.txtNunitoSansRegular18Black900),
-                      ),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(item.title,
+                              style: AppStyle.txtNunitoSansRegular18WhiteA700
+                                  .copyWith(
+                                      color: isDarkMode
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.black900))),
                       onTap: () => item.onTappedItem(context),
                     ))
               ]);

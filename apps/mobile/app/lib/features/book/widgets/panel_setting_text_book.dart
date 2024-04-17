@@ -11,11 +11,13 @@ import '../../../widgets/widgets.dart';
 class PanelSettingTextBook extends StatefulWidget {
   final Map<String, dynamic> initialValues;
   final void Function(dynamic) onChange;
+  final bool isDarkMode;
 
   const PanelSettingTextBook({
     super.key,
     required this.onChange,
     required this.initialValues,
+    required this.isDarkMode,
   });
 
   @override
@@ -78,7 +80,8 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
 
   setColor(CircleButtonModel newCircleButton) {
     setState(() {
-      _setting['color'] = newCircleButton.color;
+      _setting['circle'] = newCircleButton;
+      _setting['color'] = Colors.red;
       widget.onChange(_setting);
       // _selectedCircleButtonType = newCircleButton.name;
       selectedColor = newCircleButton.color;
@@ -126,7 +129,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
               color: ColorConstant.indigo900,
             ),
           ),
-          _buildSliders(isDarkMode),
+          _buildSliders(widget.isDarkMode),
         ],
       ),
     );
@@ -154,17 +157,17 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Colors section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // spacing: 8.0,
-              children: [
-                ...circleButtonList.map((circleButton) => _CircleButton(
-                    item: circleButton,
-                    selected: circleButton.color == selectedColor,
-                    onTapped: setColor))
-              ],
-            ),
-            SizedBox(height: 14),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   // spacing: 8.0,
+            //   children: [
+            //     ...circleButtonList.map((circleButton) => _CircleButton(
+            //         item: circleButton,
+            //         selected: circleButton.color == selectedColor,
+            //         onTapped: setColor))
+            //   ],
+            // ),
+            // SizedBox(height: 14),
 
             // Bar division
             Container(
@@ -182,7 +185,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 onChange: setFontSize,
                 indicator: 'Tamaño',
                 label: 'Texto',
-                labelStyle: labelStyle.copyWith(fontSize: 14),
+                labelStyle: labelStyle,
                 iconColor: iconColor,
                 iconTrailing: ImageConstant.imgMathCase,
                 iconTrailingColor: iconColorTrailing,
@@ -194,7 +197,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 onChange: setMargin,
                 indicator: 'Tamaño',
                 label: 'Margen',
-                labelStyle: labelStyle.copyWith(fontSize: 14),
+                labelStyle: labelStyle,
                 iconColor: iconColor,
                 iconTrailing: ImageConstant.imgWidthFit,
                 iconTrailingColor: iconColorTrailing,
@@ -206,7 +209,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
                 onChange: setLineHeight,
                 indicator: 'Tamaño',
                 label: 'Interlineado',
-                labelStyle: labelStyle.copyWith(fontSize: 14),
+                labelStyle: labelStyle,
                 iconColor: iconColor,
                 iconTrailing: ImageConstant.imgHeadline,
                 iconTrailingColor: iconColorTrailing,
@@ -257,4 +260,3 @@ class _CircleButton extends StatelessWidget {
     );
   }
 }
-
