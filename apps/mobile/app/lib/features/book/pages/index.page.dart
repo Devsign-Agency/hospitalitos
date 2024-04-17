@@ -287,6 +287,8 @@ class ListChaptersOfBook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView.builder(
+                //shrinkWrap: true,
+physics: NeverScrollableScrollPhysics(),
           itemCount: book!.Chapters!.length,
           itemBuilder: (context, index) {
             var title = (book?.Chapters![index].Title!).toString();
@@ -308,8 +310,6 @@ class ListChaptersOfBook extends StatelessWidget {
                       ),
                       children: [
                         ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             itemCount: book.Chapters![index].SubChapters.length,
                             itemBuilder: (BuildContext context, int i) {
