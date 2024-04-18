@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/features/bible/screens/book_viewer/widgets/verse_list.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -242,9 +243,19 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       {
         'icon': ImageConstant.imgFavorite,
         'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
+        'variant': bibleService.getPage() == ''
+            ? IconButtonVariant.NoFill
+            : IconButtonVariant.OutlinePurple50,
         'action': () {
-          bibleService.addNewPage();
-          showCustomToast('Página guardada en favoritos exitosamente');
+          if (bibleService.getPage() != '') {
+            bibleService.deletePage(bibleService.getCurrentPage());
+            showCustomToast('Página eliminada exitosamente');
+            setState(() {});
+          } else {
+            bibleService.addNewPage();
+            showCustomToast('Página guardada en favoritos exitosamente');
+            setState(() {});
+          }
         },
       },
       {
@@ -323,7 +334,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       padding: getPadding(all: 0.0),
                       child: Column(
                         children: [
-                          ..._buildVerseList(bibleService, isDarkTheme)
+                          VerseList(
+                              secuenceVerseIndex: secuenceVerseIndex,
+                              isDarkMode: isDarkTheme),
+                          SizedBox(height: 20)
                         ],
                       )),
                 ),

@@ -128,10 +128,8 @@ class BibleService extends ChangeNotifier {
     return markerListBook;
   }
 
-  addNewPage() {
-    String pathVerse = endVerse != -1 && endVerse != startVerse
-        ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
-        : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+  void addNewPage() {
+    String pathVerse = getCurrentPage();
 
     dynamic aux = Preferences.pageList ?? [];
 
@@ -143,20 +141,31 @@ class BibleService extends ChangeNotifier {
 
     markerListBook.add(pathVerse);
     Preferences.pageList = json.encode(markerListBook);
-    print('lastPage: ${Preferences.lastPage}');
     getPageList();
   }
 
-  setLastPage() {
-    String pathVerse = endVerse != -1 && endVerse != startVerse
-        ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
-        : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+  String getPage() {
+    String pathVerse = getCurrentPage();
+    dynamic aux = Preferences.pageList ?? [];
 
-    Preferences.lastPage = pathVerse;
+    List<dynamic> markerListBook = [];
+
+    if (aux.isNotEmpty) {
+      markerListBook = json.decode(Preferences.pageList);
+    }
+
+    String value = markerListBook.firstWhere((element) => element == pathVerse,
+        orElse: () => '');
+
+    return value;
+  }
+
+  void setLastPage() {
+    Preferences.lastPage = getCurrentPage();
   }
 
   // TODO: Dado el startVerse y endVerse obtener los versículos
-  getVersesByRange(int startVerse, int endVerse) {
+  void getVersesByRange(int startVerse, int endVerse) {
     int startIndex = startVerse;
     int endIndex = endVerse;
 
@@ -174,7 +183,7 @@ class BibleService extends ChangeNotifier {
     selectedVerses = filteredMap;
   }
 
-  getBookByName(String name) {
+  void getBookByName(String name) {
     final BookBible? book = books.firstWhere((element) => element.name == name);
 
     if (book != null) {
@@ -182,11 +191,11 @@ class BibleService extends ChangeNotifier {
     }
   }
 
-  getChapterFromBook(BookBible book, int indexOfChapter) {
+  void getChapterFromBook(BookBible book, int indexOfChapter) {
     _selectedChapter = book.chapters[indexOfChapter - 1];
   }
 
-  deletePage(String pagePath) {
+  void deletePage(String pagePath) {
     List<dynamic> pages = json.decode(Preferences.pageList) ?? [];
 
     int i = pages.indexWhere(
@@ -199,5 +208,11 @@ class BibleService extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  String getCurrentPage() {
+    return endVerse != -1 && endVerse != startVerse
+        ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
+        : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
   }
 }
