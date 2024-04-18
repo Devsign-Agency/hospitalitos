@@ -334,9 +334,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       padding: getPadding(all: 0.0),
                       child: Column(
                         children: [
-                          VerseList(
-                              secuenceVerseIndex: secuenceVerseIndex,
-                              isDarkMode: isDarkTheme),
+                          ..._buildVerseList(bibleService, isDarkTheme),
                           SizedBox(height: 20)
                         ],
                       )),
