@@ -19,43 +19,84 @@ class PageViewIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView.builder(
-          itemCount: book.Chapters!.length,
+          itemCount: book!.Chapters!.length,
           itemBuilder: (context, index) {
-            var title = book.Chapters![index].Title!;
+            var title = (book?.Chapters![index].Title!).toString();
+            var boxDecoration = BoxDecoration(
+              border: Border(
+                  left: BorderSide(
+                color: ColorConstant.yellow100,
+              )),
+            );
+
             return title != ''
-                ? ListTile(
-                    title: Container(
-                      padding: getPadding(left: 5),
-                      decoration: BoxDecoration(
-                          color: chapter.Title == book.Chapters![index].Title!
-                              ? ColorConstant.yellow100.withOpacity(0.2)
-                              : ColorConstant.transparent,
-                          border: Border(
-                            left: BorderSide(
-                                color: ColorConstant.yellow100,
-                                width: chapter.Title ==
-                                        book.Chapters![index].Title!
-                                    ? 4
-                                    : 0),
-                          )),
-                      child: Text(book.Chapters![index].Title!,
-                          style: AppStyle.txtNunitoSansSemiBold20Indigo900
-                              .copyWith(
-                                  color: isDarkMode
-                                      ? ColorConstant.whiteA700
-                                      : ColorConstant.black900)),
-                    ),
-                    //subtitle: comparateIndexPos(index, pos) ?  Text(book.Chapters![index + 1].Title!) : Text(''),
-                    onTap: () {
-                      print(book);
-                      // Navigator.pop(context);
-                      Navigator.pushNamed(context, ChapterPage.route,
-                          arguments: EpubArguments(
-                              book: book, chapter: book.Chapters![index]));
-                    },
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: book.Chapters![index].SubChapters!.length > 0
+                        ? ExpansionTile(
+                            title: Container(
+                              decoration: boxDecoration,
+                              child: Text(
+                                title,
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                              ),
+                            ),
+                            children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: book
+                                        .Chapters![index].SubChapters!.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      var subtititle = book.Chapters![index]
+                                          .SubChapters![i].Title!
+                                          .toString();
+                                      return ListTile(
+                                        onTap: () {
+                                          var sub =
+                                              book.Chapters![index].SubChapters;
+
+                                          Navigator.popAndPushNamed(
+                                              context, ChapterPage.route,
+                                              arguments: EpubArguments(
+                                                  book: book,
+                                                  chapter: book.Chapters![index]
+                                                      .SubChapters![i]));
+                                        },
+                                        title: Title(
+                                            color: ColorConstant.amber300,
+                                            child: Text(subtititle)),
+                                      );
+                                    })
+                              ])
+                        : ListTile(
+                            title: Text(
+                                (book?.Chapters![index].Title!).toString(),
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900),
+                            onTap: () {
+                              Navigator.popAndPushNamed(
+                                  context, ChapterPage.route,
+                                  arguments: EpubArguments(
+                                      book: book,
+                                      chapter: book?.Chapters![index]));
+                            }),
                   )
                 : Container();
           }),
     );
+  }
+
+  listSubMenuBook(subChapters) {
+    if (subChapters.isEmpty) {
+      return ListView.builder(
+        itemCount: subChapters.length,
+        itemBuilder: (BuildContext context, int index) {
+          var title = subChapters[index].Title!;
+
+          ListTile(title: title);
+        },
+      );
+    }
   }
 }
