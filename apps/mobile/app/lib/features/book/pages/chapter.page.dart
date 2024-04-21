@@ -39,7 +39,7 @@ class TextBook {
   Color color;
   double size;
   double? margin;
-  LineHeight? lineHeight;
+  double? lineHeight;
   CircleButtonModel circle;
 
   TextBook(
@@ -81,7 +81,7 @@ class _ChapterPageState extends State<ChapterPage> {
       color: ColorConstant.black900,
       size: 32.0,
       margin: 14.0,
-      lineHeight: LineHeight.number(1.2),
+      lineHeight: 1.2,
       circle: CircleButtonModel(CircleButtonType.white, Colors.white),
       fontSize: FontSize.medium);
 
@@ -214,7 +214,7 @@ class _ChapterPageState extends State<ChapterPage> {
     );
   }
 
-  void _handleChangeSetting(dynamic event) {
+  void _handleChangeSetting(dynamic event, dynamic values) {
     print('event: $event');
     textBook.fontSize = event['fontSize'];
     textBook.lineHeight = event['lineHeight'];
@@ -380,11 +380,12 @@ class _ChapterPageState extends State<ChapterPage> {
                       : ColorConstant.black900)),
           backgroundColor:
               isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
-          leading: _goBackButton(context, book, isDarkMode),
+          leading: CustomIconBackButton(isDarkTheme: isDarkMode),
           title: bookTitle,
           actions: actions,
           hasPopupMenu: true,
-          popupMenuButton: _popupMenuButton(menuOptions, isDarkMode)),
+          popupMenuButton: CustomPopupMenuButton(
+              isDarkMode: isDarkMode, menuOptions: menuOptions)),
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -407,7 +408,7 @@ class _ChapterPageState extends State<ChapterPage> {
                             color: isDarkMode
                                 ? ColorConstant.whiteA700
                                 : ColorConstant.black900,
-                            lineHeight: textBook.lineHeight,
+                            lineHeight: LineHeight(textBook.lineHeight),
                             fontFamily: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -456,43 +457,4 @@ class _ChapterPageState extends State<ChapterPage> {
           bottomMenuList: bottomMenuList),
     );
   }
-
-  CustomIconButton _goBackButton(
-          BuildContext context, EpubBook? book, bool isDarkMode) =>
-      CustomIconButton(
-        height: getSize(48),
-        width: getSize(48),
-        variant: IconButtonVariant.NoFill,
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: CustomImageView(
-          svgPath: ImageConstant.imgArrowleftGray900,
-          color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
-        ),
-      );
-
-  PopupMenuButton<int> _popupMenuButton(
-          List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
-      PopupMenuButton<int>(
-          iconColor:
-              isDarkMode ? ColorConstant.whiteA700 : ColorConstant.black900,
-          color: isDarkMode ? ColorConstant.gray30002 : ColorConstant.gray100,
-          constraints: BoxConstraints(
-            minWidth: 200,
-          ),
-          offset: Offset(20, 60),
-          itemBuilder: (context) => [
-                ...menuOptions.map((item) => PopupMenuItem(
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(item.title,
-                              style: AppStyle.txtNunitoSansRegular18WhiteA700
-                                  .copyWith(
-                                      color: isDarkMode
-                                          ? ColorConstant.whiteA700
-                                          : ColorConstant.black900))),
-                      onTap: () => item.onTappedItem(context),
-                    ))
-              ]);
 }

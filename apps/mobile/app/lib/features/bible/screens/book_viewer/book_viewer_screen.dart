@@ -16,24 +16,6 @@ import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../book/widgets/widgets.dart';
 
-class TextBook {
-  String fontFamily;
-  FontSize fontSize;
-
-  Color color;
-  double size;
-  double? margin;
-  LineHeight? lineHeight;
-
-  TextBook(
-      {required this.fontFamily,
-      required this.color,
-      required this.fontSize,
-      this.margin,
-      required this.lineHeight,
-      required this.size});
-}
-
 class BookViewerScreen extends StatefulWidget {
   static const String route = 'book_viewer';
   const BookViewerScreen({super.key});
@@ -56,7 +38,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       color: Colors.black,
       size: 32.0,
       margin: 14.0,
-      lineHeight: LineHeight.number(1.2),
+      lineHeight: 1.2,
       fontSize: FontSize.medium);
 
   String _newVoiceText = '';
@@ -185,6 +167,75 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     return title;
   }
 
+  double convertFontSizePxToDouble(FontSize fontSize) {
+    Map<FontSize, double> values = {
+      FontSize.xSmall: 12.0,
+      FontSize.xxSmall: 14.0,
+      FontSize.smaller: 16.0,
+      FontSize.small: 18.0,
+      FontSize.medium: 24.0,
+      FontSize.large: 32.0,
+      FontSize.larger: 36.0,
+      FontSize.xLarge: 40.0,
+      FontSize.xxLarge: 48.0
+    };
+
+    return values[fontSize]!;
+  }
+
+  void shareVerses(Map<String, dynamic> mapVerses) {
+    List<String> verseList = [];
+
+    mapVerses.forEach((key, value) {
+      verseList.add('$key) $value ');
+    });
+
+    share(verseList.join());
+  }
+
+  void shareSelectedText() async {
+    ClipboardData? selectedContent =
+        await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (selectedContent != null) share(selectedContent.text!);
+  }
+
+  void playSelectedText() async {
+    ClipboardData? kTextPlain;
+    kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+
+    _newVoiceText = kTextPlain?.text ?? '';
+    onAudioSound = true;
+
+    setState(() {});
+  }
+
+  void addNewPageToFavorite(BibleService bibleService) {
+    String message = '';
+    if (bibleService.getPage() != '') {
+      bibleService.deletePage(bibleService.getCurrentPage());
+      message = 'Página eliminada exitosamente';
+      setState(() {});
+    } else {
+      bibleService.addNewPage();
+      message = 'Página guardada en favoritos exitosamente';
+      setState(() {});
+    }
+
+    showCustomToast(message);
+  }
+
+  void handleChangeTextSetting(dynamic event, dynamic values) {
+    textBook.fontSize = event['fontSize'];
+    textBook.lineHeight = event['lineHeight'];
+    textBook.margin = event['margin'];
+    settingTextInitialValues['fontSize'] = values['fontSize'];
+    settingTextInitialValues['margin'] = values['margin'];
+    settingTextInitialValues['lineHeight'] = values['lineHeight'];
+    // textBook.color = event['color'];
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
@@ -194,16 +245,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     verses = bibleService.selectedVerses;
 
     final List<PopupMenuItemModel> menuOptions = [
-      PopupMenuItemModel(
-          id: 0,
-          title: 'Modo Noche',
-          onTappedItem: (context) {
-            ThemeProvider themeProvider =
-                Provider.of<ThemeProvider>(context, listen: false);
-            themeProvider.currentTheme == DarkTheme.theme
-                ? themeProvider.setLightMode()
-                : themeProvider.setDarkMode();
-          }),
       PopupMenuItemModel(
           id: 1,
           title: 'Ajustar texto',
@@ -217,26 +258,13 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                 builder: (context) => PanelSettingTextBook(
                       isDarkMode: isDarkTheme,
                       initialValues: settingTextInitialValues,
-                      onChange: (dynamic event) {
-                        print(event['fontSize']);
-                        textBook.fontSize = event['fontSize'];
-                        textBook.lineHeight = event['lineHeight'];
-                        textBook.margin = event['margin'];
-                        textBook.color = event['color'];
-                        // print(textBook.fontSize.value);
-                        setState(() {});
-                      },
+                      onChange: handleChangeTextSetting,
                     ));
           }),
       PopupMenuItemModel(
           id: 2,
           title: 'Compartir',
-          onTappedItem: (context) {
-            // String htmlContent = chapter!.HtmlContent!;
-            // htmlList.add(htmlContent);
-            // var doc3 = parse(htmlList.join());
-            // share(parse(doc3.body!.text).documentElement!.text);
-          })
+          onTappedItem: (context) => shareVerses(bibleService.selectedVerses))
     ];
 
     final appBarActions = [
@@ -246,17 +274,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
         'variant': bibleService.getPage() == ''
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () {
-          if (bibleService.getPage() != '') {
-            bibleService.deletePage(bibleService.getCurrentPage());
-            showCustomToast('Página eliminada exitosamente');
-            setState(() {});
-          } else {
-            bibleService.addNewPage();
-            showCustomToast('Página guardada en favoritos exitosamente');
-            setState(() {});
-          }
-        },
+        'action': () => addNewPageToFavorite(bibleService)
       },
       {
         'icon': ImageConstant.imgMusicIndigo900,
@@ -271,30 +289,13 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     ];
 
     final List<ContextMenuButtonItem> menuButtonItems = [
-      ContextMenuButtonItem(
-        label: 'Escuchar',
-        onPressed: () async {
-          ClipboardData? kTextPlain;
-          kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
-
-          _newVoiceText = kTextPlain?.text ?? '';
-          onAudioSound = true;
-
-          setState(() {});
-        },
-      ),
-      ContextMenuButtonItem(
-          label: 'Compartir',
-          onPressed: () async {
-            ClipboardData? selectedContent =
-                await Clipboard.getData(Clipboard.kTextPlain);
-
-            if (selectedContent != null) share(selectedContent.text!);
-          }),
+      ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
+      ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
     ];
 
     return Scaffold(
-      backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray100,
+      backgroundColor:
+          isDarkTheme ? ColorConstant.black9001c : ColorConstant.gray100,
       appBar: CustomAppBar(
         hasCustomTitle: true,
         customTitle: Text(getTitle(bibleService),
@@ -302,21 +303,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                 ? AppStyle.txtNunitoSansSemiBold26WhiteA700
                 : AppStyle.txtNunitoSansSemiBold26),
         actions: appBarActions,
-        leading: CustomIconButton(
-          margin: getMargin(left: 8),
-          height: getSize(48),
-          width: getSize(48),
-          variant: IconButtonVariant.NoFill,
-          onTap: () => Navigator.of(context).pop(),
-          child: CustomImageView(
-            svgPath: isDarkTheme
-                ? ImageConstant.imgArrowleftGray900
-                : ImageConstant.imgArrowleftWhiteA700,
-            color:
-                isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-          ),
-        ),
-        backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
+        leading: CustomIconBackButton(isDarkTheme: isDarkTheme),
+        backgroundColor:
+            isDarkTheme ? ColorConstant.black9001c : ColorConstant.gray50,
+        hasPopupMenu: true,
+        popupMenuButton: CustomPopupMenuButton(
+            isDarkMode: isDarkTheme, menuOptions: menuOptions),
       ),
       body: PageView(
         controller: pageController,
@@ -331,13 +323,15 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   onSelectionChanged: handleSelectedContent,
                   menuButtonItems: menuButtonItems,
                   child: Padding(
-                      padding: getPadding(all: 0.0),
-                      child: Column(
-                        children: [
-                          ..._buildVerseList(bibleService, isDarkTheme),
-                          SizedBox(height: 20)
-                        ],
-                      )),
+                    padding: getPadding(all: 0.0),
+                    child: SizedBox(
+                      height: 700,
+                      child: VerseList(
+                          secuenceVerseIndex: secuenceVerseIndex,
+                          isDarkMode: isDarkTheme,
+                          textBook: textBook),
+                    ),
+                  ),
                 ),
               ),
               if (onAudioSound)
@@ -354,92 +348,4 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       ),
     );
   }
-
-  List<Widget> _buildVerseList(BibleService bibleService, bool isDarkMode) {
-    Color borderColor =
-        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
-    List<Widget> versesList = [];
-    Map<String, dynamic> selectedVerses = bibleService.selectedVerses;
-    int i = bibleService.startVerse;
-
-    selectedVerses.forEach((key, value) {
-      versesList.add(Container(
-          width: double.infinity,
-          key: GlobalObjectKey(i),
-          padding: getPadding(left: 16, right: 16),
-          decoration: BoxDecoration(
-              border: Border(
-                  left: BorderSide(
-                      color: secuenceVerseIndex == i
-                          ? borderColor
-                          : ColorConstant.transparent,
-                      width: secuenceVerseIndex == i ? 6.0 : 0.0))),
-          child: Column(
-            children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('$i ',
-                    style: isDarkMode
-                        ? AppStyle.txtNunitoSansRegular14WhiteA700
-                        : AppStyle.txtNunitoSansRegular14Black900),
-                Expanded(
-                  child: Text(
-                    '$value',
-                    style: isDarkMode
-                        ? AppStyle.txtNunitoSansRegular18WhiteA700
-                        : AppStyle.txtNunitoSansRegular18Gray900,
-                    // style: TextStyle(
-                    //   color: textBook.color,
-                    //   fontSize: textBook.fontSize.value,
-                    //   height: textBook.lineHeight!.size,
-                    //   // fontSize: convertFontSizeToPx(textBook.fontSize),
-                    // ),
-                  ),
-                ),
-              ]),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          )));
-
-      i++;
-    });
-
-    return versesList;
-  }
-
-  CustomIconButton goBackButton(
-          BuildContext context, EpubBook? book, bool isDarkMode) =>
-      CustomIconButton(
-        height: getSize(48),
-        width: getSize(48),
-        variant: IconButtonVariant.NoFill,
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: CustomImageView(
-          svgPath: ImageConstant.imgArrowleftGray900,
-          color: isDarkMode ? ColorConstant.whiteA700 : ColorConstant.gray900,
-        ),
-      );
-
-  PopupMenuButton<int> popupMenuButton(
-          List<PopupMenuItemModel> menuOptions, bool isDarkMode) =>
-      PopupMenuButton<int>(
-          constraints: BoxConstraints(
-            minWidth: 200,
-          ),
-          offset: Offset(20, 60),
-          itemBuilder: (context) => [
-                ...menuOptions.map((item) => PopupMenuItem(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(item.title,
-                            style: isDarkMode
-                                ? AppStyle.txtNunitoSansRegular18WhiteA700
-                                : AppStyle.txtNunitoSansRegular18Black900),
-                      ),
-                      onTap: () => item.onTappedItem(context),
-                    ))
-              ]);
 }

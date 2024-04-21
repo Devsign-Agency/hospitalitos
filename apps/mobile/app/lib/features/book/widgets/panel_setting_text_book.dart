@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/style.dart';
-import 'package:mobile_app/features/book/pages/chapter.page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app_export.dart';
@@ -10,7 +9,7 @@ import '../../../widgets/widgets.dart';
 
 class PanelSettingTextBook extends StatefulWidget {
   final Map<String, dynamic> initialValues;
-  final void Function(dynamic) onChange;
+  final void Function(dynamic, dynamic) onChange;
   final bool isDarkMode;
 
   const PanelSettingTextBook({
@@ -27,7 +26,9 @@ class PanelSettingTextBook extends StatefulWidget {
 class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
   CircleButtonType _selectedCircleButtonType = CircleButtonType.black;
   Color selectedColor = Colors.black;
-  Map<dynamic, dynamic> _setting = {};
+  Map<dynamic, dynamic> _settings = {};
+  Map<dynamic, dynamic> _initialValues = {};
+
   final Map<dynamic, FontSize> fontSizes = {
     '1.0': FontSize.xSmall,
     '2.0': FontSize.xxSmall,
@@ -48,25 +49,27 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
     '5.0': 32.0,
   };
 
-  Map<dynamic, LineHeight> lineHeightValues = {
-    '1.0': LineHeight.number(1.2),
-    '2.0': LineHeight.number(1.4),
-    '3.0': LineHeight.number(1.6),
-    '4.0': LineHeight.number(1.8),
-    '5.0': LineHeight.number(2.0),
+  Map<dynamic, double> lineHeightValues = {
+    '1.0': 1.2,
+    '2.0': 1.4,
+    '3.0': 1.6,
+    '4.0': 1.8,
+    '5.0': 2.0,
   };
 
   @override
   initState() {
     super.initState();
     print(widget.initialValues);
-    _setting = {
-      'color': widget.initialValues['color'],
+    _initialValues = widget.initialValues;
+    _settings = {
+      // 'color': widget.initialValues['color'],
       'fontSize': fontSizes[widget.initialValues['fontSize'].toString()],
       'margin': marginValues[widget.initialValues['margin'].toString()],
       'lineHeight':
           lineHeightValues[widget.initialValues['lineHeight'].toString()],
     };
+
     _selectedCircleButtonType = CircleButtonType.black;
     selectedColor = widget.initialValues['color'];
   }
@@ -80,11 +83,16 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
 
   setColor(CircleButtonModel newCircleButton) {
     setState(() {
-      _setting['circle'] = newCircleButton;
-      _setting['color'] = Colors.red;
-      widget.onChange(_setting);
+      _settings['circle'] = newCircleButton;
+      _settings['color'] = Colors.red;
+      widget.onChange(
+        _settings,
+        _initialValues,
+      );
       // _selectedCircleButtonType = newCircleButton.name;
       selectedColor = newCircleButton.color;
+
+      _initialValues['color'] = newCircleButton;
       // selectedCircleButton =
       //     CircleButtonModel(newCircleButton.name, newCircleButton.color);
     });
@@ -92,23 +100,29 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
 
   setFontSize(double newFontSize) async {
     setState(() {
-      _setting['fontSize'] = fontSizes[newFontSize.toString()]!;
-      widget.onChange(_setting);
+      _settings['fontSize'] = fontSizes[newFontSize.toString()]!;
+      widget.onChange(_settings, _initialValues);
     });
+
+    _initialValues['fontSize'] = newFontSize;
   }
 
   setMargin(double value) {
     setState(() {
-      _setting['margin'] = marginValues[value.toString()]!;
-      widget.onChange(_setting);
+      _settings['margin'] = marginValues[value.toString()]!;
+      widget.onChange(_settings, _initialValues);
     });
+
+    _initialValues['margin'] = value;
   }
 
   setLineHeight(double value) {
     setState(() {
-      _setting['lineHeight'] = lineHeightValues[value.toString()]!;
-      widget.onChange(_setting);
+      _settings['lineHeight'] = lineHeightValues[value.toString()]!;
+      widget.onChange(_settings, _initialValues);
     });
+
+    _initialValues['lineHeight'] = value;
   }
 
   @override

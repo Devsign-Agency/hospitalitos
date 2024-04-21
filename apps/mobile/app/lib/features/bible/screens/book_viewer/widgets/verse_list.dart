@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/style.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
@@ -7,71 +8,116 @@ import '../../../../../shared/shared.dart';
 class VerseList extends StatelessWidget {
   final int secuenceVerseIndex;
   final bool isDarkMode;
+  final TextBook textBook;
 
   const VerseList(
-      {super.key, required this.secuenceVerseIndex, required this.isDarkMode});
+      {super.key,
+      required this.secuenceVerseIndex,
+      required this.isDarkMode,
+      required this.textBook});
 
   @override
   Widget build(BuildContext context) {
-    Color borderColor =
-        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
 
-    List<Widget> versesList = [];
-    Map<String, dynamic> selectedVerses = bibleService.selectedVerses;
-    int i = bibleService.startVerse;
-    print('selected: $selectedVerses');
+    List<String> verses = [];
 
-    selectedVerses.forEach((key, value) {
-      versesList.add(Container(
-          width: double.infinity,
-          key: GlobalObjectKey(i),
-          padding: getPadding(left: 16, right: 16),
-          decoration: BoxDecoration(
-              border: Border(
-                  left: BorderSide(
-                      color: secuenceVerseIndex == i
-                          ? borderColor
-                          : ColorConstant.transparent,
-                      width: secuenceVerseIndex == i ? 6.0 : 0.0))),
-          child: Column(
-            children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('$i ',
-                    style: isDarkMode
-                        ? AppStyle.txtNunitoSansRegular14WhiteA700
-                        : AppStyle.txtNunitoSansRegular14Black900),
-                Expanded(
-                  child: Text(
-                    '$value',
-                    style: isDarkMode
-                        ? AppStyle.txtNunitoSansRegular18WhiteA700
-                        : AppStyle.txtNunitoSansRegular18Gray900,
-                    // style: TextStyle(
-                    //   color: textBook.color,
-                    //   fontSize: textBook.fontSize.value,
-                    //   height: textBook.lineHeight!.size,
-                    //   // fontSize: convertFontSizeToPx(textBook.fontSize),
-                    // ),
-                  ),
-                ),
-              ]),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          )));
-
-      i++;
+    bibleService.selectedVerses.forEach((key, value) {
+      verses.add(value);
     });
 
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (_, int index) {
-        return versesList[index];
+        return _Verse(
+          index: bibleService.startVerse + index,
+          isDarkMode: isDarkMode,
+          textBook: textBook,
+          value: verses[index],
+          active: secuenceVerseIndex == bibleService.startVerse + index,
+        );
       },
-      itemCount: versesList.length,
+      itemCount: verses.length,
     );
+  }
+}
+
+class _Verse extends StatelessWidget {
+  final bool isDarkMode;
+  final TextBook textBook;
+  final String value;
+  final bool active;
+  final int index;
+
+  const _Verse(
+      {super.key,
+      required this.isDarkMode,
+      required this.textBook,
+      required this.value,
+      required this.active,
+      required this.index});
+
+  double convertFontSizePxToDouble(FontSize fontSize) {
+    Map<FontSize, double> values = {
+      FontSize.xSmall: 12.0,
+      FontSize.xxSmall: 14.0,
+      FontSize.smaller: 16.0,
+      FontSize.small: 18.0,
+      FontSize.medium: 24.0,
+      FontSize.large: 32.0,
+      FontSize.larger: 36.0,
+      FontSize.xLarge: 40.0,
+      FontSize.xxLarge: 48.0
+    };
+
+    return values[fontSize]!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Color borderColor =
+        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
+
+    TextStyle indexStyle = isDarkMode
+        ? AppStyle.txtNunitoSansRegular14WhiteA700.copyWith(
+            fontSize: convertFontSizePxToDouble(textBook.fontSize) - 4.0,
+          )
+        : AppStyle.txtNunitoSansRegular14Black900.copyWith(
+            fontSize: convertFontSizePxToDouble(textBook.fontSize) - 4.0);
+
+    TextStyle valueStyle = isDarkMode
+        ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
+            height: textBook.lineHeight,
+            fontSize: convertFontSizePxToDouble(textBook.fontSize))
+        : AppStyle.txtNunitoSansRegular18Gray900.copyWith(
+            height: textBook.lineHeight,
+            fontSize: convertFontSizePxToDouble(textBook.fontSize));
+
+    return Container(
+        width: double.infinity,
+        key: GlobalObjectKey(index),
+        padding: getPadding(left: textBook.margin, right: textBook.margin),
+        decoration: BoxDecoration(
+            border: Border(
+                left: BorderSide(
+                    color: active ? borderColor : ColorConstant.transparent,
+                    width: active ? 6.0 : 0.0))),
+        child: Column(
+          children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('$index ', style: indexStyle),
+              Expanded(
+                child: Text(
+                  value,
+                  style: valueStyle,
+                ),
+              ),
+            ]),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ));
   }
 }
