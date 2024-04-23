@@ -49,118 +49,182 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         Image.memory(Uint8List.fromList(encodePng(book!.CoverImage!)));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+      List<Map<String, dynamic>> actions = [
+      {
+        'icon':  ImageConstant.imgButtonalerts,
+        'action': () => {print('hi')}
+      },
+      /*{
+        'icon': ImageConstant.imgNotification,
+        'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
+      }*/
+    ];
     return Scaffold(
       appBar: CustomAppBar(
         title: book?.Title!,
+        actions: actions,
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              // Tab items
-              CustomTabBar(
-                  labelColor: Colors.black,
-                  tabController: tabController,
-                  items: IndexService.tabBarItems),
-
-              // TabBarView
-              Container(
-                margin: EdgeInsets.all(10),
-                child: SizedBox(
-                  height: height * 8,
-                  width: double.infinity,
-                  child: TabBarView(
-                    controller: tabController,
-                    children: [
-                      // Books Tab
-                      ListChaptersOfBook(book: book),
-
-                      SizedBox(
-                        height: 100,
-                        width: 600,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox.fromSize(
-                                    size: Size.fromRadius(58), // Image radius
-                                    child: Image.memory(
-                                        Uint8List.fromList(
-                                            encodePng(book.CoverImage!)),
-                                        fit: BoxFit.cover),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: 220,
-                                          child: Text(
-                                            'Titulo:',
-                                            style: AppStyle
-                                                .txtNunitoSansRegular18Gray9001,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 220,
-                                          child: Text(
-                                            book!.Title!,
-                                            style: AppStyle
-                                                .txtNunitoSansRegular18Gray9001,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                          height: 10,
-                                        ),
-                                        SizedBox(
-                                          width: 220,
-                                          child: Text(
-                                            'Autor:',
-                                            style: AppStyle
-                                                .txtNunitoSansRegular18Gray9001,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 220,
-                                          child: Text(
-                                            book!.Author!,
-                                            style: AppStyle
-                                                .txtNunitoSansRegular18Gray9001,
-                                          ),
-                                        ),
-                                      ],
+                CustomTabBar(
+                          labelColor: Colors.black,
+                          tabController: tabController,
+                          items: IndexService.tabBarItems),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: book!.Chapters!.length,
+                  itemBuilder: (context, index) {
+                    var title = (book?.Chapters![index].Title!).toString();
+                    return title != ''
+                        ? Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: book.Chapters![index].SubChapters!.length > 0
+                                ? ExpansionTile(
+                                    title: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            left: BorderSide(
+                                          color: ColorConstant.yellow100,
+                                        )),
+                                      ),
+                                      child: Text(
+                                        title,
+                                        style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                                    children: [
+                                        ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: book
+                                                .Chapters![index].SubChapters!.length,
+                                            itemBuilder: (BuildContext context, int i) {
+                                              var subtititle = book.Chapters![index]
+                                                  .SubChapters?[i].Title!
+                                                  .toString();
+                                              return ListTile(
+                                                onTap: () {
+                                                  var sub =
+                                                      book.Chapters![index].SubChapters;
+        
+                                                  Navigator.pushNamed(
+                                                      context, ChapterPage.route,
+                                                      arguments: EpubArguments(
+                                                          book: book,
+                                                          chapter: book.Chapters![index]
+                                                              .SubChapters?[i]));
+                                                },
+                                                //trailing: IconButton(icon: Icon(Icons.share_rounded), onPressed: () {  },),
+                                                title: Title(
+                                                    color: ColorConstant.amber300,
+                                                    child: Text(subtititle!)),
+                                              );
+                                            })
+                                      ])
+                                : ListTile(
+                                    title: Text(
+                                        (book?.Chapters![index].Title!).toString(),
+                                        style: AppStyle.txtNunitoSansSemiBold20Gray900),
+                                    onTap: () {
+                                      Navigator.pushNamed(context, ChapterPage.route,
+                                          arguments: EpubArguments(
+                                              book: book,
+                                              chapter: book?.Chapters![index]));
+                                    }),
+                          )
+                        : Container();
+                  }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container contentChapters(double height, EpubBook book) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: SizedBox(
+        height: height,
+        width: double.infinity,
+        child: TabBarView(
+          controller: tabController,
+          children: [
+            // Books Tab
+            ListChaptersOfBook(book: book),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox.fromSize(
+                      size: Size.fromRadius(58), // Image radius
+                      child: Image.memory(
+                          Uint8List.fromList(encodePng(book.CoverImage!)),
+                          fit: BoxFit.cover),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 220,
+                            child: Text(
+                              'Titulo:',
+                              style: AppStyle.txtNunitoSansRegular18Gray9001,
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 220,
+                            child: Text(
+                              book!.Title!,
+                              style: AppStyle.txtNunitoSansRegular18Gray9001,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                            height: 10,
+                          ),
+                          SizedBox(
+                            width: 220,
+                            child: Text(
+                              'Autor:',
+                              style: AppStyle.txtNunitoSansRegular18Gray9001,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 220,
+                            child: Text(
+                              book!.Author!,
+                              style: AppStyle.txtNunitoSansRegular18Gray9001,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -287,64 +351,68 @@ class ListChaptersOfBook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView.builder(
-                //shrinkWrap: true,
-physics: NeverScrollableScrollPhysics(),
           itemCount: book!.Chapters!.length,
           itemBuilder: (context, index) {
             var title = (book?.Chapters![index].Title!).toString();
             return title != ''
                 ? Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: book?.Chapters![index].SubChapters.length >0 ? ExpansionTile(
-                      title: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                              left: BorderSide(
-                            color: ColorConstant.yellow100,
-                          )),
-                        ),
-                        child: Text(
-                          title,
-                          style: AppStyle.txtNunitoSansSemiBold20Gray900,
-                        ),
-                      ),
-                      children: [
-                        ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: book.Chapters![index].SubChapters.length,
-                            itemBuilder: (BuildContext context, int i) {
-                              var subtititle = book
-                                  .Chapters![index].SubChapters[i].Title!
-                                  .toString();
-                              return ListTile(
-                                onTap: () {
-                                  var sub = book.Chapters![index].SubChapters;
+                    child: book?.Chapters![index].SubChapters.length > 0
+                        ? ExpansionTile(
+                            title: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                    left: BorderSide(
+                                  color: ColorConstant.yellow100,
+                                )),
+                              ),
+                              child: Text(
+                                title,
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900,
+                              ),
+                            ),
+                            children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: AlwaysScrollableScrollPhysics(),
 
-                                  Navigator.pushNamed(
-                                      context, ChapterPage.route,
-                                      arguments: EpubArguments(
-                                          book: book,
-                                          chapter: book.Chapters![index]
-                                              .SubChapters[i]));
-                                },
-                                title: Title(
-                                    color: ColorConstant.amber300,
-                                    child: Text(subtititle)),
-                              );
-                            })
-                      ] 
-                    )
-                      : 
-                      ListTile(
-                        title: Text((book?.Chapters![index].Title!).toString(),
-                        style: AppStyle.txtNunitoSansSemiBold20Gray900),
-                        onTap: () {
-                          
-                          Navigator.pushNamed(context, ChapterPage.route,
-                              arguments: EpubArguments(
-                                  book: book, chapter: book?.Chapters![index]));
-                        }),
-                    )
+                                    //physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: book
+                                        .Chapters![index].SubChapters.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      var subtititle = book.Chapters![index]
+                                          .SubChapters[i].Title!
+                                          .toString();
+                                      return ListTile(
+                                        onTap: () {
+                                          var sub =
+                                              book.Chapters![index].SubChapters;
+
+                                          Navigator.pushNamed(
+                                              context, ChapterPage.route,
+                                              arguments: EpubArguments(
+                                                  book: book,
+                                                  chapter: book.Chapters![index]
+                                                      .SubChapters[i]));
+                                        },
+                                        title: Title(
+                                            color: ColorConstant.amber300,
+                                            child: Text(subtititle)),
+                                      );
+                                    })
+                              ])
+                        : ListTile(
+                            title: Text(
+                                (book?.Chapters![index].Title!).toString(),
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900),
+                            onTap: () {
+                              Navigator.pushNamed(context, ChapterPage.route,
+                                  arguments: EpubArguments(
+                                      book: book,
+                                      chapter: book?.Chapters![index]));
+                            }),
+                  )
                 : Container();
           }),
     );
