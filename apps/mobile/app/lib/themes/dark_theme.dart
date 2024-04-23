@@ -28,6 +28,9 @@ class DarkTheme {
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: dark,
         ),
+        tabBarTheme: TabBarTheme(
+            indicatorColor: ColorConstant.purple200,
+            labelColor: ColorConstant.purple200),
         sliderTheme: SliderThemeData(
           activeTrackColor: colors.secondary,
           valueIndicatorColor: colors.onPrimary,

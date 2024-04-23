@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/main/main.screen.dart';
-import 'package:mobile_app/features/main/pages/home/widgets/list-see-more.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/router/menu_option.dart';
 
+import '../pages/home/widgets/widget.dart';
+
 class RouterMain {
-  static const initialRoute = LoadingPage.route;
+  static const initialRoute = HomePage.route;
 
   static final menuOptions = <MenuOption>[];
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     Map<String, Widget Function(BuildContext)> routes = {};
 
-    routes.addAll(
-        {MainScreen.route: (BuildContext context) => MainScreen()});
-    routes.addAll(
-        {HomePage.route: (BuildContext context) => HomePage()});
-    routes.addAll(
-        {LoadingPage.route: (BuildContext context) => LoadingPage()});
+    routes.addAll({MainScreen.route: (BuildContext context) => MainScreen()});
+    routes.addAll({HomePage.route: (BuildContext context) => HomePage()});
+    routes.addAll({LoadingPage.route: (BuildContext context) => LoadingPage()});
     routes.addAll(
         {WelcomeScreen.route: (BuildContext context) => const WelcomeScreen()});
     routes.addAll({
       SettingsScreen.route: (BuildContext context) => const SettingsScreen()
     });
-    routes.addAll({
-      ListSeeMore.route: (BuildContext context) => const ListSeeMore()
-    });
+    routes.addAll(
+        {ListSeeMore.route: (BuildContext context) => const ListSeeMore()});
 
     for (final option in menuOptions) {
       routes.addAll({option.route: (BuildContext context) => option.screen});

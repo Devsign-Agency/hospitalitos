@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../core/app_export.dart';
+import '../shared/shared.dart';
+import '../themes/themes.dart';
 
 class ListViewItemFavorite extends StatelessWidget {
   final bool isEditing;
@@ -22,9 +25,13 @@ class ListViewItemFavorite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
     final boxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      color: ColorConstant.whiteA700,
+      color: isDarkTheme ? ColorConstant.gray80040 : ColorConstant.whiteA700,
     );
 
     final borderRadius = BorderRadius.only(
@@ -66,7 +73,11 @@ class ListViewItemFavorite extends StatelessWidget {
                             : null,
                         child: Text(
                           item.title,
-                          style: AppStyle.txtNunitoSansSemiBold20Black900,
+                          style: AppStyle.txtNunitoSansSemiBold20Black900
+                              .copyWith(
+                                  color: isDarkTheme
+                                      ? ColorConstant.whiteA700
+                                      : ColorConstant.black900),
                         ),
                       ),
                       CustomIconButton(

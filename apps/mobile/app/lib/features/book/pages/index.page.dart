@@ -2,11 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:image/image.dart' hide Image;
 import '../../../shared/shared.dart';
+import '../../../themes/themes.dart';
 
 class IndexPage extends StatefulWidget {
   static const String route = 'book/index';
@@ -40,7 +42,6 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
             children: [
               // Tab items
               CustomTabBar(
-                  labelColor: Colors.black,
                   tabController: tabController,
                   items: IndexService.tabBarItems),
 
@@ -67,114 +68,6 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
       ),
     );
   }
-
-  showTitle(String data, index, items) {
-    print('title---------------- $data $index $items');
-    var textToShow = '';
-
-    return data;
-  }
-
-  findOcurrenceChapterArr(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        pos.add(i);
-      }
-    }
-
-    return pos;
-  }
-
-  makeDataToShow(book) {
-    var band = true;
-    var pos = [];
-    for (var i = 0; i < book!.Chapters!.length; i++) {
-      String mainString = book.Chapters![i].Title.toLowerCase();
-      String substring = "capítulo";
-
-      if (mainString.contains(substring)) {
-        band = false;
-        //book.Chapters![i].Title = book.Chapters![i].Title + '\n'+ book.Chapters![i + 1].Title;
-      }
-    }
-
-    return pos;
-  }
-
-  changeTitle(book, index) {
-    var title = book.Title;
-    var band = true;
-    print(title.toLowerCase().split(':')[0]);
-    if ((title.toLowerCase().split(':')[0].contains('capítulo') ||
-            title.toLowerCase().split(':')[0].contains('capitulo')) &&
-        book.SubChapters!.isEmpty) {
-      title = '';
-      band = false;
-    }
-
-    print('title $title');
-
-    return band;
-  }
-
-  comparateIndexPos(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] == index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMenor(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] < index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  valueArrMax(index, items) {
-    var band = false;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i] > index) {
-        band = true;
-      }
-    }
-
-    return band;
-  }
-
-  subChaptersMenu(data, book) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return ListTile(
-              title: Text(
-                data[index].Title!,
-                style: AppStyle.txtNunitoSansRegular16,
-              ),
-              onTap: () {
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, ChapterPage.route,
-                    arguments: EpubArguments(
-                        book: book, chapter: book.Chapter[index]));
-              });
-        },
-        itemCount: data.length);
-  }
 }
 
 class _ChapterDetail extends StatelessWidget {
@@ -187,6 +80,11 @@ class _ChapterDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+    TextStyle textStyle = AppStyle.txtNunitoSansRegular18Gray900.copyWith(
+        color: isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray900);
     return SizedBox(
       height: 100,
       width: 600,
@@ -222,14 +120,14 @@ class _ChapterDetail extends StatelessWidget {
                         width: 220,
                         child: Text(
                           'Titulo:',
-                          style: AppStyle.txtNunitoSansRegular18Gray9001,
+                          style: textStyle,
                         ),
                       ),
                       SizedBox(
                         width: 220,
                         child: Text(
                           book!.Title!,
-                          style: AppStyle.txtNunitoSansRegular18Gray9001,
+                          style: textStyle,
                         ),
                       ),
                       SizedBox(
@@ -240,14 +138,14 @@ class _ChapterDetail extends StatelessWidget {
                         width: 220,
                         child: Text(
                           'Autor:',
-                          style: AppStyle.txtNunitoSansRegular18Gray9001,
+                          style: textStyle,
                         ),
                       ),
                       SizedBox(
                         width: 220,
                         child: Text(
                           book!.Author!,
-                          style: AppStyle.txtNunitoSansRegular18Gray9001,
+                          style: textStyle,
                         ),
                       ),
                     ],
@@ -272,29 +170,28 @@ class _ListChaptersOfBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
     return Center(
       child: ListView.builder(
           itemCount: book!.Chapters!.length,
           itemBuilder: (context, index) {
             var title = (book?.Chapters![index].Title!).toString();
-            var boxDecoration = BoxDecoration(
-              border: Border(
-                  left: BorderSide(
-                color: ColorConstant.yellow100,
-              )),
-            );
 
             return title != ''
                 ? Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: book?.Chapters![index].SubChapters.length > 0
                         ? ExpansionTile(
-                            title: Container(
-                              decoration: boxDecoration,
-                              child: Text(
-                                title,
-                                style: AppStyle.txtNunitoSansSemiBold20Gray900,
-                              ),
+                            title: Text(
+                              title,
+                              style: AppStyle.txtNunitoSansSemiBold20Gray900
+                                  .copyWith(
+                                      color: isDarkTheme
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.gray900),
                             ),
                             children: [
                                 ListView.builder(
@@ -320,7 +217,9 @@ class _ListChaptersOfBook extends StatelessWidget {
                                                       .SubChapters[i]));
                                         },
                                         title: Title(
-                                            color: ColorConstant.amber300,
+                                            color: isDarkTheme
+                                                ? ColorConstant.whiteA700
+                                                : ColorConstant.amber300,
                                             child: Text(subtititle)),
                                       );
                                     })
@@ -328,7 +227,11 @@ class _ListChaptersOfBook extends StatelessWidget {
                         : ListTile(
                             title: Text(
                                 (book?.Chapters![index].Title!).toString(),
-                                style: AppStyle.txtNunitoSansSemiBold20Gray900),
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900
+                                    .copyWith(
+                                        color: isDarkTheme
+                                            ? ColorConstant.whiteA700
+                                            : ColorConstant.gray900)),
                             onTap: () {
                               Navigator.pushNamed(context, ChapterPage.route,
                                   arguments: EpubArguments(

@@ -127,7 +127,6 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: _isEditing ? 'Guardado' : 'Editar',
-        backgroundColor: ColorConstant.gray50,
         iconButtonVariant: !_isEditing
             ? IconButtonVariant.FillGray300
             : IconButtonVariant.NoFill,

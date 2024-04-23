@@ -103,7 +103,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   int i = 0;
   String parsedString = '';
-  bool isDarkMode = false;
+  bool isDarkTheme = false;
 
   @override
   void initState() {
@@ -266,6 +266,10 @@ class _ChapterPageState extends State<ChapterPage> {
     MarkerService markerService =
         Provider.of<MarkerService>(context, listen: true);
 
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgEditGray800),
       BottomNavigationMenu(icon: ImageConstant.imgBookmarkGray800),
@@ -279,7 +283,7 @@ class _ChapterPageState extends State<ChapterPage> {
           title: 'Modo Noche',
           onTappedItem: (context) {
             setState(() {
-              isDarkMode = !isDarkMode;
+              isDarkTheme = !isDarkTheme;
             });
           }),
       PopupMenuItemModel(
@@ -287,7 +291,7 @@ class _ChapterPageState extends State<ChapterPage> {
           title: 'Ajustar texto',
           onTappedItem: (context) {
             showModalBottomSheet(
-                backgroundColor: isDarkMode
+                backgroundColor: isDarkTheme
                     ? ColorConstant.gray80040
                     : ColorConstant.whiteA700,
                 shape: RoundedRectangleBorder(
@@ -296,7 +300,7 @@ class _ChapterPageState extends State<ChapterPage> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      isDarkMode: isDarkMode,
+                      isDarkMode: isDarkTheme,
                       initialValues: settingTextInitialValues,
                       onChange: _handleChangeSetting,
                     ));
@@ -312,7 +316,7 @@ class _ChapterPageState extends State<ChapterPage> {
     final actions = [
       {
         'icon': ImageConstant.imgMusicIndigo900,
-        'color': isDarkMode
+        'color': isDarkTheme
             ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
             : ColorConstant.gray800,
         'variant': !onAudioSound
@@ -369,23 +373,19 @@ class _ChapterPageState extends State<ChapterPage> {
     ];
 
     return Scaffold(
-      backgroundColor:
-          isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
       appBar: CustomAppBar(
           hasCustomTitle: true,
           customTitle: Text(bookTitle,
               style: AppStyle.txtNunitoSansSemiBold26WhiteA700.copyWith(
-                  color: isDarkMode
+                  color: isDarkTheme
                       ? ColorConstant.whiteA700
                       : ColorConstant.black900)),
-          backgroundColor:
-              isDarkMode ? ColorConstant.black9001c : ColorConstant.gray100,
-          leading: CustomIconBackButton(isDarkTheme: isDarkMode),
+          leading: CustomIconBackButton(isDarkTheme: isDarkTheme),
           title: bookTitle,
           actions: actions,
           hasPopupMenu: true,
           popupMenuButton: CustomPopupMenuButton(
-              isDarkMode: isDarkMode, menuOptions: menuOptions)),
+              isDarkMode: isDarkTheme, menuOptions: menuOptions)),
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -405,7 +405,7 @@ class _ChapterPageState extends State<ChapterPage> {
                       style: {
                         'body': Style(
                             fontSize: textBook.fontSize,
-                            color: isDarkMode
+                            color: isDarkTheme
                                 ? ColorConstant.whiteA700
                                 : ColorConstant.black900,
                             lineHeight: LineHeight(textBook.lineHeight),
@@ -431,7 +431,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
           // Page view chapter's markers
           PageViewBookmarks(
-            isDarkMode: isDarkMode,
+            isDarkMode: isDarkTheme,
             markerList: markerService.getMarkerList(bookTitle, chapter),
             onTapped: _handleTapPageViewMarkerList,
             onDeleteMarker: (marker) {
@@ -444,13 +444,11 @@ class _ChapterPageState extends State<ChapterPage> {
           PageViewIndex(
             book: book!,
             chapter: chapter!,
-            isDarkMode: isDarkMode,
+            isDarkMode: isDarkTheme,
           )
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          backgroundColor:
-              isDarkMode ? ColorConstant.gray80040 : ColorConstant.gray100,
           currentIndex: bottomNavigationBarCurrentIndex,
           onChangeIndex: (index) => _handleChangeBottomNavigationBar(
               index, markerService, bookTitle, chapter),

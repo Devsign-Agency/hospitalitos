@@ -3,6 +3,8 @@ import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../shared/shared.dart';
+import '../../../../../themes/themes.dart';
 import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewChapters extends StatelessWidget {
@@ -19,7 +21,9 @@ class TabBarViewChapters extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    bool isDarkTheme = bibleService.isDarkTheme;
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     return Stack(
       children: [

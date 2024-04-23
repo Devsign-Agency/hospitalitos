@@ -1,8 +1,11 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/book/pages/chapter.page.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/app_export.dart';
+import '../../../shared/shared.dart';
+import '../../../themes/themes.dart';
 
 class PageViewIndex extends StatelessWidget {
   final EpubBook book;
@@ -17,29 +20,27 @@ class PageViewIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
     return Center(
       child: ListView.builder(
           itemCount: book!.Chapters!.length,
           itemBuilder: (context, index) {
             var title = (book?.Chapters![index].Title!).toString();
-            var boxDecoration = BoxDecoration(
-              border: Border(
-                  left: BorderSide(
-                color: ColorConstant.yellow100,
-              )),
-            );
 
             return title != ''
                 ? Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: book.Chapters![index].SubChapters!.length > 0
                         ? ExpansionTile(
-                            title: Container(
-                              decoration: boxDecoration,
-                              child: Text(
-                                title,
-                                style: AppStyle.txtNunitoSansSemiBold20Gray900,
-                              ),
+                            title: Text(
+                              title,
+                              style: AppStyle.txtNunitoSansSemiBold20Gray900
+                                  .copyWith(
+                                      color: isDarkTheme
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.gray900),
                             ),
                             children: [
                                 ListView.builder(
@@ -73,7 +74,11 @@ class PageViewIndex extends StatelessWidget {
                         : ListTile(
                             title: Text(
                                 (book?.Chapters![index].Title!).toString(),
-                                style: AppStyle.txtNunitoSansSemiBold20Gray900),
+                                style: AppStyle.txtNunitoSansSemiBold20Gray900
+                                    .copyWith(
+                                        color: isDarkTheme
+                                            ? ColorConstant.whiteA700
+                                            : ColorConstant.gray900)),
                             onTap: () {
                               Navigator.popAndPushNamed(
                                   context, ChapterPage.route,

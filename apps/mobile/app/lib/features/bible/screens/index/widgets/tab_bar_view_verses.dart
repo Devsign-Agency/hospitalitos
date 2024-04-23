@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
-import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../shared/shared.dart';
+import '../../../../../themes/themes.dart';
 import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewVerses extends StatelessWidget {
@@ -19,7 +20,9 @@ class TabBarViewVerses extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    bool isDarkTheme = bibleService.isDarkTheme;
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     bool getColor(int index) {
       int startVerse = bibleService.startVerse;
