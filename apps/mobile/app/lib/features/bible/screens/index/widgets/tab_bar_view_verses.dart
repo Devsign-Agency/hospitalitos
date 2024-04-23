@@ -40,8 +40,14 @@ class TabBarViewVerses extends StatelessWidget {
     }
 
     void next() {
+      bibleService.endVerse = bibleService.endVerse > 0
+          ? bibleService.endVerse
+          : bibleService.selectedChapter.verses.length;
       bibleService.getVersesByRange(
-          bibleService.startVerse, bibleService.endVerse);
+          bibleService.startVerse,
+          bibleService.endVerse > 0
+              ? bibleService.endVerse
+              : bibleService.selectedChapter.verses.length);
       Navigator.of(context).pushNamed(BookViewerScreen.route,
           arguments: bibleService.selectedChapter.verses);
     }
@@ -52,7 +58,7 @@ class TabBarViewVerses extends StatelessWidget {
 
       if (startVerse > 0 && endVerse > 0) {
         startVerse = index + 1;
-        endVerse = -1;
+        endVerse = bibleService.selectedChapter.verses.length;
       } else {
         if (startVerse > 0) {
           endVerse = index + 1;
@@ -64,6 +70,8 @@ class TabBarViewVerses extends StatelessWidget {
           }
         } else {
           startVerse = index + 1;
+
+          endVerse = bibleService.selectedChapter.verses.length;
         }
       }
 
@@ -110,9 +118,7 @@ class TabBarViewVerses extends StatelessWidget {
           child: CustomButton(
               height: getVerticalSize(48),
               text: 'Aceptar',
-              onTap: bibleService.startVerse > 0 && bibleService.endVerse > 0
-                  ? next
-                  : null),
+              onTap: bibleService.startVerse > 0 ? next : null),
         )
       ],
     );
