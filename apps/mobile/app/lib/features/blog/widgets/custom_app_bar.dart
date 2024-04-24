@@ -86,10 +86,23 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-class _ActionButtonDownloadPicture extends StatelessWidget {
+class _ActionButtonDownloadPicture extends StatefulWidget {
   final imageUrl;
 
   const _ActionButtonDownloadPicture({super.key, required this.imageUrl});
+
+  @override
+  State<_ActionButtonDownloadPicture> createState() => _ActionButtonDownloadPictureState();
+}
+
+class _ActionButtonDownloadPictureState extends State<_ActionButtonDownloadPicture> {
+  final fToast = FToast();
+  @override
+  void initState() {
+    super.initState();
+
+    fToast?.init(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +112,7 @@ class _ActionButtonDownloadPicture extends StatelessWidget {
           size: 24,
           color: ColorConstant.whiteA700,
         ),
-        onPressed: () => _save(imageUrl));
+        onPressed: () => _save(widget.imageUrl));
   }
 
   _save(imageUrl) async {
@@ -112,10 +125,9 @@ class _ActionButtonDownloadPicture extends StatelessWidget {
         quality: 60,
         name: "image" + formattedDate);
     print(result);
+    showCustomToast();
   }
-}
-
-showCustomToast() {
+  showCustomToast() {
   Widget toast = Container(
     width: double.infinity,
     height: 48,
@@ -130,7 +142,7 @@ showCustomToast() {
       style: AppStyle.txtRobotoRegular14Gray10002,
     ),
   );
-  final fToast = FToast();
+  
 
   fToast?.showToast(
     child: toast,
@@ -141,6 +153,9 @@ showCustomToast() {
 
   //Navigator.of(context).pushNamed('seemore');
 }
+
+}
+
 
 class _FlexibleSpaceBarBackground extends StatelessWidget {
   final String imgUrl;
