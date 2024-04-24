@@ -13,8 +13,6 @@ class CustomPopupMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
-        iconColor:
-            isDarkMode ? ColorConstant.whiteA700 : ColorConstant.black900,
         color: isDarkMode ? ColorConstant.gray30002 : ColorConstant.gray100,
         constraints: BoxConstraints(
           minWidth: 200,

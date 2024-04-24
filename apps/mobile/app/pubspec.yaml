@@ -74,7 +74,8 @@ dependencies:
   simple_html_css: ^4.0.0
   flutter_xlider: ^3.5.0
   css_text: ^3.0.0
-
+  image_gallery_saver: '^1.7.1'
+  dio: ^4.0.0
   
   
 dependency_overrides:
