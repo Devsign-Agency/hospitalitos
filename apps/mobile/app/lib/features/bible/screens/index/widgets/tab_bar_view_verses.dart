@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +9,7 @@ import '../../../../../shared/shared.dart';
 import '../../../../../themes/themes.dart';
 import '../../../../../widgets/custom_button.dart';
 
-class TabBarViewVerses extends StatelessWidget {
+class TabBarViewVerses extends StatefulWidget {
   final Function onChangeTab;
   final int amountOfVerses;
   const TabBarViewVerses({
@@ -17,6 +19,12 @@ class TabBarViewVerses extends StatelessWidget {
   });
 
   @override
+  State<TabBarViewVerses> createState() => _TabBarViewVersesState();
+}
+
+class _TabBarViewVersesState extends State<TabBarViewVerses> {
+  int i = 0;
+  @override
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
@@ -24,30 +32,12 @@ class TabBarViewVerses extends StatelessWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    bool getColor(int index) {
-      int startVerse = bibleService.startVerse;
-      int endVerse = bibleService.endVerse;
-
-      if (startVerse == endVerse) {
-        return index == startVerse;
-      } else {
-        if (startVerse > 0 && endVerse > 0) {
-          return index >= startVerse && index <= endVerse;
-        } else {
-          return index == startVerse;
-        }
-      }
-    }
+    bool getColor(int index) =>
+        index >= bibleService.startVerse && index <= bibleService.endVerse;
 
     void next() {
-      bibleService.endVerse = bibleService.endVerse > 0
-          ? bibleService.endVerse
-          : bibleService.selectedChapter.verses.length;
       bibleService.getVersesByRange(
-          bibleService.startVerse,
-          bibleService.endVerse > 0
-              ? bibleService.endVerse
-              : bibleService.selectedChapter.verses.length);
+          bibleService.startVerse, bibleService.endVerse);
       Navigator.of(context).pushNamed(BookViewerScreen.route,
           arguments: bibleService.selectedChapter.verses);
     }
@@ -55,24 +45,17 @@ class TabBarViewVerses extends StatelessWidget {
     void handleTappedItem(int index) {
       int startVerse = bibleService.startVerse;
       int endVerse = bibleService.endVerse;
+      i = i + 1;
 
-      if (startVerse > 0 && endVerse > 0) {
-        startVerse = index + 1;
+      if (i == 1) {
+        startVerse = index;
         endVerse = bibleService.selectedChapter.verses.length;
       } else {
-        if (startVerse > 0) {
-          endVerse = index + 1;
+        int aux = min(startVerse, index);
+        endVerse = max(startVerse, index);
+        startVerse = aux;
 
-          if (startVerse > endVerse) {
-            final max = startVerse;
-            startVerse = endVerse;
-            endVerse = max;
-          }
-        } else {
-          startVerse = index + 1;
-
-          endVerse = bibleService.selectedChapter.verses.length;
-        }
+        i = 0;
       }
 
       bibleService.startVerse = startVerse;
@@ -88,10 +71,10 @@ class TabBarViewVerses extends StatelessWidget {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 5,
-            children: List.generate(amountOfVerses, (index) {
+            children: List.generate(widget.amountOfVerses, (index) {
               return Center(
                 child: GestureDetector(
-                  onTap: () => handleTappedItem(index),
+                  onTap: () => handleTappedItem(index + 1),
                   child: Container(
                     padding: getPadding(all: 10.0),
                     decoration: BoxDecoration(

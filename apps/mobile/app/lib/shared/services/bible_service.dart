@@ -30,6 +30,7 @@ class BibleService extends ChangeNotifier {
   int verseNumber = 0;
   int _startVerse = -1;
   int _endVerse = -1;
+  Map<dynamic, String> verses = {};
 
   BookBible get selectedBook => _selectedBook;
   Chapter get selectedChapter => _selectedChapter;
@@ -214,5 +215,21 @@ class BibleService extends ChangeNotifier {
     return endVerse != -1 && endVerse != startVerse
         ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
         : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+  }
+
+  void addNewVerseSelected(Map<dynamic, String> verse) {
+    dynamic keys = verse.keys;
+    dynamic key = keys.toList()[0];
+
+    if (verses.containsKey(key)) {
+      verses.remove(key);
+    } else {
+      verses.addAll(verse);
+    }
+    notifyListeners();
+  }
+
+  bool isVerseSelected(int numberOfVerse) {
+    return verses.containsKey(numberOfVerse);
   }
 }

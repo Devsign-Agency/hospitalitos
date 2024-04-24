@@ -183,14 +183,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     return values[fontSize]!;
   }
 
-  void shareVerses(Map<String, dynamic> mapVerses) {
+  void shareVerses(String title, Map<String, dynamic> mapVerses) {
     List<String> verseList = [];
 
     mapVerses.forEach((key, value) {
-      verseList.add('$key) $value ');
+      verseList.add('$key) $value\n');
     });
 
-    share(verseList.join());
+    share('$title\n${verseList.join()}');
   }
 
   void shareSelectedText() async {
@@ -236,10 +236,90 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     setState(() {});
   }
 
+  void displayDialogAndroid(BuildContext context, bool isDarkTheme,
+      String title, BibleService bibleService) {
+    List<String> menuOptions = [
+      'Añadir a Marcador',
+      'Compartir',
+      'Reproducir Versículos'
+    ];
+
+    void handleEventTapped(int index) {
+      switch (index) {
+        case 0:
+          print('Añadir marcador!');
+
+          break;
+        case 1:
+          print('Compartir!');
+          Map<String, dynamic> verses = {};
+          bibleService.verses.forEach((key, value) {
+            verses.addAll({key.toString(): value});
+          });
+          shareVerses(title, verses);
+
+          break;
+        case 2:
+          print('Reproducir Versículo!');
+          break;
+      }
+    }
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor:
+                isDarkTheme ? ColorConstant.gray80040 : ColorConstant.whiteA700,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            elevation: 5,
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(title,
+                      style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                          color: isDarkTheme
+                              ? ColorConstant.whiteA700
+                              : ColorConstant.gray900)),
+                  CustomIconButton(
+                    height: getSize(48),
+                    width: getSize(48),
+                    variant: IconButtonVariant.NoFill,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: CustomImageView(
+                        svgPath: ImageConstant.imgClose,
+                        color: ColorConstant.indigo900),
+                  )
+                ]),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 5),
+                ...List.generate(menuOptions.length, (int index) {
+                  return GestureDetector(
+                      onTap: () => handleEventTapped(index),
+                      child: Text(menuOptions[index],
+                          style: AppStyle.txtNunitoSansRegular16Gray900
+                              .copyWith(
+                                  color: isDarkTheme
+                                      ? ColorConstant.whiteA700
+                                      : ColorConstant.gray900)));
+                })
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
-        Provider.of<BibleService>(context, listen: false);
+        Provider.of<BibleService>(context, listen: true);
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
@@ -266,7 +346,9 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       PopupMenuItemModel(
           id: 2,
           title: 'Compartir',
-          onTappedItem: (context) => shareVerses(bibleService.selectedVerses))
+          onTappedItem: (context) => shareVerses(
+              '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}',
+              bibleService.selectedVerses))
     ];
 
     final appBarActions = [
@@ -348,6 +430,21 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           // Page view chapter's markers
         ],
       ),
+      floatingActionButton: bibleService.verses.isNotEmpty
+          ? FloatingActionButton(
+              onPressed: () {
+                displayDialogAndroid(
+                    context,
+                    isDarkTheme,
+                    '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}',
+                    bibleService);
+              },
+              backgroundColor: ColorConstant.indigo900,
+              child: Icon(
+                Icons.list,
+                color: ColorConstant.whiteA700,
+              ))
+          : null,
     );
   }
 }
