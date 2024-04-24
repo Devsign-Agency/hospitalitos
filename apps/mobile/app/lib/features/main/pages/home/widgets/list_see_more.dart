@@ -9,9 +9,11 @@ import 'package:mobile_app/core/constants/color.constant.dart';
 import 'package:mobile_app/core/constants/image.constant.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/epub.arguments.dart';
+import 'package:mobile_app/core/models/viewed_preview.dart';
 import 'package:mobile_app/core/theme/app.style.dart';
 import 'package:mobile_app/core/utils/size.utils.dart';
 import 'package:mobile_app/features/book/pages/index.page.dart';
+import 'package:mobile_app/features/library/widgets/tab_view_recommended.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/custom_search_books.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -77,12 +79,36 @@ class _ListSeeMoreState extends State<ListSeeMore> {
       body: Column(
         children: [
           // builds a list, but if it is empty it shows a notification message
-          _buildMainContent(books, context, isDarkTheme)
+          //_buildMainContent(books, context, isDarkTheme)
+           // Recommended
+              TabViewRecommended(
+                future: getBooksItems(),
+                onItemTapped: () => onTaped(),
+              ),
         ],
       ),
     );
   }
 
+  onTaped() async{
+ var book = await fetchDataSpecific('G.A.E');
+      Navigator.pushNamed(context, IndexPage.route,
+        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+  }
+ Future<EpubBook> fetchDataSpecific(nameBook) async {
+    return EpubDocument.openAsset('assets/epubs/G.A.E.epub');
+  }
+
+  Future<List<ViewedPreviewItem>> getBooksItems() {
+    List<ViewedPreviewItem> items = [
+      ViewedPreviewItem(
+          id: '1', title: 'G.A.E', image: 'assets/images/img_5.png'),
+      ViewedPreviewItem(
+          id: '2', title: 'Método para me...', image: 'assets/images/img_7.png'),
+    ];
+
+    return Future.delayed(Duration(seconds: 1), () => items);
+  }
   Widget _buildMainContent(
       List<dynamic> chapterList, context, bool isDarkTheme) {
     final boxDecoration = BoxDecoration(
@@ -251,6 +277,7 @@ class _ListSeeMoreState extends State<ListSeeMore> {
     return EpubDocument.openAssetFolder('/epubs');
   }
 
+ 
   onTap(context, EpubBook book) {
     Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));

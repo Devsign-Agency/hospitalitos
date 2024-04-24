@@ -178,14 +178,14 @@ class _HomePageState extends State<HomePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[0],
-                style: AppStyle.txtNunitoSansRegular16Gray900.copyWith(
+                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
                     color: _isDarkTheme
                         ? ColorConstant.whiteA700
                         : ColorConstant.gray900))),
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[1],
-                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                style: AppStyle.txtNunitoSansSemiBold20.copyWith(
                     color: _isDarkTheme
                         ? ColorConstant.whiteA700
                         : ColorConstant.indigo900))),
@@ -204,23 +204,15 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
-            /*CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray400,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgUserGray800,
-              ),
-              onTap: () => Navigator.of(context).pushNamed('profile'),
-            ),*/
-            SizedBox(width: 10),
+            SizedBox(width: 10,),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text('Buen día',
-                        style: AppStyle.txtNunitoSansSemiBold13Gray800.copyWith(
+                        style: AppStyle.txtNunitoSansSemiBold16.copyWith(
                             color: _isDarkTheme
                                 ? ColorConstant.whiteA700
                                 : ColorConstant.gray800))),
