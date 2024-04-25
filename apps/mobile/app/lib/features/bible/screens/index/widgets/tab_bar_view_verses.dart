@@ -9,7 +9,7 @@ import '../../../../../shared/shared.dart';
 import '../../../../../themes/themes.dart';
 import '../../../../../widgets/custom_button.dart';
 
-class TabBarViewVerses extends StatefulWidget {
+class TabBarViewVerses extends StatelessWidget {
   final Function onChangeTab;
   final int amountOfVerses;
   const TabBarViewVerses({
@@ -18,12 +18,6 @@ class TabBarViewVerses extends StatefulWidget {
     required this.onChangeTab,
   });
 
-  @override
-  State<TabBarViewVerses> createState() => _TabBarViewVersesState();
-}
-
-class _TabBarViewVersesState extends State<TabBarViewVerses> {
-  int i = 0;
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
@@ -43,25 +37,12 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
     }
 
     void handleTappedItem(int index) {
-      int startVerse = bibleService.startVerse;
-      int endVerse = bibleService.endVerse;
-      i = i + 1;
-
-      if (i == 1) {
-        startVerse = index;
-        endVerse = bibleService.selectedChapter.verses.length;
-      } else {
-        int aux = min(startVerse, index);
-        endVerse = max(startVerse, index);
-        startVerse = aux;
-
-        i = 0;
-      }
-
-      bibleService.startVerse = startVerse;
-      bibleService.endVerse = endVerse;
+      bibleService.startVerse = index;
+      bibleService.endVerse = index;
 
       bibleService.setLastPage();
+
+      next();
     }
 
     return Stack(
@@ -71,7 +52,7 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 5,
-            children: List.generate(widget.amountOfVerses, (index) {
+            children: List.generate(amountOfVerses, (index) {
               return Center(
                 child: GestureDetector(
                   onTap: () => handleTappedItem(index + 1),
@@ -94,15 +75,6 @@ class _TabBarViewVersesState extends State<TabBarViewVerses> {
             }),
           ),
         ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 350,
-          left: 0,
-          right: 0,
-          child: CustomButton(
-              height: getVerticalSize(48),
-              text: 'Aceptar',
-              onTap: bibleService.startVerse > 0 ? next : null),
-        )
       ],
     );
   }

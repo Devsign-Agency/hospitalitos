@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../shared/shared.dart';
@@ -87,7 +89,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         arguments: bibleService.selectedChapter.verses);
   }
 
-  showCustomToast(String message) {
+  void showCustomToast(String message) {
     Widget toast = Container(
       width: double.infinity,
       height: 48,
@@ -108,6 +110,17 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     );
   }
 
+  Future<void> share(String value) async {
+    await Share.share(value);
+  }
+
+  void handleEventShare(ListViewFavoriteModel item) {
+    String title = item.title;
+    String verse = BibleService.getVerseByPath(item.id);
+
+    share('$title\n$verse\n${item.description}');
+  }
+
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
@@ -121,7 +134,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
       final List<String> values = page.split('/');
       final String titlePage = '${values[0]} ${values[1]}, ${values[2]}';
 
-      chapterList.add(ListViewFavoriteModel(id: page, title: titlePage));
+      chapterList.add(ListViewFavoriteModel(
+          id: page, title: titlePage, date: values[4], description: values[3]));
     }
 
     return Scaffold(
@@ -152,14 +166,16 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               child: ListViewItemFavorite(
+                activeShare: true,
                 isEditing: _isEditing,
                 items: chapterList,
+                onShare: handleEventShare,
                 onRemoveItem: (ListViewFavoriteModel item) {
                   BibleService bibleService =
                       Provider.of<BibleService>(context, listen: false);
 
                   bibleService.deletePage(item.id);
-                  showCustomToast('Página eliminada exitosamente');
+                  showCustomToast('Marcador eliminado exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),

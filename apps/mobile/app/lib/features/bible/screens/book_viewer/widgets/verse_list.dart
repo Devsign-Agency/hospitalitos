@@ -24,25 +24,26 @@ class VerseList extends StatelessWidget {
 
     List<String> verses = [];
 
-    bibleService.selectedVerses.forEach((key, value) {
+    bibleService.versesByChapter.forEach((key, value) {
       verses.add(value);
     });
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (_, int index) {
-        return _Verse(
-          selected: true,
-          numberOfVerse: bibleService.startVerse + index,
-          isDarkMode: isDarkMode,
-          textBook: textBook,
-          value: verses[index],
-          active: secuenceVerseIndex == bibleService.startVerse + index,
-          onSelected: (Map<dynamic, String> verse) =>
-              bibleService.addNewVerseSelected(verse),
-        );
-      },
-      itemCount: verses.length,
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        ...List.generate(verses.length, (int index) {
+          return _Verse(
+            selected: true,
+            numberOfVerse: index + 1,
+            isDarkMode: isDarkMode,
+            textBook: textBook,
+            value: verses[index],
+            active: secuenceVerseIndex == index + 1,
+            onSelected: (Map<dynamic, String> verse) =>
+                bibleService.addNewVerseSelected(verse),
+          );
+        }),
+      ],
     );
   }
 }

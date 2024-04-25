@@ -1,3 +1,5 @@
+// ignore_for_file: void_checks
+
 import 'dart:convert';
 
 class BookBible {
@@ -13,6 +15,13 @@ class BookBible {
         chapters:
             List<Chapter>.from(json['chapters'].map((x) => Chapter.fromMap(x))),
       );
+
+  Chapter getChapterByNumber(String number) {
+    Chapter chapter =
+        chapters.firstWhere((element) => element.chapter == number);
+
+    return chapter;
+  }
 }
 
 class Chapter {
@@ -28,4 +37,24 @@ class Chapter {
         ctdverses: json['ctd_verses'],
         verses: json['verses'],
       );
+
+  String getVerseByNumber(String number) {
+    String verse = '';
+    verses.forEach((key, value) {
+      if (key == number) {
+        verse = '$value';
+      }
+    });
+
+    return verse;
+  }
+
+  String getVerseByPath(String path) {
+    List<String> paths = path.split('/');
+    String verseNumber = paths[2];
+
+    String verse = getVerseByNumber(verseNumber);
+
+    return verse;
+  }
 }

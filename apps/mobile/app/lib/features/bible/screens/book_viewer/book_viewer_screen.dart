@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/features/bible/screens/book_viewer/widgets/popup_new_marker.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/verse_list.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -56,6 +56,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   bool playingVerses = false;
   int currentIndex = 0;
   VoidCallback? onCompletion;
+
   // GlobalKey<PopupAudioPlayerState> globalKey = GlobalKey();
 
   late void Function() myMethod = () {};
@@ -66,6 +67,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
 
     fToast = FToast();
     fToast?.init(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      BibleService bibleService =
+          Provider.of<BibleService>(context, listen: false);
+
+      Scrollable.ensureVisible(
+          GlobalObjectKey(bibleService.startVerse).currentContext!);
+    });
   }
 
   @override
@@ -97,13 +106,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   void playVerses(int start, int end) {
     setState(() {
       _newVoiceText = verses[start.toString()];
-      secuenceVerseIndex = start;
+      secuenceVerseIndex = 1;
       Scrollable.ensureVisible(
           GlobalObjectKey(secuenceVerseIndex).currentContext!);
     });
 
     onCompletion = () {
       secuenceVerseIndex = secuenceVerseIndex + 1;
+
       if (secuenceVerseIndex <= end) {
         Scrollable.ensureVisible(
             GlobalObjectKey(secuenceVerseIndex).currentContext!);
@@ -123,8 +133,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     playingVerses = !playingVerses;
 
     if (onAudioSound) {
-      playVerses(int.parse(bibleService.selectedVerses.keys.first),
-          int.parse(verses.keys.last));
+      playVerses(1, verses.length);
     } else {
       onCompletion = null;
       secuenceVerseIndex = 0;
@@ -153,19 +162,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     await Share.share(value);
   }
 
-  String getTitle(BibleService bibleService) {
-    String title =
-        '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter},';
-
-    String rangeVerse = bibleService.startVerse == bibleService.endVerse ||
-            (bibleService.endVerse == -1)
-        ? '${bibleService.startVerse.toInt()}'
-        : '${bibleService.startVerse.toInt()}-${bibleService.endVerse.toInt()}';
-
-    title = '$title $rangeVerse';
-
-    return title;
-  }
+  String getTitle(BibleService bibleService) =>
+      '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}';
 
   double convertFontSizePxToDouble(FontSize fontSize) {
     Map<FontSize, double> values = {
@@ -213,11 +211,11 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   void addNewPageToFavorite(BibleService bibleService) {
     String message = '';
     if (bibleService.getPage() != '') {
-      bibleService.deletePage(bibleService.getCurrentPage());
+      // bibleService.deletePage(bibleService.getCurrentPage());
       message = 'Página eliminada exitosamente';
       setState(() {});
     } else {
-      bibleService.addNewPage();
+      // bibleService.addNewPage(usernameController.text);
       message = 'Página guardada en favoritos exitosamente';
       setState(() {});
     }
@@ -236,83 +234,12 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     setState(() {});
   }
 
-  void displayDialogAndroid(BuildContext context, bool isDarkTheme,
-      String title, BibleService bibleService) {
-    List<String> menuOptions = [
-      'Añadir a Marcador',
-      'Compartir',
-      'Reproducir Versículos'
-    ];
-
-    void handleEventTapped(int index) {
-      switch (index) {
-        case 0:
-          print('Añadir marcador!');
-
-          break;
-        case 1:
-          print('Compartir!');
-          Map<String, dynamic> verses = {};
-          bibleService.verses.forEach((key, value) {
-            verses.addAll({key.toString(): value});
-          });
-          shareVerses(title, verses);
-
-          break;
-        case 2:
-          print('Reproducir Versículo!');
-          break;
-      }
-    }
-
+  showDialogMarker(BibleService bibleService) {
     showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return AlertDialog(
-            backgroundColor:
-                isDarkTheme ? ColorConstant.gray80040 : ColorConstant.whiteA700,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-            elevation: 5,
-            title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(title,
-                      style: AppStyle.txtNunitoSansSemiBold23.copyWith(
-                          color: isDarkTheme
-                              ? ColorConstant.whiteA700
-                              : ColorConstant.gray900)),
-                  CustomIconButton(
-                    height: getSize(48),
-                    width: getSize(48),
-                    variant: IconButtonVariant.NoFill,
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: CustomImageView(
-                        svgPath: ImageConstant.imgClose,
-                        color: ColorConstant.indigo900),
-                  )
-                ]),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 5),
-                ...List.generate(menuOptions.length, (int index) {
-                  return GestureDetector(
-                      onTap: () => handleEventTapped(index),
-                      child: Text(menuOptions[index],
-                          style: AppStyle.txtNunitoSansRegular16Gray900
-                              .copyWith(
-                                  color: isDarkTheme
-                                      ? ColorConstant.whiteA700
-                                      : ColorConstant.gray900)));
-                })
-              ],
-            ),
-          );
+          return PopupNewMarker();
         });
   }
 
@@ -324,7 +251,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    verses = bibleService.selectedVerses;
+    verses = bibleService.versesByChapter;
 
     final List<PopupMenuItemModel> menuOptions = [
       PopupMenuItemModel(
@@ -346,20 +273,11 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       PopupMenuItemModel(
           id: 2,
           title: 'Compartir',
-          onTappedItem: (context) => shareVerses(
-              '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}',
-              bibleService.selectedVerses))
+          onTappedItem: (context) =>
+              shareVerses(getTitle(bibleService), bibleService.versesByChapter))
     ];
 
     final appBarActions = [
-      {
-        'icon': ImageConstant.imgFavorite,
-        'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-        'variant': bibleService.getPage() == ''
-            ? IconButtonVariant.NoFill
-            : IconButtonVariant.OutlinePurple50,
-        'action': () => addNewPageToFavorite(bibleService)
-      },
       {
         'icon': ImageConstant.imgMusicIndigo900,
         'color': isDarkTheme
@@ -408,13 +326,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   menuButtonItems: menuButtonItems,
                   child: Padding(
                     padding: getPadding(all: 0.0),
-                    child: SizedBox(
-                      height: 700,
-                      child: VerseList(
-                          secuenceVerseIndex: secuenceVerseIndex,
-                          isDarkMode: isDarkTheme,
-                          textBook: textBook),
-                    ),
+                    child: VerseList(
+                        secuenceVerseIndex: secuenceVerseIndex,
+                        isDarkMode: isDarkTheme,
+                        textBook: textBook),
                   ),
                 ),
               ),
@@ -430,18 +345,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           // Page view chapter's markers
         ],
       ),
-      floatingActionButton: bibleService.verses.isNotEmpty
+      floatingActionButton: bibleService.verses.isNotEmpty && !onAudioSound
           ? FloatingActionButton(
               onPressed: () {
-                displayDialogAndroid(
-                    context,
-                    isDarkTheme,
-                    '${bibleService.selectedBook.name} ${bibleService.selectedChapter.chapter}',
-                    bibleService);
+                showDialogMarker(bibleService);
               },
               backgroundColor: ColorConstant.indigo900,
               child: Icon(
-                Icons.list,
+                Icons.bookmark,
                 color: ColorConstant.whiteA700,
               ))
           : null,
