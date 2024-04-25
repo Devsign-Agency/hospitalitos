@@ -46,12 +46,12 @@ loadAsset() async {
 
 class _HomePageState extends State<HomePage> {
   bool _isDarkTheme = false;
-
+  //var dataLiturgia = liturgies();
   final _itemSliders = [
     [
       'Liturgia',
       'TIEMPO PASCUAL MARTES DE SEMANA II',
-      'Propio del Tiempo. Salterio II'
+      'Propio del Tiempo. Salterio IIfsdffsdfds'
     ]
   ];
 
@@ -78,6 +78,10 @@ class _HomePageState extends State<HomePage> {
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
   }
+
+  /*Future<List<EpubBook>> liturgy() async {
+    return LiturgyService.items;+
+  }*/
 
   Future<List<SfPdfViewer>> fetchDataPdf() async {
     return PdfService.openAssetFolder('/pdf');
@@ -124,10 +128,10 @@ class _HomePageState extends State<HomePage> {
       case 1:
         Navigator.of(context).pushNamed(CoursesScreen.route);
         break;
-      // case 2:
-      //   Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-      //   break;
       case 2:
+        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+        break;
+      case 3:
         Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
@@ -137,6 +141,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
+    LiturgyService liturgyService = Provider.of<LiturgyService>(context);
+    final day = DateTime.now().toString().split(' ')[0];
+    print(day);
+    List<dynamic> arr = [];
+
+    liturgyService.liturgies.forEach((liturgia) {
+      final date = liturgia['date'];
+ 
+        final detail = liturgia['detail'];
+      
+          arr.add(detail);
+        
+
+    });
 
     List<Map<String, dynamic>> actions = [
       {
@@ -165,15 +183,15 @@ class _HomePageState extends State<HomePage> {
 
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      // BottomNavigationMenu(
-      //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
       BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
 
     final List<Widget> slides = [];
 
-    for (var element in _itemSliders) {
+    for (var element in arr) {
       slides.add(Wrap(children: [
         Align(
             alignment: Alignment.centerLeft,
@@ -204,7 +222,9 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
