@@ -92,10 +92,12 @@ class _ActionButtonDownloadPicture extends StatefulWidget {
   const _ActionButtonDownloadPicture({super.key, required this.imageUrl});
 
   @override
-  State<_ActionButtonDownloadPicture> createState() => _ActionButtonDownloadPictureState();
+  State<_ActionButtonDownloadPicture> createState() =>
+      _ActionButtonDownloadPictureState();
 }
 
-class _ActionButtonDownloadPictureState extends State<_ActionButtonDownloadPicture> {
+class _ActionButtonDownloadPictureState
+    extends State<_ActionButtonDownloadPicture> {
   final fToast = FToast();
   @override
   void initState() {
@@ -127,35 +129,33 @@ class _ActionButtonDownloadPictureState extends State<_ActionButtonDownloadPictu
     print(result);
     showCustomToast();
   }
+
   showCustomToast() {
-  Widget toast = Container(
-    width: double.infinity,
-    height: 48,
-    padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(4),
+    Widget toast = Container(
+      width: double.infinity,
+      height: 48,
+      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
 
-      color: Colors.grey[800], // TODO: Añadir color a ColorConstants
-    ),
-    child: Text(
-      'El archivo se ha descargado',
-      style: AppStyle.txtRobotoRegular14Gray10002,
-    ),
-  );
-  
+        color: Colors.grey[800], // TODO: Añadir color a ColorConstants
+      ),
+      child: Text(
+        'El archivo se ha descargado',
+        style: AppStyle.txtRobotoRegular14Gray10002,
+      ),
+    );
 
-  fToast?.showToast(
-    child: toast,
-    toastDuration: const Duration(seconds: 3),
-  );
+    fToast?.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+    );
 
-  //Navigator.of(context).pop();
+    //Navigator.of(context).pop();
 
-  //Navigator.of(context).pushNamed('seemore');
+    //Navigator.of(context).pushNamed('seemore');
+  }
 }
-
-}
-
 
 class _FlexibleSpaceBarBackground extends StatelessWidget {
   final String imgUrl;

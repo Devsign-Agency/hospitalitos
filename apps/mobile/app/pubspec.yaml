@@ -76,6 +76,7 @@ dependencies:
   css_text: ^3.0.0
   image_gallery_saver: '^1.7.1'
   dio: ^4.0.0
+  youtube_api: ^1.0.4
   
   
 dependency_overrides:

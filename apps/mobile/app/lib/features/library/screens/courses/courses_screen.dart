@@ -11,7 +11,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
 import '../../../../widgets/widgets.dart';
-
+import 'package:youtube_api/youtube_api.dart';
 class CoursesScreen extends StatefulWidget {
   static const route = 'courses';
   const CoursesScreen({Key? key}) : super(key: key);
@@ -24,19 +24,34 @@ class _CoursesScreenState extends State<CoursesScreen> {
   int _selectedFilter = 0;
   String _routeName = '';
   List<Uint8List> path = [];
-
-  void _handleActions() {
-    print('You have clicked!');
-  }
+   bool isLoaded = false; 
+  static String api_key = "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g";
+    List<dynamic> results = []; //list to store the results
+  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 20, type: "video"); 
+ 
 
   @override
   initState() {
     super.initState();
-    getThumbnail();
-
+     callApi();
+     //callApi(); 
     // // retur
   }
 
+  callApi() async {
+    try {
+      results = await yt.search("EWTNespanol ");//searching for videos related to HD Music
+      print(results); 
+       setState(() {
+        isLoaded = true; //setting content as loaded
+      });
+      print('url ${results[0].url}');
+      return results[0].url;
+     
+    } catch (e) {
+      print(e);//in case of any exception like no internet or problem with API log it to console
+    }
+  }
   getThumbnail() async {
     List<String> pathsName = [
       'assets/videos/video_example.mp4',
@@ -45,7 +60,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
     ];
 
     // ignore: avoid_function_literals_in_foreach_calls
-    pathsName.forEach((element) async {
+   /* pathsName.forEach((element) async {
       print(element);
       final byteData = await rootBundle.load(element);
       Directory tempDir = await getTemporaryDirectory();
@@ -67,7 +82,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
       print('size ------ > ${path.length}');
       // setState(() {});
     });
-
+*/
     print('Paths-------');
     print(path);
     return path;
@@ -213,10 +228,44 @@ class _CoursesScreenState extends State<CoursesScreen> {
   }
 }
 
-class _CustomAppBar extends StatelessWidget {
+class _CustomAppBar extends StatefulWidget {
   const _CustomAppBar({
     super.key,
   });
+
+  @override
+  State<_CustomAppBar> createState() => _CustomAppBarState();
+}
+
+class _CustomAppBarState extends State<_CustomAppBar> {
+
+  List<Uint8List> path = [];
+   bool isLoaded = false; 
+  static String api_key = "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g";
+    List<dynamic> results = []; //list to store the results
+  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 6, type: "video"); 
+
+  @override
+  initState() {
+    super.initState();
+  
+     callApi(); 
+    // // retur
+  }
+
+  callApi() async {
+    try {
+      results = await yt.search("HD Music");//searching for videos related to HD Music
+      print(results); //logging results in console
+      setState(() {
+        isLoaded = true; //setting content as loaded
+      });
+    } catch (e) {
+      print(e);//in case of any exception like no internet or problem with API log it to console
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
