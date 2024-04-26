@@ -20,7 +20,7 @@ class VerseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BibleService bibleService =
-        Provider.of<BibleService>(context, listen: false);
+        Provider.of<BibleService>(context, listen: true);
 
     List<String> verses = [];
 
@@ -105,27 +105,27 @@ class _Verse extends StatelessWidget {
             height: textBook.lineHeight,
             fontSize: convertFontSizePxToDouble(textBook.fontSize));
 
-    return GestureDetector(
-      onTap: () {
-        Map<dynamic, String> verse = {
-          numberOfVerse: value,
-        };
-        onSelected(verse);
-      },
-      child: Container(
-          width: double.infinity,
-          key: GlobalObjectKey(numberOfVerse),
-          padding: getPadding(left: textBook.margin, right: textBook.margin),
-          decoration: BoxDecoration(
-              border: Border(
-                  left: BorderSide(
-                      color: active ? borderColor : ColorConstant.transparent,
-                      width: active ? 6.0 : 0.0))),
-          child: Column(
-            children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('$numberOfVerse ', style: numberOfVerseStyle),
-                Expanded(
+    return Container(
+        width: double.infinity,
+        key: GlobalObjectKey(numberOfVerse),
+        padding: getPadding(left: textBook.margin, right: textBook.margin),
+        decoration: BoxDecoration(
+            border: Border(
+                left: BorderSide(
+                    color: active ? borderColor : ColorConstant.transparent,
+                    width: active ? 6.0 : 0.0))),
+        child: Column(
+          children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('$numberOfVerse ', style: numberOfVerseStyle),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Map<dynamic, String> verse = {
+                      numberOfVerse: value,
+                    };
+                    onSelected(verse);
+                  },
                   child: Text(
                     value,
                     style: valueStyle.copyWith(
@@ -134,12 +134,12 @@ class _Verse extends StatelessWidget {
                             : TextDecoration.none),
                   ),
                 ),
-              ]),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          )),
-    );
+              ),
+            ]),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ));
   }
 }

@@ -97,6 +97,9 @@ class _BibleMainState extends State<BibleMain> {
       // },
     ];
 
+    // Preferences.removePageList();
+    // Preferences.lastPage = '';
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'La Biblia',

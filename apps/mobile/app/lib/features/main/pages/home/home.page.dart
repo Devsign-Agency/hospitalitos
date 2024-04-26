@@ -90,13 +90,13 @@ class _HomePageState extends State<HomePage> {
     final authService = Provider.of<AuthService>(context, listen: false);
     user = authService.user;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ThemeProvider themeProvider =
-          Provider.of<ThemeProvider>(context, listen: false);
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   ThemeProvider themeProvider =
+    //       Provider.of<ThemeProvider>(context, listen: false);
 
-      _isDarkTheme = Preferences.isDarkmode;
-      _isDarkTheme ? themeProvider.setDarkMode() : themeProvider.setLightMode();
-    });
+    //   _isDarkTheme = Preferences.isDarkmode;
+    //   _isDarkTheme ? themeProvider.setDarkMode() : themeProvider.setLightMode();
+    // });
 
     //loadAsset();
   }
@@ -143,20 +143,20 @@ class _HomePageState extends State<HomePage> {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
-      {
-        'icon': ImageConstant.imgMoonIndigo,
-        'action': () {
-          Preferences.isDarkmode
-              ? themeProvider.setLightMode()
-              : themeProvider.setDarkMode();
+      // {
+      //   'icon': ImageConstant.imgMoonIndigo,
+      //   'action': () {
+      //     Preferences.isDarkmode
+      //         ? themeProvider.setLightMode()
+      //         : themeProvider.setDarkMode();
 
-          Preferences.isDarkmode = !Preferences.isDarkmode;
+      //     Preferences.isDarkmode = !Preferences.isDarkmode;
 
-          setState(() {
-            _isDarkTheme = !_isDarkTheme;
-          });
-        }
-      },
+      //     setState(() {
+      //       _isDarkTheme = !_isDarkTheme;
+      //     });
+      //   }
+      // },
       /*{
         'icon': ImageConstant.imgNotification,
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)

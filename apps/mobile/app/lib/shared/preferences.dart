@@ -40,7 +40,7 @@ class Preferences {
   }
 
   static removeMarkerList() {
-    _preferences.remove('pageList');
+    _preferences.remove('markerList');
   }
 
   static removePageList() {

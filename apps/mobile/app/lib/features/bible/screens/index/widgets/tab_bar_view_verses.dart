@@ -40,7 +40,7 @@ class TabBarViewVerses extends StatelessWidget {
       bibleService.startVerse = index;
       bibleService.endVerse = index;
 
-      bibleService.setLastPage();
+      // bibleService.setLastPage();
 
       next();
     }

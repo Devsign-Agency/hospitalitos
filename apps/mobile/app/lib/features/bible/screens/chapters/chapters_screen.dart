@@ -83,7 +83,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     bibleService.startVerse = startVerse;
     bibleService.endVerse = endVerse;
 
-    bibleService.setLastPage();
+    // bibleService.setLastPage();
 
     Navigator.of(context).pushNamed(BookViewerScreen.route,
         arguments: bibleService.selectedChapter.verses);
@@ -140,7 +140,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: _isEditing ? 'Guardado' : 'Editar',
+        title: 'Marcadores',
         iconButtonVariant: !_isEditing
             ? IconButtonVariant.FillGray300
             : IconButtonVariant.NoFill,
@@ -175,7 +175,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                       Provider.of<BibleService>(context, listen: false);
 
                   bibleService.deletePage(item.id);
-                  showCustomToast('Marcador eliminado exitosamente');
+                  // showCustomToast('Marcador eliminado exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),

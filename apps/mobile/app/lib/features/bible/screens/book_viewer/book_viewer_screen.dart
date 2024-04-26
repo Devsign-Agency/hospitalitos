@@ -5,14 +5,17 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/popup_new_marker.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/verse_list.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../core/models/chip_item.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
+import '../../../../widgets/filters_bar.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../book/widgets/widgets.dart';
 
@@ -41,7 +44,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       lineHeight: 1.2,
       fontSize: FontSize.medium);
 
-  String _newVoiceText = '';
+  String _newVoiceText = 'Hola';
   CircleButtonModel selectedCircleButton =
       CircleButtonModel(CircleButtonType.black, Colors.black);
 
@@ -250,8 +253,11 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+    BookBible book = bibleService.selectedBook;
 
     verses = bibleService.versesByChapter;
+
+    bibleService.setLastPage();
 
     final List<PopupMenuItemModel> menuOptions = [
       PopupMenuItemModel(
@@ -295,6 +301,14 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
     ];
 
+    List<ChipItem> filtersData = [];
+
+    for (var element in book.chapters) {
+      filtersData.add(ChipItem(
+          id: int.parse(element.chapter),
+          name: 'Capítulo  ${element.chapter}'));
+    }
+
     return Scaffold(
       backgroundColor:
           isDarkTheme ? ColorConstant.black9001c : ColorConstant.gray100,
@@ -317,29 +331,61 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           // Page view book viewer
-          Stack(
+          Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SingleChildScrollView(
-                controller: scrollController,
-                child: CustomSelectionArea(
-                  onSelectionChanged: handleSelectedContent,
-                  menuButtonItems: menuButtonItems,
-                  child: Padding(
-                    padding: getPadding(all: 0.0),
-                    child: VerseList(
-                        secuenceVerseIndex: secuenceVerseIndex,
-                        isDarkMode: isDarkTheme,
-                        textBook: textBook),
+              // Items filter
+              Padding(
+                padding: getPadding(bottom: 16),
+                child: FiltersBar(
+                    selectedItem:
+                        int.parse(bibleService.selectedChapter.chapter),
+                    items: filtersData,
+                    onChangeSelected: (int id) {
+                      Chapter chapter = book.chapters.firstWhere(
+                          (element) => int.parse(element.chapter) == id);
+
+                      bibleService.selectedChapter = chapter;
+                      bibleService.startVerse = 1;
+
+                      Scrollable.ensureVisible(
+                          GlobalObjectKey(1).currentContext!);
+                    }),
+              ),
+
+              Expanded(
+                child: SizedBox(
+                  height: 800,
+                  child: Stack(
+                    children: [
+                      SingleChildScrollView(
+                        controller: scrollController,
+                        child: CustomSelectionArea(
+                          onSelectionChanged: handleSelectedContent,
+                          menuButtonItems: menuButtonItems,
+                          child: Padding(
+                            padding: getPadding(all: 0.0),
+                            child: VerseList(
+                                secuenceVerseIndex: secuenceVerseIndex,
+                                isDarkMode: isDarkTheme,
+                                textBook: textBook),
+                          ),
+                        ),
+                      ),
+                      if (onAudioSound)
+                        ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: 400),
+                          child: PopupAudioPlayer(
+                            onCompletion: onCompletion,
+                            voiceText: _newVoiceText,
+                            bookTitle: getTitle(bibleService),
+                            bookAuthor: '',
+                          ),
+                        )
+                    ],
                   ),
                 ),
               ),
-              if (onAudioSound)
-                PopupAudioPlayer(
-                  onCompletion: onCompletion,
-                  voiceText: _newVoiceText,
-                  bookTitle: getTitle(bibleService),
-                  bookAuthor: '',
-                )
             ],
           ),
           // Page view chapter's markers
