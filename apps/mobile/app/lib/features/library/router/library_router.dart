@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 
 import '../screens/screens.dart';
 
@@ -13,6 +14,7 @@ class RouterLibrary {
       PreviewVideoScreen.route: (BuildContext context) => PreviewVideoScreen(),
       PreviewBookScreen.route: (BuildContext context) => PreviewBookScreen(),
       ReaderBookScreen.route: (BuildContext context) => ReaderBookScreen(),
+      DiscoverScreen.route: (BuildContext context) => DiscoverScreen(),
       PreviewPodcastScreen.route: (BuildContext context) =>
           PreviewPodcastScreen(),
     });

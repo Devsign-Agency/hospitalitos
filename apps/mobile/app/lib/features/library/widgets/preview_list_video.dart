@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
 import '../../../core/models/viewed_preview.dart';
 import '../../../widgets/viewed_preview.dart';
+import '../screens/screens.dart';
 
-class TabViewRecommended extends StatelessWidget {
+class PreviewListVideo extends StatelessWidget {
   final Future<dynamic> future;
-  final Function onItemTapped;
+  final VoidCallback onItemTapped;
 
-  const TabViewRecommended({
+  const PreviewListVideo({
     super.key,
     required this.future,
     required this.onItemTapped,
@@ -52,11 +53,27 @@ class TabViewRecommended extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     shrinkWrap: true,
-                    itemBuilder: (_, int index) => _CardImagePreview(
-                        title: items[index].title,
-                        image: Image.asset(items[index].image),
-                          onTap: () => onItemTapped(items[index].title) )
-                       ,
+                    itemBuilder: (_, int index) {
+                      print(items[index]);
+                      var item = items[index].thumbnail.high.url;
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, PreviewVideoScreen.route,
+                              arguments: items[index].url);
+                        },
+                        child: Container(
+                          height: double.infinity,
+                          width: 244.0,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(item), fit: BoxFit.cover),
+                              color: ColorConstant.blueGray10002,
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ),
+                      );
+                    },
                     itemCount: items.length,
                     // separatorBuilder: (_, __) => SizedBox(width: 8),
                   ),

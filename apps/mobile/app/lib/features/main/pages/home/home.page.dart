@@ -9,6 +9,7 @@ import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -46,12 +47,12 @@ loadAsset() async {
 
 class _HomePageState extends State<HomePage> {
   bool _isDarkTheme = false;
-
+  //var dataLiturgia = liturgies();
   final _itemSliders = [
     [
       'Liturgia',
       'TIEMPO PASCUAL MARTES DE SEMANA II',
-      'Propio del Tiempo. Salterio II'
+      'Propio del Tiempo. Salterio IIfsdffsdfds'
     ]
   ];
 
@@ -78,6 +79,10 @@ class _HomePageState extends State<HomePage> {
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
   }
+
+  /*Future<List<EpubBook>> liturgy() async {
+    return LiturgyService.items;+
+  }*/
 
   Future<List<SfPdfViewer>> fetchDataPdf() async {
     return PdfService.openAssetFolder('/pdf');
@@ -122,12 +127,12 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pushNamed(HomePage.route);
         break;
       case 1:
-        Navigator.of(context).pushNamed(CoursesScreen.route);
+        Navigator.of(context).pushNamed(DiscoverScreen.route);
         break;
-      // case 2:
-      //   Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-      //   break;
       case 2:
+        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+        break;
+      case 3:
         Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
@@ -137,6 +142,90 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
+    LiturgyService liturgyService = Provider.of<LiturgyService>(context);
+    final day = DateTime.now().toString().split(' ')[0];
+    print(day);
+    List<dynamic> arr = [];
+    var index = -1;
+    liturgyService.liturgies.forEach((liturgia) {
+      final date = liturgia['date'];
+      index++;
+      if (date == day) {
+        final detail = liturgia['detail'];
+
+        if (detail[2].contains('LUNES')) {
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+        }
+        if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+        }
+
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+        }
+
+        /*if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index -2]);
+          arr.add(liturgyService.liturgies[index -1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]);
+          arr.add(liturgyService.liturgies[index - 2]);
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+
+        if (detail[2].contains('SABADO')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }*/
+      }
+    });
 
     List<Map<String, dynamic>> actions = [
       {
@@ -165,27 +254,27 @@ class _HomePageState extends State<HomePage> {
 
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      // BottomNavigationMenu(
-      //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
       BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
 
     final List<Widget> slides = [];
 
-    for (var element in _itemSliders) {
+    for (var element in arr) {
       slides.add(Wrap(children: [
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[0],
-                style: AppStyle.txtNunitoSansRegular16Gray900.copyWith(
+                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
                     color: _isDarkTheme
                         ? ColorConstant.whiteA700
                         : ColorConstant.gray900))),
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[1],
-                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                style: AppStyle.txtNunitoSansSemiBold20.copyWith(
                     color: _isDarkTheme
                         ? ColorConstant.whiteA700
                         : ColorConstant.indigo900))),
@@ -204,23 +293,17 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
-            /*CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray400,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgUserGray800,
-              ),
-              onTap: () => Navigator.of(context).pushNamed('profile'),
-            ),*/
-            SizedBox(width: 10),
+            SizedBox(
+              width: 10,
+            ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text('Buen día',
-                        style: AppStyle.txtNunitoSansSemiBold13Gray800.copyWith(
+                        style: AppStyle.txtNunitoSansSemiBold16.copyWith(
                             color: _isDarkTheme
                                 ? ColorConstant.whiteA700
                                 : ColorConstant.gray800))),
