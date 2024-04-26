@@ -153,6 +153,29 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 'Videos',
                 style: AppStyle.txtNunitoSansSemiBold20Indigo900,
               ),
+              // Preview Image
+              // Container(
+              //   padding: getPadding(left: 16),
+              //   margin: getMargin(bottom: 24.0),
+              //   width: double.infinity,
+              //   height: 160.0,
+              //   child: ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemBuilder: (_, int index) {
+              //         var item = listVideos[index].thumbnail.high.url;
+              //         print('ey ${listVideos[index].url}');
+              //         return Container(
+              //           height: double.infinity,
+              //           width: 244.0,
+              //           margin: EdgeInsets.all(5),
+              //           decoration: BoxDecoration(
+              //             image:DecorationImage(image: NetworkImage(item), fit: BoxFit.cover ),
+              //               color: ColorConstant.blueGray10002,
+              //               borderRadius: BorderRadius.circular(10.0)),
+              //         );
+              //       },
+              //       itemCount: listVideos.length),
+              // ),
 
               // Preview Image
               Container(
