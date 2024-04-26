@@ -74,7 +74,9 @@ dependencies:
   simple_html_css: ^4.0.0
   flutter_xlider: ^3.5.0
   css_text: ^3.0.0
-
+  image_gallery_saver: '^1.7.1'
+  dio: ^4.0.0
+  youtube_api: ^1.0.4
   
   
 dependency_overrides:
@@ -120,6 +122,7 @@ flutter:
     - assets/liturgia/sync/2024/mar/10/
     - assets/liturgia/sync/2024/mar/11/
     - assets/liturgia/sync/2024/mar/12/
+    - assets/epubs/G.A.E.epub
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
