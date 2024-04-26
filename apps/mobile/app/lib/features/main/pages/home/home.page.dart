@@ -9,6 +9,7 @@ import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pushNamed(HomePage.route);
         break;
       case 1:
-        Navigator.of(context).pushNamed(CoursesScreen.route);
+        Navigator.of(context).pushNamed(DiscoverScreen.route);
         break;
       case 2:
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
@@ -182,13 +183,12 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 1]['detail']);
         }
 
-         if (detail[2].contains('VIERNES')) {
+        if (detail[2].contains('VIERNES')) {
           arr.add(liturgyService.liturgies[index - 4]['detail']);
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
-         
         }
 
         /*if (detail[2].contains('MARTES')) {

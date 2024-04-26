@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_app/features/library/screens/preview_video/preview_video_screen.dart';
 import 'package:mobile_app/widgets/card_preview_item_list%20copy.dart';
 import 'package:mobile_app/widgets/filters_bar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:youtube_api/youtube_api.dart';
+
 class CoursesScreen extends StatefulWidget {
   static const route = 'courses';
   const CoursesScreen({Key? key}) : super(key: key);
@@ -24,35 +26,35 @@ class _CoursesScreenState extends State<CoursesScreen> {
   int _selectedFilter = 0;
   String _routeName = '';
   List<Uint8List> path = [];
-   bool isLoaded = false; 
+  bool isLoaded = false;
   static String api_key = "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g";
-    List<dynamic> results = []; //list to store the results
-  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 20, type: "video"); 
+  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 20, type: "video");
+  List<dynamic> results = []; //list to store the results
   var listVideos = [];
 
   @override
   initState() {
     super.initState();
-  
-     callApi().then((value) {
-     
-  
+
+    callApi().then((value) {
       setState(() {});
     });
-     //callApi(); 
+    //callApi();
     // // retur
   }
 
   callApi() async {
     try {
-      results = await yt.search("EWTNespanol ");//searching for videos related to HD Music
+      results = await yt
+          .search("EWTNespanol "); //searching for videos related to HD Music
       listVideos = results;
       return results;
-     
     } catch (e) {
-      print(e);//in case of any exception like no internet or problem with API log it to console
+      print(
+          e); //in case of any exception like no internet or problem with API log it to console
     }
   }
+
   getThumbnail() async {
     List<String> pathsName = [
       'assets/videos/video_example.mp4',
@@ -106,10 +108,10 @@ class _CoursesScreenState extends State<CoursesScreen> {
     List<ChipItem> filtersData = [
       ChipItem(id: 1, name: 'Video', icon: ImageConstant.imgVideo24x24),
       ChipItem(id: 2, name: 'Libro', icon: ImageConstant.imgBookmark),
-      ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgPodcast24x24),
-      ChipItem(id: 1, name: 'Video', icon: ImageConstant.imgMusic),
-      ChipItem(id: 2, name: 'Libro', icon: ImageConstant.imgMusic),
-      ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgMusic),
+      // ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgPodcast24x24),
+      // ChipItem(id: 1, name: 'Video', icon: ImageConstant.imgMusic),
+      // ChipItem(id: 2, name: 'Libro', icon: ImageConstant.imgMusic),
+      // ChipItem(id: 3, name: 'Podcast', icon: ImageConstant.imgMusic),
     ];
 
     List<ChipItem> filtersData2 = [
@@ -122,87 +124,136 @@ class _CoursesScreenState extends State<CoursesScreen> {
     ];
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Biblioteca',),
+        appBar: CustomAppBar(
+          title: 'Biblioteca',
+        ),
         body: SingleChildScrollView(
-      child: Column(
-        children: [
-          // AppBar
-          //_CustomAppBar(),
+          child: Column(
+            children: [
+              // AppBar
+              //_CustomAppBar(),
 
-          // Search Input
-          Padding(
-            padding: getPadding(bottom: 16),
-            child: BarInputSearch(
-              onChange: (String value) {},
-            ),
-          ),
+              // // Search Input
+              // Padding(
+              //   padding: getPadding(bottom: 16),
+              //   child: BarInputSearch(
+              //     onChange: (String value) {},
+              //   ),
+              // ),
 
-          // Items filter
-          Padding(
-            padding: getPadding(bottom: 16),
-            child: FiltersBar(
-                items: filtersData,
-                onChangeSelected: changeSelectedFilterItem),
-          ),
+              // Items filter
+              Padding(
+                padding: getPadding(bottom: 16),
+                child: FiltersBar(
+                    items: filtersData,
+                    onChangeSelected: changeSelectedFilterItem),
+              ),
 
-          // Preview Image
-          Container(
-            padding: getPadding(left: 16),
-            margin: getMargin(bottom: 24.0),
-            width: double.infinity,
-            height: 160.0,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, int index) {
-                  var item = listVideos[index].thumbnail.high.url;
-                  print('ey $item');
-                  return Container(
-                    height: double.infinity,
-                    width: 244.0,
-                    margin: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      image:DecorationImage(image: NetworkImage(item), fit: BoxFit.cover ),
-                        color: ColorConstant.blueGray10002,
-                        borderRadius: BorderRadius.circular(10.0)),
-                  );
-                },
-                itemCount: listVideos.length),
-          ),
+              Text(
+                'Videos',
+                style: AppStyle.txtNunitoSansSemiBold20Indigo900,
+              ),
 
-          // Popular categories
-          _ListItemScrollableHorizontal(
-            title: 'Categorías Populares',
-            hasFilter: true,
-            filterItems: filtersData2,
-            onTappedItem: onTap,
-            onSelectedFilterItem: changeSelectedFilterItem,
-            future: fetchData(),
-          ),
+              // Preview Image
+              Container(
+                padding: getPadding(left: 16),
+                margin: getMargin(bottom: 24.0),
+                width: double.infinity,
+                height: 160.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, int index) {
+                      var item = listVideos[index].thumbnail.high.url;
+                      print('ey $item');
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, PreviewVideoScreen.route,
+                              arguments: listVideos[index].url);
+                        },
+                        child: Container(
+                          height: double.infinity,
+                          width: 244.0,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(item), fit: BoxFit.cover),
+                              color: ColorConstant.blueGray10002,
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ),
+                      );
+                    },
+                    itemCount: listVideos.length),
+              ),
 
-          SizedBox(
-            height: 24,
-          ),
+              Text(
+                'Libros',
+                style: AppStyle.txtNunitoSansSemiBold20Indigo900,
+              ),
+              // Preview Image
+              Container(
+                padding: getPadding(left: 16),
+                margin: getMargin(bottom: 24.0),
+                width: double.infinity,
+                height: 160.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, int index) {
+                      var item = listVideos[index].thumbnail.high.url;
+                      print('ey $item');
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, PreviewVideoScreen.route,
+                              arguments: listVideos[index].url);
+                        },
+                        child: Container(
+                          height: double.infinity,
+                          width: 244.0,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(item), fit: BoxFit.cover),
+                              color: ColorConstant.blueGray10002,
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ),
+                      );
+                    },
+                    itemCount: listVideos.length),
+              ),
 
-          // Recommended
-          _ListItemScrollableHorizontal(
-            title: 'Recomendados',
-            onTappedItem: onTap,
-            future: fetchData(),
-          ),
+              // // Popular categories
+              // _ListItemScrollableHorizontal(
+              //   title: 'Categorías Populares',
+              //   hasFilter: true,
+              //   filterItems: filtersData2,
+              //   onTappedItem: onTap,
+              //   onSelectedFilterItem: changeSelectedFilterItem,
+              //   future: fetchData(),
+              // ),
 
-          CardThumbnailVideoItemList(
-            future: fetchVideoPaths(),
-            onTappedItem: null,
-            paths: path,
-            pathsName: [
-              'assets/videos/video_example.mp4',
-              'assets/videos/video_test.mp4',
-              'assets/videos/video_example2.mp4',
+              // SizedBox(
+              //   height: 24,
+              // ),
+
+              // // Recommended
+              // _ListItemScrollableHorizontal(
+              //   title: 'Recomendados',
+              //   onTappedItem: onTap,
+              //   future: fetchData(),
+              // ),
+
+              // CardThumbnailVideoItemList(
+              //   future: fetchVideoPaths(),
+              //   onTappedItem: null,
+              //   paths: path,
+              //   pathsName: [
+              //     'assets/videos/video_example.mp4',
+              //     'assets/videos/video_test.mp4',
+              //     'assets/videos/video_example2.mp4',
+              //   ],
+              // ),
             ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -216,20 +267,17 @@ class _CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<_CustomAppBar> {
-
   List<Uint8List> path = [];
-   bool isLoaded = false; 
+  bool isLoaded = false;
   static String api_key = "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g";
-    List<dynamic> results = []; //list to store the results
-  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 6, type: "video"); 
+  List<dynamic> results = []; //list to store the results
+  YoutubeAPI yt = YoutubeAPI(api_key, maxResults: 6, type: "video");
   var ListVideos = [];
   @override
   initState() {
     super.initState();
-  
-     callApi().then((value) {
-      
-  
+
+    callApi().then((value) {
       setState(() {});
     });
     // // retur
@@ -237,18 +285,18 @@ class _CustomAppBarState extends State<_CustomAppBar> {
 
   callApi() async {
     try {
-      results = await yt.search("HD Music");//searching for videos related to HD Music
+      results = await yt
+          .search("HD Music"); //searching for videos related to HD Music
       print(results);
-       ListVideos = results; //logging results in console
+      ListVideos = results; //logging results in console
       setState(() {
         isLoaded = true; //setting content as loaded
       });
     } catch (e) {
-      print(e);//in case of any exception like no internet or problem with API log it to console
+      print(
+          e); //in case of any exception like no internet or problem with API log it to console
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
