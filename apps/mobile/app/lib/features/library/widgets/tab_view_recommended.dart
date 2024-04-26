@@ -6,7 +6,7 @@ import '../../../widgets/viewed_preview.dart';
 
 class TabViewRecommended extends StatelessWidget {
   final Future<dynamic> future;
-  final VoidCallback onItemTapped;
+  final Function onItemTapped;
 
   const TabViewRecommended({
     super.key,
@@ -55,7 +55,8 @@ class TabViewRecommended extends StatelessWidget {
                     itemBuilder: (_, int index) => _CardImagePreview(
                         title: items[index].title,
                         image: Image.asset(items[index].image),
-                        onTap: onItemTapped),
+                          onTap: () => onItemTapped(items[index].title) )
+                       ,
                     itemCount: items.length,
                     // separatorBuilder: (_, __) => SizedBox(width: 8),
                   ),

@@ -155,7 +155,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (_, int index) {
                   var item = listVideos[index].thumbnail.high.url;
-                  print('ey $item');
+                  print('ey ${listVideos[index].url}');
                   return Container(
                     height: double.infinity,
                     width: 244.0,

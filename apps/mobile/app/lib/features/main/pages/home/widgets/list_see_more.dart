@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:epub_view/epub_view.dart' hide Image;
@@ -80,35 +81,39 @@ class _ListSeeMoreState extends State<ListSeeMore> {
         children: [
           // builds a list, but if it is empty it shows a notification message
           //_buildMainContent(books, context, isDarkTheme)
-           // Recommended
-              TabViewRecommended(
-                future: getBooksItems(),
-                onItemTapped: () => onTaped(),
-              ),
+          // Recommended
+          TabViewRecommended(
+            future: getBooksItems(),
+            onItemTapped: (item) => onTaped(item),
+          ),
         ],
       ),
     );
   }
 
-  onTaped() async{
- var book = await fetchDataSpecific('G.A.E');
-      Navigator.pushNamed(context, IndexPage.route,
+  onTaped(item) async {
+    var book = await fetchDataSpecific(item);
+    Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
- Future<EpubBook> fetchDataSpecific(nameBook) async {
-    return EpubDocument.openAsset('assets/epubs/G.A.E.epub');
+
+  Future<EpubBook> fetchDataSpecific(nameBook) async {
+    return EpubDocument.openAsset('assets/epubs/$nameBook.epub');
   }
 
   Future<List<ViewedPreviewItem>> getBooksItems() {
     List<ViewedPreviewItem> items = [
       ViewedPreviewItem(
-          id: '1', title: 'G.A.E', image: 'assets/images/img_5.png'),
+          id: '1', title: 'G.A.E', image: 'assets/images/img_9.png'),
       ViewedPreviewItem(
-          id: '2', title: 'Método para me...', image: 'assets/images/img_7.png'),
+          id: '2',
+          title: 'Método para memorizar citas bíblicas',
+          image: 'assets/images/img_10.png'),
     ];
 
     return Future.delayed(Duration(seconds: 1), () => items);
   }
+
   Widget _buildMainContent(
       List<dynamic> chapterList, context, bool isDarkTheme) {
     final boxDecoration = BoxDecoration(
@@ -174,56 +179,52 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                           ),
 
                           Flexible(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 8.0, left: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 200,
-                                        child: Text(
-                                          item.Title,
-                                          style: textStyle,
-                                        ),
-                                      ),
-                                      Text(
-                                        item.Author,
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        item.Title,
                                         style: textStyle,
+                                      ),
+                                    ),
+                                    Text(
+                                      item.Author,
+                                      style: textStyle,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 6.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      CustomIconButton(
+                                        height: getSize(48),
+                                        width: getSize(48),
+                                        onTap: () {
+                                          getTextFromEpubInstance(index);
+                                        },
+                                        variant: IconButtonVariant.FillYellow,
+                                        child: CustomImageView(
+                                            color: ColorConstant.gray800,
+                                            svgPath: ImageConstant
+                                                .imgDownloadGray30024x24),
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 6.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CustomIconButton(
-                                          height: getSize(48),
-                                          width: getSize(48),
-                                          onTap: () {
-                                            getTextFromEpubInstance(index);
-                                          },
-                                          variant: IconButtonVariant.FillYellow,
-                                          child: CustomImageView(
-                                              color: ColorConstant.gray800,
-                                              svgPath: ImageConstant
-                                                  .imgDownloadGray30024x24),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
 
@@ -277,7 +278,6 @@ class _ListSeeMoreState extends State<ListSeeMore> {
     return EpubDocument.openAssetFolder('/epubs');
   }
 
- 
   onTap(context, EpubBook book) {
     Navigator.pushNamed(context, IndexPage.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
