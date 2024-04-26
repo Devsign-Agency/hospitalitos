@@ -79,12 +79,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: getPadding(bottom: 16),
-                child: FiltersBar(
-                    items: filtersData,
-                    onChangeSelected: changeSelectedFilterItem),
-              ),
+              // Padding(
+              //   padding: getPadding(bottom: 16),
+              //   child: FiltersBar(
+              //       items: filtersData,
+              //       onChangeSelected: changeSelectedFilterItem),
+              // ),
 
               // Recommended
               PreviewListVideo(
