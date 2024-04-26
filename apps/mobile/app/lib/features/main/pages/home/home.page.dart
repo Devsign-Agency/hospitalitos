@@ -145,15 +145,86 @@ class _HomePageState extends State<HomePage> {
     final day = DateTime.now().toString().split(' ')[0];
     print(day);
     List<dynamic> arr = [];
-
+    var index = -1;
     liturgyService.liturgies.forEach((liturgia) {
       final date = liturgia['date'];
- 
+      index++;
+      if (date == day) {
         final detail = liturgia['detail'];
-      
-          arr.add(detail);
-        
 
+        if (detail[2].contains('LUNES')) {
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+        }
+        if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+        }
+
+         if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+         
+        }
+
+        /*if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index -2]);
+          arr.add(liturgyService.liturgies[index -1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]);
+          arr.add(liturgyService.liturgies[index - 2]);
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+
+        if (detail[2].contains('SABADO')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }*/
+      }
     });
 
     List<Map<String, dynamic>> actions = [
