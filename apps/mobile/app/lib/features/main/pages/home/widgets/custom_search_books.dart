@@ -113,6 +113,7 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                         height: getSize(88),
                         decoration: boxDecoration,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // Image
                             ClipRRect(
@@ -139,59 +140,54 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
 
                             Container(
                               margin: EdgeInsets.all(5),
-                              child: Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                width: 200,
-                                                child: Text(
-                                                  item.Title,
-                                                  style: AppStyle
-                                                      .txtNunitoSansRegular16Gray9001,
-                                                ),
-                                              ),
-                                              Text(
-                                                item.Author,
-                                                style: AppStyle
-                                                    .txtNunitoSansRegular14Gray9001,
-                                              ),
-                                            ],
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                 
+                                  Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 200,
+                                          child: Text(
+                                            item.Title,
+                                            style: AppStyle
+                                                .txtNunitoSansRegular16Gray9001,
                                           ),
                                         ),
-                                      ),
-                                      Column(
-                                        children: [
-                                          CustomIconButton(
-                                            height: getSize(48),
-                                            width: getSize(48),
-                                            onTap: () {
-                                              getTextFromEpubInstance(item);
-                                            },
-                                            variant: IconButtonVariant.FillYellow,
-                                            child: CustomImageView(
-                                                color: ColorConstant.gray800,
-                                                svgPath: ImageConstant
-                                                    .imgDownloadGray30024x24),
-                                          ),
-                                        ],
+                                        Text(
+                                          item.Author,
+                                          style: AppStyle
+                                              .txtNunitoSansRegular14Gray9001,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                   Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      CustomIconButton(
+                                        height: getSize(48),
+                                        width: getSize(48),
+                                        onTap: () {
+                                          getTextFromEpubInstance(item);
+                                        },
+                                        variant: IconButtonVariant.FillYellow,
+                                        child: CustomImageView(
+                                            color: ColorConstant.gray800,
+                                            svgPath: ImageConstant
+                                                .imgDownloadGray30024x24),
                                       ),
                                     ],
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                             // Content

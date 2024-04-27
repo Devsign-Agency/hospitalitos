@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -18,10 +22,15 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
   late TabController tabController;
+
+  FToast? fToast;
+
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    fToast = FToast();
+    fToast?.init(context);
   }
 
   @override
@@ -30,16 +39,20 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
     double height = MediaQuery.of(context).size.height;
-
+    var actions = [
+      {
+        'icon': ImageConstant.imgDownloadGray30024x24,
+        'action': () => {getTextFromEpubInstance(book)}
+      },
+    ];
     return Scaffold(
-      appBar: CustomAppBar(
-        title: book?.Title!,
-      ),
+      appBar: CustomAppBar(title: book?.Title!, actions: actions),
       body: Column(
         children: [
           CustomTabBar(
-            labelColor: ColorConstant.black9004c,
-              tabController: tabController, items: IndexService.tabBarItems),
+              labelColor: ColorConstant.black9004c,
+              tabController: tabController,
+              items: IndexService.tabBarItems),
 
           // TabBarView
           Expanded(
@@ -47,7 +60,7 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
               controller: tabController,
               children: [
                 // Books Tab
-                 _ListChaptersOfBook(book: book),
+                _ListChaptersOfBook(book: book),
                 _ChapterDetail(book: book),
               ],
             ),
@@ -56,6 +69,94 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
       ),
     );
   }
+
+getTextFromEpubInstance(item) async {
+  var url = 'https://sample-videos.com/video123/mp4';
+
+  final nameFile = item.Title + '.epub';
+
+  var response = await loadAsset(nameFile);
+
+  var savePath = '/storage/emulated/0/Download/$nameFile';
+
+  var file = File(savePath);
+
+  var raf = file.openSync(mode: FileMode.write);
+
+  // response.data is List<int> type
+
+  final data = await rootBundle.load('assets/epubs/$nameFile');
+
+  final bytes = data.buffer.asUint8List();
+
+  raf.writeFromSync(bytes);
+
+  showCustomToast();
+}
+
+
+
+Future<File> loadAsset(fileName) async {
+  final data = await rootBundle.load('assets/epubs/$fileName');
+
+  final bytes = data.buffer.asUint8List();
+
+  return _storeFile('book3.epub', bytes);
+}
+
+Future<File> _storeFile(String url, List<int> bytes) async {
+  final filename = url;
+
+  final dir = await getApplicationDocumentsDirectory();
+
+  final file = File('${dir.path}/$filename');
+
+  return await file.writeAsBytes(bytes, flush: true);
+}
+
+Future<File> writeToFile(ByteData data) async {
+  final buffer = data.buffer;
+
+  Directory tempDir = await getTemporaryDirectory();
+
+  String tempPath = tempDir.path;
+
+  var filePath =
+      tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
+
+  return new File(filePath)
+      .writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+}
+
+testData(book) {
+  print(book.Chapters);
+}
+
+  showCustomToast() {
+  Widget toast = Container(
+    width: double.infinity,
+    height: 48,
+    padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(4),
+
+      color: Colors.grey[800], // TODO: Añadir color a ColorConstants
+    ),
+    child: Text(
+      'El archivo se ha descargado',
+      style: AppStyle.txtRobotoRegular14Gray10002,
+    ),
+  );
+
+  fToast?.showToast(
+    child: toast,
+    toastDuration: const Duration(seconds: 3),
+  );
+
+  //Navigator.of(context).pop();
+
+  //Navigator.of(context).pushNamed('seemore');
+}
 }
 
 class _ChapterDetail extends StatelessWidget {

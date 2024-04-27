@@ -29,6 +29,12 @@ class _IndexScreenState extends State<IndexScreen>
       length: BibleService.tabBarItems.length,
       vsync: this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      BibleService bibleService =
+          Provider.of<BibleService>(context, listen: false);
+      bibleService.resetState();
+    });
   }
 
   handleChangeTab() {
@@ -61,14 +67,6 @@ class _IndexScreenState extends State<IndexScreen>
       //   'icon': ImageConstant.imgSearch,
       //   'action': () => {print('Search...')}
       // },
-      {
-        'icon': ImageConstant.imgMoonIndigo,
-        'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-        'action': () {
-          bibleService.isDarkTheme = !bibleService.isDarkTheme;
-          print(bibleService.isDarkTheme);
-        }
-      },
     ];
 
     return Scaffold(
@@ -102,9 +100,6 @@ class _IndexScreenState extends State<IndexScreen>
               children: [
                 // Tab items
                 CustomTabBar(
-                    // indicatorColor:
-                    //     isDarkTheme ? ColorConstant.purple200 : null,
-                    // labelColor: isDarkTheme ? ColorConstant.purple200 : null,
                     tabController: tabController,
                     items: BibleService.tabBarItems),
 

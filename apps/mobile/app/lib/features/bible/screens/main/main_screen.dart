@@ -88,7 +88,7 @@ class _BibleMainState extends State<BibleMain> {
         isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800;
 
     bibleService.getBooks();
-    bibleService.resetState();
+    // bibleService.resetState();
 
     final List<Map<String, dynamic>> actions = [
       // {
@@ -183,7 +183,7 @@ class _BibleMainState extends State<BibleMain> {
                       ),
                     ),
                     Text(
-                      'Página guardadas',
+                      'Marcadores',
                       style: AppStyle.txtNunitoSansSemiBold23.copyWith(
                           color: isDarkTheme
                               ? ColorConstant.whiteA700

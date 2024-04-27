@@ -9,6 +9,7 @@ import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -38,7 +39,6 @@ loadAsset() async {
     const HtmlEscape htmlEscape = HtmlEscape();
     //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
     var text = htmlEscape.convert(contents);
-    print('--------------- $text');
 
     //final reg = RegExp('(?=<div id="cuerpo" class="normal")|(?<=/div>)');
   });
@@ -113,6 +113,7 @@ class _HomePageState extends State<HomePage> {
 
   getCurrentDate() {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
+    
     return format2.format(DateTime.now()).split('de 2024')[0];
   }
 
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pushNamed(HomePage.route);
         break;
       case 1:
-        Navigator.of(context).pushNamed(CoursesScreen.route);
+        Navigator.of(context).pushNamed(DiscoverScreen.route);
         break;
       case 2:
         Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<ThemeProvider>(context, listen: false);
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
     final day = DateTime.now().toString().split(' ')[0];
-    print(day);
+  
     List<dynamic> arr = [];
     var index = -1;
     liturgyService.liturgies.forEach((liturgia) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,20 +26,8 @@ class TabBarViewVerses extends StatelessWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    bool getColor(int index) {
-      int startVerse = bibleService.startVerse;
-      int endVerse = bibleService.endVerse;
-
-      if (startVerse == endVerse) {
-        return index == startVerse;
-      } else {
-        if (startVerse > 0 && endVerse > 0) {
-          return index >= startVerse && index <= endVerse;
-        } else {
-          return index == startVerse;
-        }
-      }
-    }
+    bool getColor(int index) =>
+        index >= bibleService.startVerse && index <= bibleService.endVerse;
 
     void next() {
       bibleService.getVersesByRange(
@@ -47,30 +37,12 @@ class TabBarViewVerses extends StatelessWidget {
     }
 
     void handleTappedItem(int index) {
-      int startVerse = bibleService.startVerse;
-      int endVerse = bibleService.endVerse;
-
-      if (startVerse > 0 && endVerse > 0) {
-        startVerse = index + 1;
-        endVerse = -1;
-      } else {
-        if (startVerse > 0) {
-          endVerse = index + 1;
-
-          if (startVerse > endVerse) {
-            final max = startVerse;
-            startVerse = endVerse;
-            endVerse = max;
-          }
-        } else {
-          startVerse = index + 1;
-        }
-      }
-
-      bibleService.startVerse = startVerse;
-      bibleService.endVerse = endVerse;
+      bibleService.startVerse = index;
+      bibleService.endVerse = index;
 
       bibleService.setLastPage();
+
+      next();
     }
 
     return Stack(
@@ -83,7 +55,7 @@ class TabBarViewVerses extends StatelessWidget {
             children: List.generate(amountOfVerses, (index) {
               return Center(
                 child: GestureDetector(
-                  onTap: () => handleTappedItem(index),
+                  onTap: () => handleTappedItem(index + 1),
                   child: Container(
                     padding: getPadding(all: 10.0),
                     decoration: BoxDecoration(
@@ -103,17 +75,6 @@ class TabBarViewVerses extends StatelessWidget {
             }),
           ),
         ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 350,
-          left: 0,
-          right: 0,
-          child: CustomButton(
-              height: getVerticalSize(48),
-              text: 'Aceptar',
-              onTap: bibleService.startVerse > 0 && bibleService.endVerse > 0
-                  ? next
-                  : null),
-        )
       ],
     );
   }

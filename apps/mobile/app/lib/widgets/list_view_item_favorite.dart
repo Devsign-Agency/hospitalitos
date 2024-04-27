@@ -13,6 +13,8 @@ class ListViewItemFavorite extends StatelessWidget {
   final List<ListViewFavoriteModel> items;
   final Function? onTappedItem;
   final Function? onRemoveItem;
+  final bool activeShare;
+  final Function? onShare;
 
   const ListViewItemFavorite({
     super.key,
@@ -21,6 +23,8 @@ class ListViewItemFavorite extends StatelessWidget {
     required this.items,
     this.onTappedItem,
     this.onRemoveItem,
+    this.activeShare = false,
+    this.onShare,
   });
 
   @override
@@ -44,7 +48,8 @@ class ListViewItemFavorite extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          height: getSize(88),
+          height: getSize(100),
+          padding: getPadding(top: 10, bottom: 10),
           decoration: boxDecoration,
           child: Row(
             children: [
@@ -71,32 +76,63 @@ class ListViewItemFavorite extends StatelessWidget {
                         onTap: onTappedItem != null
                             ? () => onTappedItem!(item)
                             : null,
-                        child: Text(
-                          item.title,
-                          style: AppStyle.txtNunitoSansSemiBold20Black900
-                              .copyWith(
-                                  color: isDarkTheme
-                                      ? ColorConstant.whiteA700
-                                      : ColorConstant.black900),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: AppStyle.txtNunitoSansSemiBold20Black900
+                                  .copyWith(
+                                      color: isDarkTheme
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.black900),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 200),
+                              child: Text(
+                                item.description ?? '',
+                                style:
+                                    TextStyle(overflow: TextOverflow.ellipsis),
+                                maxLines: 1,
+                              ),
+                            ),
+                            Text(item.date ?? '')
+                          ],
                         ),
                       ),
-                      CustomIconButton(
-                        onTap: isEditing && onTappedItem != null
-                            ? () => onRemoveItem!(item)
-                            : () => onTappedItem!(item),
-                        height: getSize(48),
-                        width: getSize(48),
-                        variant: !isEditing
-                            ? IconButtonVariant.FillYellow
-                            : IconButtonVariant.FillRed50033,
-                        child: CustomImageView(
-                          color: !isEditing
-                              ? ColorConstant.gray800
-                              : ColorConstant.red500,
-                          svgPath: !isEditing
-                              ? ImageConstant.imgPlayIndigo900
-                              : ImageConstant.imgTrashRed500,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (activeShare)
+                            CustomIconButton(
+                              onTap: () => onShare!(item),
+                              height: getSize(48),
+                              width: getSize(48),
+                              variant: IconButtonVariant.FillDeeppurple5002,
+                              child: CustomImageView(
+                                  color: ColorConstant.indigo900,
+                                  svgPath: ImageConstant.imgShare),
+                            ),
+                          SizedBox(width: 10),
+                          CustomIconButton(
+                            onTap: isEditing && onTappedItem != null
+                                ? () => onRemoveItem!(item)
+                                : () => onTappedItem!(item),
+                            height: getSize(48),
+                            width: getSize(48),
+                            variant: !isEditing
+                                ? IconButtonVariant.FillYellow
+                                : IconButtonVariant.FillRed50033,
+                            child: CustomImageView(
+                              color: !isEditing
+                                  ? ColorConstant.gray800
+                                  : ColorConstant.red500,
+                              svgPath: !isEditing
+                                  ? ImageConstant.imgPlayIndigo900
+                                  : ImageConstant.imgTrashRed500,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -106,7 +142,7 @@ class ListViewItemFavorite extends StatelessWidget {
           ),
         );
       },
-      separatorBuilder: (_, __) => SizedBox(height: 8),
+      separatorBuilder: (_, __) => SizedBox(height: 20),
       itemCount: items.length,
     );
   }
