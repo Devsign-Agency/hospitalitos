@@ -8,11 +8,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/popup_new_marker.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/verse_list.dart';
+import 'package:mobile_app/main.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
+import '../../../../shared/services/ftoast_service.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
 import '../../../../widgets/filters_bar.dart';
@@ -68,8 +70,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   void initState() {
     super.initState();
 
-    fToast = FToast();
-    fToast?.init(context);
+    // fToast = FToast();
+    // fToast?.init(navigatorKey.currentContext!);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BibleService bibleService =
@@ -153,7 +155,19 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
   }
 
   void showCustomToast(String message) {
-    Widget toast = FttToast(text: message);
+    Widget toast = Container(
+      width: double.infinity,
+      height: 48,
+      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: ColorConstant.black900ff,
+      ),
+      child: Text(
+        message,
+        style: AppStyle.txtRobotoRegular14Gray10002,
+      ),
+    );
 
     fToast?.showToast(
       child: toast,
@@ -237,7 +251,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     setState(() {});
   }
 
-  showDialogMarker(BibleService bibleService) {
+  showDialogMarker() {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -394,7 +408,10 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
       floatingActionButton: bibleService.verses.isNotEmpty && !onAudioSound
           ? FloatingActionButton(
               onPressed: () {
-                showDialogMarker(bibleService);
+                bibleService.addNewPage('');
+                Fluttertoast.showToast(msg: 'Marcador guardado exitosamenete');
+
+                showDialogMarker();
               },
               backgroundColor: ColorConstant.indigo900,
               child: Icon(

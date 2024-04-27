@@ -154,8 +154,6 @@ class BibleService extends ChangeNotifier {
       markerListBook = json.decode(Preferences.pageList);
     }
 
-    print(markerListBook);
-
     return markerListBook;
   }
 
@@ -181,9 +179,8 @@ class BibleService extends ChangeNotifier {
     markerListBook.add(pathVerse);
     Preferences.pageList = json.encode(markerListBook);
 
-    verses = {};
-    getPageList();
-    notifyListeners();
+    // getPageList();
+    //notifyListeners();
   }
 
   String getPage() {
@@ -280,5 +277,27 @@ class BibleService extends ChangeNotifier {
 
   bool isVerseSelected(int numberOfVerse) {
     return verses.containsKey(numberOfVerse);
+  }
+
+  void editMarker(BookBible book, Chapter chapterBook,
+      Map<dynamic, String> verse, String text) {
+    List<dynamic> markers = getPageList();
+    String verseKey = verse.keys.toList()[0].toString();
+
+    int index = markers.indexWhere((dynamic element) {
+      List<String> paths = element.split('/');
+
+      return book.name == paths[0] &&
+          chapterBook.chapter == paths[1] &&
+          verseKey == paths[2];
+    });
+
+    if (index != -1) {
+      List<String> paths = markers[index].split('/');
+
+      markers[index] = '${paths[0]}/${paths[1]}/${paths[2]}/$text/${paths[4]}';
+    }
+
+    Preferences.pageList = json.encode(markers);
   }
 }

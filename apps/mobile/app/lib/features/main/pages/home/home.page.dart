@@ -144,7 +144,6 @@ class _HomePageState extends State<HomePage> {
         Provider.of<ThemeProvider>(context, listen: false);
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
     final day = DateTime.now().toString().split(' ')[0];
-    print(day);
     List<dynamic> arr = [];
     var index = -1;
     liturgyService.liturgies.forEach((liturgia) {
@@ -232,20 +231,6 @@ class _HomePageState extends State<HomePage> {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
-      // {
-      //   'icon': ImageConstant.imgMoonIndigo,
-      //   'action': () {
-      //     Preferences.isDarkmode
-      //         ? themeProvider.setLightMode()
-      //         : themeProvider.setDarkMode();
-
-      //     Preferences.isDarkmode = !Preferences.isDarkmode;
-
-      //     setState(() {
-      //       _isDarkTheme = !_isDarkTheme;
-      //     });
-      //   }
-      // },
       /*{
         'icon': ImageConstant.imgNotification,
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
@@ -267,25 +252,19 @@ class _HomePageState extends State<HomePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[0],
-                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
-                    color: _isDarkTheme
-                        ? ColorConstant.whiteA700
-                        : ColorConstant.gray900))),
+                style: AppStyle.txtNunitoSansSemiBold16
+                    .copyWith(color: ColorConstant.black900))),
         Align(
             alignment: Alignment.centerLeft,
             child: Text(element[1],
-                style: AppStyle.txtNunitoSansSemiBold20.copyWith(
-                    color: _isDarkTheme
-                        ? ColorConstant.whiteA700
-                        : ColorConstant.indigo900))),
+                style: AppStyle.txtNunitoSansSemiBold20
+                    .copyWith(color: ColorConstant.indigo900))),
         Align(
             widthFactor: double.infinity,
             alignment: Alignment.centerLeft,
             child: Text(element[2],
-                style: AppStyle.txtNunitoSansRegular14Gray900.copyWith(
-                    color: _isDarkTheme
-                        ? ColorConstant.whiteA700
-                        : ColorConstant.gray900))),
+                style: AppStyle.txtNunitoSansRegular14Gray900
+                    .copyWith(color: ColorConstant.gray900))),
       ]));
     }
 

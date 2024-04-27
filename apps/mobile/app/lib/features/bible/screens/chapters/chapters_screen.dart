@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
+import 'package:mobile_app/shared/services/ftoast_service.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -26,8 +27,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
   @override
   void initState() {
     super.initState();
-    fToast = FToast();
-    fToast?.init(context);
+    // fToast = FToast();
+    // fToast?.init(FtoastService.navigatorKey.currentContext!);
     _initActions();
   }
 
@@ -175,7 +176,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                       Provider.of<BibleService>(context, listen: false);
 
                   bibleService.deletePage(item.id);
-                  // showCustomToast('Marcador eliminado exitosamente');
+                  Fluttertoast.showToast(
+                      msg: 'Marcador eliminado exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),

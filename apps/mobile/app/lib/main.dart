@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/router/router.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
+
+import 'shared/services/ftoast_service.dart';
+import 'themes/themes.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -16,6 +20,8 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +56,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MarkerService()),
       ],
       child: MaterialApp(
+          builder: FToastBuilder(),
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Kaad App',
           localizationsDelegates: [
@@ -60,7 +68,7 @@ class MyApp extends StatelessWidget {
           initialRoute: RouterApp.initialRoute,
           routes: RouterApp.getRoutes(),
           onGenerateRoute: (settings) => RouterApp.onGenerateRoute(settings),
-          theme: Provider.of<ThemeProvider>(context).currentTheme),
+          theme: LightTheme.theme),
     );
   }
 }
