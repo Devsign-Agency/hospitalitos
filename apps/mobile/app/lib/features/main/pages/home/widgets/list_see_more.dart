@@ -109,6 +109,10 @@ class _ListSeeMoreState extends State<ListSeeMore> {
           id: '2',
           title: 'Método para memorizar citas bíblicas',
           image: 'assets/images/img_10.png'),
+       ViewedPreviewItem(
+          id: '3',
+          title: 'Método para memorizar citas bíblicas',
+          image: 'assets/images/img_10.png'),
     ];
 
     return Future.delayed(Duration(seconds: 1), () => items);

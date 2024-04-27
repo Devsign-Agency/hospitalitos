@@ -34,9 +34,31 @@ class TabViewRecommended extends StatelessWidget {
     return FutureBuilder<dynamic>(
         future: future,
         builder: (context, snapshot) {
+          double width = MediaQuery.of(context).size.width;
+          double height = MediaQuery.of(context).size.height;
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Si estamos cargando los datos, mostramos un indicador de carga
-            return Center(child: CircularProgressIndicator());
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Text('Cargando libros')],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                  ),
+                ],
+              );
           } else if (snapshot.hasError) {
             // Si hubo un error al cargar los datos, mostramos un mensaje de error
             return Center(child: Text('Error al cargar los datos'));
@@ -55,8 +77,7 @@ class TabViewRecommended extends StatelessWidget {
                     itemBuilder: (_, int index) => _CardImagePreview(
                         title: items[index].title,
                         image: Image.asset(items[index].image),
-                          onTap: () => onItemTapped(items[index].title) )
-                       ,
+                        onTap: () => onItemTapped(items[index].title)),
                     itemCount: items.length,
                     // separatorBuilder: (_, __) => SizedBox(width: 8),
                   ),

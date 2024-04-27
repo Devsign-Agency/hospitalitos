@@ -154,12 +154,16 @@ class _HomePageState extends State<HomePage> {
 
         if (detail[2].contains('LUNES')) {
           arr.add(detail);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
           arr.add(liturgyService.liturgies[index + 3]['detail']);
           arr.add(liturgyService.liturgies[index + 4]['detail']);
         }
         if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
@@ -167,63 +171,53 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 3]['detail']);
         }
         if (detail[2].contains('MIERCOLES')) {
-          arr.add(liturgyService.liturgies[index - 2]['detail']);
-          arr.add(liturgyService.liturgies[index - 1]['detail']);
-
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 1]['detail']);
-          arr.add(liturgyService.liturgies[index + 2]['detail']);
-        }
-        if (detail[2].contains('JUEVES')) {
-          arr.add(liturgyService.liturgies[index - 3]['detail']);
-          arr.add(liturgyService.liturgies[index - 2]['detail']);
-          arr.add(liturgyService.liturgies[index - 1]['detail']);
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 1]['detail']);
-        }
-
-         if (detail[2].contains('VIERNES')) {
           arr.add(liturgyService.liturgies[index - 4]['detail']);
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
-         
-        }
-
-        /*if (detail[2].contains('MARTES')) {
-          arr.add(liturgyService.liturgies[index - 1]);
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }
-        if (detail[2].contains('MIERCOLES')) {
-          arr.add(liturgyService.liturgies[index -2]);
-          arr.add(liturgyService.liturgies[index -1]);
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
         }
         if (detail[2].contains('JUEVES')) {
-          arr.add(liturgyService.liturgies[index - 3]);
-          arr.add(liturgyService.liturgies[index - 2]);
-          arr.add(liturgyService.liturgies[index - 1]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }
-        if (detail[2].contains('VIERNES')) {
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
         }
 
-        if (detail[2].contains('SABADO')) {
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }*/
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index - 6]['detail']);
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+        }
+
+        if (detail[2].contains('SÁBADO')) {
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+        }
+
+        if (detail[2].contains('DOMINGO')) {
+          arr.add(liturgyService.liturgies[index - 6]['detail']);
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+        }
       }
     });
 

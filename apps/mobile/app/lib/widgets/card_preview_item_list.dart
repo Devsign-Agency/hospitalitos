@@ -17,7 +17,7 @@ import 'package:mobile_app/features/book/pages/pages.dart';
 import 'modal_bottom_actiosn_epub.dart';
 
 class CardPreviewItemList extends StatelessWidget {
-  final Future<List<EpubBook>> future;
+  final Future<List<dynamic>> future;
   final onTappedItem;
   const CardPreviewItemList(
       {super.key, required this.future, required this.onTappedItem});
@@ -28,7 +28,7 @@ class CardPreviewItemList extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 0.0),
         height: 190.0,
         width: double.infinity,
-        child: FutureBuilder<List<EpubBook>>(
+        child: FutureBuilder<List<dynamic>>(
           future: future,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,12 +49,11 @@ class CardPreviewItemList extends StatelessWidget {
                   } else if (index == length - 1) {
                     return SizedBox(width: 6);
                   } else {
-                    EpubBook book = snapshot.data![index - 1];
-                    print(book);
-                    Image image = Image.memory(
-                        Uint8List.fromList(encodePng(book.CoverImage!)));
-
-                    String title = book.Title!.trim();
+                   var book = snapshot.data![index - 1];
+                    //print(book);
+                    Image image =Image.asset(book.image);
+    
+                    String title = book.title!.trim();
                     print(title);
 
                     final List<Map<String, dynamic>> menuOptions = [
@@ -101,10 +100,11 @@ class CardPreviewItemList extends StatelessWidget {
   //   Navigator.pushNamed(context, 'preview-book');
   // }
 
-  onTap(context, EpubBook book) {
+  onTap(context, book) {
+    print('book $book');
     // testData(book);
-    Navigator.pushNamed(context, IndexPage.route,
-        arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
+    //Navigator.pushNamed(context, IndexPage.route,
+    //    arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
   testData(book) {

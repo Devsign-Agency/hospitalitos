@@ -20,7 +20,7 @@ class ListCollapseItemState extends State<ListCollapseItem> {
   int selectedIndex = 1000;
 
   void _changeSelected(Map item) {
-    // selectedIndex = index;
+    print('epale $item');
     item['isSelected'] = !item['isSelected'];
     widget.onSelectedItem(item);
     setState(() {});
@@ -52,7 +52,7 @@ class ListCollapseItemState extends State<ListCollapseItem> {
               ]),
               if (item['isSelected'])
                 Text(
-                  '${item['description']}',
+                  '${item['description']}jjjjjjjjjjjj',
                   style: AppStyle.txtNunitoSansRegular14Black900,
                 )
             ],
