@@ -4,6 +4,8 @@ import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../shared/shared.dart';
+import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../main/pages/pages.dart';
 
@@ -27,6 +29,12 @@ class _IndexScreenState extends State<IndexScreen>
       length: BibleService.tabBarItems.length,
       vsync: this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      BibleService bibleService =
+          Provider.of<BibleService>(context, listen: false);
+      bibleService.resetState();
+    });
   }
 
   handleChangeTab() {
@@ -50,25 +58,18 @@ class _IndexScreenState extends State<IndexScreen>
     final double height = MediaQuery.of(context).size.height;
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    bool isDarkTheme = bibleService.isDarkTheme;
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     final List<Map<String, dynamic>> actions = [
       // {
       //   'icon': ImageConstant.imgSearch,
       //   'action': () => {print('Search...')}
       // },
-      {
-        'icon': ImageConstant.imgMoonIndigo,
-        'color': isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-        'action': () {
-          bibleService.isDarkTheme = !bibleService.isDarkTheme;
-          print(bibleService.isDarkTheme);
-        }
-      },
     ];
 
     return Scaffold(
-      backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray100,
       appBar: CustomAppBar(
         customTitle: Text('Índice',
             style: isDarkTheme
@@ -89,8 +90,6 @@ class _IndexScreenState extends State<IndexScreen>
                 isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
           ),
         ),
-        // title: 'Índice',
-        backgroundColor: isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
         actions: [...actions],
       ),
       body: SafeArea(
@@ -101,9 +100,6 @@ class _IndexScreenState extends State<IndexScreen>
               children: [
                 // Tab items
                 CustomTabBar(
-                    indicatorColor:
-                        isDarkTheme ? ColorConstant.purple200 : null,
-                    labelColor: isDarkTheme ? ColorConstant.purple200 : null,
                     tabController: tabController,
                     items: BibleService.tabBarItems),
 
@@ -140,8 +136,6 @@ class _IndexScreenState extends State<IndexScreen>
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          backgroundColor:
-              isDarkTheme ? Color(0xff1C1B1F) : ColorConstant.gray50,
           currentIndex: 2,
           onChangeIndex: handleChangeBottomNavigationBar,
           bottomMenuList: BibleService.bottomMenuList),

@@ -49,23 +49,21 @@ class AppDecoration {
         ),
       ]);
 
-  static BoxDecoration get fillWhiteA700BoxShadow => BoxDecoration(
-          color: ColorConstant.whiteA700,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(24, 39, 75, 0.08),
-              offset: const Offset(0.0, 12.0),
-              blurRadius: 42.0,
-              spreadRadius: -4.0,
-            ), //BoxSha
-            BoxShadow(
-              color: Color.fromRGBO(24, 39, 75, 0.08),
-              offset: const Offset(0.0, 8.0),
-              blurRadius: 18.0,
-              spreadRadius: -6.0,
-            ),
-          ]);
+  static BoxDecoration get fillWhiteA700BoxShadow =>
+      BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: [
+        BoxShadow(
+          color: Color.fromRGBO(24, 39, 75, 0.08),
+          offset: const Offset(0.0, 12.0),
+          blurRadius: 42.0,
+          spreadRadius: -4.0,
+        ), //BoxSha
+        BoxShadow(
+          color: Color.fromRGBO(24, 39, 75, 0.08),
+          offset: const Offset(0.0, 8.0),
+          blurRadius: 18.0,
+          spreadRadius: -6.0,
+        ),
+      ]);
 
   static BoxDecoration get outlineIndigo9002 => BoxDecoration(
       color: ColorConstant.whiteA700,

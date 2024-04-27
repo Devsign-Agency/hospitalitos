@@ -14,13 +14,15 @@ class ChipviewinputchipItemWidget extends StatelessWidget {
   bool selected;
   bool hasDeleteIcon;
 
-  ChipviewinputchipItemWidget(
-      {this.onSelected,
-      this.selected = false,
-      this.hasDeleteIcon = false,
-      this.onDeleted,
-      this.avatar,
-      required this.text});
+  ChipviewinputchipItemWidget({
+    this.onSelected,
+    this.selected = false,
+    this.hasDeleteIcon = false,
+    this.onDeleted,
+    this.avatar,
+    required this.text,
+    Key? key,
+  });
 
   @override
   Widget build(BuildContext context) {

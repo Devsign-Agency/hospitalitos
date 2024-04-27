@@ -8,6 +8,7 @@ import 'package:mobile_app/features/blog/screens/search/search_delegate.dart';
 import 'package:mobile_app/features/blog/widgets/wp-api.dart';
 import 'package:mobile_app/features/main/router/main.router.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/app_export.dart';
 import 'package:dio/dio.dart';
@@ -25,11 +26,12 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   List<dynamic> posts = [];
-
+ 
   @override
   void initState() {
     fetchWpPosts().then((value) {
       posts = value;
+  
       setState(() {});
     });
 

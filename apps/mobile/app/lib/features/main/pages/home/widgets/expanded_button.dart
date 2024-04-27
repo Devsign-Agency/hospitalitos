@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/shared/providers/providers.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
+import '../../../../../themes/themes.dart';
 
 class ExpandedButton extends StatelessWidget {
   final String icon;
@@ -18,6 +21,10 @@ class ExpandedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: true);
+    bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
+
     return Expanded(
       child: Tooltip(
         message: message,
@@ -34,7 +41,9 @@ class ExpandedButton extends StatelessWidget {
                       horizontal: 12.0, vertical: 12.0),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: ColorConstant.whiteA700,
+                      color: isDarkMode
+                          ? ColorConstant.gray80040
+                          : ColorConstant.whiteA700,
                       borderRadius: BorderRadius.all(Radius.circular(14)),
                       boxShadow: [
                         BoxShadow(
@@ -57,13 +66,18 @@ class ExpandedButton extends StatelessWidget {
                       shape: IconButtonShape.CircleBorder24,
                       alignment: Alignment.center,
                       child: CustomImageView(
-                        color: ColorConstant.indigo900,
+                        color: isDarkMode
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.indigo900,
                         svgPath: icon,
                       ))),
             ),
             Text(
               label,
-              style: AppStyle.txtNunitoSansSemiBold16,
+              style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                  color: isDarkMode
+                      ? ColorConstant.whiteA700
+                      : ColorConstant.black9001c),
             )
           ],
         ),

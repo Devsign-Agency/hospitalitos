@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? customTitle;
   final bool hasPopupMenu;
   final List<Map<String, dynamic>>? menuOptions;
-  final PopupMenuButton<int>? popupMenuButton;
+  final CustomPopupMenuButton? popupMenuButton;
   final bool? hasLeading;
   const CustomAppBar({
     super.key,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../core/models/BookBible.dart';
 import '../../../../../shared/shared.dart';
+import '../../../../../themes/themes.dart';
 
 class TabBarViewBooks extends StatelessWidget {
   final VoidCallback onChangeTab;
@@ -18,7 +19,9 @@ class TabBarViewBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
-    bool isDarkTheme = bibleService.isDarkTheme;
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     return Stack(
       children: [

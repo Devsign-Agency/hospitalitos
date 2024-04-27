@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../core/app_export.dart';
+import '../shared/shared.dart';
+import '../themes/themes.dart';
 
 class ListViewItemFavorite extends StatelessWidget {
   final bool isEditing;
@@ -10,6 +13,8 @@ class ListViewItemFavorite extends StatelessWidget {
   final List<ListViewFavoriteModel> items;
   final Function? onTappedItem;
   final Function? onRemoveItem;
+  final bool activeShare;
+  final Function? onShare;
 
   const ListViewItemFavorite({
     super.key,
@@ -18,13 +23,19 @@ class ListViewItemFavorite extends StatelessWidget {
     required this.items,
     this.onTappedItem,
     this.onRemoveItem,
+    this.activeShare = false,
+    this.onShare,
   });
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
     final boxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      color: ColorConstant.whiteA700,
+      color: isDarkTheme ? ColorConstant.gray80040 : ColorConstant.whiteA700,
     );
 
     final borderRadius = BorderRadius.only(
@@ -37,7 +48,8 @@ class ListViewItemFavorite extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          height: getSize(88),
+          height: getSize(100),
+          padding: getPadding(top: 10, bottom: 10),
           decoration: boxDecoration,
           child: Row(
             children: [
@@ -64,28 +76,63 @@ class ListViewItemFavorite extends StatelessWidget {
                         onTap: onTappedItem != null
                             ? () => onTappedItem!(item)
                             : null,
-                        child: Text(
-                          item.title,
-                          style: AppStyle.txtNunitoSansSemiBold20Black900,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: AppStyle.txtNunitoSansSemiBold20Black900
+                                  .copyWith(
+                                      color: isDarkTheme
+                                          ? ColorConstant.whiteA700
+                                          : ColorConstant.black900),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 200),
+                              child: Text(
+                                item.description ?? '',
+                                style:
+                                    TextStyle(overflow: TextOverflow.ellipsis),
+                                maxLines: 1,
+                              ),
+                            ),
+                            Text(item.date ?? '')
+                          ],
                         ),
                       ),
-                      CustomIconButton(
-                        onTap: isEditing && onTappedItem != null
-                            ? () => onRemoveItem!(item)
-                            : () => onTappedItem!(item),
-                        height: getSize(48),
-                        width: getSize(48),
-                        variant: !isEditing
-                            ? IconButtonVariant.FillYellow
-                            : IconButtonVariant.FillRed50033,
-                        child: CustomImageView(
-                          color: !isEditing
-                              ? ColorConstant.gray800
-                              : ColorConstant.red500,
-                          svgPath: !isEditing
-                              ? ImageConstant.imgPlayIndigo900
-                              : ImageConstant.imgTrashRed500,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (activeShare)
+                            CustomIconButton(
+                              onTap: () => onShare!(item),
+                              height: getSize(48),
+                              width: getSize(48),
+                              variant: IconButtonVariant.FillDeeppurple5002,
+                              child: CustomImageView(
+                                  color: ColorConstant.indigo900,
+                                  svgPath: ImageConstant.imgShare),
+                            ),
+                          SizedBox(width: 10),
+                          CustomIconButton(
+                            onTap: isEditing && onTappedItem != null
+                                ? () => onRemoveItem!(item)
+                                : () => onTappedItem!(item),
+                            height: getSize(48),
+                            width: getSize(48),
+                            variant: !isEditing
+                                ? IconButtonVariant.FillYellow
+                                : IconButtonVariant.FillRed50033,
+                            child: CustomImageView(
+                              color: !isEditing
+                                  ? ColorConstant.gray800
+                                  : ColorConstant.red500,
+                              svgPath: !isEditing
+                                  ? ImageConstant.imgPlayIndigo900
+                                  : ImageConstant.imgTrashRed500,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -95,7 +142,7 @@ class ListViewItemFavorite extends StatelessWidget {
           ),
         );
       },
-      separatorBuilder: (_, __) => SizedBox(height: 8),
+      separatorBuilder: (_, __) => SizedBox(height: 20),
       itemCount: items.length,
     );
   }

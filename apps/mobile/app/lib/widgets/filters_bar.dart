@@ -7,10 +7,13 @@ import 'widgets.dart';
 
 class FiltersBar extends StatefulWidget {
   final List<ChipItem> items;
-  final int? selectedItem = 0;
+  final int? selectedItem;
   final void Function(int) onChangeSelected;
   const FiltersBar(
-      {super.key, required this.items, required this.onChangeSelected});
+      {super.key,
+      required this.items,
+      required this.onChangeSelected,
+      this.selectedItem});
 
   @override
   State<FiltersBar> createState() => _FiltersBarState();
@@ -23,6 +26,11 @@ class _FiltersBarState extends State<FiltersBar> {
   void initState() {
     super.initState();
     selectedItem = widget.selectedItem ?? 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Scrollable.ensureVisible(
+          GlobalObjectKey(selectedItem + 10000).currentContext!);
+    });
   }
 
   void _handleSelected(int index) {
@@ -46,6 +54,7 @@ class _FiltersBarState extends State<FiltersBar> {
             ...List<Widget>.generate(
                 widget.items.length,
                 (index) => Padding(
+                    key: GlobalObjectKey(widget.items[index].id + 10000),
                     padding: getPadding(right: 8),
                     child: ChipviewinputchipItemWidget(
                       text: widget.items[index].name,
@@ -57,8 +66,9 @@ class _FiltersBarState extends State<FiltersBar> {
                               svgPath: widget.items[index].icon,
                             )
                           : null,
-                      onSelected: (value) => _handleSelected(index),
-                      selected: index == selectedItem,
+                      onSelected: (value) =>
+                          _handleSelected(widget.items[index].id),
+                      selected: widget.items[index].id == selectedItem,
                     )))
           ]),
         ));

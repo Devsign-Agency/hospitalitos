@@ -3,6 +3,7 @@ import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../main/pages/home/home.dart';
 import '../screens.dart';
@@ -32,8 +33,8 @@ class _BibleMainState extends State<BibleMain> {
     }
   }
 
-  String getPathPage() {
-    String lastPage = '';
+  String getLastPage() {
+    String lastPage = '- - - - - -';
     if (Preferences.lastPage.isNotEmpty) {
       final List<String> paths = Preferences.lastPage.split('/');
 
@@ -79,9 +80,15 @@ class _BibleMainState extends State<BibleMain> {
   Widget build(BuildContext context) {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: false);
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
+    Color iconColor =
+        isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800;
 
     bibleService.getBooks();
-    bibleService.resetState();
+    // bibleService.resetState();
 
     final List<Map<String, dynamic>> actions = [
       // {
@@ -90,10 +97,13 @@ class _BibleMainState extends State<BibleMain> {
       // },
     ];
 
+    // Preferences.removePageList();
+    // Preferences.lastPage = '';
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'La Biblia',
-        backgroundColor: ColorConstant.gray50,
+        // backgroundColor: ColorConstant.gray50,
         iconButtonVariant: IconButtonVariant.FillGray300,
         actions: [...actions],
       ),
@@ -108,14 +118,24 @@ class _BibleMainState extends State<BibleMain> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Última Lectura',
-                    style: AppStyle.txtNunitoSansSemiBold13Gray200),
-                Text(getPathPage(), style: AppStyle.txtNunitoSansSemiBold23),
+                    style: AppStyle.txtNunitoSansSemiBold13Gray200.copyWith(
+                        color: isDarkTheme
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.gray200)),
+                Text(getLastPage(),
+                    style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                        color: isDarkTheme
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.gray900)),
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: () => _handleTappedItem(),
                     child: Text('Continuar',
-                        style: AppStyle.txtNunitoSansSemiBold16),
+                        style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                            color: isDarkTheme
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.indigo900)),
                   ),
                 ),
               ],
@@ -134,13 +154,16 @@ class _BibleMainState extends State<BibleMain> {
                       width: getSize(48),
                       variant: IconButtonVariant.NoFill,
                       child: CustomImageView(
-                        color: ColorConstant.gray800,
+                        color: iconColor,
                         svgPath: ImageConstant.imgBookmark,
                       ),
                     ),
                     Text(
                       'Ver índice',
-                      style: AppStyle.txtNunitoSansSemiBold23,
+                      style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                          color: isDarkTheme
+                              ? ColorConstant.whiteA700
+                              : ColorConstant.gray900),
                     ),
                   ],
                 )),
@@ -158,13 +181,16 @@ class _BibleMainState extends State<BibleMain> {
                       width: getSize(48),
                       variant: IconButtonVariant.NoFill,
                       child: CustomImageView(
-                        color: ColorConstant.gray800,
+                        color: iconColor,
                         svgPath: ImageConstant.imgBookmarkGray800,
                       ),
                     ),
                     Text(
-                      'Página guardadas',
-                      style: AppStyle.txtNunitoSansSemiBold23,
+                      'Marcadores',
+                      style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                          color: isDarkTheme
+                              ? ColorConstant.whiteA700
+                              : ColorConstant.gray900),
                     ),
                   ],
                 )),

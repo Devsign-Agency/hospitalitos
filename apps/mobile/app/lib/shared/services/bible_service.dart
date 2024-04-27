@@ -22,7 +22,14 @@ class BibleService extends ChangeNotifier {
     BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
   ];
 
-  List<BookBible> books = [];
+  static List<BottomNavigationMenu> bottomToolsMenu = [
+    BottomNavigationMenu(icon: ImageConstant.imgEditGray800, title: 'Resaltar'),
+    BottomNavigationMenu(
+        icon: ImageConstant.imgBookmarkGray800, title: 'Marcador'),
+    BottomNavigationMenu(icon: ImageConstant.imgShare, title: 'Biblia'),
+  ];
+
+  static List<BookBible> books = [];
   BookBible _selectedBook = BookBible(name: '', chapters: []);
   bool _isDarkTheme = false;
   Map<String, dynamic> _selectedVerses = {};
@@ -30,6 +37,7 @@ class BibleService extends ChangeNotifier {
   int verseNumber = 0;
   int _startVerse = -1;
   int _endVerse = -1;
+  Map<dynamic, String> verses = {};
 
   BookBible get selectedBook => _selectedBook;
   Chapter get selectedChapter => _selectedChapter;
@@ -37,6 +45,7 @@ class BibleService extends ChangeNotifier {
   int get startVerse => _startVerse;
   int get endVerse => _endVerse;
   bool get isDarkTheme => _isDarkTheme;
+  Map<String, dynamic> get versesByChapter => _selectedChapter.verses;
 
   set isDarkTheme(bool value) {
     _isDarkTheme = value;
@@ -116,6 +125,28 @@ class BibleService extends ChangeNotifier {
     return chapter.verses;
   }
 
+  static BookBible getBookByTitle(String title) {
+    BookBible bookBible =
+        BibleService.books.firstWhere((element) => element.name == title);
+
+    return bookBible;
+  }
+
+  static String getVerseByPath(String path) {
+    List<String> paths = path.split('/');
+    String bookName = paths[0];
+    String chapterNumber = paths[1];
+    String verseNumber = paths[2];
+
+    BookBible bookBible = getBookByTitle(bookName);
+
+    Chapter chapter = bookBible.getChapterByNumber(chapterNumber);
+
+    String verse = chapter.getVerseByNumber(verseNumber);
+
+    return verse;
+  }
+
   List<dynamic> getPageList() {
     List<dynamic> markerListBook = [];
 
@@ -128,10 +159,16 @@ class BibleService extends ChangeNotifier {
     return markerListBook;
   }
 
-  addNewPage() {
-    String pathVerse = endVerse != -1 && endVerse != startVerse
-        ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
-        : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+  void addNewPage(String description) {
+    DateTime now = DateTime.now();
+    int year = now.year;
+    int month = now.month;
+    int day = now.day;
+    String date = '$day-$month-$year';
+
+    print('${getCurrentPage()}/$description/$date');
+
+    String pathVerse = '${getCurrentPage()}/$description/$date';
 
     dynamic aux = Preferences.pageList ?? [];
 
@@ -143,20 +180,35 @@ class BibleService extends ChangeNotifier {
 
     markerListBook.add(pathVerse);
     Preferences.pageList = json.encode(markerListBook);
-    print('lastPage: ${Preferences.lastPage}');
+
+    verses = {};
     getPageList();
+    notifyListeners();
   }
 
-  setLastPage() {
-    String pathVerse = endVerse != -1 && endVerse != startVerse
-        ? '${selectedBook.name}/${selectedChapter.chapter}/$startVerse-$endVerse'
-        : '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+  String getPage() {
+    String pathVerse = getCurrentPage();
+    dynamic aux = Preferences.pageList ?? [];
 
-    Preferences.lastPage = pathVerse;
+    List<dynamic> markerListBook = [];
+
+    if (aux.isNotEmpty) {
+      markerListBook = json.decode(Preferences.pageList);
+    }
+
+    String value = markerListBook.firstWhere((element) => element == pathVerse,
+        orElse: () => '');
+
+    return value;
+  }
+
+  void setLastPage() {
+    Preferences.lastPage =
+        '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
   }
 
   // TODO: Dado el startVerse y endVerse obtener los versículos
-  getVersesByRange(int startVerse, int endVerse) {
+  void getVersesByRange(int startVerse, int endVerse) {
     int startIndex = startVerse;
     int endIndex = endVerse;
 
@@ -174,7 +226,7 @@ class BibleService extends ChangeNotifier {
     selectedVerses = filteredMap;
   }
 
-  getBookByName(String name) {
+  void getBookByName(String name) {
     final BookBible? book = books.firstWhere((element) => element.name == name);
 
     if (book != null) {
@@ -182,11 +234,11 @@ class BibleService extends ChangeNotifier {
     }
   }
 
-  getChapterFromBook(BookBible book, int indexOfChapter) {
+  void getChapterFromBook(BookBible book, int indexOfChapter) {
     _selectedChapter = book.chapters[indexOfChapter - 1];
   }
 
-  deletePage(String pagePath) {
+  void deletePage(String pagePath) {
     List<dynamic> pages = json.decode(Preferences.pageList) ?? [];
 
     int i = pages.indexWhere(
@@ -199,5 +251,34 @@ class BibleService extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  String getCurrentPage() {
+    dynamic keys = verses.keys;
+    dynamic key = keys.toList()[0];
+
+    return '${selectedBook.name}/${selectedChapter.chapter}/$key';
+  }
+
+  void addNewVerseSelected(Map<dynamic, String> verse) {
+    dynamic keys = verse.keys;
+    dynamic key = keys.toList()[0];
+
+    if (verses.containsKey(key)) {
+      verses.remove(key);
+    } else {
+      verses = {};
+      verses.addAll(verse);
+    }
+    notifyListeners();
+  }
+
+  void clearVerseSelected() {
+    verses = {};
+    notifyListeners();
+  }
+
+  bool isVerseSelected(int numberOfVerse) {
+    return verses.containsKey(numberOfVerse);
   }
 }

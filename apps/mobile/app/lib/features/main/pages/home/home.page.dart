@@ -9,6 +9,7 @@ import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
@@ -18,6 +19,7 @@ import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../../themes/themes.dart';
 import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
 
@@ -44,111 +46,43 @@ loadAsset() async {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Widget> _slides = [
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold20)),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular14Gray900)),
-    ]),
-    /*
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold13)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold13)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold13)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold13)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    Wrap(children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-              style: AppStyle.txtNunitoSansSemiBold13)),
-      SizedBox(height: 8.0),
-      Align(
-          widthFactor: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Text('Propio del Tiempo. Salterio II',
-              style: AppStyle.txtNunitoSansRegular18Gray900)),
-    ]),
-    */
+  bool _isDarkTheme = false;
+  //var dataLiturgia = liturgies();
+  final _itemSliders = [
+    [
+      'Liturgia',
+      'TIEMPO PASCUAL MARTES DE SEMANA II',
+      'Propio del Tiempo. Salterio IIfsdffsdfds'
+    ]
   ];
+
+  // final List<Widget> _slides = [
+  //   Wrap(children: [
+  //     Align(
+  //         alignment: Alignment.centerLeft,
+  //         child:
+  //             Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
+  //     Align(
+  //         alignment: Alignment.centerLeft,
+  //         child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
+  //             style: AppStyle.txtNunitoSansSemiBold20)),
+  //     Align(
+  //         widthFactor: double.infinity,
+  //         alignment: Alignment.centerLeft,
+  //         child: Text('Propio del Tiempo. Salterio II',
+  //             style: AppStyle.txtNunitoSansRegular14Gray900)),
+  //   ]),
+  // ];
   late User? user;
   late BottomNavigationMainProvider bottomNavigationMain =
       Provider.of<BottomNavigationMainProvider>(context, listen: false);
   Future<List<EpubBook>> fetchData() async {
     return EpubDocument.openAssetFolder('/epubs');
   }
+
+  /*Future<List<EpubBook>> liturgy() async {
+    return LiturgyService.items;+
+  }*/
 
   Future<List<SfPdfViewer>> fetchDataPdf() async {
     return PdfService.openAssetFolder('/pdf');
@@ -160,6 +94,15 @@ class _HomePageState extends State<HomePage> {
 
     final authService = Provider.of<AuthService>(context, listen: false);
     user = authService.user;
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   ThemeProvider themeProvider =
+    //       Provider.of<ThemeProvider>(context, listen: false);
+
+    //   _isDarkTheme = Preferences.isDarkmode;
+    //   _isDarkTheme ? themeProvider.setDarkMode() : themeProvider.setLightMode();
+    // });
+
     //loadAsset();
   }
 
@@ -170,12 +113,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   getCurrentDate() {
-    var date = DateTime.now().toString();
-
-    var dateParse = DateTime.parse(date);
-
-    //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
-    //final dateName = DateFormat('MEd').format(DateFormat("DD MMMM yyyy").parse(date));
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
     return format2.format(DateTime.now()).split('de 2024')[0];
   }
@@ -190,12 +127,12 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pushNamed(HomePage.route);
         break;
       case 1:
-        Navigator.of(context).pushNamed(CoursesScreen.route);
+        Navigator.of(context).pushNamed(DiscoverScreen.route);
         break;
-      // case 2:
-      //   Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
-      //   break;
       case 2:
+        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+        break;
+      case 3:
         Navigator.of(context).pushNamed(BibleMain.route);
         break;
     }
@@ -203,11 +140,112 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    LiturgyService liturgyService = Provider.of<LiturgyService>(context);
+    final day = DateTime.now().toString().split(' ')[0];
+    print(day);
+    List<dynamic> arr = [];
+    var index = -1;
+    liturgyService.liturgies.forEach((liturgia) {
+      final date = liturgia['date'];
+      index++;
+      if (date == day) {
+        final detail = liturgia['detail'];
+
+        if (detail[2].contains('LUNES')) {
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+        }
+        if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+        }
+
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+        }
+
+        /*if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('MIERCOLES')) {
+          arr.add(liturgyService.liturgies[index -2]);
+          arr.add(liturgyService.liturgies[index -1]);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+        }
+        if (detail[2].contains('JUEVES')) {
+          arr.add(liturgyService.liturgies[index - 3]);
+          arr.add(liturgyService.liturgies[index - 2]);
+          arr.add(liturgyService.liturgies[index - 1]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+        if (detail[2].contains('VIERNES')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }
+
+        if (detail[2].contains('SABADO')) {
+          arr.add(liturgyService.liturgies[index + 1]);
+          arr.add(liturgyService.liturgies[index + 2]);
+          arr.add(liturgyService.liturgies[index + 3]);
+          arr.add(liturgyService.liturgies[index + 4]);
+        }*/
+      }
+    });
+
     List<Map<String, dynamic>> actions = [
       {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
+      // {
+      //   'icon': ImageConstant.imgMoonIndigo,
+      //   'action': () {
+      //     Preferences.isDarkmode
+      //         ? themeProvider.setLightMode()
+      //         : themeProvider.setDarkMode();
+
+      //     Preferences.isDarkmode = !Preferences.isDarkmode;
+
+      //     setState(() {
+      //       _isDarkTheme = !_isDarkTheme;
+      //     });
+      //   }
+      // },
       /*{
         'icon': ImageConstant.imgNotification,
         'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
@@ -216,37 +254,66 @@ class _HomePageState extends State<HomePage> {
 
     final List<BottomNavigationMenu> bottomMenuList = [
       BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      // BottomNavigationMenu(
-      //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
       BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
       BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
     ];
+
+    final List<Widget> slides = [];
+
+    for (var element in arr) {
+      slides.add(Wrap(children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(element[0],
+                style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                    color: _isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.gray900))),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(element[1],
+                style: AppStyle.txtNunitoSansSemiBold20.copyWith(
+                    color: _isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.indigo900))),
+        Align(
+            widthFactor: double.infinity,
+            alignment: Alignment.centerLeft,
+            child: Text(element[2],
+                style: AppStyle.txtNunitoSansRegular14Gray900.copyWith(
+                    color: _isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.gray900))),
+      ]));
+    }
 
     return Scaffold(
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
-            /*CustomIconButton(
-              height: 48,
-              width: 48,
-              variant: IconButtonVariant.FillGray400,
-              child: CustomImageView(
-                color: ColorConstant.gray800,
-                svgPath: ImageConstant.imgUserGray800,
-              ),
-              onTap: () => Navigator.of(context).pushNamed('profile'),
-            ),*/
-            SizedBox(width: 10),
+            SizedBox(
+              width: 10,
+            ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text('Buen día',
-                        style: AppStyle.txtNunitoSansSemiBold13Gray800)),
+                        style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                            color: _isDarkTheme
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.gray800))),
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(getCurrentDate(),
-                        style: AppStyle.txtNunitoSansSemiBold23))
+                        style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                            color: _isDarkTheme
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.gray900)))
               ],
             ),
           ],
@@ -255,135 +322,148 @@ class _HomePageState extends State<HomePage> {
         actions: actions,
         //iconButtonVariant: IconButtonVariant.FillGray300,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // News Slider
-            CustomCard(
-              margin:
-                  getMargin(left: 14.0, right: 14.0, bottom: 8.0, top: 18.0),
-              child: NewsSlider(
-                children: _slides,
-              ),
+      body: Column(
+        children: [
+          // News Slider
+          CustomCard(
+            margin: getMargin(left: 14.0, right: 14.0, bottom: 8.0, top: 14.0),
+            child: NewsSlider(
+              children: slides,
             ),
+          ),
 
-            // My Favorites
-            CustomCard(
-              margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
-              child: Row(
-                children: [
-                  CustomImageView(
-                      color: ColorConstant.gray800,
-                      svgPath: ImageConstant.imgFavorite,
-                      height: getSize(24),
-                      width: getSize(24),
-                      margin: getMargin(top: 4, bottom: 4)),
-                  SizedBox(width: 10),
-                  Tooltip(
-                    message: 'En Desarrollo',
-                    triggerMode: TooltipTriggerMode.tap,
-                    child: Text(
-                      'Mis Favoritos',
-                      style: AppStyle.txtNunitoSansSemiBold23,
-                    ),
-                  )
-                ],
-              ),
-              onTapped: () {
-                //Navigator.of(context).pushNamed(FavoriteListScreen.route);
-              },
-            ),
-
-            // Recently viewed
-            Column(
+          // My Favorites
+          CustomCard(
+            margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
+            child: Row(
               children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 14.0),
-                    child: Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Visto recientemente',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtNunitoSansSemiBold23,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: [
-                              Text('Ver más',
-                                  style: AppStyle
-                                      .txtNunitoSansSemiBold16Indigo900),
-                              CustomIconButton(
-                                height: 48,
-                                width: 48,
-                                variant: IconButtonVariant.NoFill,
-                                child: CustomImageView(
-                                  color: ColorConstant.gray800,
-                                  svgPath: ImageConstant.imgArrowrightIndigo900,
-                                ),
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(ListSeeMore.route),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-
-                // Show epub list
-
-                CardPreviewItemList(
-                  future: fetchData(),
-                  onTappedItem: () {},
-                ),
-              ],
-            ),
-
-            // Daily activities
-            Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 14.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Actividades diarias',
-                          style: AppStyle.txtNunitoSansSemiBold23),
-                    )),
-                SizedBox(height: 14),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 14.0, right: 14.0, bottom: 14.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ExpandedButton(
-                          message: 'En Desarrollo',
-                          icon: ImageConstant.imgButtonalerts,
-                          label: 'Lecturas'),
-                      SizedBox(width: 14.0),
-                      ExpandedButton(
-                        icon: ImageConstant.imgVolume,
-                        label: 'Oraciones',
-                        message: 'En Desarrollo',
-                      ),
-                      SizedBox(width: 14.0),
-                      ExpandedButton(
-                        icon: ImageConstant.imgVolumeIndigo900,
-                        label: 'Blog',
-                        route: 'blog',
-                      )
-                    ],
+                CustomImageView(
+                    color: _isDarkTheme
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.gray800,
+                    svgPath: ImageConstant.imgFavorite,
+                    height: getSize(24),
+                    width: getSize(24),
+                    margin: getMargin(top: 4, bottom: 4)),
+                SizedBox(width: 10),
+                Tooltip(
+                  message: 'En Desarrollo',
+                  triggerMode: TooltipTriggerMode.tap,
+                  child: Text(
+                    'Mis Favoritos',
+                    style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                        color: _isDarkTheme
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.gray900),
                   ),
                 )
               ],
-            )
-          ],
-        ),
+            ),
+            onTapped: () {
+              ThemeProvider themeProvider =
+                  Provider.of<ThemeProvider>(context, listen: false);
+
+              themeProvider.setLightMode();
+              //Navigator.of(context).pushNamed(FavoriteListScreen.route);
+            },
+          ),
+
+          // Recently viewed
+          Column(
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.0),
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Visto recientemente',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: AppStyle.txtNunitoSansSemiBold23.copyWith(
+                              color: _isDarkTheme
+                                  ? ColorConstant.whiteA700
+                                  : ColorConstant.black9001c),
+                        ),
+                      ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          children: [
+                            Text('Ver más',
+                                style: AppStyle.txtNunitoSansSemiBold16Indigo900
+                                    .copyWith(
+                                        color: _isDarkTheme
+                                            ? ColorConstant.whiteA700
+                                            : ColorConstant.indigo900)),
+                            CustomIconButton(
+                              height: 48,
+                              width: 48,
+                              variant: IconButtonVariant.NoFill,
+                              child: CustomImageView(
+                                color: _isDarkTheme
+                                    ? ColorConstant.whiteA700
+                                    : ColorConstant.indigo900,
+                                svgPath: ImageConstant.imgArrowrightIndigo900,
+                              ),
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(ListSeeMore.route),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+
+              // Show epub list
+
+              CardPreviewItemList(
+                future: fetchData(),
+                onTappedItem: () {},
+              ),
+            ],
+          ),
+
+          // Daily activities
+          Column(
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 14.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Actividades diarias',
+                        style: AppStyle.txtNunitoSansSemiBold23),
+                  )),
+              SizedBox(height: 14),
+              Padding(
+                padding: EdgeInsets.only(left: 14.0, right: 14.0, bottom: 14.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ExpandedButton(
+                        message: 'En Desarrollo',
+                        icon: ImageConstant.imgButtonalerts,
+                        label: 'Lecturas'),
+                    SizedBox(width: 14.0),
+                    ExpandedButton(
+                      icon: ImageConstant.imgVolume,
+                      label: 'Oraciones',
+                      message: 'En Desarrollo',
+                    ),
+                    SizedBox(width: 14.0),
+                    ExpandedButton(
+                      icon: ImageConstant.imgVolumeIndigo900,
+                      label: 'Blog',
+                      route: 'blog',
+                    )
+                  ],
+                ),
+              )
+            ],
+          )
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         bottomMenuList: bottomMenuList,

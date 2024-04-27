@@ -12,7 +12,7 @@ import 'package:mobile_app/widgets/custom_card.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
 import 'package:mobile_app/widgets/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:mobile_app/features/book/book.screen.dart' ;
+import 'package:mobile_app/features/book/book.screen.dart';
 import 'package:mobile_app/features/book/pages/pages.dart';
 import 'modal_bottom_actiosn_epub.dart';
 
@@ -25,7 +25,7 @@ class CardPreviewItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 14.0),
+        margin: EdgeInsets.symmetric(vertical: 0.0),
         height: 190.0,
         width: double.infinity,
         child: FutureBuilder<List<EpubBook>>(
@@ -107,7 +107,7 @@ class CardPreviewItemList extends StatelessWidget {
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
-    testData(book){
+  testData(book) {
     print(book.Chapters.SubChapters > 0);
   }
 
@@ -280,4 +280,3 @@ class _ViewedPreview extends StatelessWidget {
     );
   }
 }
-

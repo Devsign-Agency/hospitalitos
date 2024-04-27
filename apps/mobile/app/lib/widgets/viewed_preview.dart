@@ -40,8 +40,10 @@ class ViewedPreview extends StatelessWidget {
               Text(
                 title,
                 style: AppStyle.txtNunitoSansSemiBold20,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                //overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

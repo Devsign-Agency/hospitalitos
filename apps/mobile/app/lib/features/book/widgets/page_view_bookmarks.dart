@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
@@ -8,18 +7,20 @@ class PageViewBookmarks extends StatelessWidget {
   final List<dynamic> markerList;
   final Function? onTapped;
   final void Function(dynamic)? onDeleteMarker;
+  final bool isDarkMode;
 
   const PageViewBookmarks(
       {super.key,
       required this.markerList,
       this.onTapped,
-      this.onDeleteMarker});
+      this.onDeleteMarker,
+      required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
     final boxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      color: ColorConstant.whiteA700,
+      color: isDarkMode ? ColorConstant.gray80040 : ColorConstant.whiteA700,
     );
 
     return Padding(
@@ -31,10 +32,17 @@ class PageViewBookmarks extends StatelessWidget {
             children: [
               Text(
                 'Marcadores',
-                style: AppStyle.txtNunitoSansSemiBold28,
+                style: AppStyle.txtNunitoSansSemiBold28.copyWith(
+                    color: isDarkMode
+                        ? ColorConstant.whiteA700
+                        : ColorConstant.black900),
               ),
               SizedBox(width: 10),
-              Text('(${markerList.length})')
+              Text('(${markerList.length})',
+                  style: TextStyle(
+                      color: isDarkMode
+                          ? ColorConstant.whiteA700
+                          : ColorConstant.black900))
             ],
           ),
           SizedBox(height: 30),
@@ -86,15 +94,26 @@ class PageViewBookmarks extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
                                               style: AppStyle
-                                                  .txtNunitoSansSemiBold20Black900,
+                                                  .txtNunitoSansSemiBold20Black900
+                                                  .copyWith(
+                                                      color: isDarkMode
+                                                          ? ColorConstant
+                                                              .whiteA700
+                                                          : ColorConstant
+                                                              .black900),
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
                                     SizedBox(height: 20),
-                                    Text(markerList.elementAt(index)['date'] ??
-                                        '')
+                                    Text(
+                                      markerList.elementAt(index)['date'] ?? '',
+                                      style: TextStyle(
+                                          color: isDarkMode
+                                              ? ColorConstant.whiteA700
+                                              : ColorConstant.black900),
+                                    )
                                   ],
                                 ),
                                 CustomIconButton(
@@ -127,7 +146,10 @@ class PageViewBookmarks extends StatelessWidget {
                 children: [
                   Text(
                     'No hay marcadores guardados...',
-                    style: AppStyle.txtNunitoSansSemiBold26,
+                    style: AppStyle.txtNunitoSansSemiBold26.copyWith(
+                        color: isDarkMode
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.black900),
                     textAlign: TextAlign.center,
                   ),
                 ],
