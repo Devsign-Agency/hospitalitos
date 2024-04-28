@@ -57,7 +57,7 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       elevation: 5,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text('Añadir Marcador', style: AppStyle.txtNunitoSansSemiBold23),
+        Text('Añadir comentario', style: AppStyle.txtNunitoSansSemiBold23),
         CustomIconButton(
           height: getSize(48),
           width: getSize(48),
@@ -77,7 +77,7 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
             enabled: true,
             focusNode: FocusNode(),
             controller: usernameController,
-            hintText: 'Ingrese una descripción',
+            hintText: 'Ingrese un comentario',
             margin: getMargin(top: 16),
             variant: TextFormFieldVariant.OutlineBottom,
             textInputType: TextInputType.visiblePassword,
@@ -89,14 +89,22 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
       actions: [
         TextButton(
             onPressed: () {
+              bibleService.selectedVerses = {};
               Navigator.pop(context);
             },
             child: Text('Cancelar', style: AppStyle.txtNunitoSansSemiBold16)),
         TextButton(
             onPressed: () async {
-              bibleService.addNewPage(usernameController.text);
+              Map<dynamic, String> verseSelected = bibleService.selectedVerses;
+              // bibleService.addNewPage(usernameController.text);
+              bibleService.editMarker(
+                  bibleService.selectedBook,
+                  bibleService.selectedChapter,
+                  verseSelected,
+                  usernameController.text);
               usernameController.clear();
-              showCustomToast('Marcador guardado exitosamenete');
+              bibleService.selectedVerses = {};
+
               Navigator.pop(context);
             },
             child: Text('Guardar', style: AppStyle.txtNunitoSansSemiBold16)),

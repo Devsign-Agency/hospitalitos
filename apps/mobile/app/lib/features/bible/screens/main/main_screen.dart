@@ -64,10 +64,7 @@ class _BibleMainState extends State<BibleMain> {
           Provider.of<BibleService>(context, listen: false);
       bibleService.getBookByName(bookName);
       bibleService.getChapterFromBook(bibleService.selectedBook, chapterIndex);
-
-      bibleService.getVersesByRange(startVerse, endVerse);
       bibleService.startVerse = startVerse;
-      bibleService.endVerse = endVerse;
 
       bibleService.setLastPage();
 
@@ -90,19 +87,12 @@ class _BibleMainState extends State<BibleMain> {
     bibleService.getBooks();
     // bibleService.resetState();
 
-    final List<Map<String, dynamic>> actions = [
-      // {
-      //   'icon': ImageConstant.imgSearch,
-      //   'action': () => {print('Search...')}
-      // },
-    ];
+    // Preferences.removePageList();
+    // Preferences.lastPage = '';
 
     return Scaffold(
       appBar: CustomAppBar(
         title: 'La Biblia',
-        // backgroundColor: ColorConstant.gray50,
-        iconButtonVariant: IconButtonVariant.FillGray300,
-        actions: [...actions],
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -26,8 +25,6 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
   @override
   void initState() {
     super.initState();
-    fToast = FToast();
-    fToast?.init(context);
     _initActions();
   }
 
@@ -65,13 +62,11 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     final String bookName = paths[0];
     final int chapterIndex = int.parse(paths[1]);
     int startVerse = -1;
-    int endVerse = -1;
 
     if (paths[2].split('-').length > 1) {
       startVerse = int.parse(paths[2].split('-')[0]);
-      endVerse = int.parse(paths[2].split('-')[1]);
     } else {
-      startVerse = endVerse = int.parse(paths[2]);
+      startVerse = int.parse(paths[2]);
     }
 
     BibleService bibleService =
@@ -79,11 +74,9 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     bibleService.getBookByName(bookName);
     bibleService.getChapterFromBook(bibleService.selectedBook, chapterIndex);
 
-    bibleService.getVersesByRange(startVerse, endVerse);
     bibleService.startVerse = startVerse;
-    bibleService.endVerse = endVerse;
 
-    bibleService.setLastPage();
+    // bibleService.setLastPage();
 
     Navigator.of(context).pushNamed(BookViewerScreen.route,
         arguments: bibleService.selectedChapter.verses);
@@ -140,7 +133,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: _isEditing ? 'Guardado' : 'Editar',
+        title: 'Marcadores',
         iconButtonVariant: !_isEditing
             ? IconButtonVariant.FillGray300
             : IconButtonVariant.NoFill,
@@ -175,7 +168,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
                       Provider.of<BibleService>(context, listen: false);
 
                   bibleService.deletePage(item.id);
-                  showCustomToast('Marcador eliminado exitosamente');
+                  Fluttertoast.showToast(
+                      msg: 'Marcador eliminado exitosamente');
                 },
                 onTappedItem: _handleTappedItem,
               ),

@@ -28,15 +28,22 @@ class Chapter {
   String chapter;
   int ctdverses;
   Map<String, dynamic> verses;
+  List<Verse> versiculos;
 
   Chapter(
-      {required this.chapter, required this.ctdverses, required this.verses});
+      {required this.chapter,
+      required this.ctdverses,
+      required this.verses,
+      required this.versiculos});
 
   factory Chapter.fromMap(Map<String, dynamic> json) => Chapter(
-        chapter: json['chapter'],
-        ctdverses: json['ctd_verses'],
-        verses: json['verses'],
-      );
+      chapter: json['chapter'],
+      ctdverses: json['ctd_verses'],
+      verses: json['verses'],
+      versiculos: List<Verse>.from(json['verses']
+          .entries
+          .map((entry) => Verse(id: entry.key, verse: entry.value))
+          .toList()));
 
   String getVerseByNumber(String number) {
     String verse = '';
@@ -57,4 +64,11 @@ class Chapter {
 
     return verse;
   }
+}
+
+class Verse {
+  String id;
+  String verse;
+
+  Verse({required this.id, required this.verse});
 }

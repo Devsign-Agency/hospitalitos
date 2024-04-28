@@ -368,7 +368,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
               markerService.addNewMarker(bookTitle, chapter, marker);
             }
-            showCustomToast('Marcador guardado con éxito');
+            Fluttertoast.showToast(msg: 'Marcador guardado exitosamente');
           }),
     ];
 
@@ -436,7 +436,8 @@ class _ChapterPageState extends State<ChapterPage> {
             onTapped: _handleTapPageViewMarkerList,
             onDeleteMarker: (marker) {
               markerService.deleteMarker(bookTitle, chapter, marker);
-              showCustomToast('Marcador eliminado con éxito');
+
+              Fluttertoast.showToast(msg: 'Marcador eliminado con éxito');
             },
           ),
 
