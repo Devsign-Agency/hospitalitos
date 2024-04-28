@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/bible/screens/index/widgets/widgets.dart';
-import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
@@ -33,7 +32,7 @@ class _IndexScreenState extends State<IndexScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BibleService bibleService =
           Provider.of<BibleService>(context, listen: false);
-      bibleService.resetState();
+      bibleService.init();
     });
   }
 
@@ -62,36 +61,14 @@ class _IndexScreenState extends State<IndexScreen>
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    final List<Map<String, dynamic>> actions = [
-      // {
-      //   'icon': ImageConstant.imgSearch,
-      //   'action': () => {print('Search...')}
-      // },
-    ];
-
     return Scaffold(
       appBar: CustomAppBar(
-        customTitle: Text('Índice',
-            style: isDarkTheme
-                ? AppStyle.txtNunitoSansSemiBold26WhiteA700
-                : AppStyle.txtNunitoSansSemiBold26),
-        hasCustomTitle: true,
-        leading: CustomIconButton(
-          margin: getMargin(left: 8),
-          height: getSize(48),
-          width: getSize(48),
-          variant: IconButtonVariant.NoFill,
-          onTap: () => Navigator.of(context).pop(),
-          child: CustomImageView(
-            svgPath: isDarkTheme
-                ? ImageConstant.imgArrowleftGray900
-                : ImageConstant.imgArrowleftWhiteA700,
-            color:
-                isDarkTheme ? ColorConstant.whiteA700 : ColorConstant.gray800,
-          ),
-        ),
-        actions: [...actions],
-      ),
+          customTitle: Text('Índice',
+              style: isDarkTheme
+                  ? AppStyle.txtNunitoSansSemiBold26WhiteA700
+                  : AppStyle.txtNunitoSansSemiBold26),
+          hasCustomTitle: true,
+          leading: CustomIconBackButton(isDarkTheme: isDarkTheme)),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -113,7 +90,7 @@ class _IndexScreenState extends State<IndexScreen>
                     children: [
                       // Books Tab
                       TabBarViewBooks(
-                          future: bibleService.getBooks(),
+                          books: BibleService.books,
                           onChangeTab: handleChangeTab),
 
                       // Chapters Tab

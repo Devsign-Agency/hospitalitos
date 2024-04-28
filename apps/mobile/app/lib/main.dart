@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => CategoryService()),
-        ChangeNotifierProvider(create: (_) => BibleService()),
+        ChangeNotifierProvider(create: (_) => BibleService(), lazy: false),
         ChangeNotifierProvider(create: (_) => LiturgyService()),
         ChangeNotifierProvider(create: (_) => FavoriteService()),
         ChangeNotifierProvider(create: (_) => PdfService()),

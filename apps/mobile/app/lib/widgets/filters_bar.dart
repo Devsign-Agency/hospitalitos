@@ -33,6 +33,17 @@ class _FiltersBarState extends State<FiltersBar> {
     });
   }
 
+  @override
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedItem != widget.selectedItem) {
+      selectedItem = widget.selectedItem!;
+      Scrollable.ensureVisible(
+          GlobalObjectKey(selectedItem + 10000).currentContext!);
+      setState(() {});
+    }
+  }
+
   void _handleSelected(int index) {
     // if (selectedItem >= 0 && selectedItem != index) {
     //   widget.items[selectedItem].isSelected = false;

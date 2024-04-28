@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
-import 'package:mobile_app/shared/services/ftoast_service.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -27,8 +25,6 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
   @override
   void initState() {
     super.initState();
-    // fToast = FToast();
-    // fToast?.init(FtoastService.navigatorKey.currentContext!);
     _initActions();
   }
 
@@ -66,13 +62,11 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     final String bookName = paths[0];
     final int chapterIndex = int.parse(paths[1]);
     int startVerse = -1;
-    int endVerse = -1;
 
     if (paths[2].split('-').length > 1) {
       startVerse = int.parse(paths[2].split('-')[0]);
-      endVerse = int.parse(paths[2].split('-')[1]);
     } else {
-      startVerse = endVerse = int.parse(paths[2]);
+      startVerse = int.parse(paths[2]);
     }
 
     BibleService bibleService =
@@ -80,9 +74,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     bibleService.getBookByName(bookName);
     bibleService.getChapterFromBook(bibleService.selectedBook, chapterIndex);
 
-    bibleService.getVersesByRange(startVerse, endVerse);
     bibleService.startVerse = startVerse;
-    bibleService.endVerse = endVerse;
 
     // bibleService.setLastPage();
 

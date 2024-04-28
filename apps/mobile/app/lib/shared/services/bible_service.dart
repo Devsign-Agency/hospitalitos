@@ -22,87 +22,66 @@ class BibleService extends ChangeNotifier {
     BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
   ];
 
-  static List<BottomNavigationMenu> bottomToolsMenu = [
-    BottomNavigationMenu(icon: ImageConstant.imgEditGray800, title: 'Resaltar'),
-    BottomNavigationMenu(
-        icon: ImageConstant.imgBookmarkGray800, title: 'Marcador'),
-    BottomNavigationMenu(icon: ImageConstant.imgShare, title: 'Biblia'),
-  ];
-
+  // State
   static List<BookBible> books = [];
-  BookBible _selectedBook = BookBible(name: '', chapters: []);
-  bool _isDarkTheme = false;
-  Map<String, dynamic> _selectedVerses = {};
-  Chapter _selectedChapter = Chapter(chapter: '', ctdverses: 0, verses: {});
+  late BookBible _selectedBook;
+  late Map<dynamic, String> _selectedVerses;
+  late Chapter _selectedChapter;
+  late int _startVerse;
   int verseNumber = 0;
-  int _startVerse = -1;
-  int _endVerse = -1;
-  Map<dynamic, String> verses = {};
 
+  // Getters
   BookBible get selectedBook => _selectedBook;
   Chapter get selectedChapter => _selectedChapter;
-  Map<String, dynamic> get selectedVerses => _selectedVerses;
+  Map<dynamic, String> get selectedVerses => _selectedVerses;
   int get startVerse => _startVerse;
-  int get endVerse => _endVerse;
-  bool get isDarkTheme => _isDarkTheme;
   Map<String, dynamic> get versesByChapter => _selectedChapter.verses;
 
-  set isDarkTheme(bool value) {
-    _isDarkTheme = value;
-
-    notifyListeners();
+  // Constructor
+  BibleService() {
+    init();
+    getBooks();
   }
 
+  // Setters
   set selectedBook(BookBible book) {
     _selectedBook = book;
-
     notifyListeners();
   }
 
   set selectedChapter(Chapter chapter) {
     _selectedChapter = chapter;
-
     notifyListeners();
   }
 
-  set selectedVerses(Map<String, dynamic> verses) {
+  set selectedVerses(Map<dynamic, String> verses) {
     _selectedVerses = verses;
-
     notifyListeners();
   }
 
   set startVerse(int startVerse) {
     _startVerse = startVerse;
-
     notifyListeners();
   }
 
-  set endVerse(int endVerse) {
-    _endVerse = endVerse;
-
-    notifyListeners();
-  }
-
-  setVerseNumber(int value) {
+  set setVerseNumber(int value) {
     verseNumber = value;
+    notifyListeners();
+  }
+
+  // Initialize the state of the bible provider
+  void init() {
+    selectedBook = BookBible(name: '', chapters: []);
+    selectedVerses = {};
+    selectedChapter =
+        Chapter(chapter: '', ctdverses: 0, verses: {}, versiculos: []);
+    startVerse = -1;
 
     notifyListeners();
   }
 
-  void resetState() {
-    _selectedBook = BookBible(name: '', chapters: []);
-    _selectedVerses = {};
-    _selectedChapter = Chapter(chapter: '', ctdverses: 0, verses: {});
-    _startVerse = -1;
-    _endVerse = -1;
-  }
-
-  // TODO: Optimizar función para guardar los libros en una variable
-  Future<List<BookBible>> getBooks() async {
-    if (books.isNotEmpty) {
-      return books;
-    }
-
+  // Call to json api to get all the books of the bible
+  void getBooks() async {
     String response = await rootBundle.loadString('assets/json/bible.json');
     final Map<dynamic, dynamic> data = json.decode(response);
     books = [];
@@ -113,18 +92,9 @@ class BibleService extends ChangeNotifier {
 
       books.add(book);
     });
-
-    return books;
   }
 
-  List<Chapter> getChaptersByBook(BookBible book) {
-    return book.chapters;
-  }
-
-  Map<String, dynamic> getVersesByChapter(Chapter chapter) {
-    return chapter.verses;
-  }
-
+  // Get bible book by title
   static BookBible getBookByTitle(String title) {
     BookBible bookBible =
         BibleService.books.firstWhere((element) => element.name == title);
@@ -204,25 +174,6 @@ class BibleService extends ChangeNotifier {
         '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
   }
 
-  // TODO: Dado el startVerse y endVerse obtener los versículos
-  void getVersesByRange(int startVerse, int endVerse) {
-    int startIndex = startVerse;
-    int endIndex = endVerse;
-
-    if (endIndex == -1) {
-      endIndex = startIndex;
-    }
-
-    final Map<String, dynamic> filteredMap = {
-      for (var k in _selectedChapter.verses.keys
-          .where((k) => int.parse(k) >= startIndex && int.parse(k) <= endIndex))
-        k: _selectedChapter.verses[k]
-    };
-
-    filteredMap.forEach((k, v) => print('key: $k, value: $v'));
-    selectedVerses = filteredMap;
-  }
-
   void getBookByName(String name) {
     final BookBible? book = books.firstWhere((element) => element.name == name);
 
@@ -251,7 +202,7 @@ class BibleService extends ChangeNotifier {
   }
 
   String getCurrentPage() {
-    dynamic keys = verses.keys;
+    dynamic keys = selectedVerses.keys;
     dynamic key = keys.toList()[0];
 
     return '${selectedBook.name}/${selectedChapter.chapter}/$key';
@@ -261,22 +212,22 @@ class BibleService extends ChangeNotifier {
     dynamic keys = verse.keys;
     dynamic key = keys.toList()[0];
 
-    if (verses.containsKey(key)) {
-      verses.remove(key);
+    if (selectedVerses.containsKey(key)) {
+      selectedVerses.remove(key);
     } else {
-      verses = {};
-      verses.addAll(verse);
+      selectedVerses = {};
+      selectedVerses.addAll(verse);
     }
     notifyListeners();
   }
 
   void clearVerseSelected() {
-    verses = {};
+    selectedVerses = {};
     notifyListeners();
   }
 
   bool isVerseSelected(int numberOfVerse) {
-    return verses.containsKey(numberOfVerse);
+    return selectedVerses.containsKey(numberOfVerse);
   }
 
   void editMarker(BookBible book, Chapter chapterBook,
@@ -299,5 +250,19 @@ class BibleService extends ChangeNotifier {
     }
 
     Preferences.pageList = json.encode(markers);
+  }
+
+  // moves the chapter forward or backward depending on the action
+  void moveChapter(String action) {
+    int move;
+
+    move = action == 'next' ? 1 : -1;
+
+    selectedChapter =
+        selectedBook.chapters[(int.parse(selectedChapter.chapter) - 1) + move];
+    startVerse = 1;
+    selectedVerses = {};
+
+    Scrollable.ensureVisible(GlobalObjectKey(startVerse).currentContext!);
   }
 }

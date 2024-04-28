@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/core/models/BookBible.dart';
+import 'package:mobile_app/features/bible/screens/book_viewer/widgets/button_navigation_chapter.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/popup_new_marker.dart';
 import 'package:mobile_app/features/bible/screens/book_viewer/widgets/verse_list.dart';
 import 'package:mobile_app/main.dart';
@@ -386,6 +387,26 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                           ),
                         ),
                       ),
+
+                      // Button back chapter
+                      if (int.parse(bibleService.selectedChapter.chapter) > 1)
+                        Positioned(
+                          top: 250,
+                          left: 0,
+                          child: ButtonNavigationChapter(
+                              onTap: () => bibleService.moveChapter('back'),
+                              icon: Icons.arrow_back),
+                        ),
+
+                      // Button next chapter
+                      if (int.parse(bibleService.selectedChapter.chapter) <
+                          bibleService.selectedBook.chapters.length)
+                        Positioned(
+                            right: 0,
+                            top: 250,
+                            child: ButtonNavigationChapter(
+                                onTap: () => bibleService.moveChapter('next'),
+                                icon: Icons.arrow_forward)),
                       if (onAudioSound)
                         ConstrainedBox(
                           constraints: BoxConstraints(minHeight: 400),
@@ -405,7 +426,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           // Page view chapter's markers
         ],
       ),
-      floatingActionButton: bibleService.verses.isNotEmpty && !onAudioSound
+      floatingActionButton: bibleService.selectedVerses.isNotEmpty &&
+              !onAudioSound
           ? FloatingActionButton(
               onPressed: () {
                 bibleService.addNewPage('');

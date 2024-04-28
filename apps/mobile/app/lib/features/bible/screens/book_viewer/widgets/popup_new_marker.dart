@@ -89,13 +89,13 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
       actions: [
         TextButton(
             onPressed: () {
-              bibleService.verses = {};
+              bibleService.selectedVerses = {};
               Navigator.pop(context);
             },
             child: Text('Cancelar', style: AppStyle.txtNunitoSansSemiBold16)),
         TextButton(
             onPressed: () async {
-              Map<dynamic, String> verseSelected = bibleService.verses;
+              Map<dynamic, String> verseSelected = bibleService.selectedVerses;
               // bibleService.addNewPage(usernameController.text);
               bibleService.editMarker(
                   bibleService.selectedBook,
@@ -103,7 +103,7 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
                   verseSelected,
                   usernameController.text);
               usernameController.clear();
-              bibleService.verses = {};
+              bibleService.selectedVerses = {};
 
               Navigator.pop(context);
             },

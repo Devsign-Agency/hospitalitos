@@ -143,6 +143,7 @@ class _HomePageState extends State<HomePage> {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
+
     final day = DateTime.now().toString().split(' ')[0];
     List<dynamic> arr = [];
     var index = -1;

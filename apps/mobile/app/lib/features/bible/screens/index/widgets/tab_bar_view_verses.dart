@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 import 'package:mobile_app/features/bible/screens/book_viewer/book_viewer_screen.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../shared/shared.dart';
 import '../../../../../themes/themes.dart';
-import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewVerses extends StatelessWidget {
   final Function onChangeTab;
@@ -27,22 +25,13 @@ class TabBarViewVerses extends StatelessWidget {
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     bool getColor(int index) =>
-        index >= bibleService.startVerse && index <= bibleService.endVerse;
-
-    void next() {
-      bibleService.getVersesByRange(
-          bibleService.startVerse, bibleService.endVerse);
-      Navigator.of(context).pushNamed(BookViewerScreen.route,
-          arguments: bibleService.selectedChapter.verses);
-    }
+        index >= bibleService.startVerse && index <= bibleService.startVerse;
 
     void handleTappedItem(int index) {
       bibleService.startVerse = index;
-      bibleService.endVerse = index;
-
+      Navigator.of(context).pushNamed(BookViewerScreen.route,
+          arguments: bibleService.selectedChapter.verses);
       // bibleService.setLastPage();
-
-      next();
     }
 
     return Stack(
