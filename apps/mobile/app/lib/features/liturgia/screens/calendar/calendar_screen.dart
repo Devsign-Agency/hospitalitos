@@ -14,6 +14,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
 
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Liturgia',
@@ -57,6 +58,9 @@ class LiturgiaCalendarScreen extends StatelessWidget {
         ),
       ),
     );
+
+
+    
   }
 
   void _handleSelectedItem(dynamic item) {

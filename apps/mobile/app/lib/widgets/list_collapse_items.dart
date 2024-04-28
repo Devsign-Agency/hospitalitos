@@ -18,9 +18,27 @@ class ListCollapseItem extends StatefulWidget {
 
 class ListCollapseItemState extends State<ListCollapseItem> {
   int selectedIndex = 1000;
+  var arrLiturgy = [];
+   _itemsForDate(){
+       final day = DateTime.now().toString().split(' ')[0];
+    print(day);
+    var index = 0;
+    var findIndex = 0;
+     widget.items.forEach((liturgia) {
+      final date = liturgia['date'];
+          if (date == day)
+            {
+              findIndex = index;
+              arrLiturgy.add(liturgia['info']);
+            }
+            index++;
+        });
+        
 
+        return findIndex;
+  }
   void _changeSelected(Map item) {
-    print('epale $item');
+    // selectedIndex = index;
     item['isSelected'] = !item['isSelected'];
     widget.onSelectedItem(item);
     setState(() {});
@@ -28,10 +46,19 @@ class ListCollapseItemState extends State<ListCollapseItem> {
 
   @override
   Widget build(BuildContext context) {
+ final day = DateTime.now().toString().split(' ')[0];
+   
+   
+   var indexItem = _itemsForDate();
+   var data = widget.items[indexItem]['info'];
+   var datasss = widget.items[indexItem]['isSelected'];
+   var dataL = widget.items[0]['info'];
+   print('search $data');
     return ListView.separated(
       shrinkWrap: true,
       itemBuilder: (_, int index) {
-        final Map<String, dynamic> item = widget.items[index];
+        
+        final Map<String, dynamic> item = data[index];
         return Container(
           // padding: getPadding(top: 16, bottom: 16),
           child: Column(
@@ -52,7 +79,7 @@ class ListCollapseItemState extends State<ListCollapseItem> {
               ]),
               if (item['isSelected'])
                 Text(
-                  '${item['description']}jjjjjjjjjjjj',
+                  '${item['description']}',
                   style: AppStyle.txtNunitoSansRegular14Black900,
                 )
             ],
@@ -65,7 +92,13 @@ class ListCollapseItemState extends State<ListCollapseItem> {
         margin: getMargin(top: 16, bottom: 16),
         color: ColorConstant.gray400,
       ),
-      itemCount: widget.items.length,
+      itemCount: data.length,
     );
+
+
+    
   }
+
+ 
+
 }
