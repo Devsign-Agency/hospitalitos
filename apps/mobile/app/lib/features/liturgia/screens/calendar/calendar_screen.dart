@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
-
+import 'package:excel/excel.dart';
 class LiturgiaCalendarScreen extends StatelessWidget {
   static const String route = 'calendar-route';
   const LiturgiaCalendarScreen({Key? key}) : super(key: key);
@@ -13,8 +16,8 @@ class LiturgiaCalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
-
-
+var data = loadJsonAsset();
+  print('data $data');
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Liturgia',
@@ -62,7 +65,33 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
     
   }
+Future<void> main() async {
+  final data = await rootBundle.load('assets/epubs/data.xlsx');
+  final bytes = data.buffer.asUint8List();
+  //var bytes = File('assets/epubs/data.xlsx').readAsBytesSync();
+  var excel = Excel.decodeBytes(bytes);
 
+  List<Map<String, dynamic>> jsonData = [];
+
+  for (var table in excel.tables.keys) {
+    for (var row in excel.tables[table]!.rows) {
+      Map<String, dynamic> rowMap = {};
+      for (int i = 1; i < row.length; i++) {
+        rowMap['columna_$i'] = row[i]!.value;
+      }
+      jsonData.add(rowMap);
+    }
+  }
+
+  print(jsonData);
+}
+
+Future<void> loadJsonAsset() async { 
+  final String jsonString = await rootBundle.loadString('assets/epubs/data.json'); 
+  final data = jsonDecode(jsonString); 
+  print(data);
+  return data; 
+}
   void _handleSelectedItem(dynamic item) {
     print(item);
   }

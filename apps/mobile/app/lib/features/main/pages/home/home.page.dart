@@ -12,16 +12,19 @@ import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
+import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../themes/themes.dart';
 import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
+
+
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -266,6 +269,16 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        child: Icon(Icons.chat_bubble,color: ColorConstant.yellow100,),
+        onPressed: (){
+           Navigator.of(context).pushNamed(ChatBubble.route);
+        
+      },
+     
+      ),
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
@@ -309,7 +322,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // My Favorites
-          CustomCard(
+          /*CustomCard(
             margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
             child: Row(
               children: [
@@ -342,7 +355,7 @@ class _HomePageState extends State<HomePage> {
               themeProvider.setLightMode();
               //Navigator.of(context).pushNamed(FavoriteListScreen.route);
             },
-          ),
+          ),*/
 
           // Recently viewed
           Column(

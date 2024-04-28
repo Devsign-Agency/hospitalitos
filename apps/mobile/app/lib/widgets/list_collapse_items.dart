@@ -4,7 +4,7 @@ import 'package:mobile_app/widgets/widgets.dart';
 import '../core/app_export.dart';
 
 class ListCollapseItem extends StatefulWidget {
-  final List<Map<String, dynamic>> items;
+  final List<dynamic> items;
   final Function onSelectedItem;
   const ListCollapseItem({
     super.key,
