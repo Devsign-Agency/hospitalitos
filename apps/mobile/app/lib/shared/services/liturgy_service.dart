@@ -120,7 +120,7 @@ Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. 
       'detail': [
         'Tiempo Pascual',
         'San Marcos, evangelista',
-        'V Domingo de Pascua',
+        'V DOMINGO de Pascua',
       ],
       'title': 'Oficio de lectura',
       'description':
