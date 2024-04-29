@@ -17,7 +17,6 @@ import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../../themes/themes.dart';
 import '../../../bible/screens/screens.dart';
@@ -83,10 +82,6 @@ class _HomePageState extends State<HomePage> {
   /*Future<List<EpubBook>> liturgy() async {
     return LiturgyService.items;+
   }*/
-
-  Future<List<SfPdfViewer>> fetchDataPdf() async {
-    return PdfService.openAssetFolder('/pdf');
-  }
 
   @override
   initState() {

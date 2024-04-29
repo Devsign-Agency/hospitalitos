@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:catholic_liturgy/catholic_liturgy.dart';
+// import 'package:catholic_liturgy/catholic_liturgy.dart';
 
 class LiturgyService extends ChangeNotifier {
   List<dynamic> liturgies = [
-       {
+    {
       'date': '2024-04-22',
       'detail': [
         'Tiempo Pascual',
         'Lunes de la IV Semana de Pascua',
-
         'LUNES de la IV Semana de Pascua',
       ],
       'title': 'Oficio de lectura',
@@ -21,7 +20,7 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-       {
+    {
       'date': '2024-04-23',
       'detail': [
         'Tiempo Pascual',
@@ -38,7 +37,7 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-       {
+    {
       'date': '2024-04-24',
       'detail': [
         'Tiempo Pascual',
@@ -89,7 +88,6 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-    
     {
       'date': '2024-04-27',
       'detail': [
@@ -107,7 +105,6 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-    
     {
       'date': '2024-04-28',
       'detail': [
@@ -125,7 +122,7 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-      {
+    {
       'date': '2024-04-29',
       'detail': [
         'Tiempo Pascual',
@@ -142,7 +139,7 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-       {
+    {
       'date': '2024-04-30',
       'detail': [
         'Tiempo Pascual',
@@ -159,7 +156,7 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-       {
+    {
       'date': '2024-05-01',
       'detail': [
         'Tiempo Pascual',
@@ -210,7 +207,6 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-    
     {
       'date': '2024-05-04',
       'detail': [
@@ -228,7 +224,6 @@ class LiturgyService extends ChangeNotifier {
       'oficioLectura': '',
       'horaItermedia': ''
     },
-    
     {
       'date': '2024-05-05',
       'detail': [
