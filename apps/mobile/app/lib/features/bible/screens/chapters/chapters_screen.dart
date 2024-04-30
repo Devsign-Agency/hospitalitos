@@ -123,6 +123,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
     List<dynamic> pages = bibleService.getPageList();
 
+    print('pages: $pages');
+
     for (var page in pages) {
       final List<String> values = page.split('/');
       final String titlePage = '${values[0]} ${values[1]}, ${values[2]}';

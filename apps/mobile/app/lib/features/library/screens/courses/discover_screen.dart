@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/features/library/widgets/preview_list_video.dart';
 import 'package:mobile_app/widgets/custom_app_bar.dart';
 import 'package:youtube_api/youtube_api.dart';
-
+import 'package:youtube_data_api/models/channel.dart';
+import 'package:youtube_data_api/models/playlist.dart';
+import 'package:youtube_data_api/models/video.dart';
+import 'package:youtube_data_api/models/video_data.dart';
+import 'package:youtube_data_api/youtube_data_api.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
 import '../../../../core/models/viewed_preview.dart';
@@ -41,10 +45,41 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   callApi() async {
+    // YoutubeDataApi youtubeDataApi = YoutubeDataApi();
+
+    String query = "Wegz";
+    YoutubeDataApi youtubeDataApi = YoutubeDataApi();
+    // List videoResult = await youtubeDataApi.fetchSearchVideo(
+    //     query, "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g");
+    // videoResult.forEach((element) {
+    //   if (element is Video) {
+    //     Video video = element;
+    //   } else if (element is Channel) {
+    //     Channel channel = element;
+    //   } else if (element is PlayList) {
+    //     PlayList playList = element;
+    //   }
+    // });
+
+    // print(videoResult);
+//             VideoData? videoData = await youtubeDataApi.fetchVideoData(videoId);
+// String? videoTitle = videoData?.video?.title;
+// String? videoChannelName = videoData?.video?.username;
+// String? viewsCount = videoData?.video?.viewCount;
+// String? likeCount = videoData?.video?.likeCount;
+// String? channelThumbnail = videoData?.video?.channelThumb;
+// String? channelId = videoData?.video?.channelId;
+// String? subscribeCount = videoData?.video?.subscribeCount;
+// List<Video?>? relatedVideos = videoData?.videosList;
+
+    // await youtubeAPI.channel('UCBJni9poQ67aCVmW6bA9wRg').then((value) {
+    //   print(value);
+    // });
+
     try {
-      results = await youtubeAPI
-          .search('EWTNespanol '); //searching for videos related to HD Music
+      results = await youtubeAPI.search('Hospitalitos de la fe '); //searching for videos related to HD Music
       listVideos = results;
+
       return results;
     } catch (e) {
       print(
@@ -68,7 +103,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             id: '4', title: 'Título', image: 'assets/images/img_5.png'),
       ];
 
-      return youtubeAPI.search('EWTNespanol ');
+      return youtubeAPI.search('DwTN ');
     }
 
     return Scaffold(

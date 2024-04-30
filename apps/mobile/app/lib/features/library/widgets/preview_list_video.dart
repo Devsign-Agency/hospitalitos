@@ -62,17 +62,38 @@ class PreviewListVideo extends StatelessWidget {
                           Navigator.pushNamed(context, PreviewVideoScreen.route,
                               arguments: items[index].url);
                         },
-                        child: Container(
-                          height: double.infinity,
-                          width: 244.0,
-                          margin: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(item), fit: BoxFit.cover),
-                              color: ColorConstant.blueGray10002,
-                              borderRadius: BorderRadius.circular(10.0)),
-                        ),
-                      );
+                        child:  
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                width: double.infinity,
+                                height: 300.0,
+                                margin: getMargin(right: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 136.0,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: DecorationImage(
+                                              image: NetworkImage(item), fit: BoxFit.cover)),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      items[index].title,
+                                      style: AppStyle.txtNunitoSansSemiBold20,
+                                      maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                      //overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
                     },
                     itemCount: items.length,
                     // separatorBuilder: (_, __) => SizedBox(width: 8),
