@@ -24,8 +24,6 @@ import '../../../../themes/themes.dart';
 import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
 
-
-
 class HomePage extends StatefulWidget {
   static const String route = 'home';
 
@@ -116,7 +114,7 @@ class _HomePageState extends State<HomePage> {
 
   getCurrentDate() {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
-    
+
     return format2.format(DateTime.now()).split('de 2024')[0];
   }
 
@@ -148,7 +146,7 @@ class _HomePageState extends State<HomePage> {
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
 
     final day = DateTime.now().toString().split(' ')[0];
-  
+
     List<dynamic> arr = [];
     var index = -1;
     liturgyService.liturgies.forEach((liturgia) {
@@ -159,14 +157,32 @@ class _HomePageState extends State<HomePage> {
 
         if (detail[2].contains('LUNES')) {
           arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+          arr.add(liturgyService.liturgies[index + 5]['detail']);
+          arr.add(liturgyService.liturgies[index + 6]['detail']);
+        }
+        if (detail[2].contains('MARTES')) {
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+          arr.add(liturgyService.liturgies[index + 5]['detail']);
+        }
+        if (detail[2].contains('MIERCOLES')) {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
           arr.add(liturgyService.liturgies[index + 3]['detail']);
           arr.add(liturgyService.liturgies[index + 4]['detail']);
         }
-        if (detail[2].contains('MARTES')) {
+        if (detail[2].contains('JUEVES')) {
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
@@ -175,7 +191,8 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 2]['detail']);
           arr.add(liturgyService.liturgies[index + 3]['detail']);
         }
-        if (detail[2].contains('MIERCOLES')) {
+
+        if (detail[2].contains('VIERNES')) {
           arr.add(liturgyService.liturgies[index - 4]['detail']);
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
@@ -183,25 +200,6 @@ class _HomePageState extends State<HomePage> {
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
-        }
-        if (detail[2].contains('JUEVES')) {
-          arr.add(liturgyService.liturgies[index - 5]['detail']);
-          arr.add(liturgyService.liturgies[index - 4]['detail']);
-          arr.add(liturgyService.liturgies[index - 3]['detail']);
-          arr.add(liturgyService.liturgies[index - 2]['detail']);
-          arr.add(liturgyService.liturgies[index - 1]['detail']);
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 1]['detail']);
-        }
-
-        if (detail[2].contains('VIERNES')) {
-          arr.add(liturgyService.liturgies[index - 6]['detail']);
-          arr.add(liturgyService.liturgies[index - 5]['detail']);
-          arr.add(liturgyService.liturgies[index - 4]['detail']);
-          arr.add(liturgyService.liturgies[index - 3]['detail']);
-          arr.add(liturgyService.liturgies[index - 2]['detail']);
-          arr.add(liturgyService.liturgies[index - 1]['detail']);
-          arr.add(detail);
         }
 
         if (detail[2].contains('SÁBADO')) {
@@ -231,10 +229,6 @@ class _HomePageState extends State<HomePage> {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
-      /*{
-        'icon': ImageConstant.imgNotification,
-        'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
-      }*/
     ];
 
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -272,12 +266,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        child: Icon(Icons.chat_bubble,color: ColorConstant.yellow100,),
-        onPressed: (){
-           Navigator.of(context).pushNamed(ChatBubble.route);
-        
-      },
-     
+        child: Icon(
+          Icons.chat_bubble,
+          color: ColorConstant.yellow100,
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(ChatBubble.route);
+        },
       ),
       appBar: CustomAppBar(
         customTitle: Row(

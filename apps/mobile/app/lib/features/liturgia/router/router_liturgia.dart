@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
+import 'package:mobile_app/features/liturgia/screens/calendar/detail_screen.dart';
+
 import 'package:mobile_app/router/menu_option.dart';
 
 class RouterLiturgia {
@@ -11,6 +13,9 @@ class RouterLiturgia {
     routes.addAll({
       LiturgiaCalendarScreen.route: (BuildContext context) =>
           LiturgiaCalendarScreen()
+    });
+    routes.addAll({
+      DetailLiturgyScreen.route: (BuildContext context) => DetailLiturgyScreen()
     });
 
     for (final option in menuOptions) {

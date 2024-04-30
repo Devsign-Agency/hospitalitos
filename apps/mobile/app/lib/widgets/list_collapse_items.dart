@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/liturgia/screens/calendar/detail_screen.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 
 import '../core/app_export.dart';
@@ -19,45 +20,43 @@ class ListCollapseItem extends StatefulWidget {
 class ListCollapseItemState extends State<ListCollapseItem> {
   int selectedIndex = 1000;
   var arrLiturgy = [];
-   _itemsForDate(){
-       final day = DateTime.now().toString().split(' ')[0];
+  _itemsForDate() {
+    final day = DateTime.now().toString().split(' ')[0];
     print(day);
     var index = 0;
     var findIndex = 0;
-     widget.items.forEach((liturgia) {
+    widget.items.forEach((liturgia) {
       final date = liturgia['date'];
-          if (date == day)
-            {
-              findIndex = index;
-              arrLiturgy.add(liturgia['info']);
-            }
-            index++;
-        });
-        
+      if (date == day) {
+        findIndex = index;
+        arrLiturgy.add(liturgia['info']);
+      }
+      index++;
+    });
 
-        return findIndex;
+    return findIndex;
   }
-  void _changeSelected(Map item) {
+
+  void _changeSelected(context, Map item) {
     // selectedIndex = index;
-    item['isSelected'] = !item['isSelected'];
-    widget.onSelectedItem(item);
-    setState(() {});
+    //item['isSelected'] = !item['isSelected'];
+    //widget.onSelectedItem(item);
+    //setState(() {});
+    Navigator.of(context).pushNamed(DetailLiturgyScreen.route, arguments: item);
   }
 
   @override
   Widget build(BuildContext context) {
- final day = DateTime.now().toString().split(' ')[0];
-   
-   
-   var indexItem = _itemsForDate();
-   var data = widget.items[indexItem]['info'];
-   var datasss = widget.items[indexItem]['isSelected'];
-   var dataL = widget.items[0]['info'];
-   print('search $data');
+    final day = DateTime.now().toString().split(' ')[0];
+
+    var indexItem = _itemsForDate();
+    var data = widget.items[indexItem]['info'];
+    var datasss = widget.items[indexItem]['isSelected'];
+    var dataL = widget.items[0]['info'];
+    print('search $data');
     return ListView.separated(
       shrinkWrap: true,
       itemBuilder: (_, int index) {
-        
         final Map<String, dynamic> item = data[index];
         return Container(
           // padding: getPadding(top: 16, bottom: 16),
@@ -74,7 +73,7 @@ class ListCollapseItemState extends State<ListCollapseItem> {
                   svgPath: !item['isSelected']
                       ? ImageConstant.imgArrowright
                       : ImageConstant.imgArrowdownGray900,
-                  onTap: () => _changeSelected(item),
+                  onTap: () => _changeSelected(context, item),
                 )
               ]),
               if (item['isSelected'])
@@ -94,11 +93,5 @@ class ListCollapseItemState extends State<ListCollapseItem> {
       ),
       itemCount: data.length,
     );
-
-
-    
   }
-
- 
-
 }
