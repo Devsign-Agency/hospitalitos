@@ -23,7 +23,7 @@ class DiscoverScreen extends StatefulWidget {
 }
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
-  static String api_key = "AIzaSyB4lAIBNuHW_QsWBIW-KOl8MnqhRW8D3_g";
+  static String api_key = "AIzaSyCl6HFPoNj3vMimDlOyHZOXQcgwSvyrp7w";
   YoutubeAPI youtubeAPI = YoutubeAPI(api_key, maxResults: 20, type: "video");
   List<dynamic> results = []; //list to store the results
   var listVideos = [];
