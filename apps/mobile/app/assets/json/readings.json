@@ -1,0 +1,76 @@
+{
+    "readings": [
+        {
+            "title": "Feria de Pascua",
+            "date": "2024-4-30",
+            "readings": [
+              {
+                "title": "Primera Lectura",
+                "description":
+                    "19Vinieron entonces de Antioquía e Iconio algunos judíos y, habiendo persuadido a la gente, lapidaron a Pablo y le arrastraron fuera de la ciudad, dándole por muerto. 20Pero él se levantó y, rodeado de los discípulos, entró en la ciudad. Al día siguiente marchó con Bernabé a Derbe. 21Habiendo evangelizado aquella ciudad y conseguido bastantes discípulos, se volvieron a Listra, Iconio y Antioquía, 22confortando los ánimos de los discípulos, exhortándoles a perseverar en la fe y diciéndoles: «Es necesario que pasemos por muchas tribulaciones para entrar en el Reino de Dios.» 23Designaron presbíteros en cada Iglesia y después de hacer oración con ayunos, los encomendaron al Señor en quien habían creído. 24Atravesaron Pisidia y llegaron a Panfilia; 25predicaron en Perge la Palabra y bajaron a Atalía. 26Allí se embarcaron para Antioquía, de donde habían partido encomendados a la gracia de Dios para la obra que habían realizado. 27A su llegada reunieron a la Iglesia y se pusieron a contar todo cuanto Dios había hecho juntamente con ellos y cómo había abierto a los gentiles la puerta de la fe. 28Y permanecieron no poco tiempo con los discípulos.",
+                "verses": "HECHOS 14:19-28"
+              },
+              {
+                "title": "Salmo Responsorial",
+                "description":
+                    "10Te darán gracias, Yahveh, todas tus obras y tus amigos te bendecirán; 11dirán la gloria de tu reino, de tus proezas hablarán, 12para mostrar a los hijos de Adán tus proezas, el esplendor y la gloria de tu reino. 13Tu reino, un reino por los siglos todos, tu dominio, por todas las edades. Yahveh es fiel en todas sus palabras, en todas sus obras amoroso; 21¡La alabanza de Yahveh diga mi boca, y toda carne bendiga su nombre sacrosanto, para siempre jamás!",
+                "verses": "SALMO 145:10-13, 21"
+              },
+              {
+                "title": "Evangelio",
+                "description":
+                    "27Os dejo la paz, mi paz os doy; no os la doy como la da el mundo. No se turbe vuestro corazón ni se acobarde. 28Habéis oído que os he dicho: 'Me voy y volveré a vosotros.' Si me amarais, os alegraríais de que me fuera al Padre, porque el Padre es más grande que yo. 29Y os lo digo ahora, antes de que suceda, para que cuando suceda creáis. 30Ya no hablaré muchas cosas con vosotros, porque llega el Príncipe de este mundo. En mí no tiene ningún poder; 31pero ha de saber el mundo que amo al Padre y que obro según el Padre me ha ordenado. Levantaos. Vámonos de aquí.»",
+                "verses": "JUAN 14:27-31"
+              }
+            ]
+        },
+        {
+            "title": "San José Obrero (Memoria Libre)",
+            "date": "2024-5-01",
+            "readings": [
+              {
+                "title": "Primera Lectura",
+                "description":
+                    "1 26Y dijo Dios: «Hagamos al ser humano a nuestra imagen, como semejanza nuestra, y manden en los peces del mar y en las aves de los cielos, y en las bestias y en todas las alimañas terrestres, y en todas las sierpes que serpean por la tierra. 27Creó, pues, Dios al ser humano a imagen suya, a imagen de Dios le creó, macho y hembra los creó. 28Y bendíjolos Dios, y díjoles Dios: «Sed fecundos y multiplicaos y henchid la tierra y sometedla; mandad en los peces del mar y en las aves de los cielos y en todo animal que serpea sobre la tierra.» 29Dijo Dios: «Ved que os he dado toda hierba de semilla que existe sobre la haz de toda la tierra, así como todo árbol que lleva fruto de semilla; para vosotros será de alimento. 30Y a todo animal terrestre, y a toda ave de los cielos y a toda sierpe de sobre la tierra, animada de vida, toda la hierba verde les doy de alimento.» Y así fue. 31Vio Dios cuanto había hecho, y todo estaba muy bien. Y atardecío y amaneció: día sexto. 2 1Concluyéronse, pues, los cielos y la tierra y todo su aparato, 2y dio por concluida Dios en el séptimo día la labor que había hecho, y cesó en el día séptimo de toda la labor que hiciera. 3Y bendijo Dios el día séptimo y lo santificó; porque en él cesó Dios de toda la obra creadora que Dios había hecho.",
+                "verses": "GÉNESIS 1:26--2:3"
+              },
+              {
+                "title": "Salmo Responsorial",
+                "description":
+                    "2Antes que los montes fuesen engendrados, antes que naciesen tierra y orbe, desde siempre hasta siempre tú eres Dios. 3Tú al polvo reduces a los hombres, diciendo: «¡Tornad, hijos de Adán!» 4Porque mil años a tus ojos son como el ayer, que ya pasó, como una vigilia de la noche. 12¡Enseñanos a contar nuestros días, para que entre la sabiduría en nuestro corazón! 13¡Vuelve, Yahveh! ¿Hasta cuándo? Ten piedad de tus siervos. 14Sácianos de tu amor a la mañana, que exultemos y cantemos toda nuestra vida. 16¡Que se vea tu obra con tus siervos, y tu esplendor sobre sus hijos!",
+                "verses": "SALMO 90:2-4, 12-14, 16"
+              },
+              {
+                "title": "Evangelio",
+                "description":
+                    "54Viniendo a su patria, les enseñaba en su sinagoga, de tal manera que decían maravillados: «¿De dónde le viene a éste esa sabiduría y esos milagros? 55¿No es éste el hijo del carpintero? ¿No se llama su madre María, y sus hermanos Santiago, José, Simón y Judas? 56Y sus hermanas, ¿no están todas entre nosotros? Entonces, ¿de dónde le viene todo esto?» 57Y se escandalizaban a causa de él. Mas Jesús les dijo: «Un profeta sólo en su patria y en su casa carece de prestigio.» 58Y no hizo allí muchos milagros, a causa de su falta de fe.",
+                "verses": "MATEO 13:54-58"
+              }
+            ]
+        },
+        {
+            "date": "2024-5-02",
+            "title": "San Athanasius, Obispo, Doctor de la Iglesia (Memoria)",
+            "readings": [
+              {
+                "title": "Primera Lectura",
+                "description":
+                    "7Después de una larga discusión, Pedro se levantó y les dijo: «Hermanos, vosotros sabéis que ya desde los primeros días me eligió Dios entre vosotros para que por mi boca oyesen los gentiles la Palabra de la Buena Nueva y creyeran. 8Y Dios, conocedor de los corazones, dio testimonio en su favor comunicándoles el Espíritu Santo como a nosotros; 9y no hizo distinción alguna entre ellos y nosotros, pues purificó sus corazones con la fe. 10¿Por qué, pues, ahora tentáis a Dios queriendo poner sobre el cuello de los discípulos un yugo que ni nuestros padres ni nosotros pudimos sobrellevar? 11Nosotros creemos más bien que nos salvamos por la gracia del Señor Jesús, del mismo modo que ellos.» 12Toda la asamblea calló y escucharon a Bernabé y a Pablo contar todas las señales y prodigios que Dios había realizado por medio de ellos entre los gentiles. 13Cuando terminaron de hablar, tomó Santiago la palabra y dijo: «Hermanos, escuchadme. 14Simeón ha referido cómo Dios ya al principio intervino para procurarse entre los gentiles un pueblo para su Nombre. 15Con esto concuerdan los oráculos de los Profetas, según está escrito: 16«Después de esto volveré y reconstruiré la tienda de David que está caída; reconstruiré sus ruinas, y la volveré a levantar. 17Para que el resto de los hombres busque al Señor, y todas las naciones que han sido consagradas a mi nombre, dice el Señor que hace 18que estas cosas sean conocidas desde la eternidad. 19«Por esto opino yo que no se debe molestar a los gentiles que se conviertan a Dios, 20sino escribirles que se abstengan de lo que ha sido contaminado por los ídolos, de la impureza, de los animales estrangulados y de la sangre. 21Porque desde tiempos antiguos Moisés tiene en cada ciudad sus predicadores y es leído cada sábado en las sinagogas.»",
+                "verses": "HECHOS 15:7-21"
+              },
+              {
+                "title": "Salmo Responsorial",
+                "description":
+                    "1¡Cantad a Yahveh un canto nuevo, cantad a Yahveh, toda la tierra, 2cantad a Yahveh, su nombre bendecid! Anunciad su salvación día tras día, 3contad su gloria a las naciones, a todos los pueblos sus maravillas. 10Decid entre las gentes: «¡Yahveh es rey!» El orbe está seguro, no vacila; él gobierna a los pueblos rectamente.",
+                "verses": "SALMO 96:1-3, 10"
+              },
+              {
+                "title": "Evangelio",
+                "description":
+                    "9Como el Padre me amó, yo también os he amado a vosotros; permaneced en mi amor. 10Si guardáis mis mandamientos, permaneceréis en mi amor, como yo he guardado los mandamientos de mi Padre, y permanezco en su amor. 11Os he dicho esto, para que mi gozo esté en vosotros, y vuestro gozo sea colmado.",
+                "verses": "JUAN 15:9-11"
+              }
+            ]
+        }
+    ]
+}
