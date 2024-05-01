@@ -37,20 +37,17 @@ class DailyReadingService extends ChangeNotifier {
   }
 
   DailyReading getDailyReadingSelected() {
-    DateTime now = DateTime.now();
-    int year = now.year;
-    int month = now.month;
-    int day = now.day;
-    String date = '$year-$month-$day';
+    List<String> split = DateTime.now().toString().split('-');
 
-    print(_dailyReadings);
+    String year = split[0];
+    String month = split[1];
+    String day = split[2].substring(0, 2);
+
+    String date = '$year-$month-$day';
     dailyReadingSelected = _dailyReadings.firstWhere((element) {
-      print('element.date : ${element.date}');
-      print('date: $date');
       return element.date == date;
     }, orElse: () => DailyReading(title: '', date: '', readings: []));
 
-    print('dailyReading : $dailyReadingSelected');
     // notifyListeners();
     return dailyReadingSelected;
   }

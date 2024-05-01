@@ -16,8 +16,8 @@ class BibleService extends ChangeNotifier {
 
   static List<BottomNavigationMenu> bottomMenuList = [
     BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-    // BottomNavigationMenu(
-    //     icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+    BottomNavigationMenu(
+        icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
     BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
     BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
   ];
@@ -32,9 +32,13 @@ class BibleService extends ChangeNotifier {
 
   // Getters
   BookBible get selectedBook => _selectedBook;
+
   Chapter get selectedChapter => _selectedChapter;
+
   Map<dynamic, String> get selectedVerses => _selectedVerses;
+
   int get startVerse => _startVerse;
+
   Map<String, dynamic> get versesByChapter => _selectedChapter.verses;
 
   // Constructor

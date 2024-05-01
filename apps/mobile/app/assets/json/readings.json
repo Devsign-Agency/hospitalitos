@@ -2,7 +2,7 @@
     "readings": [
         {
             "title": "Feria de Pascua",
-            "date": "2024-4-30",
+            "date": "2024-04-30",
             "readings": [
               {
                 "title": "Primera Lectura",
@@ -26,7 +26,7 @@
         },
         {
             "title": "San José Obrero (Memoria Libre)",
-            "date": "2024-5-01",
+            "date": "2024-05-01",
             "readings": [
               {
                 "title": "Primera Lectura",
@@ -49,7 +49,7 @@
             ]
         },
         {
-            "date": "2024-5-02",
+            "date": "2024-05-02",
             "title": "San Athanasius, Obispo, Doctor de la Iglesia (Memoria)",
             "readings": [
               {
@@ -68,7 +68,7 @@
               {
                 "title": "Evangelio",
                 "description":
-                    "9 Como el Padre me amó, yo también os he amado a vosotros; permaneced en mi amor.\n\n10 Si guardáis mis mandamientos, permaneceréis en mi amor, como yo he guardado los mandamientos de mi Padre, y permanezco en su amor.\n\n11 Os he dicho esto, para que mi gozo esté en vosotros, y vuestro gozo sea colmado.",
+                    "9 Como el Padre me amó, yo también os he amado a vosotros; permaneced en mi amor.\n\n10 Si guardáis mis mandamientos, permaneceréis en mi amor, como yo he guardado los mandamientos de mi Padre, y permanezco en su amor.\n\n11Os he dicho esto, para que mi gozo esté en vosotros, y vuestro gozo sea colmado.",
                 "verses": "JUAN 15:9-11"
               }
             ]

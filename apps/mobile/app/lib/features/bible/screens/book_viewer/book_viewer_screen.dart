@@ -323,6 +323,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
           id: int.parse(element.chapter),
           name: 'Capítulo  ${element.chapter}'));
     }
+    double height = MediaQuery.of(context).size.height * 0.60;
 
     return Scaffold(
       backgroundColor:
@@ -363,6 +364,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       bibleService.selectedChapter = chapter;
                       bibleService.startVerse = 1;
 
+                      // bibleService.setLastPage();
+
                       Scrollable.ensureVisible(
                           GlobalObjectKey(1).currentContext!);
                     }),
@@ -391,7 +394,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                       // Button back chapter
                       if (int.parse(bibleService.selectedChapter.chapter) > 1)
                         Positioned(
-                          top: 250,
+                          top: height,
                           left: 0,
                           child: ButtonNavigationChapter(
                               onTap: () => bibleService.moveChapter('back'),
@@ -403,7 +406,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                           bibleService.selectedBook.chapters.length)
                         Positioned(
                             right: 0,
-                            top: 250,
+                            top: height,
                             child: ButtonNavigationChapter(
                                 onTap: () => bibleService.moveChapter('next'),
                                 icon: Icons.arrow_forward)),

@@ -53,7 +53,7 @@ class PreviewListVideo extends StatelessWidget {
                 child: Wrap(
                   children: [
                     SizedBox(
-                      height: height * 0.86,
+                      height: height * 0.75,
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2),
@@ -106,6 +106,7 @@ class PreviewListVideo extends StatelessWidget {
                         // separatorBuilder: (_, __) => SizedBox(width: 8),
                       ),
                     ),
+                    // SizedBox(height: 100),
                   ],
                 ),
               ),

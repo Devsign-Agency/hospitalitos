@@ -116,22 +116,28 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onChangeTab(int index) {
-    bottomNavigationMain.setSelectedItem(index);
+    // bottomNavigationMain.setSelectedItem(index);
 
     switch (index) {
       case 0:
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomePage.route, (r) => false);
-        // Navigator.of(context).pushNamed(HomePage.route);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
         break;
       case 1:
-        Navigator.of(context).pushNamed(DiscoverScreen.route);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
         break;
       case 2:
-        Navigator.of(context).pushNamed(LiturgiaCalendarScreen.route);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
         break;
       case 3:
-        Navigator.of(context).pushNamed(BibleMain.route);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
+            (Route<dynamic> route) => false);
         break;
     }
   }
@@ -170,7 +176,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 4]['detail']);
           arr.add(liturgyService.liturgies[index + 5]['detail']);
         }
-        if (detail[2].contains('MIERCOLES')) {
+        if (detail[2].contains('MIÉRCOLES')) {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
@@ -247,9 +253,13 @@ class _HomePageState extends State<HomePage> {
                     .copyWith(color: ColorConstant.black900))),
         Align(
             alignment: Alignment.centerLeft,
-            child: Text(element[1],
-                style: AppStyle.txtNunitoSansSemiBold20
-                    .copyWith(color: ColorConstant.indigo900))),
+            child: Text(
+              element[1],
+              style: AppStyle.txtNunitoSansSemiBold20
+                  .copyWith(color: ColorConstant.indigo900),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            )),
         Align(
             widthFactor: double.infinity,
             alignment: Alignment.centerLeft,

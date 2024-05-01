@@ -11,9 +11,38 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:excel/excel.dart';
 
+import '../../../bible/screens/screens.dart';
+import '../../../library/screens/courses/discover_screen.dart';
+import '../../../main/pages/pages.dart';
+
 class LiturgiaCalendarScreen extends StatelessWidget {
   static const String route = 'calendar-route';
   const LiturgiaCalendarScreen({Key? key}) : super(key: key);
+
+  handleChangeBottomNavigationBar(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 2:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 3:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
+            (Route<dynamic> route) => false);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +91,11 @@ class LiturgiaCalendarScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 2,
+          onChangeIndex: (int index) =>
+              handleChangeBottomNavigationBar(index, context),
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 
@@ -100,22 +134,29 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
   getCurrentDate(date) {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
-    return date;
+
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        .parse(date + 'T00:00:00.000Z');
+    var inputDate = DateTime.parse(parseDate.toString());
+    String formattedDate = DateFormat.yMMMEd('es_ES').format(inputDate);
+    return formattedDate;
   }
 
   _handleEditDate(BuildContext context, LiturgyService liturgyService) async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime(2100),
+      initialDate: DateTime(DateTime.now().year, DateTime.now().month, 1),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      firstDate: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      lastDate: DateTime(DateTime.now().year, DateTime.now().month, 31),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
               colorScheme: ColorScheme.light(
-            primary: ColorConstant.indigo900, // header background color
+            primary: ColorConstant.yellow100, // header background color
             onPrimary: Colors.white, // header text color
-            onSurface: Colors.blue, // body text color
+            onSurface: Colors.black,
           )),
           // data: ThemeData.light().copyWith(
           //     primaryColor: const Color(0xFF4A5BF6), //Head background
@@ -138,9 +179,15 @@ class LiturgiaCalendarScreen extends StatelessWidget {
     //     lastDate: DateTime(2100));
 
     // dateCtl.text = date.toIso8601String();
-    print(date);
-    var newDate = date.toString().split(' ')[0];
-    liturgyService.date = newDate;
+
+    if (date != null) {
+      var newDate = date.toString().split(' ')[0];
+      liturgyService.date = newDate;
+    } else {
+      date = DateTime.now();
+      var newDate = date.toString().split(' ')[0];
+      liturgyService.date = newDate;
+    }
   }
 }
 

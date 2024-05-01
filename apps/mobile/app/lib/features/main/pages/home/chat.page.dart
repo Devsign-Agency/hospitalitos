@@ -13,18 +13,17 @@ class ChatBubble extends StatefulWidget {
 class _ChatBubbleState extends State<ChatBubble> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: CustomAppBar(
-          title: 'Felipe',
-        ),
-      
-        //iconButtonVariant: IconButtonVariant.FillGray300,
-      
-        body: WebView(
-          initialUrl: 'https://asistai.scrib.art/',
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
-      );
-    
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Andrea',
+      ),
+
+      //iconButtonVariant: IconButtonVariant.FillGray300,
+
+      body: WebView(
+        initialUrl: 'https://asistai.scrib.art/',
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
+    );
   }
 }

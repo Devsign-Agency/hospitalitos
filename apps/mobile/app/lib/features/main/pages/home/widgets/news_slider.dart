@@ -38,7 +38,7 @@ class _NewsSliderState extends State<NewsSlider> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 90,
+          height: 110,
           child: PageView(
             children: widget.children,
             onPageChanged: (value) => setState(() => pageIndex = value),

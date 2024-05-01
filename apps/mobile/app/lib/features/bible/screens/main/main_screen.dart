@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
+import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,21 @@ class _BibleMainState extends State<BibleMain> {
       case 0:
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 2:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 3:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
             (Route<dynamic> route) => false);
         break;
     }
@@ -68,8 +85,10 @@ class _BibleMainState extends State<BibleMain> {
 
       bibleService.setLastPage();
 
-      Navigator.of(context).pushNamed(BookViewerScreen.route,
-          arguments: bibleService.selectedChapter.verses);
+      Navigator.of(context)
+          .pushNamed(BookViewerScreen.route,
+              arguments: bibleService.selectedChapter.verses)
+          .then((value) => setState(() {}));
     }
   }
 
@@ -89,6 +108,7 @@ class _BibleMainState extends State<BibleMain> {
 
     // Preferences.removePageList();
     // Preferences.lastPage = '';
+    // Preferences.removeMarkerList();
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -114,17 +134,18 @@ class _BibleMainState extends State<BibleMain> {
                         color: isDarkTheme
                             ? ColorConstant.whiteA700
                             : ColorConstant.gray900)),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () => _handleTappedItem(),
-                    child: Text('Continuar',
-                        style: AppStyle.txtNunitoSansSemiBold16.copyWith(
-                            color: isDarkTheme
-                                ? ColorConstant.whiteA700
-                                : ColorConstant.indigo900)),
+                if (Preferences.lastPage.isNotEmpty)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () => _handleTappedItem(),
+                      child: Text('Continuar',
+                          style: AppStyle.txtNunitoSansSemiBold16.copyWith(
+                              color: isDarkTheme
+                                  ? ColorConstant.whiteA700
+                                  : ColorConstant.indigo900)),
+                    ),
                   ),
-                ),
               ],
             )),
 
@@ -187,7 +208,7 @@ class _BibleMainState extends State<BibleMain> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 2,
+          currentIndex: 3,
           onChangeIndex: handleChangeBottomNavigationBar,
           bottomMenuList: BibleService.bottomMenuList),
     );
