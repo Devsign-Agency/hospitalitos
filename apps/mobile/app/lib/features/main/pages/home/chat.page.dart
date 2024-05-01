@@ -15,7 +15,7 @@ class _ChatBubbleState extends State<ChatBubble> {
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: CustomAppBar(
-          title: 'Felipe',
+          title: 'Andrea',
         ),
       
         //iconButtonVariant: IconButtonVariant.FillGray300,

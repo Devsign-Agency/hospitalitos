@@ -11,19 +11,7 @@ class LiturgyService extends ChangeNotifier {
         'LUNES de la IV Semana de Pascua',
       ],
       'title': 'Oficio de lectura',
-      'description': '''Si ésta es la primera oración del día:
-
-V. Señor abre mis labios
-R. Y mi boca proclamará tu alabanza
-
-Se añade el Salmo del Invitatorio con la siguiente antífona:
- 
-Ant. Verdaderamente ha resucitado el Señor. Aleluya.
-Si antes se ha rezado ya alguna otra Hora:
- 
-V. Dios mío, ven en mi auxilio
-R. Señor, date prisa en socorrerme. Gloria al Padre, y al Hijo, y al Espíritu Santo.
-Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. Aleluya.''',
+      'description': '',
       'isSelected': false,
       'laudes': '',
       'completas': '',
@@ -270,7 +258,7 @@ Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. 
         {
           'title': 'Completas',
           'description':
-              'V. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre y al Hijo y al Espíritu Santo\ncomo era en el principio, ahora y siempre\ny por los siglos de los siglos. Amén. Aleluya.\n\nEXAMEN DE CONCIENCIA\n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, agradezcamos sus dones y reconozcamos humildemente nuestros pecados.\n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:\n\nI\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.\n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.  \n\nII\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.\n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.\n\nHIMNO\n\nGracias, porque al fin del día\npodemos agradecerte\nlos méritos de tu muerte,\ny el pan de la eucaristía,\nla plenitud de alegría\nde haber vivido tu alianza,\nla fe, el amor, la esperanza\ny esta bondad de tu empeño\nde convertir nuestro sueño\nen una humilde alabanza.\n\nGloria al Padre, gloria al Hijo,\ngloria al Espíritu Santo,\npor los siglos de los siglos. Amén.\n\nSALMODIA\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 90\nA LA SOMBRA DEL OMNIPOTENTE\nOs he dado potestad para pisotear serpientes y escorpiones (Lc 10, 19)\n\nTú que habitas al Amparo del Altísimo,\nque vives a la sombra del Omnipotente,\ndi al Señor: \"Refugio mío, alcázar mío,\nDios mío, confío en Ti\".\n \nÉl te librará de la red del cazador,\nde la peste funesta.\nTe cubrirá con sus plumas,\nbajo sus alas te refugiarás:\nSu brazo es escudo y armadura.\n \nNo temerás el espanto nocturno,\nni la flecha que vuela de día,\nni la peste que se desliza en las tinieblas,\nni la epidemia que devasta a mediodía.\n \nCaerán a tu izquierda mil,\ndiez mil a tu derecha;\na ti no te alcanzará.\n \nNada más mirar con tus ojos,\nverás la paga de los malvados,\nporque hiciste del Señor tu refugio,\ntomaste al Altísimo por defensa.\n \nNo se te acercará la desgracia,\nni la plaga llegará hasta tu tienda,\nporque a sus ángeles ha dado órdenes\npara que te guarden en tus caminos;\n \nte llevarán en sus palmas,\npara que tu pie no tropiece en la piedra;\ncaminarás sobre áspides y víboras,\npisotearás leones y dragones.\n \n\"Se puso junto a mí: lo libraré;\nlo protegeré porque conoce mi nombre,\nme invocará y lo escucharé.\n \nCon él estaré en la tribulación,\nlo defenderé, lo glorificaré,\nlo saciaré de largos días\ny le haré ver mi salvación\".\n\nAnt. Aleluya, aleluya, aleluya.\n\nLECTURA BREVE Ap 22, 4-5\n\nVerán al Señor cara a cara y llevarán su nombre en la frente. Ya no habrá más noche, ni necesitarán luz de lámpara o de sol, porque el Señor Dios irradiará luz sobre ellos, y reinarán por los siglos de los siglos.\n\nDurante la octava de Pascua en lugar del responsorio breve se dice la siguiente antífona:\n\nÉste es el día en que actuó el Señor: sea él nuestra alegría y nuestro gozo. Aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL\n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nORACIÓN\n\nHumildemente te pedimos, Señor, que después de haber celebrado en este día los misterios de la resurrección de tu Hijo, sin temor alguno, descansemos en tu paz, y mañana nos levantemos alegres para cantar nuevamente tus alabanzas. Por Jesucristo nuestro Señor.\n\nCONCLUSIÓN\nBendición\n\nV. El Señor todopoderoso nos conceda una noche tranquila y una santa muerte.\nR. Amén.\n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN\n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate Virgen María, aleluya.\nPorque ha resucitado verdaderamente el Señor, aleluya.',
+              'V. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre y al Hijo y al Espíritu Santo\ncomo era en el principio, ahora y siempre\ny por los siglos de los siglos. Amén. Aleluya.\n\nEXAMEN DE CONCIENCIA\n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, agradezcamos sus dones y reconozcamos humildemente nuestros pecados.\n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:\n\n<br>I</br>\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.\n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.  \n\nII\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.\n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.\n\nHIMNO\n\nGracias, porque al fin del día\npodemos agradecerte\nlos méritos de tu muerte,\ny el pan de la eucaristía,\nla plenitud de alegría\nde haber vivido tu alianza,\nla fe, el amor, la esperanza\ny esta bondad de tu empeño\nde convertir nuestro sueño\nen una humilde alabanza.\n\nGloria al Padre, gloria al Hijo,\ngloria al Espíritu Santo,\npor los siglos de los siglos. Amén.\n\nSALMODIA\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 90\nA LA SOMBRA DEL OMNIPOTENTE\nOs he dado potestad para pisotear serpientes y escorpiones (Lc 10, 19)\n\nTú que habitas al Amparo del Altísimo,\nque vives a la sombra del Omnipotente,\ndi al Señor: \"Refugio mío, alcázar mío,\nDios mío, confío en Ti\".\n \nÉl te librará de la red del cazador,\nde la peste funesta.\nTe cubrirá con sus plumas,\nbajo sus alas te refugiarás:\nSu brazo es escudo y armadura.\n \nNo temerás el espanto nocturno,\nni la flecha que vuela de día,\nni la peste que se desliza en las tinieblas,\nni la epidemia que devasta a mediodía.\n \nCaerán a tu izquierda mil,\ndiez mil a tu derecha;\na ti no te alcanzará.\n \nNada más mirar con tus ojos,\nverás la paga de los malvados,\nporque hiciste del Señor tu refugio,\ntomaste al Altísimo por defensa.\n \nNo se te acercará la desgracia,\nni la plaga llegará hasta tu tienda,\nporque a sus ángeles ha dado órdenes\npara que te guarden en tus caminos;\n \nte llevarán en sus palmas,\npara que tu pie no tropiece en la piedra;\ncaminarás sobre áspides y víboras,\npisotearás leones y dragones.\n \n\"Se puso junto a mí: lo libraré;\nlo protegeré porque conoce mi nombre,\nme invocará y lo escucharé.\n \nCon él estaré en la tribulación,\nlo defenderé, lo glorificaré,\nlo saciaré de largos días\ny le haré ver mi salvación\".\n\nAnt. Aleluya, aleluya, aleluya.\n\nLECTURA BREVE Ap 22, 4-5\n\nVerán al Señor cara a cara y llevarán su nombre en la frente. Ya no habrá más noche, ni necesitarán luz de lámpara o de sol, porque el Señor Dios irradiará luz sobre ellos, y reinarán por los siglos de los siglos.\n\nDurante la octava de Pascua en lugar del responsorio breve se dice la siguiente antífona:\n\nÉste es el día en que actuó el Señor: sea él nuestra alegría y nuestro gozo. Aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL\n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nORACIÓN\n\nHumildemente te pedimos, Señor, que después de haber celebrado en este día los misterios de la resurrección de tu Hijo, sin temor alguno, descansemos en tu paz, y mañana nos levantemos alegres para cantar nuevamente tus alabanzas. Por Jesucristo nuestro Señor.\n\nCONCLUSIÓN\nBendición\n\nV. El Señor todopoderoso nos conceda una noche tranquila y una santa muerte.\nR. Amén.\n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN\n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate Virgen María, aleluya.\nPorque ha resucitado verdaderamente el Señor, aleluya.',
           'isSelected': false
         },
         {
@@ -341,7 +329,7 @@ Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. 
         {
           'title': 'Completas',
           'description':
-              'V. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.  \n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. Aleluya.  \n\nEXAMEN DE CONCIENCIA  \n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, agradezcamos sus dones y reconozcamos humildemente nuestros pecados.  \n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:  \nI  \n\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.  \n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.    \n\nII  \n\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.  \n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.  \n\nHIMNO  \n\nTiembla el frío de los astros,\ny el silencio de los montes\nduerme sin fin. (Sólo el agua\nde mi corazón se oye).\n \nSu dulce latir, ¡tan dentro!,\ncalladamente responde\na la soledad inmensa\nde algo que late en la noche.\n \nSomos tuyos, tuyos, tuyos;\nsomos, Señor, ese insomne\ntemblor del agua nocturna,\nmás limpia después que corre.\n \n¡Agua en reposo viviente,\nque vuelve a ser pura y joven\ncon una esperanza! (Sólo\nen mi alma sonar se oye).\n \nGloria al Padre, gloria al Hijo,\ngloria al Espíritu Santo,\npor los siglos de los siglos. Amén.  \n\nSALMODIA  \n\nAnt. No me escondas tu rostro, ya que confío en ti. Aleluya.  \n\nSalmo 142, 1-11\nLAMENTACIÓN Y SÚPLICA ANTE LA ANGUSTIA\nEl hombre no se justifica por cumplir la ley; sino por creer en Cristo Jesús (Ga 2, 16).  \n\nSeñor, escucha mi oración;\ntú, que eres fiel, atiende a mi súplica;\ntú, que eres justo, escúchame.\nNo llames a juicio a tu siervo,\npues ningún hombre vivo es inocente frente a ti.\n \nEl enemigo me persigue a muerte,\nempuja mi vida al sepulcro,\nme confina a las tinieblas\ncomo a los muertos ya olvidados.\nMi aliento desfallece,\nmi corazón dentro de mí está yerto.\n \nRecuerdo los tiempos antiguos,\nmedito todas tus acciones,\nconsidero las obras de tus manos\ny extiendo mis brazos hacia ti:\ntengo sed de ti como tierra reseca.\n \nEscúchame en seguida, Señor,\nque me falta el aliento.\nNo me escondas tu rostro,\nigual que a los que bajan a la fosa.\n \nEn la mañana hazme escuchar tu gracia,\nya que confío en ti.\nIndícame el camino que he de seguir,\npues levanto mi alma a ti.\n \nLíbrame del enemigo, Señor,\nque me refugio en ti.\nEnséñame a cumplir tu voluntad,\nya que tú eres mi Dios.\nTu espíritu, que es bueno,\nme guíe por tierra llana.\n \nPor tu nombre, Señor, consérvame vivo;\npor tu clemencia, sácame de la angustia.   \n\nAnt. No me escondas tu rostro, ya que confío en ti. Aleluya.  \n\nLECTURA BREVE 1 Pe 5, 8-9  \n\nSed sobrios, estad alerta, que vuestro enemigo, el diablo, como león rugiente, ronda buscando a quien devorar; resistidle firmes en la fe.  \n\nRESPONSORIO BREVE  \n\nV. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nV. Tú, el Dios leal, nos librarás.\nR. Aleluya, aleluya.\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.  \n\nCÁNTICO EVANGÉLICO  \n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.  \n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL  \n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.  \n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.   \n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.  \n\nORACIÓN  \n\nIlumina, Señor, nuestra noche y concédenos un descanso tranquilo; que mañana nos levantemos en tu nombre y podamos contemplar, con salud y gozo, el clarear del nuevo día. Por Jesucristo nuestro Señor.  \n\nCONCLUSIÓN\nBendición  \n\nV. El Señor todopoderoso nos conceda una noche tranquila y una santa muerte.\nR. Amén. \n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN \n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate, Virgen María; aleluya.\nPorque verdaderamente ha resucitado el Señor; aleluya.',
+              'V. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.  \n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. Aleluya.  \n\nEXAMEN DE CONCIENCIA  \n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, agradezcamos sus dones y reconozcamos humildemente nuestros pecados.  \n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:  \n\nI  \n\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.  \n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.    \n\nII  \n\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.  \n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.  \n\nHIMNO  \n\nTiembla el frío de los astros,\ny el silencio de los montes\nduerme sin fin. (Sólo el agua\nde mi corazón se oye).\n \nSu dulce latir, ¡tan dentro!,\ncalladamente responde\na la soledad inmensa\nde algo que late en la noche.\n \nSomos tuyos, tuyos, tuyos;\nsomos, Señor, ese insomne\ntemblor del agua nocturna,\nmás limpia después que corre.\n \n¡Agua en reposo viviente,\nque vuelve a ser pura y joven\ncon una esperanza! (Sólo\nen mi alma sonar se oye).\n \nGloria al Padre, gloria al Hijo,\ngloria al Espíritu Santo,\npor los siglos de los siglos. Amén.  \n\nSALMODIA  \n\nAnt. No me escondas tu rostro, ya que confío en ti. Aleluya.  \n\nSalmo 142, 1-11\nLAMENTACIÓN Y SÚPLICA ANTE LA ANGUSTIA\nEl hombre no se justifica por cumplir la ley; sino por creer en Cristo Jesús (Ga 2, 16).  \n\nSeñor, escucha mi oración;\ntú, que eres fiel, atiende a mi súplica;\ntú, que eres justo, escúchame.\nNo llames a juicio a tu siervo,\npues ningún hombre vivo es inocente frente a ti.\n \nEl enemigo me persigue a muerte,\nempuja mi vida al sepulcro,\nme confina a las tinieblas\ncomo a los muertos ya olvidados.\nMi aliento desfallece,\nmi corazón dentro de mí está yerto.\n \nRecuerdo los tiempos antiguos,\nmedito todas tus acciones,\nconsidero las obras de tus manos\ny extiendo mis brazos hacia ti:\ntengo sed de ti como tierra reseca.\n \nEscúchame en seguida, Señor,\nque me falta el aliento.\nNo me escondas tu rostro,\nigual que a los que bajan a la fosa.\n \nEn la mañana hazme escuchar tu gracia,\nya que confío en ti.\nIndícame el camino que he de seguir,\npues levanto mi alma a ti.\n \nLíbrame del enemigo, Señor,\nque me refugio en ti.\nEnséñame a cumplir tu voluntad,\nya que tú eres mi Dios.\nTu espíritu, que es bueno,\nme guíe por tierra llana.\n \nPor tu nombre, Señor, consérvame vivo;\npor tu clemencia, sácame de la angustia.   \n\nAnt. No me escondas tu rostro, ya que confío en ti. Aleluya.  \n\nLECTURA BREVE 1 Pe 5, 8-9  \n\nSed sobrios, estad alerta, que vuestro enemigo, el diablo, como león rugiente, ronda buscando a quien devorar; resistidle firmes en la fe.  \n\nRESPONSORIO BREVE  \n\nV. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nV. Tú, el Dios leal, nos librarás.\nR. Aleluya, aleluya.\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.  \n\nCÁNTICO EVANGÉLICO  \n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.  \n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL  \n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.  \n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.   \n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.  \n\nORACIÓN  \n\nIlumina, Señor, nuestra noche y concédenos un descanso tranquilo; que mañana nos levantemos en tu nombre y podamos contemplar, con salud y gozo, el clarear del nuevo día. Por Jesucristo nuestro Señor.  \n\nCONCLUSIÓN\nBendición  \n\nV. El Señor todopoderoso nos conceda una noche tranquila y una santa muerte.\nR. Amén. \n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN \n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate, Virgen María; aleluya.\nPorque verdaderamente ha resucitado el Señor; aleluya.',
           'isSelected': false
         },
         {
@@ -404,6 +392,941 @@ Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. 
           'isSelected': false
         }
       ]
+    },
+    
+    {
+      'date': '2024-05-02',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': 'Completas \n\nV. Dios mío, ven en mi ayuda.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. Aleluya.\n\nEXAMEN DE CONCIENCIA\n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, reconozcamos humildemente nuestros pecados.\n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:\n\nI\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.\n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.  \n\nII\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.\n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.\n\nHIMNO\n\nComo el niño que no sabe dormirse\nsin cogerse a la mano de su madre, \nasí mi corazón viene a ponerse\nsobre tus manos al caer la tarde.\n\nComo el niño que sabe que alguien vela \nsu sueño de inocencia y esperanza,\nasí descansará mi alma segura, \nsabiendo que eres tú quien nos aguarda.\n\nTú endulzarás mi última amargura, \ntú aliviarás el último cansancio,\ntú cuidarás los sueños de la noche,\ntú borrarás las huellas de mi llanto.\n\nTú nos darás mañana nuevamente\nla antorcha de la luz y la alegría,\ny por las horas que te traigo muertas,\ntú me darás una mañana viva. Amén.\n\nSALMODIA\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 15\nEL SEÑOR ES EL LOTE DE MI HEREDAD\nDios resucitó a Jesús rompiendo las ataduras de la muerte (Hch 2, 24).\n\nProtégeme, Dios mío, que me refugio en ti;\nyo digo al Señor: «Tú eres mi bien.»\nLos dioses y señores de la tierra\nno me satisfacen.\n\nMultiplican las estatuas\nde dioses extraños;\nno derramaré sus libaciones con mis manos,\nni tomaré sus nombres en mis labios.\n\nEl Señor es el lote de mi heredad y mi copa;\nmi suerte está en tu mano:\nme ha tocado un lote hermoso,\nme encanta mi heredad.\n\nBendeciré al Señor, que me aconseja, \nhasta de noche me instruye internamente. \nTengo siempre presente al Señor,\ncon él a mi derecha no vacilaré.\n\nPor eso se me alegra el corazón,\nse gozan mis entrañas,\ny mi carne descansa serena.\nPorque no me entregarás a la muerte,\nni dejarás a tu fiel conocer la corrupción.\n\nMe enseñarás el sendero de la vida,\nme saciarás de gozo en tu presencia,\nde alegría perpetua a tu derecha.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Aleluya, aleluya, aleluya.\n\nLECTURA BREVE 1Ts 5, 23\n\nQue el mismo Dios de la paz os consagre totalmente, y que todo vuestro espíritu, alma y cuerpo, sea custodiado sin reproche hasta la venida de nuestro Señor Jesucristo.\n\nRESPONSORIO BREVE\n\nV. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nV. Tú, el Dios leal, nos librarás.\nR. Aleluya, aleluya.\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL\n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nORACIÓN\n\nSeñor Dios nuestro, concédenos un descanso tranquilo que restaure nuestras fuerzas, desgastadas ahora por el trabajo del día; así, fortalecidos con tu ayuda, te serviremos siempre con todo nuestro cuerpo y nuestro espíritu. Por Jesucristo nuestro Señor.\n\nCONCLUSIÓN\n\nV. El Señor todopoderoso nos conceda una noche tranquila y una muerte santa.\nR. Amén.\n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN\n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate Virgen María, aleluya.\nPorque ha resucitado verdaderamente el Señor, aleluya.',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '\n\nV. Señor, ábreme los labios.\nR. Y mi boca proclamará tu alabanza.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. \n\nAnt. Venid, adoremos a Cristo, Pastor supremo. \n\nSalmo 94\n\nVenid, aclamemos al Señor,\ndemos vítores a la Roca que nos salva;\nentremos a su presencia dándole gracias,\naclamándolo con cantos.\n\nPorque el Señor es un Dios grande,\nsoberano de todos los dioses:\ntiene en su mano las simas de la tierra,\nson suyas las cumbres de los montes.\nSuyo es el mar, porque él lo hizo,\nla tierra firme que modelaron sus manos.\n\nVenid, postrémonos por tierra,\nbendiciendo al Señor, creador nuestro.\nPorque él es nuestro Dios,\ny nosotros su pueblo,\nel rebaño que él guía.\n\nOjalá escuchéis hoy su voz:\n"No endurezcáis el corazón como en Meribá,\ncomo el día de Masá en el desierto:\ncuando vuestros padres me pusieron a prueba,\ny dudaron de mí, aunque habían visto mis obras."\n\nDurante cuarenta años\naquella generación me repugnó, y dije:\n"Es un pueblo de corazón extraviado,\nque no reconoce mi camino;\npor eso he jurado en mi cólera\nque no entrarán en mi descanso."\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. \n\nAnt. Venid, adoremos a Cristo, Pastor supremo. \n\nHIMNO\n\nCristo, Cabeza, Rey de los pastores,\nel pueblo entero, madrugando a fiesta,\ncanta a la gloria de tu sacerdote\nhimnos sagrados.\n \nCon abundancia de sagrado crisma,\nla unción profunda de tu Santo Espíritu\nlo armó guerrero y lo nombró en la Iglesia\njefe del pueblo.\n \nÉl fue pastor y forma del rebaño,\nluz para el ciego, báculo del pobre,\npadre común, presencia providente,\ntodo de todos.\n \nTú que coronas sus merecimientos,\ndanos la gracia de imitar su vida\ny al fin, sumisos a su magisterio,\ndanos su gloria. Amén.\n\nSALMODIA\n\nAnt. 1. Elévate sobre el cielo, Dios mío. Aleluya.\n\nSalmo 56\nORACIÓN MATUTINA DE UN AFLIGIDO\nEste salmo canta la pasión del Señor (S. Agustín).\n\nMisericordia, Dios mío, misericordia,\nque mi alma se refugia en ti;\nme refugio a la sombra de tus alas\nmientras pasa la calamidad.\n \nInvoco al Dios Altísimo,\nal Dios que hace tanto por mí:\ndesde el cielo me enviará la salvación,\nconfundirá a los que ansían matarme,\nenviará su gracia y su lealtad.\n \nEstoy echado entre leones\ndevoradores de hombres;\nsus dientes son lanzas y flechas,\nsu lengua es una espada afilada.\n \nElévate sobre el cielo, Dios mío,\ny llene la tierra tu gloria.\n \nHan tendido una red a mis pasos\npara que sucumbiera;\nme han cavado delante una fosa,\npero han caído en ella.\n \nMi corazón está firme, Dios mío,\nmi corazón está firme.\nVoy a cantar y a tocar:\ndespierta, gloria mía;\ndespertad, cítara y arpa;\ndespertaré a la aurora.\n \nTe daré gracias ante los pueblos, Señor;\ntocaré para ti ante las naciones:\npor tu bondad, que es más grande que los cielos;\npor tu fidelidad, que alcanza a las nubes.\n \nElévate sobre el cielo, Dios mío,\ny llene la tierra tu gloria.\n\nAnt. Elévate sobre el cielo, Dios mío. Aleluya.\n\nAnt. 2. El Señor redimió a su pueblo. Aleluya.\n\nCántico Jr 31, 10-14\nFELICIDAD DEL PUEBLO REDIMIDO\nJesús iba a morir... para reunir a los hijos de Dios dispersos (Jn 11, 51. 52).\n\nEscuchad, pueblos, la palabra del Señor,\nanunciadla en las islas remotas:\n«El que dispersó a Israel lo reunirá,\nlo guardará como un pastor a su rebaño;\nporque el Señor redimió a Jacob,\nlo rescató de una mano más fuerte.»\n \nVendrán con aclamaciones a la altura de Sión,\nafluirán hacia los bienes del Señor:\nhacia el trigo y el vino y el aceite,\ny los rebaños de ovejas y de vacas;\nsu alma será como un huerto regado,\ny no volverán a desfallecer.\n \nEntonces se alegrará la doncella en la danza,\ngozarán los jóvenes y los viejos;\nconvertiré su tristeza en gozo,\nlos alegraré y aliviaré sus penas;\nalimentaré a los sacerdotes con manjares sustanciosos,\ny mi pueblo se saciará de mis bienes.\n\nAnt. El Señor redimió a su pueblo. Aleluya.\n\nAnt. 3. Éste es nuestro Dios por siempre jamás. Aleluya.\n\nSalmo 47\nHIMNO A LA GLORIA DE JERUSALÉN\nMe transportó en espíritu a un monte altísimo y me enseñó la ciudad santa, Jerusalén (Ap 21, 10). \n\nGrande es el Señor y muy digno de alabanza\nen la ciudad de nuestro Dios,\nsu monte santo, altura hermosa,\nalegría de toda la tierra:\n \nel monte Sión, vértice del cielo,\nciudad del gran rey;\nentre sus palacios,\nDios descuella como un alcázar.\n \nMirad: los reyes se aliaron\npara atacarla juntos;\npero, al verla, quedaron aterrados\ny huyeron despavoridos;\n \nallí los agarró un temblor\ny dolores como de parto;\ncomo un viento del desierto,\nque destroza las naves de Tarsis.\n \nLo que habíamos oído lo hemos visto\nen la ciudad del Señor de los ejércitos,\nen la ciudad de nuestro Dios:\nque Dios la ha fundado para siempre.\n \n¡Oh Dios!, meditamos tu misericordia\nen medio de tu templo:\ncomo tu renombre, ¡oh Dios!, tu alabanza\nllega al confín de la tierra;\n \ntu diestra está llena de justicia:\nel monte Sión se alegra,\nlas ciudades de Judá se gozan\ncon tus sentencias.\n \nDad la vuelta en torno a Sión,\ncontando sus torreones;\nfijaos en sus baluartes,\nobservad sus palacios,\n \npara poder decirle a la próxima generación:\n«Éste es el Señor, nuestro Dios.»\nÉl nos guiará por siempre jamás.\n\nAnt. Éste es nuestro Dios por siempre jamás. Aleluya.\n\nLECTURA BREVE Hb 13, 7-9a\n\nAcordaos de aquellos superiores vuestros que os expusieron la palabra de Dios: reflexionando sobre el desenlace de su vida, ¡mitad su fe. Jesucristo es el mismo hoy que ayer, y para siempre. No os dejéis extraviar por doctrinas llamativas y extrañas.\n\nRESPONSORIO BREVE\n\nV. Sobre tus murallas, Jerusalén, he colocado centinelas. Aleluya, aleluya.\nR. Sobre tus murallas, Jerusalén, he colocado centinelas. Aleluya, aleluya.\nV. Ni de día ni de noche dejarán de anunciar el nombre del Señor.\nR. Aleluya, aleluya..\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. Sobre tus murallas, Jerusalén, he colocado centinelas. Aleluya, aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. No sois vosotros los que habláis, sino el Espíritu de vuestro Padre quien habla por vosotros. Aleluya.\n\nBENEDICTUS Lc 1, 68-79\nEL MESÍAS Y SU PRECURSOR\n\nBendito sea el Señor, Dios de Israel,\nporque ha visitado y redimido a su pueblo,\nsuscitándonos una fuerza de salvación\nen la casa de David, su siervo,\nsegún lo había predicho desde antiguo,\npor boca de sus santos profetas.\n \nEs la salvación que nos libra de nuestros enemigos\ny de la mano de todos los que nos odian;\nrealizando la misericordia\nque tuvo con nuestros padres,\nrecordando su santa alianza\ny el juramento que juró a nuestro padre Abrahán.\n \nPara concedernos que, libres de temor,\narrancados de la mano de los enemigos,\nle sirvamos con santidad y justicia,\nen su presencia, todos nuestros días.\n \nY a ti, niño, te llamarán profeta del Altísimo,\nporque irás delante del Señor\na preparar sus caminos,\nanunciando a su pueblo la salvación,\nel perdón de sus pecados.\n \nPor la entrañable misericordia de nuestro Dios,\nnos visitará el sol que nace de lo alto,\npara iluminar a los que viven en tinieblas\ny en sombra de muerte,\npara guiar nuestros pasos\npor el camino de la paz.\n \nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. No sois vosotros los que habláis, sino el Espíritu de vuestro Padre quien habla por vosotros. Aleluya.\n\nPRECES\n\nDemos gracias a Cristo, el buen pastor que entregó la vida por sus ovejas, y supliquémosle diciendo:\n\nApacienta a tu pueblo, Señor.\n \nSeñor Jesucristo, tú que en los santos pastores has revelado tu misericordia y tu amor,\n— haz que, por ellos, continúe llegando a nosotros tu acción misericordiosa.\n \nSeñor Jesucristo, tú que a través de los santos pastores sigues siendo el único pastor de tu pueblo,\n— no dejes de guiarnos siempre por medio de ellos.\n \nSeñor Jesucristo, tú que por medio de los santos pastores eres el médico de los cuerpos y de las almas,\n— haz que nunca falten en tu Iglesia los ministros que nos guíen por las sendas de una vida santa.\n \nSeñor Jesucristo, tú que has adoctrinado a la Iglesia con la prudencia y el amor de los santos,\n— haz que, guiados por nuestros pastores, progresemos en la santidad.\n\nSe pueden añadir algunas intenciones libres.\n\nOremos confiadamente al Padre, como Cristo nos enseñó: \n\nPadre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad  en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. \n\nORACIÓN\n\nDios todopoderoso y eterno, que hiciste de tu obispo san Atanasio un preclaro defensor de la divinidad de tu Hijo, concédenos, en tu bondad, que, fortalecidos con su doctrina y protección, te conozcamos y te amemos cada vez más plenamente. Por nuestro Señor Jesucristo.\n\nCONCLUSIÓN\n\nV. El Señor nos bendiga, nos guarde de todo mal y nos lleve a la vida eterna.\nR. Amén.',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': 'Vísperas\n\nV. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. \n\nHIMNO\n\nCantemos al Señor con alegría,\nunidos a la voz del Pastor santo;\ndemos gracias a Dios, que es luz y guía,\nsolícito pastor de su rebaño.\n \nEs su voz y su amor el que nos llama\nen la voz del pastor que él ha elegido,\nes su amor infinito el que nos ama\nen la entrega y amor de este otro cristo.\n \nConociendo en la fe su fiel presencia,\nhambrientos de verdad y luz divina,\nsigamos al pastor que es providencia\nde pastos abundantes que son vida.\n \nApacienta, Señor, guarda a tus hijos,\nmanda siempre a tu mies trabajadores;\ncada aurora, a la puerta del aprisco,\nnos aguarde el amor de tus pastores. Amén.\n\nSALMODIA\n\nAnt. 1. Cambiaste mi luto en danzas. Aleluya.\n\nSalmo 29\nACCIÓN DE GRACIAS POR LA CURACIÓN DE UN ENFERMO EN PELIGRO DE MUERTE\nCristo, después de su gloriosa resurrección, da gracias al Padre (Casiano).\n\nTe ensalzaré, Señor, porque me has librado\ny no has dejado que mis enemigos se rían de mí.\n \nSeñor, Dios mío, a ti grité,\ny tú me sanaste.\nSeñor, sacaste mi vida del abismo,\nme hiciste revivir cuando bajaba a la fosa.\n \nTañed para el Señor, fieles suyos,\ndad gracias a su nombre santo;\nsu cólera dura un instante;\nsu bondad, de por vida;\nal atardecer nos visita el llanto,\npor la mañana, el júbilo.\n \nYo pensaba muy seguro:\n«No vacilaré jamás.»\nTu bondad, Señor, me aseguraba\nel honor y la fuerza;\npero escondiste tu rostro,\ny quedé desconcertado.\n \nA ti, Señor, llamé,\nsupliqué a mi Dios:\n«¿Qué ganas con mi muerte,\ncon que yo baje a la fosa?\n \n¿Te va a dar gracias el polvo,\no va a proclamar tu lealtad?\nEscucha, Señor, y ten piedad de mí.\nSeñor, socórreme.»\n \nCambiaste mi luto en danzas,\nme desataste el sayal y me has vestido de fiesta;\nte cantará mi alma sin callarse.\nSeñor, Dios mío, te daré gracias por siempre.\n\nAnt. Cambiaste mi luto en danzas. Aleluya.\n\nAnt. 2. Hemos sido reconciliados con Dios por la muerte de su Hijo. Aleluya.\n\nSalmo 31\nACCIÓN DE GRACIAS DE UN PECADOR PERDONADO\nDavid proclama dichoso al hombre a quien Dios confiere la justificación haciendo caso omiso de las obras (Rom 4, 6).\n\nDichoso el que está absuelto de su culpa,\na quien le han sepultado su pecado;\ndichoso el hombre a quien el Señor\nno le apunta el delito.\n \nMientras callé se consumían mis huesos,\nrugiendo todo el día,\nporque día y noche tu mano\npesaba sobre mí;\nmi savia se me había vuelto\nun fruto seco.\n \nHabía pecado, lo reconocí,\nno te encubrí mi delito;\npropuse: «Confesaré al Señor mi culpa»,\ny tú perdonaste mi culpa y mi pecado.\n \nPor eso, que todo fiel te suplique\nen el momento de la desgracia:\nla crecida de las aguas caudalosas\nno lo alcanzará.\n \nTú eres mi refugio, me libras del peligro,\nme rodeas de cantos de liberación.\n \nTe instruiré y te enseñaré el camino que has de seguir,\nfijaré en ti mis ojos.\n \nNo seáis irracionales como caballos y mulos,\ncuyo brío hay que domar con freno y brida;\nsi no, no puedes acercarte.\n \nLos malvados sufren muchas penas;\nal que confía en el Señor,\nla misericordia lo rodea.\n \nAlegraos, justos, y gozad con el Señor,\naclamadlo, los de corazón sincero.\n\nAnt. Hemos sido reconciliados con Dios por la muerte de su Hijo. Aleluya.\n\nAnt. 3. ¿Quién como tú, Señor, entre los dioses? ¿Quién como tú, terrible entre los santos? Aleluya.\n\nCántico Ap 11, 17-18; 12, 10b-12a\nEL JUICIO DE DIOS\n\nGracias te damos, Señor Dios omnipotente,\nel que eres y el que eras,\nporque has asumido el gran poder\ny comenzaste a reinar.\n \nSe encolerizaron las naciones,\nllegó tu cólera,\ny el tiempo de que sean juzgados los muertos,\ny de dar el galardón a tus siervos los profetas,\ny a los santos y a los que temen tu nombre,\ny a los pequeños y a los grandes,\ny de arruinar a los que arruinaron la tierra.\n \nAhora se estableció la salud y el poderío,\ny el reinado de nuestro Dios,\ny la potestad de su Cristo;\nporque fue precipitado\nel acusador de nuestros hermanos,\nel que los acusaba ante nuestro Dios día y noche.\n \nEllos le vencieron en virtud de la sangre del Cordero\ny por la palabra del testimonio que dieron,\ny no amaron tanto su vida que temieran la muerte.\nPor esto, estad alegres, cielos,\ny los que moráis en sus tiendas.\n\nAnt. ¿Quién como tú, Señor, entre los dioses? ¿Quién como tú, terrible entre los santos? Aleluya.\n\nLECTURA BREVE 1 Pe 5, 1-4\n\nA los presbíteros en esa comunidad, yo, presbítero como ellos, testigo de los sufrimientos de Cristo y partícipe de la gloria que va a descubrirse, os exhorto: Sed pastores del rebaño de Dios a vuestro cargo, gobernándolo, no a la fuerza, sino de buena gana, como Dios quiere, no por sórdida ganancia, sino con generosidad, no como dominadores sobre la heredad de Dios, sino convirtiéndoos en modelos del rebaño. Y, cuando aparezca el supremo Pastor, recibiréis la corona de gloria que no se marchita.\n\nRESPONSORIO BREVE\n\nV. Éste es el que ama a sus hermanos, el que ora mucho por su pueblo. Aleluya, aleluya.\nR. Éste es el que ama a sus hermanos, el que ora mucho por su pueblo. Aleluya, aleluya.\nV. El que entregó su vida por sus hermanos.\nR. Aleluya, aleluya.\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. Éste es el que ama a sus hermanos, el que ora mucho por su pueblo. Aleluya, aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. Éste es el administrador fiel y prudente, a quien su señor ha puesto al frente de su servidumbre para que les reparta la ración a sus horas. Aleluya.\n\nMAGNÍFICAT Lc 1, 46-55\nALEGRÍA DEL ALMA EN EL SEÑOR\n\nProclama mi alma la grandeza del Señor,\nse alegra mi espíritu en Dios mi salvador;\nporque ha mirado la humillación de su esclava.\n \nDesde ahora me felicitarán todas las generaciones,\nporque el Poderoso ha hecho obras grandes por mí:\nsu nombre es santo\ny su misericordia llega a sus fieles\nde generación en generación.\n \nÉl hace proezas con su brazo:\ndispersa a los soberbios de corazón,\nderriba del trono a los poderosos\ny enaltece a los humildes,\na los hambrientos los colma de bienes\ny a los ricos los despide vacíos.\n \nAuxilia a Israel, su siervo,\nacordándose de su misericordia\n—como lo había prometido a nuestros padres—\nen favor de Abraham y su descendencia por siempre.\n \nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Éste es el administrador fiel y prudente, a quien su señor ha puesto al frente de su servidumbre para que les reparta la ración a sus horas. Aleluya.\n\nPRECES\n\nGlorifiquemos a Cristo, constituido pontífice en favor de los hombres en lo que se refiere a Dios, y supliquémosle humildemente diciendo:\n\nSalva a tu pueblo, Señor.\n \nTú que por medio de pastores santos y eximios has glorificado a tu Iglesia,\n— haz que todos los cristianos resplandezcan por su virtud.\n \nTú que por la oración de los santos pastores, que a semejanza de Moisés oraban por el pueblo, perdonaste los pecados de tus fieles,\n— purifica y santifica también ahora a la santa Iglesia por la intercesión de los santos.\n \nTú que de entre los fieles elegiste a los santos pastores y, por tu Espíritu, los consagraste como ministros en bien de sus hermanos,\n— llena también de tu Espíritu a todos los pastores del pueblo de Dios.\n \nTú que fuiste la heredad de los santos pastores,\n— no permitas que ninguno de los que fueron adquiridos por tu sangre viva alejado de ti.\n\nSe pueden añadir algunas intenciones libres.\n\nTú que por medio de los pastores de la Iglesia das la vida eterna a tus ovejas para que nadie las arrebate de tu mano,\n— salva a los difuntos, por quienes entregaste tu vida.\n \nDigamos juntos la oración que Cristo nos enseñó como modelo de toda oración: \n\nPadre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad  en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. \n\nORACIÓN\n\nDios todopoderoso y eterno, que hiciste de tu obispo san Atanasio un preclaro defensor de la divinidad de tu Hijo, concédenos, en tu bondad, que, fortalecidos con su doctrina y protección, te conozcamos y te amemos cada vez más plenamente. Por nuestro Señor Jesucristo.\n\nCONCLUSIÓN\n\nV. El Señor nos bendiga, nos guarde de todo mal y nos lleve a la vida eterna.\nR. Amén.',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': 'Oficio de Lecturas\n\nV. Señor, ábreme los labios.\nR. Y mi boca proclamará tu alabanza.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. \n\nINVITATORIO\n\nAnt. Venid, adoremos a Cristo, Pastor supremo. \n\nSalmo 94 \n\nVenid, aclamemos al Señor,\ndemos vítores a la Roca que nos salva;\nentremos a su presencia dándole gracias,\naclamándolo con cantos. \n\nPorque el Señor es un Dios grande,\nsoberano de todos los dioses:\ntiene en su mano las simas de la tierra,\nson suyas las cumbres de los montes.\nSuyo es el mar, porque él lo hizo,\nla tierra firme que modelaron sus manos. \n\nVenid, postrémonos por tierra,\nbendiciendo al Señor, creador nuestro.\nPorque él es nuestro Dios,\ny nosotros su pueblo,\nel rebaño que él guía. \n\nOjalá escuchéis hoy su voz:\n"No endurezcáis el corazón como en Meribá,\ncomo el día de Masá en el desierto:\ncuando vuestros padres me pusieron a prueba,\ny dudaron de mí, aunque habían visto mis obras." \n\nDurante cuarenta años\naquella generación me repugnó, y dije:\n"Es un pueblo de corazón extraviado,\nque no reconoce mi camino;\npor eso he jurado en mi cólera\nque no entrarán en mi descanso." \n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. \n\nAnt. Venid, adoremos a Cristo, Pastor supremo. \n\nHIMNO\n\nPuerta de Dios en el redil humano\nfue Cristo, el buen Pastor que al mundo vino,\nglorioso va delante del rebaño,\nguiando su marchar por buen camino.\n \nMadero de la cruz es su cayado,\nsu voz es la verdad que a todos llama,\nsu amor es el del Padre, que le ha dado\nEspíritu de Dios, que a todos ama.\n \nPastores del Señor son sus ungidos,\nnuevos cristos de Dios, son enviados\na los pueblos del mundo redimidos;\ndel único Pastor siervos amados.\n \nLa cruz de su Señor es su cayado,\nla voz de la verdad es su llamada,\nlos pastos de su amor, fecundo prado,\nson vida del Señor que nos es dada. Amén.\n\nSALMODIA\n\nAnt. 1. La promesa del Señor es escudo para los que a ella se acogen. Aleluya.\n\nSalmo 17, 31-51\nEL SEÑOR REVELA SU PODER SALVADOR\nSi Dios está con nosotros, ¿quién estará contra nosotros? (Rom 8, 31).\nIV\n\nPerfecto es el camino de Dios,\nacendrada es la promesa del Señor;\nél es escudo para los que a él se acogen.\n \n¿Quién es dios fuera del Señor?\n¿Qué roca hay fuera de nuestro Dios?\nDios me ciñe de valor\ny me enseña un camino perfecto.\n \nÉl me da pies de ciervo,\ny me coloca en las alturas;\nél adiestra mis manos para la guerra,\ny mis brazos para tensar la ballesta.\n\nAnt. La promesa del Señor es escudo para los que a ella se acogen. Aleluya.\n\nAnt. 2. Tu diestra, Señor, me sostuvo. Aleluya.\n\nV\n\nMe dejaste tu escudo protector,\ntu diestra me sostuvo,\nmultiplicaste tus cuidados conmigo.\nEnsanchaste el camino a mis pasos,\ny no flaquearon mis tobillos;\n \nyo perseguía al enemigo hasta alcanzarlo,\ny no me volvía sin haberlo aniquilado:\nlos derroté, y no pudieron rehacerse,\ncayeron bajo mis pies.\n \nMe ceñiste de valor para la lucha,\ndoblegaste a los que me resistían;\nhiciste volver la espalda a mis enemigos,\nrechazaste a mis adversarios.\n \nPedían auxilio, pero nadie los salvaba;\ngritaban al Señor, pero no les respondía.\nLos reduje a polvo, que arrebataba el viento;\nlos pisoteaba como barro de las calles.\n \nMe libraste de las contiendas de mi pueblo,\nme hiciste cabeza de naciones,\nun pueblo extraño fue mi vasallo.\n \nLos extranjeros me adulaban,\nme escuchaban y me obedecían.\nLos extranjeros palidecían\ny salían temblando de sus baluartes.\n\nAnt. Tu diestra, Señor, me sostuvo. Aleluya.\n\nAnt. 3. Viva el Señor, bendito sea mi Dios y Salvador.  Aleluya.\n\nVI\n\nViva el Señor, bendita sea mi Roca,\nsea ensalzado mi Dios y Salvador:\nel Dios que me dio el desquite\ny me sometió los pueblos;\n \nque me libró de mis enemigos,\nme levantó sobre los que resistían\ny me salvó del hombre cruel.\n \nPor eso te daré gracias entre las naciones, Señor,\ny tañeré en honor de tu nombre:\ntú diste gran victoria a tu rey,\ntuviste misericordia de tu Ungido,\nde David y su linaje por siempre.\n\nAnt. Viva el Señor, bendito sea mi Dios y Salvador. Aleluya.\n\nVERSÍCULO\n\nV. Dios resucitó al Señor. Aleluya.\nR. Y nos resucitará también a nosotros por su poder. Aleluya.\n\nPRIMERA LECTURA\n\nDel libro del Apocalipsis 21, 9-27\nVISIÓN DE LA JERUSALÉN CELESTE\n\nVino uno de los siete ángeles que tenía las siete copas llenas de las siete últimas plagas, y me habló, diciendo:«Ven y te mostraré la desposada, la esposa del Cordero.»\nMe transportó en espíritu a un monte altísimo y me enseñó la ciudad santa, Jerusalén, que bajaba del cielo, de junto a Dios, y traía la gloria de Dios. Su resplandor era como el de una piedra muy preciosa, como jaspe cristalino. Tenía una muralla grande y alta con doce puertas; y, sobre las puertas, doce ángeles y nombres grabados, que son los de las doce tribus de los hijos de Israel; tres puertas al oriente; tres puertas al norte; tres puertas al mediodía; tres puertas al occidente. La muralla de la ciudad se asienta sobre doce piedras, que llevan los nombres de los doce apóstoles del Cordero.\nEl que hablaba conmigo tenía una caña de medir, de oro, para medir la ciudad, sus puertas y su muralla. La ciudad es un cuadrado: su largo es igual a su ancho. Midió la ciudad con la caña, y tenía doce mil estadios. Su largo, ancho y alto son iguales.\nMidió luego su muralla, y tenía ciento cuarenta y cuatro codos con medida humana, la empleada por el ángel. El material de esta muralla es jaspe y la ciudad es de oro puro semejante al vidrio puro.\nLas piedras en que se asienta la muralla de la ciudad están adornadas de toda clase de piedras preciosas: la primera piedra es de jaspe; la segunda, de zafiro; la tercera, de calcedonia; la cuarta, de esmeralda; la quinta, de sardónica; la sexta, de cornalina; la séptima, de crisólito; la octava, de berilo; la novena, de topacio; la décima, de crisoprasa; la undécima, de jacinto; la duodécima, de amatista.\nY las doce puertas son doce perlas, cada una de las puertas hecha de una sola perla; y la plaza de la ciudad es de oro puro, transparente como el cristal.\nPero no vi santuario alguno en ella; porque el Señor, Dios todopoderoso, y el Cordero, es su santuario. La ciudad no necesita ni de sol ni de luna que la alumbren, porque la ilumina la gloria de Dios, y su lámpara es el Cordero. Las naciones caminarán a su luz, y los reyes de la tierra irán a llevarle su esplendor. Sus puertas no se cerrarán con el día —porque allí no habrá noche— y traerán a ella el esplendor y los tesoros de las naciones. Nada profano entrará en ella, ni los que cometen abominación y mentira, sino solamente los inscritos en el libro de la vida del Cordero.\n\nRESPONSORIO Cf. Ap 21, 21; Tb 13, 21. 22. 13\n\nV. Tus plazas, Jerusalén, están pavimentadas de oro puro, y en tus puertas se entonarán cantos de alegría. \nR. Y todas tus casas cantarán: «Aleluya».\nV. Brillarás cual luz de lámpara y todos los confines de la tierra vendrán a ti.\nR. Y todas tus casas cantarán: «Aleluya».\n\nAño II:\n\nDe los Hechos de los apóstoles 19, 1-20\nPABLO EN ÉFESO\n\nEn aquellos días, mientras Apolo se encontraba en Corinto, Pablo, después de atravesar la región alta del Asia proconsular, llegó a Éfeso, donde encontró algunos discípulos. Y les preguntó: «¿Recibisteis el Espíritu Santo cuando abrazasteis la fe?»\nEllos contestaron: «Ni siquiera hemos oído que exista el Espíritu Santo.»\nÉl les preguntó de nuevo: «Pues entonces, ¿qué bautismo recibisteis?»\nLe respondieron: «El bautismo de Juan.»\nY dijo Pablo: «Juan bautizó con un bautismo que era sólo una señal de arrepentimiento, y fue diciendo al pueblo que creyese en el que iba a venir después de él, esto es, en Jesús.»\nOídas estas palabras, se hicieron bautizar en el nombre de Jesús, el Señor. Pablo les impuso después las manos, y descendió sobre ellos el Espíritu Santo; y comenzaron a hablar distintas lenguas y a proferir discursos inspirados por Dios. Eran en total unos doce hombres.\nEntró Pablo en la sinagoga, y con entereza y libertad habló por espacio de tres meses acerca del reino de Dios, tratando de convencer a los judíos. Pero, como algunos de ellos se obstinasen en no creer y en plena asamblea blasfemasen de la doctrina del Señor, Pablo rompió con ellos. Tomó aparte a sus discípulos y comenzó a enseñar todos los días en la escuela de un tal Tirano. Esta situación se prolongó por dos años, de manera que todos los habitantes del Asia proconsular, tanto judíos como griegos, llegaron a escuchar la doctrina del Señor.\nObraba Dios por medio de Pablo milagros extraordinarios; hasta tal punto que, con sólo aplicar a los enfermos los pañuelos y delantales que habían estado en contacto con su cuerpo, desaparecían las enfermedades y sanaban los espíritus malignos. Hasta unos exorcistas ambulantes, que eran judíos, llegaron a invocar sobre los posesos el nombre de Jesús, el Señor, con las siguientes palabras: «Os conjuro por Jesús, a quien Pablo predica.»\nLos que tal hacían eran siete hijos de un tal Esceva judío perteneciente a la familia pontifical. Pero, una vez, el mal espíritu les replicó: «Conozco a Jesús y sé quién es Pablo, pero vosotros, ¿quiénes sois?»\nY, abalanzándose el poseso sobre ellos, los sujetó a todos y la emprendió con tal violencia que, desnudos y maltrechos, tuvieron que escapar de aquella casa. Este suceso llegó a conocimiento de todos cuantos vivían en Éfeso, tanto judíos como griegos; con lo que se apoderó de todos un gran temor, y dieron gloria al nombre de Jesús, el Señor. Muchos de los que se habían hecho cristianos venían a confesar y revelar sus fórmulas secretas de magia. Y buen número de los que se habían dedicado a las artes mágicas traían sus libros para quemarlos en presencia de todos. Se calculó el valor de los mismos en cincuenta mil monedas de plata. De este modo, por la eficacia que daba el Señor, se extendía y arraigaba el Evangelio.\n\nRESPONSORIO Hch 2, 4; 19, 6\n\nV. Todos quedaron llenos del Espíritu Santo y comenzaron a hablar, \nR. Según les hacía expresarse el Espíritu. Aleluya.\nV. Pablo les impuso las manos, y descendió sobre ellos el Espíritu Santo; y comenzaron a hablar distintas lenguas y a proferir discursos inspirados.\nR. Según les hacía expresarse el Espíritu. Aleluya.\n\nSEGUNDA LECTURA\n\nDe los sermones de san Atanasio, obispo\n(Sermón sobre la encarnación del Verbo, 8-9: PG 25,110-111)\nDE LA ENCARNACIÓN DEL VERBO\n\nEl Verbo de Dios, incorpóreo, incorruptible e inmaterial vino a nuestro mundo, aunque tampoco antes se hallaba lejos, pues nunca parte alguna del universo se hallaba vacía de él, sino que lo llenaba todo en todas partes, ya que está junto a su Padre. Pero él vino por su benignidad hacia nosotros, y en cuanto se nos hizo visible. Tuvo piedad de nuestra raza y de nuestra debilidad y, compadecido de nuestra corrupción, no soportó que la muerte nos dominase, para que no pereciese lo que había sido creado, con lo que hubiera resultado inútil la obra de su Padre al crear al hombre, y por esto tomó para sí un cuerpo como el nuestro, ya que no se contentó con habitar en un cuerpo ni tampoco en hacerse simplemente visible. En efecto, si tan solo hubiese pretendido hacerse visible, hubiera podido ciertamente asumir un cuerpo más excelente; pero él tomó nuestro mismo cuerpo. En el seno de la Virgen, se construyó un templo, es decir, su cuerpo, y lo hizo su propio instrumento, en el que había de darse a conocer y habitar; de este modo, habiendo tomado un cuerpo semejante al de cualquiera de nosotros, ya que todos estaban sujetos a la corrupción de la muerte, lo entregó a la muerte por todos, ofreciéndolo al Padre con un amor sin límites; con ello, al morir en su persona todos los hombres, quedó sin vigor la ley de la corrupción que afectaba a todos, ya que agotó toda la eficacia de la muerte en el cuerpo del Señor; y así ya no le quedó fuerza alguna para ensañarse con los demás hombres, semejantes a él; con ello, también hizo de nuevo incorruptibles a los hombres, que habían caído en la corrupción, y los llamó de muerte a vida, consumiendo totalmente en ellos la muerte, con el cuerpo que había asumido y con el poder de su resurrección, del mismo modo que la paja es consumida por el fuego. Por esta razón, asumió un cuerpo mortal: para que este cuerpo, unido al Verbo que está por encima de todo, satisficiera por todos la deuda contraída con la muerte; para que, por el hecho de habitar el Verbo en él, no sucumbiera a la corrupción; y, finalmente, para que, en adelante, por el poder de la resurrección, se vieran ya todos libres de la corrupción. De ahí que el cuerpo que él había tomado, al entregarlo a la muerte como una hostia y víctima limpia de toda mancha, alejó al momento la muerte de todos los hombres, a los que él se había asemejado, ya que se ofreció en lugar de ellos. De este modo, el Verbo de Dios, superior a todo lo que existe, ofreciendo en sacrificio su cuerpo, templo e instrumento de su divinidad, pagó con su muerte la deuda que habíamos contraído, y, así, el Hijo de Dios, inmune a la corrupción, por la promesa de la resurrección, hizo partícipes de esta misma inmunidad a todos los hombres, con los que se había hecho una misma cosa por su cuerpo semejante al de ellos. Es verdad, pues, que la corrupción de la muerte no tiene ya poder alguno sobre los hombres, gracias al Verbo, que habita entre ellos por su encarnación.\n\nRESPONSORIO Jr 15, 19. 20; 2 Pe 2, 1\n\nV. Serás como mi boca, te pondré frente a este pueblo como muralla de bronce inexpugnable.\nR. Lucharán contra ti, mas no podrán vencerte, pues yo estoy contigo. Aleluya.\nV. Habrá falsos maestros que introducirán sectas perniciosas, y llegarán hasta a negar al Señor que los rescató.\nR. Lucharán contra ti, mas no podrán vencerte, pues yo estoy contigo. Aleluya.\n\nORACIÓN\n\nDios todopoderoso y eterno, que hiciste de tu obispo san Atanasio un preclaro defensor de la divinidad de tu Hijo, concédenos, en tu bondad, que, fortalecidos con su doctrina y protección, te conozcamos y te amemos cada vez más plenamente. Por nuestro Señor Jesucristo.\n\nCONCLUSIÓN\n\nV. Bendigamos al Señor. Aleluya.\nR. Demos gracias a Dios. Aleluya, aleluya.',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': 'Hora Intermedia\n\nV. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén. Aleluya.\n\nHIMNO\n\nEl mundo brilla de alegría.\nSe renueva la faz de la tierra.\nGloria al Padre, y al Hijo, y al Espíritu\n \nÉsta es la hora\nen que rompe el Espíritu\nel techo de la tierra,\ny una lengua de fuego innumerable\npurifica, renueva, enciende, alegra\nlas entrañas del mundo.\n \nÉsta es la fuerza\nque pone en pie a la Iglesia\nen medio de las plazas\ny levanta testigos en el pueblo,\npara hablar con palabras como espadas\ndelante de los jueces.\n \nLlama profunda,\nque escrutas e iluminas\nel corazón del hombre:\nrestablece la fe con tu noticia,\ny el amor ponga en vela la esperanza,\nhasta que el Señor vuelva.\n\nSALMODIA\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 118, 17-24\nIII (Ghimel)\n\nHaz bien a tu siervo: viviré\ny cumpliré tus palabras;\nábreme los ojos, y contemplaré\nlas maravillas de tu voluntad;\nsoy un forastero en la tierra:\nno me ocultes tus promesas.\n \nMi alma se consume, deseando\ncontinuamente tus mandamientos;\nreprendes a los soberbios,\nmalditos los que se apartan de tus mandatos.\n \nAleja de mí las afrentas y el desprecio,\nporque observo tus preceptos;\naunque los nobles se sienten a murmurar de mí,\ntu siervo medita tus leyes;\ntus preceptos son mi delicia,\ntus decretos son mis consejeros.\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 24\nORACIÓN POR TODA CLASE DE NECESIDADES\nLa esperanza no defrauda (Rom 5, 5).\nI\n\nA ti, Señor, levanto mi alma;\nDios mío, en ti confío\nno quede yo defraudado,\nque no triunfen de mí mis enemigos,\npues los que esperan en ti no quedan defraudados,\nmientras que el fracaso malogra a los traidores.\n \nSeñor, enséñame tus caminos,\ninstrúyeme en tus sendas:\nhaz que camine con lealtad;\nenséñame, porque tú eres mi Dios y Salvador,\ny todo el día te estoy esperando.\n \nRecuerda, Señor, que tu ternura\ny tu misericordia son eternas;\nno te acuerdes de los pecados\nni de las maldades de mi juventud;\nacuérdate de mí con misericordia,\npor tu bondad, Señor.\n \nEl Señor es bueno y es recto,\ny enseña el camino a los pecadores;\nhace caminar a los humildes con rectitud,\nenseña su camino a los humildes.\n \nLas sendas del Señor son misericordia y lealtad\npara los que guardan su alianza y sus mandatos.\nPor el honor de tu nombre, Señor,\nperdona mis culpas, que son muchas.\n\nAnt. Aleluya, aleluya, aleluya.\n\nII\n\n¿Hay alguien que tema al Señor?\nÉl le enseñará el camino escogido:\nsu alma vivirá feliz,\nsu descendencia poseerá la tierra.\n \nEl Señor se confía con sus fieles,\ny les da a conocer su alianza.\nTengo los ojos puestos en el Señor,\nporque Él saca mis pies de la red.\n \nMírame, oh Dios, y ten piedad de mí,\nque estoy solo y afligido.\nEnsancha mi corazón oprimido\ny sácame de mis tribulaciones.\n \nMira mis trabajos y mis penas\ny perdona todos mis pecados;\nmira cuántos son mis enemigos,\nque me detestan con odio cruel.\n \nGuarda mi vida y líbrame,\nno quede yo defraudado de haber acudido a ti.\nLa inocencia y la rectitud me protegerán,\nporque espero en ti.\n \nSalva, oh Dios, a Israel\nde todos sus peligros.\n\nAnt. Aleluya, aleluya, aleluya.\n\nTERCIA\n\nLECTURA BREVE 1 Co 12, 13\n\nTodos nosotros, judíos y griegos, esclavos y libres, hemos sido bautizados en un mismo Espíritu, para formar un solo cuerpo. Y todos hemos bebido de un solo Espíritu.\n\nV. Verdaderamente ha resucitado el Señor. Aleluya.\nR. Y se ha aparecido a Simón. Aleluya.\n\nORACIÓN\n\nSeñor Dios todopoderoso, que, sin mérito alguno de nuestra parte, nos haces pasar de la muerte a la vida y de la tristeza al gozo, no pongas fin a tus dones, ni ceses de realizar tus maravillas en nosotros, y concede a quienes ya hemos sido justificados por la fe la fuerza necesaria para perseverar siempre en ella. Por nuestro Señor Jesucristo.\n\nSEXTA\n\nLECTURA BREVE Tt 3, 5b-7\n\nDios nos ha salvado con el baño del segundo nacimiento y con la renovación por el Espíritu Santo; Dios lo derramó copiosamente sobre nosotros por medio de Jesucristo, nuestro Salvador. Así, justificados por su gracia, somos, en esperanza, herederos de la vida eterna.\n\nV. Los discípulos se llenaron de alegría. Aleluya.\nR. Al ver al Señor. Aleluya.\n\nORACIÓN\n\nSeñor Dios todopoderoso, que, sin mérito alguno de nuestra parte, nos haces pasar de la muerte a la vida y de la tristeza al gozo, no pongas fin a tus dones, ni ceses de realizar tus maravillas en nosotros, y concede a quienes ya hemos sido justificados por la fe la fuerza necesaria para perseverar siempre en ella. Por nuestro Señor Jesucristo.\n\nNONA\n\nLECTURA BREVE Cf. Col 1, 12-14\n\nDamos gracias a Dios Padre, que nos ha hecho capaces de compartir la herencia del pueblo santo en la luz. Él nos ha sacado del dominio de las tinieblas, y nos ha trasladado al reino de su Hijo querido, por cuya sangre hemos recibido la redención, el perdón de los pecados.\n\nV. Quédate con nosotros, Señor. Aleluya.\nR. Porque ya es tarde. Aleluya.\n\nORACIÓN\n\nSeñor Dios todopoderoso, que, sin mérito alguno de nuestra parte, nos haces pasar de la muerte a la vida y de la tristeza al gozo, no pongas fin a tus dones, ni ceses de realizar tus maravillas en nosotros, y concede a quienes ya hemos sido justificados por la fe la fuerza necesaria para perseverar siempre en ella. Por nuestro Señor Jesucristo.\n\nCONCLUSIÓN\n\nV. Bendigamos al Señor. \nR. Demos gracias a Dios.',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-03',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': 'Completas\n\nV. Dios mío, ven en mi auxilio.\nR. Señor, date prisa en socorrerme.\n\nGloria al Padre y al Hijo y al Espíritu Santo\ncomo era en el principio, ahora y siempre\ny por los siglos de los siglos. Amén. Alelluya.\n\nEXAMEN DE CONCIENCIA\n\nHermanos: Llegados al fin de esta jornada que Dios nos ha concedido, agradezcamos sus dones y reconozcamos humildemente nuestros pecados.\n\nTodos examinan en silencio su conciencia. Terminado el examen se añade una de las siguientes fórmulas penitenciales:\n\nI\nYo confieso ante Dios todopoderoso\ny ante vosotros, hermanos,\nque he pecado mucho\nde pensamiento, palabra, obra y omisión:\npor mi culpa, por mi culpa, por mi gran culpa.\n\nPor eso ruego a santa María, siempre Virgen,\na los ángeles, a los santos y a vosotros, hermanos,\nque intercedáis por mí ante Dios, nuestro Señor.  \n\nII\n\nV. Señor, ten misericordia de nosotros.\nR. Porque hemos pecado contra ti.\nV. Muéstranos, Señor, tu misericordia.\nR. Y danos tu salvación.\n\nV. Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna.\nR. Amén.\n\nHIMNO\n\nDe la vida en la arena\nme llevas de la mano\nal puerto más cercano,\nal agua más serena.\nEl corazón se llena,\nSeñor, de tu ternura;\ny es la noche más pura\ny la ruta más bella\nporque tú estás en ella,\nsea clara u oscura.\n \nLa noche misteriosa\nacerca a lo escondido;\nel sueño es el olvido\ndonde la paz se posa.\nY esa paz es la rosa\nde los vientos. Velero,\ninquieto marinero,\nya mi timón preparo\n-tú el mar y cielo claro-\nhacia el alba que espero.\n \nGloria al Padre, y al Hijo,\ny al Espíritu Santo. Amén.\n\nSALMODIA\n\nAnt. Aleluya, aleluya, aleluya.\n\nSalmo 85\nORACIÓN DEL POBRE ANTE LOS PROBLEMAS\nBendito sea Dios, que nos alienta en nuestras luchas (2 Co 1, 3.4)\n\nInclina tu oído, Señor, escúchame,\nque soy un pobre desamparado;\nprotege mi vida, que soy un fiel tuyo;\nsalva a tu siervo, que confía en ti.\n \nTú eres mi Dios, piedad de mí, Señor,\nque a tí te estoy llamando todo el día;\nalegra el alma de tu siervo,\npues levanto mi alma hacia ti;\n \nporque tú, Señor, eres bueno y clemente,\nrico en misericordia\ncon los que te invocan.\nSeñor, escucha mi oración,\natiende a la voz de mi súplica.\n \nEn el día del peligro te llamo,\ny tú me escuchas.\nNo tienes igual entre los dioses, Señor,\nni hay obras como las tuyas.\n \nTodos los pueblos vendrán\na postrarse en tu presencia, Señor;\nbendecirán tu nombre:\n"Grande eres tú, y haces maravillas;\ntú eres el único Dios".\n \nEnséñame, Señor, tu camino,\npara que siga tu verdad;\nmantén mi corazón entero\nen el temor de tu nombre.\n \nTe alabaré de todo corazón, Dios mío;\ndaré gloria a tu nombre por siempre,\npor tu gran piedad para conmigo,\nporque me salvaste\ndel abismo profundo.\n \nDios mío, unos soberbios\nse levantan contra mí,\nuna banda de insolentes\natenta contra mi vida,\nsin tenerte en cuenta a ti.\n \nPero tú, Señor,\nDios clemente y misericordioso,\nlento a la cólera, rico en piedad y leal,\nmírame, ten compasión de mí.\n \nDa fuerza a tu siervo,\nsalva al hijo de tu esclava;\ndame una señal propicia,\nque la vean mis adversarios\ny se avergüencen,\nporque tú, Señor,\nme ayudas y consuelas.\n\nAnt. Aleluya, aleluya, aleluya.\n\nLECTURA BREVE 1 Ts 5, 9-10\n\nDios nos ha destinado a obtener la salvación por medio de nuestro Señor Jesucristo; él murió por nosotros, para que, despiertos o dormidos, vivamos con él.\n\nRESPONSORIO BREVE \n\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\nV. Tú, el Dios leal, nos librarás.\nR. Aleluya, aleluya.\nV. Gloria al Padre, y al Hijo, y al Espíritu Santo.\nR. A tus manos, Señor, encomiendo mi espíritu. Aleluya, aleluya.\n\nCÁNTICO EVANGÉLICO\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz. Aleluya.\n\nCántico de Simeón Lc 2, 29-32\nCRISTO, LUZ DE LAS NACIONES Y GLORIA DE ISRAEL\n\nAhora, Señor, según tu promesa,\npuedes dejar a tu siervo irse en paz,\nporque mis ojos han visto a tu Salvador,\na quien has presentado ante todos los pueblos:\nluz para alumbrar a las naciones\ny gloria de tu pueblo Israel.\nGloria al Padre, y al Hijo, y al Espíritu Santo.\nComo era en el principio, ahora y siempre,\npor los siglos de los siglos. Amén.\n\nAnt. Sálvanos, Señor, despiertos, protégenos mientras dormimos, para que velemos con Cristo y descansemos en paz.  Aleluya.\n\nORACIÓN\n\nConcede, Señor, a nuestros cuerpos fatigados el descanso necesario, y haz que la simiente del reino que con nuestro trabajo hemos sembrado hoy crezca y germine para la cosecha de la vida eterna. Por Jesucristo nuestro Señor.\n\nCONCLUSIÓN\nBendición\n\nV. El Señor todopoderoso nos conceda una noche tranquila y una santa muerte.\nR. Amén. Alelluya, alelluya.\n\nINVOCACIÓN A LA SANTÍSIMA VIRGEN\n\nReina del cielo, alégrate, aleluya,\nporque el Señor, a quien has merecido llevar, aleluya,\nha resucitado, según su palabra, aleluya.\nRuega al Señor por nosotros, aleluya.\nGózate y alégrate Virgen María, aleluya.\nPorque ha resucitado verdaderamente el Señor, aleluya.',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': 'Laudes\n\nSALMODIA\n\nAnt. 1. Señor, muéstranos al Padre y nos basta. Aleluya.\n\nSalmo 62, 2-9\nEL ALMA SEDIENTA DE DIOS\nMadruga por Dios todo el que rechaza las obras de las tinieblas.\n\n¡Oh Dios!, tú eres mi Dios, por ti madrugo,\nmi alma está sedienta de ti;\nmi carne tiene ansia de ti,\ncomo tierra reseca, agostada, sin agua.\n \n¡Cómo te contemplaba en el santuario\nviendo tu fuerza y tu gloria!\nTu gracia vale más que la vida,\nte alabarán mis labios.\n \nToda mi vida te bendeciré\ny alzaré las manos invocándote.\nMe saciaré como de enjundia y de manteca,\ny mis labios te alabarán jubilosos.\n \nEn el lecho me acuerdo de ti\ny velando medito en ti,\nporque fuiste mi auxilio,\ny a la sombra de tus alas canto con júbilo;\nmi alma está unida a ti,\ny tu diestra me sostiene.\n\nAnt. Señor, muéstranos al Padre y nos basta. Aleluya.\n\nAnt. 2. Hace tanto que estoy con vosotros, ¿y no me conoces, Felipe? Quien me ha visto a mí ha visto al Padre. Aleluya.\n\nCántico Dn 3, 57-88. 56\nTODA LA CREACIÓN ALABE AL SEÑOR\nAlabad al Señor, sus siervos todos (Ap 19, 5).\n\nCriaturas todas del Señor, bendecid al Señor,\nensalzadlo con himnos por los siglos.\n \nÁngeles del Señor, bendecid al Señor;\ncielos, bendecid al Señor.\n \nAguas del espacio, bendecid al Señor;\nejércitos del Señor, bendecid al Señor. \n \nSol y luna, bendecid al Señor;\nastros del cielo, bendecid al Señor. \n \nLluvia y rocío, bendecid al Señor;\nvientos todos, bendecid al Señor. \n \nFuego y calor, bendecid al Señor;\nfríos y heladas, bendecid al Señor. \n \nRocíos y nevadas, bendecid al Señor;\ntémpanos y hielos, bendecid al Señor. \n \nEscarchas y nieves, bendecid al Señor;\nnoche y día, bendecid al Señor. \n \nLuz y tinieblas, bendecid al Señor;\nrayos y nubes, bendecid al Señor. \n \nBendiga la tierra al Señor,\nensálcelo con himnos por los siglos.\n \nMontes y cumbres, bendecid al Señor;\ncuanto germina en la tierra, bendiga al Señor.\n \nManantiales, bendecid al Señor;\nmares y ríos, bendecid al Señor. \n \nCetáceos y peces, bendecid al Señor;\naves del cielo, bendecid al Señor. \n \nFieras y ganados, bendecid al Señor,\nensalzadlo con himnos por los siglos.\n \nHijos de los hombres, bendecid al Señor;\nbendiga Israel al Señor. \n \nSacerdotes del Señor, bendecid al Señor;\nsiervos del Señor, bendecid al Señor. \n \nAlmas y espíritus justos, bendecid al Señor;\nsantos y humildes de corazón, bendecid al Señor. \n \nAnanías, Azarías y Misael, bendecid al Señor,\nensalzadlo con himnos por los siglos.\n \nBendigamos al Padre, al Hijo y al Espíritu Santo,\nensalcémoslo con himnos por los siglos.\n \nBendito el Señor en la bóveda del cielo,\nalabado y glorioso y ensalzado por los siglos.\n\nNo se dice Gloria al Padre.\n\nAnt. Hace tanto que estoy con vosotros, ¿y no me conoces, Felipe? Quien me ha visto a mí ha visto al Padre. Aleluya.\n\nAnt. 3. Que no tiemble vuestro corazón ni se acobarde; creed en Dios y creed también en mí. En la casa de mi Padre hay muchas estancias. Aleluya.\n\nSalmo 149\nALEGRÍA DE LOS SANTOS\nLos hijos de la Iglesia, nuevo pueblo de Dios, se alegran en su Rey, Cristo, el Señor (Hesiquio).\n\nCantad al Señor un cántico nuevo,\nresuene su alabanza en la asamblea de los fieles;\nque se alegre Israel por su Creador,\nlos hijos de Sión por su Rey.\n \nAlabad su nombre con danzas,\ncantadle con tambores y cítaras;\nporque el Señor ama a su pueblo\ny adorna con la victoria a los humildes.\n \nQue los fieles festejen su gloria\ny canten jubilosos en filas:\ncon vítores a Dios en la boca\ny espadas de dos filos en las manos:\n \npara tomar venganza de los pueblos\ny aplicar el castigo a las naciones,\nsujetando a los reyes con argollas,\na los nobles con esposas de hierro.\n \nEjecutar la sentencia dictada\nes un honor para todos sus fieles.\n\nAnt. Que no tiemble vuestro corazón ni se acobarde: creed en Dios y creed también en mí; en la casa de mi Padre hay muchas estancias. Aleluya.',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-04',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',          
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-05',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-06',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-07',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-08',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-09',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-10',
+      'info': [
+       {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-11',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-12',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-13',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }
+      ]
+    },
+    
+    {
+      'date': '2024-05-14',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },
+    {
+      'date': '2024-05-15',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-16',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-17',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-18',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-19',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-20',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-21',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-22',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-23',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-24',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-25',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-26',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-27',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-28',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-29',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-30',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-05-31',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-06-01',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
+    },{
+      'date': '2024-06-02',
+      'info': [
+        {
+          'title': 'Completas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Laudes',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Visperas',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Oficio',
+          'description': '',
+          'isSelected': false
+        },
+        {
+          'title': 'Intermedias',
+          'description': '',
+          'isSelected': false
+        }      ]
     },
   ];
 }
