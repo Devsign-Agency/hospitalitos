@@ -111,16 +111,18 @@ class LiturgiaCalendarScreen extends StatelessWidget {
   _handleEditDate(BuildContext context, LiturgyService liturgyService) async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime(2100),
+      initialDate: DateTime(DateTime.now().year,DateTime.now().month,27),
+      initialEntryMode :DatePickerEntryMode.calendarOnly,
+      firstDate: DateTime(DateTime.now().year,DateTime.now().month,27),
+      lastDate: DateTime(DateTime.now().year,DateTime.now().month,31),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
               colorScheme: ColorScheme.light(
-            primary: ColorConstant.indigo900, // header background color
+            primary: ColorConstant.yellow100, // header background color
             onPrimary: Colors.white, // header text color
-            onSurface: Colors.blue, // body text color
+            onSurface: Colors.black, 
+            // body text color
           )),
           // data: ThemeData.light().copyWith(
           //     primaryColor: const Color(0xFF4A5BF6), //Head background
