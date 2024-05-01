@@ -15,6 +15,7 @@ class RouterMain {
 
     routes.addAll({MainScreen.route: (BuildContext context) => MainScreen()});
     routes.addAll({HomePage.route: (BuildContext context) => HomePage()});
+      routes.addAll({ChatBubble.route: (BuildContext context) => ChatBubble()});
     routes.addAll({LoadingPage.route: (BuildContext context) => LoadingPage()});
     routes.addAll(
         {WelcomeScreen.route: (BuildContext context) => const WelcomeScreen()});

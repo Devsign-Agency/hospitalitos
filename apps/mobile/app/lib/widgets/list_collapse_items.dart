@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/features/liturgia/screens/calendar/detail_screen.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 
 import '../core/app_export.dart';
 
 class ListCollapseItem extends StatefulWidget {
-  final List<Map<String, dynamic>> items;
+  final List<dynamic> items;
   final Function onSelectedItem;
   const ListCollapseItem({
     super.key,
@@ -18,22 +19,47 @@ class ListCollapseItem extends StatefulWidget {
 
 class ListCollapseItemState extends State<ListCollapseItem> {
   int selectedIndex = 1000;
+  var arrLiturgy = [];
+  _itemsForDate() {
+    final day = DateTime.now().toString().split(' ')[0];
+    print(day);
+    var index = 0;
+    var findIndex = 0;
+    widget.items.forEach((liturgia) {
+      final date = liturgia['date'];
+      if (date == day) {
+        findIndex = index;
+        arrLiturgy.add(liturgia['info']);
+      }
+      index++;
+    });
 
-  void _changeSelected(Map item) {
+    return findIndex;
+  }
+
+  void _changeSelected(context, Map item) {
     // selectedIndex = index;
-    item['isSelected'] = !item['isSelected'];
-    widget.onSelectedItem(item);
-    setState(() {});
+    //item['isSelected'] = !item['isSelected'];
+    //widget.onSelectedItem(item);
+    //setState(() {});
+    Navigator.of(context).pushNamed(DetailLiturgyScreen.route, arguments: item);
   }
 
   @override
   Widget build(BuildContext context) {
+    final day = DateTime.now().toString().split(' ')[0];
+
+    var indexItem = _itemsForDate();
+    var data = widget.items[indexItem]['info'];
+    var datasss = widget.items[indexItem]['isSelected'];
+    var dataL = widget.items[0]['info'];
+    print('search $data');
     return ListView.separated(
       shrinkWrap: true,
       itemBuilder: (_, int index) {
-        final Map<String, dynamic> item = widget.items[index];
-        return Container(
-          // padding: getPadding(top: 16, bottom: 16),
+        final Map<String, dynamic> item = data[index];
+        return GestureDetector(
+          onTap: () => _changeSelected(context, item),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,13 +68,6 @@ class ListCollapseItemState extends State<ListCollapseItem> {
                   '${item['title']}',
                   style: AppStyle.txtNunitoSansSemiBold20Black900,
                 ),
-                CustomImageView(
-                  color: ColorConstant.whiteA700,
-                  svgPath: !item['isSelected']
-                      ? ImageConstant.imgArrowright
-                      : ImageConstant.imgArrowdownGray900,
-                  onTap: () => _changeSelected(item),
-                )
               ]),
               if (item['isSelected'])
                 Text(
@@ -65,7 +84,7 @@ class ListCollapseItemState extends State<ListCollapseItem> {
         margin: getMargin(top: 16, bottom: 16),
         color: ColorConstant.gray400,
       ),
-      itemCount: widget.items.length,
+      itemCount: data.length,
     );
   }
 }

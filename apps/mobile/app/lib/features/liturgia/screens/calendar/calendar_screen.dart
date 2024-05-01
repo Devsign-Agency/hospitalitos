@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_app/features/liturgia/screens/screens.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
+import 'package:excel/excel.dart';
 
 class LiturgiaCalendarScreen extends StatelessWidget {
   static const String route = 'calendar-route';
@@ -12,7 +17,8 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LiturgyService liturgyService = Provider.of<LiturgyService>(context);
+    LiturgyService liturgyService =
+        Provider.of<LiturgyService>(context, listen: true);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -29,15 +35,15 @@ class LiturgiaCalendarScreen extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(getCurrentDate(),
+                Text(getCurrentDate(liturgyService.date),
                     style: AppStyle.txtNunitoSansSemiBold20Black900),
                 CustomImageView(
                     width: 24,
                     height: 24,
-                    color: ColorConstant.whiteA700,
+                    color: ColorConstant.indigo900,
                     svgPath: ImageConstant.imgEditIndigo900,
                     onTap: () {
-                      _handleEditDate(context);
+                      _handleEditDate(context, liturgyService);
                     }),
               ],
             )),
@@ -59,18 +65,45 @@ class LiturgiaCalendarScreen extends StatelessWidget {
     );
   }
 
-  void _handleSelectedItem(dynamic item) {
-    print(item);
+  Future<void> main() async {
+    final data = await rootBundle.load('assets/epubs/data.xlsx');
+    final bytes = data.buffer.asUint8List();
+    //var bytes = File('assets/epubs/data.xlsx').readAsBytesSync();
+    var excel = Excel.decodeBytes(bytes);
+
+    List<Map<String, dynamic>> jsonData = [];
+
+    for (var table in excel.tables.keys) {
+      for (var row in excel.tables[table]!.rows) {
+        Map<String, dynamic> rowMap = {};
+        for (int i = 1; i < row.length; i++) {
+          rowMap['columna_$i'] = row[i]!.value;
+        }
+        jsonData.add(rowMap);
+      }
+    }
+
+    print(jsonData);
   }
 
-  getCurrentDate() {
+  Future<void> loadJsonAsset() async {
+    final String jsonString =
+        await rootBundle.loadString('assets/epubs/data.json');
+    final data = jsonDecode(jsonString);
+    print(data);
+    return data;
+  }
 
-    
+  void _handleSelectedItem(context, dynamic item) {
+    Navigator.of(context).pushNamed(DetailLiturgyScreen.route);
+  }
+
+  getCurrentDate(date) {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
-    return format2.format(DateTime.now()).split('de 2024')[0];
+    return date;
   }
 
-  _handleEditDate(BuildContext context) async {
+  _handleEditDate(BuildContext context, LiturgyService liturgyService) async {
     DateTime? date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -106,6 +139,8 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
     // dateCtl.text = date.toIso8601String();
     print(date);
+    var newDate = date.toString().split(' ')[0];
+    liturgyService.date = newDate;
   }
 }
 
@@ -119,20 +154,19 @@ class liturgyOfTheDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final day = DateTime.now().toString().split(' ')[0];
+    final day = liturgyService.date;
     print(day);
     List<Widget> arr = [];
-  
-   liturgyService.liturgies.forEach((liturgia) {
-      final date = liturgia['date'];
-          if (date == day)
-            {
-              final detail = liturgia['detail'];
-                 detail.forEach((info){ arr.add(
-                  Text(info, style: AppStyle.txtNunitoSansRegular16)); });
-            }
-        });
 
+    liturgyService.liturgies.forEach((liturgia) {
+      final date = liturgia['date'];
+      if (date == day) {
+        final detail = liturgia['detail'];
+        detail.forEach((info) {
+          arr.add(Text(info, style: AppStyle.txtNunitoSansRegular16));
+        });
+      }
+    });
 
     return CustomCard(
       child: Column(
@@ -141,6 +175,4 @@ class liturgyOfTheDay extends StatelessWidget {
       ),
     );
   }
-
-
 }

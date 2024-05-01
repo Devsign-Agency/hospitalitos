@@ -8,19 +8,21 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
+import 'package:mobile_app/features/blog/screens/screens.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
+import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
+import 'package:mobile_app/features/prayer/screens/prayers/prayers_screen.dart';
+import 'package:mobile_app/features/reading/screens/screens.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../themes/themes.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../bible/screens/screens.dart';
-import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -38,7 +40,6 @@ loadAsset() async {
     const HtmlEscape htmlEscape = HtmlEscape();
     //var text = (Uri.dataFromString(contents, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
     var text = htmlEscape.convert(contents);
-    print('--------------- $text');
 
     //final reg = RegExp('(?=<div id="cuerpo" class="normal")|(?<=/div>)');
   });
@@ -109,6 +110,7 @@ class _HomePageState extends State<HomePage> {
 
   getCurrentDate() {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
+
     return format2.format(DateTime.now()).split('de 2024')[0];
   }
 
@@ -140,6 +142,7 @@ class _HomePageState extends State<HomePage> {
     LiturgyService liturgyService = Provider.of<LiturgyService>(context);
 
     final day = DateTime.now().toString().split(' ')[0];
+
     List<dynamic> arr = [];
     var index = -1;
     liturgyService.liturgies.forEach((liturgia) {
@@ -154,6 +157,8 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 2]['detail']);
           arr.add(liturgyService.liturgies[index + 3]['detail']);
           arr.add(liturgyService.liturgies[index + 4]['detail']);
+          arr.add(liturgyService.liturgies[index + 5]['detail']);
+          arr.add(liturgyService.liturgies[index + 6]['detail']);
         }
         if (detail[2].contains('MARTES')) {
           arr.add(liturgyService.liturgies[index - 1]['detail']);
@@ -161,14 +166,17 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
           arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
+          arr.add(liturgyService.liturgies[index + 5]['detail']);
         }
         if (detail[2].contains('MIERCOLES')) {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
-
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
+          arr.add(liturgyService.liturgies[index + 4]['detail']);
         }
         if (detail[2].contains('JUEVES')) {
           arr.add(liturgyService.liturgies[index - 3]['detail']);
@@ -176,6 +184,8 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
+          arr.add(liturgyService.liturgies[index + 3]['detail']);
         }
 
         if (detail[2].contains('VIERNES')) {
@@ -184,41 +194,29 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
+          arr.add(liturgyService.liturgies[index + 2]['detail']);
         }
 
-        /*if (detail[2].contains('MARTES')) {
-          arr.add(liturgyService.liturgies[index - 1]);
+        if (detail[2].contains('SÁBADO')) {
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }
-        if (detail[2].contains('MIERCOLES')) {
-          arr.add(liturgyService.liturgies[index -2]);
-          arr.add(liturgyService.liturgies[index -1]);
-          arr.add(detail);
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
-        }
-        if (detail[2].contains('JUEVES')) {
-          arr.add(liturgyService.liturgies[index - 3]);
-          arr.add(liturgyService.liturgies[index - 2]);
-          arr.add(liturgyService.liturgies[index - 1]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }
-        if (detail[2].contains('VIERNES')) {
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
+          arr.add(liturgyService.liturgies[index + 1]['detail']);
         }
 
-        if (detail[2].contains('SABADO')) {
-          arr.add(liturgyService.liturgies[index + 1]);
-          arr.add(liturgyService.liturgies[index + 2]);
-          arr.add(liturgyService.liturgies[index + 3]);
-          arr.add(liturgyService.liturgies[index + 4]);
-        }*/
+        if (detail[2].contains('DOMINGO')) {
+          arr.add(liturgyService.liturgies[index - 6]['detail']);
+          arr.add(liturgyService.liturgies[index - 5]['detail']);
+          arr.add(liturgyService.liturgies[index - 4]['detail']);
+          arr.add(liturgyService.liturgies[index - 3]['detail']);
+          arr.add(liturgyService.liturgies[index - 2]['detail']);
+          arr.add(liturgyService.liturgies[index - 1]['detail']);
+          arr.add(detail);
+        }
       }
     });
 
@@ -227,10 +225,6 @@ class _HomePageState extends State<HomePage> {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
-      /*{
-        'icon': ImageConstant.imgNotification,
-        'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
-      }*/
     ];
 
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -265,6 +259,17 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        child: Icon(
+          Icons.chat_bubble,
+          color: ColorConstant.yellow100,
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(ChatBubble.route);
+        },
+      ),
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
@@ -308,7 +313,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // My Favorites
-          CustomCard(
+          /*CustomCard(
             margin: getMargin(left: 14.0, right: 14.0, bottom: 14.0),
             child: Row(
               children: [
@@ -341,7 +346,7 @@ class _HomePageState extends State<HomePage> {
               themeProvider.setLightMode();
               //Navigator.of(context).pushNamed(FavoriteListScreen.route);
             },
-          ),
+          ),*/
 
           // Recently viewed
           Column(
@@ -418,20 +423,23 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ExpandedButton(
-                        message: 'En Desarrollo',
-                        icon: ImageConstant.imgButtonalerts,
-                        label: 'Lecturas'),
+                      message: 'En Desarrollo',
+                      icon: ImageConstant.imgButtonalerts,
+                      label: 'Lecturas',
+                      route: ReadingScreen.route,
+                    ),
                     SizedBox(width: 14.0),
                     ExpandedButton(
                       icon: ImageConstant.imgVolume,
                       label: 'Oraciones',
                       message: 'En Desarrollo',
+                      route: PrayersScreen.route,
                     ),
                     SizedBox(width: 14.0),
                     ExpandedButton(
                       icon: ImageConstant.imgVolumeIndigo900,
                       label: 'Blog',
-                      route: 'blog',
+                      route: BlogScreen.route,
                     )
                   ],
                 ),

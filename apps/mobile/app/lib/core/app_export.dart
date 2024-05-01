@@ -15,6 +15,8 @@ export 'package:mobile_app/core/models/custom_icon_button_model.dart';
 export 'package:mobile_app/core/models/popup_menu_item.dart';
 export 'package:mobile_app/core/models/circle_button_model.dart';
 export 'package:mobile_app/core/models/text_book.dart';
+export 'package:mobile_app/core/models/daily_reading.dart';
+export 'package:mobile_app/core/models/prayer.dart';
 
 export 'package:mobile_app/core/theme/app.decoration.dart';
 export 'package:mobile_app/core/theme/app.style.dart';

@@ -50,12 +50,10 @@ class CardPreviewItemList extends StatelessWidget {
                     return SizedBox(width: 6);
                   } else {
                     EpubBook book = snapshot.data![index - 1];
-                    print(book);
                     Image image = Image.memory(
                         Uint8List.fromList(encodePng(book.CoverImage!)));
 
                     String title = book.Title!.trim();
-                    print(title);
 
                     final List<Map<String, dynamic>> menuOptions = [
                       {
