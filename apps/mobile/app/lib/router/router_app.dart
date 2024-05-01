@@ -4,6 +4,8 @@ import 'package:mobile_app/features/book/router/router.dart';
 import 'package:mobile_app/features/library/router/library_router.dart';
 import 'package:mobile_app/features/main/router/router.dart';
 import 'package:mobile_app/features/notification/router/router_notification.dart';
+import 'package:mobile_app/features/prayer/router/router.dart';
+import 'package:mobile_app/features/reading/router/router.dart';
 import 'package:mobile_app/features/security/router/router.dart';
 import 'package:mobile_app/features/favorite/router/router.dart';
 import 'package:mobile_app/features/profile/router/router.dart';
@@ -27,6 +29,8 @@ class RouterApp {
     routes.addAll(RouterLibrary.getRoutes());
     routes.addAll(RouterLiturgia.getRoutes());
     routes.addAll(RouterBible.getRoutes());
+    routes.addAll(RouterReading.getRoutes());
+    routes.addAll(RouterPrayer.getRoutes());
 
     return routes;
   }

@@ -8,19 +8,20 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
 import 'package:mobile_app/features/bible/bible_screen.dart';
+import 'package:mobile_app/features/blog/screens/screens.dart';
 import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
 import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
+import 'package:mobile_app/features/prayer/screens/prayers/prayers_screen.dart';
+import 'package:mobile_app/features/reading/screens/screens.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../../../themes/themes.dart';
 import '../../../bible/screens/screens.dart';
 import '../../../library/screens/screens.dart';
 
@@ -83,10 +84,6 @@ class _HomePageState extends State<HomePage> {
   /*Future<List<EpubBook>> liturgy() async {
     return LiturgyService.items;+
   }*/
-
-  Future<List<SfPdfViewer>> fetchDataPdf() async {
-    return PdfService.openAssetFolder('/pdf');
-  }
 
   @override
   initState() {
@@ -229,10 +226,6 @@ class _HomePageState extends State<HomePage> {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
-      /*{
-        'icon': ImageConstant.imgNotification,
-        'action': () => Navigator.pushNamed(context, NotificationsScreen.route)
-      }*/
     ];
 
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -431,20 +424,23 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ExpandedButton(
-                        message: 'En Desarrollo',
-                        icon: ImageConstant.imgButtonalerts,
-                        label: 'Lecturas'),
+                      message: 'En Desarrollo',
+                      icon: ImageConstant.imgButtonalerts,
+                      label: 'Lecturas',
+                      route: ReadingScreen.route,
+                    ),
                     SizedBox(width: 14.0),
                     ExpandedButton(
                       icon: ImageConstant.imgVolume,
                       label: 'Oraciones',
                       message: 'En Desarrollo',
+                      route: PrayersScreen.route,
                     ),
                     SizedBox(width: 14.0),
                     ExpandedButton(
                       icon: ImageConstant.imgVolumeIndigo900,
                       label: 'Blog',
-                      route: 'blog',
+                      route: BlogScreen.route,
                     )
                   ],
                 ),

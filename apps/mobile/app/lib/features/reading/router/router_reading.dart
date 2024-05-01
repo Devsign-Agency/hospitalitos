@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
-import 'package:mobile_app/features/liturgia/screens/calendar/detail_screen.dart';
+import 'package:mobile_app/features/reading/screens/screens.dart';
 
 import 'package:mobile_app/router/menu_option.dart';
 
-class RouterLiturgia {
+import '../screens/reading_detail/reading_detail_screen.dart';
+
+class RouterReading {
   static final menuOptions = <MenuOption>[];
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     Map<String, Widget Function(BuildContext)> routes = {};
 
+    routes.addAll(
+        {ReadingScreen.route: (BuildContext context) => ReadingScreen()});
     routes.addAll({
-      LiturgiaCalendarScreen.route: (BuildContext context) =>
-          LiturgiaCalendarScreen()
-    });
-    routes.addAll({
-      DetailLiturgyScreen.route: (BuildContext context) => DetailLiturgyScreen()
+      ReadingDetailScreen.route: (BuildContext context) => ReadingDetailScreen()
     });
 
     for (final option in menuOptions) {
