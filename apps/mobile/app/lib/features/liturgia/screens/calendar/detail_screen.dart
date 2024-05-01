@@ -94,32 +94,32 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
         title: title,
         actions: appBarActions,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Center(
                   child: Text(
                     desc,
                     style: AppStyle.txtNunitoSansSemiBold20,
                   ),
                   
                 ),
-              ),
-              /*if (onAudioSound)
-                PopupAudioPlayer(
-                  voiceText: _newVoiceText,
-                  bookTitle: title,
-                  bookAuthor: '',
-                  onCompletion: () {},
-                )*/
-            ],
+                /*if (onAudioSound)
+                  PopupAudioPlayer(
+                    voiceText: _newVoiceText,
+                    bookTitle: title,
+                    bookAuthor: '',
+                    onCompletion: () {},
+                  )*/
+              ],
+            ),
           ),
+          
         ),
-        
       ),
     );
   }

@@ -100,7 +100,12 @@ class LiturgiaCalendarScreen extends StatelessWidget {
 
   getCurrentDate(date) {
     final DateFormat format2 = DateFormat.yMMMMd('es_ES');
-    return date;
+
+    DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        .parse(date + 'T00:00:00.000Z');
+    var inputDate = DateTime.parse(parseDate.toString());
+    String formattedDate = DateFormat.yMMMEd('es_ES').format(inputDate);
+    return formattedDate;
   }
 
   _handleEditDate(BuildContext context, LiturgyService liturgyService) async {
