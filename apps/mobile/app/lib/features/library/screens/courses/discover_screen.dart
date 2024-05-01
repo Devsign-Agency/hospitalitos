@@ -77,7 +77,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     // });
 
     try {
-      results = await youtubeAPI.search('Hospitalitos de la fe '); //searching for videos related to HD Music
+      results = await youtubeAPI.search(
+          'Hospitalitos de la fe '); //searching for videos related to HD Music
       listVideos = results;
 
       return results;
@@ -89,8 +90,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void changeSelectedFilterItem(int index) {}
-
     Future<List<YouTubeVideo>> getBooks() {
       List<ViewedPreviewItem> items = [
         ViewedPreviewItem(
@@ -103,7 +102,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             id: '4', title: 'Título', image: 'assets/images/img_5.png'),
       ];
 
-      return youtubeAPI.search('DwTN ');
+      return youtubeAPI.channel('UCBJni9poQ67aCVmW6bA9wRg');
     }
 
     return Scaffold(
@@ -127,8 +126,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 onItemTapped: () => Navigator.pushNamed(context, 'reader-book',
                     arguments: 'instance-book'),
               ),
-
-              SizedBox(height: 100)
             ],
           ),
         ));

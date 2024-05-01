@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
@@ -17,6 +18,7 @@ class PreviewListVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     // List<ViewedPreviewItem> items = [
     //   ViewedPreviewItem(
     //       id: '1', title: 'Título', image: 'assets/images/img_image12.png'),
@@ -47,23 +49,26 @@ class PreviewListVideo extends StatelessWidget {
             print(items);
             return Padding(
               padding: getPadding(left: 16, right: 16, top: 24),
-              child: Wrap(
-                children: [
-                  GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    shrinkWrap: true,
-                    itemBuilder: (_, int index) {
-                      print(items[index]);
-                      var item = items[index].thumbnail.high.url;
+              child: SingleChildScrollView(
+                child: Wrap(
+                  children: [
+                    SizedBox(
+                      height: height * 0.86,
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                        shrinkWrap: true,
+                        itemBuilder: (_, int index) {
+                          print(items[index]);
+                          var item = items[index].thumbnail.high.url;
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, PreviewVideoScreen.route,
-                              arguments: items[index].url);
-                        },
-                        child:  
-                          ClipRRect(
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, PreviewVideoScreen.route,
+                                  arguments: items[index].url);
+                            },
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Container(
                                 width: double.infinity,
@@ -74,19 +79,21 @@ class PreviewListVideo extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: double.infinity,
-                                      height: 136.0,
+                                      height: 120.0,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           image: DecorationImage(
-                                              image: NetworkImage(item), fit: BoxFit.cover)),
+                                              image: NetworkImage(item),
+                                              fit: BoxFit.cover)),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
                                       items[index].title,
-                                      style: AppStyle.txtNunitoSansSemiBold20,
+                                      style: AppStyle.txtNunitoSansSemiBold16,
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
                                       //overflow: TextOverflow.ellipsis,
                                     ),
                                   ],
@@ -94,11 +101,13 @@ class PreviewListVideo extends StatelessWidget {
                               ),
                             ),
                           );
-                    },
-                    itemCount: items.length,
-                    // separatorBuilder: (_, __) => SizedBox(width: 8),
-                  ),
-                ],
+                        },
+                        itemCount: items.length,
+                        // separatorBuilder: (_, __) => SizedBox(width: 8),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }
