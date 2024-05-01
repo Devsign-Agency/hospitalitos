@@ -47,32 +47,6 @@ loadAsset() async {
 
 class _HomePageState extends State<HomePage> {
   bool _isDarkTheme = false;
-  //var dataLiturgia = liturgies();
-  final _itemSliders = [
-    [
-      'Liturgia',
-      'TIEMPO PASCUAL MARTES DE SEMANA II',
-      'Propio del Tiempo. Salterio IIfsdffsdfds'
-    ]
-  ];
-
-  // final List<Widget> _slides = [
-  //   Wrap(children: [
-  //     Align(
-  //         alignment: Alignment.centerLeft,
-  //         child:
-  //             Text('Liturgia', style: AppStyle.txtNunitoSansRegular16Gray900)),
-  //     Align(
-  //         alignment: Alignment.centerLeft,
-  //         child: Text('TIEMPO PASCUAL MARTES DE SEMANA II',
-  //             style: AppStyle.txtNunitoSansSemiBold20)),
-  //     Align(
-  //         widthFactor: double.infinity,
-  //         alignment: Alignment.centerLeft,
-  //         child: Text('Propio del Tiempo. Salterio II',
-  //             style: AppStyle.txtNunitoSansRegular14Gray900)),
-  //   ]),
-  // ];
   late User? user;
   late BottomNavigationMainProvider bottomNavigationMain =
       Provider.of<BottomNavigationMainProvider>(context, listen: false);

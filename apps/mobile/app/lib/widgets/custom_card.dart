@@ -26,7 +26,8 @@ class CustomCard extends StatelessWidget {
             }
           : null,
       child: Container(
-          width: double.infinity,
+          width: double.infinity ,
+          height: double.infinity * 2,
           padding: getPadding(all: 16),
           margin: margin ?? getMargin(top: 8, left: 16, right: 16),
           decoration: AppDecoration.fillWhiteA700BoxShadow.copyWith(
