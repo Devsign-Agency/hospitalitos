@@ -71,14 +71,14 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
     ];
 
     final appBarActions = [
-      {
+      /*{
         'icon': ImageConstant.imgMusicIndigo900,
         'color': ColorConstant.indigo900,
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
         'action': () => handleButtonPlay(),
-      },
+      },*/
       {
         'icon': ImageConstant.imgShare,
         'color': ColorConstant.indigo900,
@@ -109,13 +109,13 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
                   
                 ),
               ),
-              if (onAudioSound)
+              /*if (onAudioSound)
                 PopupAudioPlayer(
                   voiceText: _newVoiceText,
                   bookTitle: title,
                   bookAuthor: '',
                   onCompletion: () {},
-                )
+                )*/
             ],
           ),
         ),
