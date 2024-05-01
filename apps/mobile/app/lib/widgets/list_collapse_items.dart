@@ -58,8 +58,8 @@ class ListCollapseItemState extends State<ListCollapseItem> {
       shrinkWrap: true,
       itemBuilder: (_, int index) {
         final Map<String, dynamic> item = data[index];
-        return Container(
-          // padding: getPadding(top: 16, bottom: 16),
+        return GestureDetector(
+          onTap: () => _changeSelected(context, item),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -68,13 +68,6 @@ class ListCollapseItemState extends State<ListCollapseItem> {
                   '${item['title']}',
                   style: AppStyle.txtNunitoSansSemiBold20Black900,
                 ),
-                CustomImageView(
-                  color: ColorConstant.whiteA700,
-                  svgPath: !item['isSelected']
-                      ? ImageConstant.imgArrowright
-                      : ImageConstant.imgArrowdownGray900,
-                  onTap: () => _changeSelected(context, item),
-                )
               ]),
               if (item['isSelected'])
                 Text(

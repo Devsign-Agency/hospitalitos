@@ -40,7 +40,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
                 CustomImageView(
                     width: 24,
                     height: 24,
-                    color: ColorConstant.whiteA700,
+                    color: ColorConstant.indigo900,
                     svgPath: ImageConstant.imgEditIndigo900,
                     onTap: () {
                       _handleEditDate(context, liturgyService);

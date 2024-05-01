@@ -104,7 +104,7 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
                 child: Center(
                   child: Text(
                     desc,
-                    style: AppStyle.txtNunitoSansSemiBold16Gray9001,
+                    style: AppStyle.txtNunitoSansSemiBold20,
                   ),
                   
                 ),
