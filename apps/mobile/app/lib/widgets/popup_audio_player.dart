@@ -107,6 +107,8 @@ class _AudioPlayerTitleAndAuthor extends StatelessWidget {
             style: isDarkMode
                 ? AppStyle.txtNunitoSansSemiBold20WhiteA700
                 : AppStyle.txtNunitoSansSemiBold20Black900,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             bookAuthor,
@@ -152,7 +154,6 @@ class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
-      print('Hola');
 
       // await ttsProvider.streamController.close();
       // streamController = ttsProvider.streamController;

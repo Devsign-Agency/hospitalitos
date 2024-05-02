@@ -11,9 +11,38 @@ import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:excel/excel.dart';
 
+import '../../../bible/screens/screens.dart';
+import '../../../library/screens/courses/discover_screen.dart';
+import '../../../main/pages/pages.dart';
+
 class LiturgiaCalendarScreen extends StatelessWidget {
   static const String route = 'calendar-route';
   const LiturgiaCalendarScreen({Key? key}) : super(key: key);
+
+  handleChangeBottomNavigationBar(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 2:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 3:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
+            (Route<dynamic> route) => false);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +91,11 @@ class LiturgiaCalendarScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 2,
+          onChangeIndex: (int index) =>
+              handleChangeBottomNavigationBar(index, context),
+          bottomMenuList: BibleService.bottomMenuList),
     );
   }
 

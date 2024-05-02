@@ -10,7 +10,12 @@ import 'package:youtube_data_api/youtube_data_api.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
 import '../../../../core/models/viewed_preview.dart';
+import '../../../../shared/shared.dart';
 import '../../../../widgets/filters_bar.dart';
+import '../../../../widgets/widgets.dart';
+import '../../../bible/screens/screens.dart';
+import '../../../liturgia/screens/screens.dart';
+import '../../../main/pages/pages.dart';
 import '../../widgets/widgets.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -42,6 +47,31 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     });
     //callApi();
     // // retur
+  }
+
+  handleChangeBottomNavigationBar(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 2:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 3:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
+            (Route<dynamic> route) => false);
+        break;
+    }
   }
 
   callApi() async {
@@ -106,28 +136,34 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     }
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: 'Descubre',
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Padding(
-              //   padding: getPadding(bottom: 16),
-              //   child: FiltersBar(
-              //       items: filtersData,
-              //       onChangeSelected: changeSelectedFilterItem),
-              // ),
+      appBar: CustomAppBar(
+        title: 'Descubre',
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Padding(
+            //   padding: getPadding(bottom: 16),
+            //   child: FiltersBar(
+            //       items: filtersData,
+            //       onChangeSelected: changeSelectedFilterItem),
+            // ),
 
-              // Recommended
-              PreviewListVideo(
-                future: getBooks(),
-                onItemTapped: () => Navigator.pushNamed(context, 'reader-book',
-                    arguments: 'instance-book'),
-              ),
-            ],
-          ),
-        ));
+            // Recommended
+            PreviewListVideo(
+              future: getBooks(),
+              onItemTapped: () => Navigator.pushNamed(context, 'reader-book',
+                  arguments: 'instance-book'),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 1,
+          onChangeIndex: (int index) =>
+              handleChangeBottomNavigationBar(index, context),
+          bottomMenuList: BibleService.bottomMenuList),
+    );
   }
 }

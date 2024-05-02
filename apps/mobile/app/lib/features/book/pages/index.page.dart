@@ -70,93 +70,91 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
     );
   }
 
-getTextFromEpubInstance(item) async {
-  var url = 'https://sample-videos.com/video123/mp4';
+  getTextFromEpubInstance(item) async {
+    var url = 'https://sample-videos.com/video123/mp4';
 
-  final nameFile = item.Title + '.epub';
+    final nameFile = item.Title + '.epub';
 
-  var response = await loadAsset(nameFile);
+    var response = await loadAsset(nameFile);
 
-  var savePath = '/storage/emulated/0/Download/$nameFile';
+    var savePath = '/storage/emulated/0/Download/$nameFile';
 
-  var file = File(savePath);
+    var file = File(savePath);
 
-  var raf = file.openSync(mode: FileMode.write);
+    var raf = file.openSync(mode: FileMode.write);
 
-  // response.data is List<int> type
+    // response.data is List<int> type
 
-  final data = await rootBundle.load('assets/epubs/$nameFile');
+    final data = await rootBundle.load('assets/epubs/$nameFile');
 
-  final bytes = data.buffer.asUint8List();
+    final bytes = data.buffer.asUint8List();
 
-  raf.writeFromSync(bytes);
+    raf.writeFromSync(bytes);
 
-  showCustomToast();
-}
+    Fluttertoast.showToast(msg: 'El archivo se ha descargado');
+  }
 
+  Future<File> loadAsset(fileName) async {
+    final data = await rootBundle.load('assets/epubs/$fileName');
 
+    final bytes = data.buffer.asUint8List();
 
-Future<File> loadAsset(fileName) async {
-  final data = await rootBundle.load('assets/epubs/$fileName');
+    return _storeFile('book3.epub', bytes);
+  }
 
-  final bytes = data.buffer.asUint8List();
+  Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = url;
 
-  return _storeFile('book3.epub', bytes);
-}
+    final dir = await getApplicationDocumentsDirectory();
 
-Future<File> _storeFile(String url, List<int> bytes) async {
-  final filename = url;
+    final file = File('${dir.path}/$filename');
 
-  final dir = await getApplicationDocumentsDirectory();
+    return await file.writeAsBytes(bytes, flush: true);
+  }
 
-  final file = File('${dir.path}/$filename');
+  Future<File> writeToFile(ByteData data) async {
+    final buffer = data.buffer;
 
-  return await file.writeAsBytes(bytes, flush: true);
-}
+    Directory tempDir = await getTemporaryDirectory();
 
-Future<File> writeToFile(ByteData data) async {
-  final buffer = data.buffer;
+    String tempPath = tempDir.path;
 
-  Directory tempDir = await getTemporaryDirectory();
+    var filePath =
+        tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
 
-  String tempPath = tempDir.path;
+    return new File(filePath).writeAsBytes(
+        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  }
 
-  var filePath =
-      tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
-
-  return new File(filePath)
-      .writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-}
-
-testData(book) {
-  print(book.Chapters);
-}
+  testData(book) {
+    print(book.Chapters);
+  }
 
   showCustomToast() {
-  Widget toast = Container(
-    width: double.infinity,
-    height: 48,
-    padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(4),
+    Widget toast = Container(
+      width: double.infinity,
+      height: 48,
+      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
 
-      color: Colors.grey[800], // TODO: Añadir color a ColorConstants
-    ),
-    child: Text(
-      'El archivo se ha descargado',
-      style: AppStyle.txtRobotoRegular14Gray10002,
-    ),
-  );
+        color: Colors.grey[800], // TODO: Añadir color a ColorConstants
+      ),
+      child: Text(
+        'El archivo se ha descargado',
+        style: AppStyle.txtRobotoRegular14Gray10002,
+      ),
+    );
 
-  fToast?.showToast(
-    child: toast,
-    toastDuration: const Duration(seconds: 3),
-  );
+    fToast?.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+    );
 
-  //Navigator.of(context).pop();
+    //Navigator.of(context).pop();
 
-  //Navigator.of(context).pushNamed('seemore');
-}
+    //Navigator.of(context).pushNamed('seemore');
+  }
 }
 
 class _ChapterDetail extends StatelessWidget {
@@ -261,6 +259,8 @@ class _ListChaptersOfBook extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
+    BookService bookService = Provider.of<BookService>(context, listen: false);
+
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     return ListView.builder(
@@ -294,11 +294,15 @@ class _ListChaptersOfBook extends StatelessWidget {
                                     var subtititle = book
                                         .Chapters![index].SubChapters[i].Title!
                                         .toString();
+
                                     return ListTile(
                                       onTap: () {
                                         var sub =
                                             book.Chapters![index].SubChapters;
-
+                                        bookService.chapterIndex = index;
+                                        bookService.subchapterIndex = i;
+                                        bookService.subchapterSelected = book
+                                            .Chapters![index].SubChapters[i];
                                         Navigator.pushNamed(
                                             context, ChapterPage.route,
                                             arguments: EpubArguments(
@@ -323,6 +327,10 @@ class _ListChaptersOfBook extends StatelessWidget {
                                           ? ColorConstant.whiteA700
                                           : ColorConstant.gray900)),
                           onTap: () {
+                            bookService.subchapterSelected =
+                                book?.Chapters![index];
+                            bookService.chapterIndex = index;
+                            bookService.subchapterIndex = 0;
                             Navigator.pushNamed(context, ChapterPage.route,
                                 arguments: EpubArguments(
                                     book: book,

@@ -82,11 +82,6 @@ class _BlogDetailState extends State<BlogDetail> {
                                 ttsProvider.init();
 
                                 ttsProvider.play();
-                                // debugPrint(selectedText);
-                                print('playText');
-                                // TextToSpeech tts = TextToSpeech();
-                                // await tts.play(selectedText);
-                                // your "send email" code
 
                                 // setState(() {
                                 //   newVoiceText = selectedText;
@@ -128,13 +123,6 @@ class _BlogDetailState extends State<BlogDetail> {
                           ),
                         ),
                       )),
-                  // if (onAudioSound)
-                  //   PopupAudioPlayer(
-                  //     voiceText: newVoiceText,
-                  //     bookTitle: '',
-                  //     bookAuthor: '',
-                  //     onCompletion: () {},
-                  //   )
                 ],
               );
             }),

@@ -126,8 +126,8 @@ class _ActionButtonDownloadPictureState
         Uint8List.fromList(response.data),
         quality: 60,
         name: "image" + formattedDate);
-    print(result);
-    showCustomToast();
+
+    Fluttertoast.showToast(msg: 'El archivo se ha descargado');
   }
 
   showCustomToast() {
