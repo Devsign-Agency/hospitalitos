@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/style.dart';
 import 'package:mobile_app/core/app_export.dart';
+import 'package:mobile_app/widgets/custom_selection_area.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -84,6 +87,30 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
     });
   }
 
+  void playSelectedText() async {
+    ClipboardData? kTextPlain;
+    kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+
+    _newVoiceText = kTextPlain?.text ?? '';
+    onAudioSound = true;
+
+    setState(() {});
+  }
+
+  void shareSelectedText() async {
+    ClipboardData? selectedContent =
+        await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (selectedContent != null) share(selectedContent.text!);
+  }
+
+  void handleSelectedContent(SelectedContent? selectedContent) {
+    if (selectedContent != null) {
+      ClipboardData data = ClipboardData(text: selectedContent.plainText);
+      Clipboard.setData(data);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Reading reading = ModalRoute.of(context)?.settings.arguments! as Reading;
@@ -125,6 +152,15 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
       },
     ];
 
+    final List<ContextMenuButtonItem> menuButtonItems = [
+      ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
+      ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
+    ];
+
+    TextStyle valueStyle = AppStyle.txtNunitoSansRegular18Gray900.copyWith(
+        height: textBook.lineHeight,
+        fontSize: convertFontSizePxToDouble(textBook.fontSize));
+
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -157,11 +193,12 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      reading.description,
-                      style: AppStyle.txtNunitoSansSemiBold20Black900.copyWith(
-                        fontSize: convertFontSizePxToDouble(textBook.fontSize),
-                        height: textBook.lineHeight,
+                    CustomSelectionArea(
+                      onSelectionChanged: handleSelectedContent,
+                      menuButtonItems: menuButtonItems,
+                      child: Text(
+                        reading.description,
+                        style: valueStyle,
                       ),
                     ),
                   ],

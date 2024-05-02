@@ -46,7 +46,7 @@ class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
       },
     ];
     return Scaffold(
-      appBar: CustomAppBar(title: book?.Title!, actions: actions),
+      appBar: CustomAppBar(title: book?.Title!),
       body: Column(
         children: [
           CustomTabBar(

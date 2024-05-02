@@ -18,6 +18,7 @@ class BlogDetail extends StatefulWidget {
 }
 
 class _BlogDetailState extends State<BlogDetail> {
+  late TextToSpeech ttsProvider;
   var _scrollController = ScrollController();
   bool _isExpanded = false;
   bool onAudioSound = false;
@@ -26,6 +27,7 @@ class _BlogDetailState extends State<BlogDetail> {
 
   @override
   void initState() {
+    super.initState();
     _scrollController.addListener(() {
       setState(() {
         _isExpanded = _isSliverAppBarExpanded;
@@ -37,9 +39,15 @@ class _BlogDetailState extends State<BlogDetail> {
   }
 
   @override
+  dispose() {
+    ttsProvider.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final dynamic params = ModalRoute.of(context)?.settings.arguments;
-
+    ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
     final String parsedString =
         stripHtmlIfNeeded(params['content']['rendered']);
     var selectedText = '';
@@ -63,7 +71,7 @@ class _BlogDetailState extends State<BlogDetail> {
                       padding: getPadding(all: 16),
                       child: SelectionArea(
                         onSelectionChanged: (value) {
-                          selectedText = value?.plainText ?? "";
+                          selectedText = value?.plainText ?? '';
                         },
                         contextMenuBuilder: (context, editableTextState) {
                           final List<ContextMenuButtonItem> buttonItems =
@@ -73,10 +81,6 @@ class _BlogDetailState extends State<BlogDetail> {
                             ContextMenuButtonItem(
                               label: 'Escuchar',
                               onPressed: () async {
-                                TextToSpeech ttsProvider =
-                                    Provider.of<TextToSpeech>(context,
-                                        listen: false);
-
                                 ttsProvider.text = selectedText;
 
                                 ttsProvider.init();
@@ -99,14 +103,14 @@ class _BlogDetailState extends State<BlogDetail> {
                           child: Html(
                             data: parsedString,
                             style: {
-                              "body": Style(
+                              'body': Style(
                                 margin: Margins.zero,
                                 padding: EdgeInsets.zero,
                                 fontSize: FontSize(17.0),
                                 lineHeight: LineHeight(1.4),
                                 fontFamily: 'Nunito Sans',
                               ),
-                              "p": Style(
+                              'p': Style(
                                   padding: EdgeInsets.all(6),
                                   fontFamily: 'Nunito Sans',
                                   alignment:
@@ -139,9 +143,9 @@ class _BlogDetailState extends State<BlogDetail> {
 
 String removeAllHtmlTags(String htmlText) {
   print(htmlText);
-  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+  RegExp exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
   var separator = '\n';
-  final result = RegExp(r"<[^>]*>")
+  final result = RegExp(r'<[^>]*>')
       .allMatches(htmlText)
       .map((e) => e.group(0))
       .join(separator);
@@ -153,5 +157,5 @@ String stripHtmlIfNeeded(String text) {
   // The regular expression is simplified for an HTML tag (opening or
   // closing) or an HTML escape. We might want to skip over such expressions
   // when estimating the text directionality.
-  return text.replaceAll('<img .*?>/g', "");
+  return text.replaceAll('<img .*?>/g', '');
 }

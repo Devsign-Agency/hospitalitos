@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/style.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:share_plus/share_plus.dart';
@@ -79,6 +81,30 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
     });
   }
 
+  void playSelectedText() async {
+    ClipboardData? kTextPlain;
+    kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
+
+    _newVoiceText = kTextPlain?.text ?? '';
+    onAudioSound = true;
+
+    setState(() {});
+  }
+
+  void shareSelectedText() async {
+    ClipboardData? selectedContent =
+        await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (selectedContent != null) share(selectedContent.text!);
+  }
+
+  void handleSelectedContent(SelectedContent? selectedContent) {
+    if (selectedContent != null) {
+      ClipboardData data = ClipboardData(text: selectedContent.plainText);
+      Clipboard.setData(data);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Prayer prayer = ModalRoute.of(context)?.settings.arguments! as Prayer;
@@ -119,6 +145,15 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
       },
     ];
 
+    final List<ContextMenuButtonItem> menuButtonItems = [
+      ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
+      ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
+    ];
+
+    TextStyle valueStyle = AppStyle.txtNunitoSansRegular18Gray900.copyWith(
+        height: textBook.lineHeight,
+        fontSize: convertFontSizePxToDouble(textBook.fontSize));
+
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -135,11 +170,12 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  child: Text(
-                    prayer.prayer,
-                    style: AppStyle.txtNunitoSansSemiBold20Black900.copyWith(
-                      fontSize: convertFontSizePxToDouble(textBook.fontSize),
-                      height: textBook.lineHeight,
+                  child: CustomSelectionArea(
+                    menuButtonItems: menuButtonItems,
+                    onSelectionChanged: handleSelectedContent,
+                    child: Text(
+                      prayer.prayer,
+                      style: valueStyle,
                     ),
                   ),
                 ),
