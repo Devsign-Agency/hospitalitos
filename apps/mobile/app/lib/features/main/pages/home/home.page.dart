@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 4]['detail']);
           arr.add(liturgyService.liturgies[index + 5]['detail']);
         }
-        if (detail[2].contains('MIERCOLES')) {
+        if (detail[2].contains('MIÉRCOLES')) {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
