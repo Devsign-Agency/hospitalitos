@@ -280,6 +280,8 @@ class _ChapterPageState extends State<ChapterPage> {
       BottomNavigationMenu(icon: ImageConstant.imgShareGray50),
     ];
 
+    parsedString = _parseDocumentToString(bookService.subchapterSelected);
+
     final List<PopupMenuItemModel> menuOptions = [
       PopupMenuItemModel(
           id: 1,
