@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobile_app/features/reading/screens/widgets/list_view_reading.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +33,15 @@ class ReadingScreen extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(reading.title,
-                    style: AppStyle.txtNunitoSansSemiBold20Black900),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 300),
+                  child: Text(
+                    reading.title,
+                    style: AppStyle.txtNunitoSansSemiBold20Black900,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                ),
                 CustomImageView(
                     width: 24,
                     height: 24,

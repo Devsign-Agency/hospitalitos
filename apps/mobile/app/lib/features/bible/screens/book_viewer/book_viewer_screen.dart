@@ -410,6 +410,8 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                             child: ButtonNavigationChapter(
                                 onTap: () => bibleService.moveChapter('next'),
                                 icon: Icons.arrow_forward)),
+
+                      // Player Text
                       if (onAudioSound)
                         ConstrainedBox(
                           constraints: BoxConstraints(minHeight: 400),

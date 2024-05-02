@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -117,6 +118,13 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
     return values[fontSize]!;
   }
 
+  void handleSelectedContent(SelectedContent? selectedContent) {
+    if (selectedContent != null) {
+      ClipboardData data = ClipboardData(text: selectedContent.plainText);
+      Clipboard.setData(data);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     dynamic params = ModalRoute.of(context)?.settings.arguments;
@@ -159,7 +167,16 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
       },
     ];
 
+    final List<ContextMenuButtonItem> menuButtonItems = [
+      ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
+      ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
+    ];
+
     double height = MediaQuery.of(context).size.height;
+
+    TextStyle valueStyle = AppStyle.txtNunitoSansRegular18Gray900.copyWith(
+        height: textBook.lineHeight,
+        fontSize: convertFontSizePxToDouble(textBook.fontSize));
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -176,12 +193,10 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
           child: Stack(
             children: [
               SingleChildScrollView(
-                child: Text(
-                  desc,
-                  style: AppStyle.txtNunitoSansSemiBold20Black900.copyWith(
-                    fontSize: convertFontSizePxToDouble(textBook.fontSize),
-                    height: textBook.lineHeight,
-                  ),
+                child: CustomSelectionArea(
+                  onSelectionChanged: handleSelectedContent,
+                  menuButtonItems: menuButtonItems,
+                  child: Text(desc, style: valueStyle),
                 ),
               ),
               if (onAudioSound)

@@ -146,10 +146,8 @@ class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
   StreamController<int> streamController = StreamController<int>();
   late TextToSpeech ttsProvider;
 
-  FlutterTts? ftts;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -166,8 +164,6 @@ class _AudioPlayerProgressBarState extends State<_AudioPlayerProgressBar> {
 
   @override
   dispose() {
-    print('DISPOSE');
-
     ttsProvider.cancel();
 
     super.dispose();
