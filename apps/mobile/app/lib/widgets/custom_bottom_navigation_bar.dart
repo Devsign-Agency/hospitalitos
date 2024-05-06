@@ -34,11 +34,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     _currentIndex = widget.currentIndex!;
   }
 
-  // void _onTappedItem(int index) {
-  //   _currentIndex = index;
-  //   widget.onChangeIndex(index);
-  //   setState(() {});
-  // }
+  void _onTappedItem(int index) {
+    _currentIndex = index;
+    widget.onChangeIndex(index);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     bool isDarkMode = themeProvider.currentTheme == DarkTheme.theme;
 
     return BottomNavigationBar(
-      currentIndex: widget.currentIndex,
+      currentIndex: _currentIndex,
       backgroundColor: widget.backgroundColor,
       type: BottomNavigationBarType.fixed,
       items: List.generate(
@@ -103,7 +103,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ));
         },
       ),
-      onTap: widget.onChangeIndex,
+      onTap: _onTappedItem,
     );
   }
 }

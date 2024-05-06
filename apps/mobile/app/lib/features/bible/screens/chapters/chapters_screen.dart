@@ -135,7 +135,7 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Marcadores',
+        title: !_isEditing ? 'Guardado' : 'Editar',
         iconButtonVariant: !_isEditing
             ? IconButtonVariant.FillGray300
             : IconButtonVariant.NoFill,
