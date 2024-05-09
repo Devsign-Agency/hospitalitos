@@ -48,7 +48,7 @@ class VerseList extends StatelessWidget {
   }
 }
 
-class _Verse extends StatelessWidget {
+class _Verse extends StatefulWidget {
   final bool isDarkMode;
   final TextBook textBook;
   final String value;
@@ -66,6 +66,32 @@ class _Verse extends StatelessWidget {
       required this.numberOfVerse,
       required this.selected,
       required this.onSelected});
+
+  @override
+  State<_Verse> createState() => _VerseState();
+}
+
+class _VerseState extends State<_Verse> {
+  Color selectedVerseColor = ColorConstant.yellow100.withOpacity(0.1);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // ttsProvider = Provider.of<TextToSpeech>(context, listen: true);
+
+      selectedVerseColor = ColorConstant.gray100;
+      setState(() {});
+
+      // await ttsProvider.streamController.close();
+      // streamController = ttsProvider.streamController;
+
+      // ttsProvider.ftts!.setCompletionHandler(() {
+      //   print('COMPLETIOOOOOOOOOOOON');
+      // });
+    });
+  }
 
   double convertFontSizePxToDouble(FontSize fontSize) {
     Map<FontSize, double> values = {
@@ -88,50 +114,59 @@ class _Verse extends StatelessWidget {
     BibleService bibleService =
         Provider.of<BibleService>(context, listen: true);
     Color borderColor =
-        isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
+        widget.isDarkMode ? ColorConstant.purple50 : ColorConstant.indigo900;
 
-    TextStyle numberOfVerseStyle = isDarkMode
+    TextStyle numberOfVerseStyle = widget.isDarkMode
         ? AppStyle.txtNunitoSansRegular14WhiteA700.copyWith(
-            fontSize: convertFontSizePxToDouble(textBook.fontSize) - 4.0,
+            fontSize: convertFontSizePxToDouble(widget.textBook.fontSize) - 4.0,
           )
         : AppStyle.txtNunitoSansRegular14Black900.copyWith(
-            fontSize: convertFontSizePxToDouble(textBook.fontSize) - 4.0);
+            fontSize:
+                convertFontSizePxToDouble(widget.textBook.fontSize) - 4.0);
 
-    TextStyle valueStyle = isDarkMode
+    TextStyle valueStyle = widget.isDarkMode
         ? AppStyle.txtNunitoSansRegular18WhiteA700.copyWith(
-            height: textBook.lineHeight,
-            fontSize: convertFontSizePxToDouble(textBook.fontSize))
+            height: widget.textBook.lineHeight,
+            fontSize: convertFontSizePxToDouble(widget.textBook.fontSize))
         : AppStyle.txtNunitoSansRegular18Gray900.copyWith(
-            height: textBook.lineHeight,
-            fontSize: convertFontSizePxToDouble(textBook.fontSize));
+            height: widget.textBook.lineHeight,
+            fontSize: convertFontSizePxToDouble(widget.textBook.fontSize));
 
-    return Container(
+    return AnimatedContainer(
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeIn,
         width: double.infinity,
-        key: GlobalObjectKey(numberOfVerse),
-        padding: getPadding(left: textBook.margin, right: textBook.margin),
+        key: GlobalObjectKey(widget.numberOfVerse),
+        padding: getPadding(
+            left: widget.textBook.margin, right: widget.textBook.margin),
         decoration: BoxDecoration(
+            color: bibleService.startVerse == widget.numberOfVerse
+                ? selectedVerseColor
+                : null,
             border: Border(
                 left: BorderSide(
-                    color: active ? borderColor : ColorConstant.transparent,
-                    width: active ? 6.0 : 0.0))),
+                    color:
+                        widget.active ? borderColor : ColorConstant.transparent,
+                    width: widget.active ? 6.0 : 0.0))),
         child: Column(
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('$numberOfVerse ', style: numberOfVerseStyle),
+              Text('${widget.numberOfVerse} ', style: numberOfVerseStyle),
               Expanded(
                 child: GestureDetector(
                   onTap: () {
                     Map<dynamic, String> verse = {
-                      numberOfVerse: value,
+                      widget.numberOfVerse: widget.value,
                     };
-                    onSelected(verse);
+                    widget.onSelected(verse);
                   },
                   child: Text(
-                    value,
+                    widget.value,
                     style: valueStyle.copyWith(
-                        decoration: bibleService.isVerseSelected(numberOfVerse)
-                            ? TextDecoration.underline
-                            : TextDecoration.none),
+                        decoration:
+                            bibleService.isVerseSelected(widget.numberOfVerse)
+                                ? TextDecoration.underline
+                                : TextDecoration.none),
                   ),
                 ),
               ),

@@ -179,7 +179,7 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _handleChangeBottomNavigationBar(int index, MarkerService markerService,
-      String bookTitle, dynamic chapter) async {
+      String bookTitle, dynamic chapter, chapterTitle) async {
     bottomNavigationBarCurrentIndex = index;
     // List<Map<dynamic, dynamic>> jsonDecode =
     //     json.decode(Preferences.markerList);
@@ -190,7 +190,7 @@ class _ChapterPageState extends State<ChapterPage> {
     }
 
     if (index == 3) {
-      _shareDocument(chapter);
+      _shareDocument(chapter, bookTitle, chapterTitle);
     }
 
     if (index != 3) {
@@ -216,8 +216,6 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _handleChangeSetting(dynamic event, dynamic values) {
-    print('event: $event');
-
     textBook.fontSize = event['fontSize'];
     textBook.lineHeight = event['lineHeight'];
     textBook.margin = event['margin'];
@@ -236,11 +234,12 @@ class _ChapterPageState extends State<ChapterPage> {
     await Share.share(value);
   }
 
-  void _shareDocument(EpubChapter? chapter) async {
-    print('chaptyer $chapter');
+  void _shareDocument(
+      EpubChapter? chapter, String bookTitle, String title) async {
     String parsedString = _parseDocumentToString(chapter);
 
-    _share(parsedString);  }
+    _share('$bookTitle\n$title\n$parsedString\n');
+  }
 
   Color getTextColor(CircleButtonType type) {
     Color color;
@@ -306,7 +305,7 @@ class _ChapterPageState extends State<ChapterPage> {
           id: 2,
           title: 'Compartir',
           onTappedItem: (context) {
-            _shareDocument(chapter);
+            _shareDocument(chapter, bookTitle, bookService.chapterTitle);
           })
     ];
     String findRefInBook(url) {
@@ -943,8 +942,8 @@ class _ChapterPageState extends State<ChapterPage> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: bottomNavigationBarCurrentIndex,
-          onChangeIndex: (index) => _handleChangeBottomNavigationBar(
-              index, markerService, bookTitle, chapter),
+          onChangeIndex: (index) => _handleChangeBottomNavigationBar(index,
+              markerService, bookTitle, chapter, bookService.chapterTitle),
           bottomMenuList: bottomMenuList),
     );
   }

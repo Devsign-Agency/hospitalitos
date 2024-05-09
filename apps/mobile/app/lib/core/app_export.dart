@@ -23,5 +23,6 @@ export 'package:mobile_app/core/theme/app.style.dart';
 
 export 'package:mobile_app/core/utils/date_time.utils.dart';
 export 'package:mobile_app/core/utils/size.utils.dart';
+export 'package:mobile_app/core/utils/convert.utils.dart';
 
 export 'package:url_launcher/url_launcher.dart';

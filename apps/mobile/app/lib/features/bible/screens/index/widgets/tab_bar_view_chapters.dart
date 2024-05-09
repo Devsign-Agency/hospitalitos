@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/shared/services/bible_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/app_export.dart';
 import '../../../../../shared/shared.dart';
 import '../../../../../themes/themes.dart';
-import '../../../../../widgets/custom_button.dart';
 
 class TabBarViewChapters extends StatelessWidget {
   final VoidCallback onChangeTab;
@@ -38,6 +36,7 @@ class TabBarViewChapters extends StatelessWidget {
                   onTap: () {
                     bibleService.selectedChapter =
                         bibleService.selectedBook.chapters[index];
+                    bibleService.startVerse = -1;
                     onChangeTab();
                   },
                   child: Container(

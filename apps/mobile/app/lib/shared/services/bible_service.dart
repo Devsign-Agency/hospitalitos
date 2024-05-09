@@ -29,6 +29,8 @@ class BibleService extends ChangeNotifier {
   late Chapter _selectedChapter;
   late int _startVerse;
   int verseNumber = 0;
+  List<BookBible> _filteredBook = [];
+  late String _selectedGroup = 'antiguo';
 
   // Getters
   BookBible get selectedBook => _selectedBook;
@@ -40,6 +42,10 @@ class BibleService extends ChangeNotifier {
   int get startVerse => _startVerse;
 
   Map<String, dynamic> get versesByChapter => _selectedChapter.verses;
+
+  List<BookBible> get filteredBook => _filteredBook;
+
+  String get selectedGroup => _selectedGroup;
 
   // Constructor
   BibleService() {
@@ -73,6 +79,16 @@ class BibleService extends ChangeNotifier {
     notifyListeners();
   }
 
+  set filteredBook(List<BookBible> books) {
+    filteredBook = books;
+    notifyListeners();
+  }
+
+  set selectedGroup(String group) {
+    _selectedGroup = group;
+    notifyListeners();
+  }
+
   // Initialize the state of the bible provider
   void init() {
     selectedBook = BookBible(name: '', chapters: []);
@@ -80,6 +96,8 @@ class BibleService extends ChangeNotifier {
     selectedChapter =
         Chapter(chapter: '', ctdverses: 0, verses: {}, versiculos: []);
     startVerse = -1;
+
+    selectedGroup = 'antiguo';
 
     notifyListeners();
   }
@@ -96,6 +114,8 @@ class BibleService extends ChangeNotifier {
 
       books.add(book);
     });
+
+    // getBooksByGroup('antiguo');
   }
 
   // Get bible book by title
@@ -137,8 +157,6 @@ class BibleService extends ChangeNotifier {
     int month = now.month;
     int day = now.day;
     String date = '$day-$month-$year';
-
-    print('${getCurrentPage()}/$description/$date');
 
     String pathVerse = '${getCurrentPage()}/$description/$date';
 
@@ -268,5 +286,19 @@ class BibleService extends ChangeNotifier {
     selectedVerses = {};
 
     Scrollable.ensureVisible(GlobalObjectKey(startVerse).currentContext!);
+  }
+
+  void getBooksByGroup(String bookType) {
+    int index = books.indexWhere((element) => element.name == ' Mateo');
+
+    if (index > -1) {
+      _filteredBook = bookType == 'antiguo'
+          ? books.sublist(0, index + 1)
+          : books.sublist(index, books.length);
+    }
+
+    selectedGroup = bookType;
+
+    notifyListeners();
   }
 }

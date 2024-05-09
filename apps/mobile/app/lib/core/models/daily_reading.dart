@@ -26,11 +26,13 @@ class DailyReading {
 
 class Reading {
   String title;
+  // String book;
   String description;
   String verses;
 
   Reading({
     required this.title,
+    // required this.book,
     required this.description,
     required this.verses,
   });
@@ -39,6 +41,7 @@ class Reading {
 
   factory Reading.fromMap(Map<String, dynamic> json) => Reading(
         title: json['title'],
+        // book: json['book'],
         description: json['description'],
         verses: json['verses'],
       );

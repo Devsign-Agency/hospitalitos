@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/features/bible/screens/index/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class IndexScreen extends StatefulWidget {
 class _IndexScreenState extends State<IndexScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
+  bool _showBottomNavigationBar = true;
 
   @override
   void initState() {
@@ -29,10 +31,29 @@ class _IndexScreenState extends State<IndexScreen>
       vsync: this,
     );
 
+    tabController.addListener(() {
+      BibleService bibleService =
+          Provider.of<BibleService>(context, listen: false);
+      _showBottomNavigationBar = tabController.index == 0;
+
+      if (tabController.index == 0) {
+        _showBottomNavigationBar = true;
+        bibleService.selectedChapter =
+            Chapter(chapter: '', ctdverses: -1, verses: {}, versiculos: []);
+        bibleService.selectedVerses = {};
+        bibleService.startVerse = -1;
+      } else {
+        _showBottomNavigationBar = false;
+      }
+
+      setState(() {});
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BibleService bibleService =
           Provider.of<BibleService>(context, listen: false);
       bibleService.init();
+      bibleService.getBooksByGroup('antiguo');
     });
   }
 
@@ -42,14 +63,8 @@ class _IndexScreenState extends State<IndexScreen>
     }
   }
 
-  handleChangeBottomNavigationBar(int index) {
-    switch (index) {
-      case 0:
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()),
-            (Route<dynamic> route) => false);
-        break;
-    }
+  handleChangeBottomNavigationBar(int index, BibleService bibleService) {
+    bibleService.getBooksByGroup(index == 0 ? 'antiguo' : 'nuevo');
   }
 
   @override
@@ -60,6 +75,13 @@ class _IndexScreenState extends State<IndexScreen>
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
+    List<BottomNavigationMenu> bottomMenuList = [
+      BottomNavigationMenu(
+          icon: ImageConstant.imgBookmark, title: 'Antiguo Testamento'),
+      BottomNavigationMenu(
+          icon: ImageConstant.imgBookmark, title: 'Nuevo Testamento'),
+    ];
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -90,7 +112,7 @@ class _IndexScreenState extends State<IndexScreen>
                     children: [
                       // Books Tab
                       TabBarViewBooks(
-                          books: BibleService.books,
+                          books: bibleService.filteredBook,
                           onChangeTab: handleChangeTab),
 
                       // Chapters Tab
@@ -112,10 +134,13 @@ class _IndexScreenState extends State<IndexScreen>
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 2,
-          onChangeIndex: handleChangeBottomNavigationBar,
-          bottomMenuList: BibleService.bottomMenuList),
+      bottomNavigationBar: _showBottomNavigationBar
+          ? CustomBottomNavigationBar(
+              currentIndex: bibleService.selectedGroup == 'antiguo' ? 0 : 1,
+              onChangeIndex: (int index) =>
+                  handleChangeBottomNavigationBar(index, bibleService),
+              bottomMenuList: bottomMenuList)
+          : null,
     );
   }
 }

@@ -64,6 +64,28 @@ class Chapter {
 
     return verse;
   }
+
+  Verse getVerseById(String id) {
+    Verse verse = versiculos.firstWhere((element) {
+      print('element: ${element.id}');
+      print('id: $id');
+      return element.id == id.toString().trim();
+    }, orElse: () => Verse(id: '', verse: ''));
+
+    return verse;
+  }
+
+  List<Verse> getVersesByRange(int start, int end) {
+    List<Verse> verses = [];
+
+    for (var element in versiculos) {
+      if (int.parse(element.id) >= start && int.parse(element.id) <= end) {
+        verses.add(element);
+      }
+    }
+
+    return verses;
+  }
 }
 
 class Verse {
@@ -71,4 +93,9 @@ class Verse {
   String verse;
 
   Verse({required this.id, required this.verse});
+
+  @override
+  String toString() {
+    return 'id: $id verse: $verse';
+  }
 }

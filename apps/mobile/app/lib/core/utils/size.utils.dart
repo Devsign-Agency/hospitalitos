@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 // This is where the magic happens.
 // This functions are responsible to make UI responsive across all the mobile devices.
