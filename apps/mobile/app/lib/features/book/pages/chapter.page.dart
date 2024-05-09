@@ -237,10 +237,10 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _shareDocument(EpubChapter? chapter) async {
+    print('chaptyer $chapter');
     String parsedString = _parseDocumentToString(chapter);
 
-    _share(parsedString);
-  }
+    _share(parsedString);  }
 
   Color getTextColor(CircleButtonType type) {
     Color color;

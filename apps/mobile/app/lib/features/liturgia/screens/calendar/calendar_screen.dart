@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/features/liturgia/screens/screens.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
+// ignore: unused_import
 import 'dart:io';
 import '../../../../core/app_export.dart';
 import '../../../../widgets/widgets.dart';
@@ -145,10 +146,10 @@ class LiturgiaCalendarScreen extends StatelessWidget {
   _handleEditDate(BuildContext context, LiturgyService liturgyService) async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: DateTime(DateTime.now().year, DateTime.now().month, 1),
+      initialDate: DateTime(DateTime.now().year, DateTime.now().month,  DateTime.now().day),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       firstDate: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day),
+          DateTime.now().year, DateTime.now().month, 1),
       lastDate: DateTime(DateTime.now().year, DateTime.now().month, 31),
       builder: (BuildContext context, Widget? child) {
         return Theme(

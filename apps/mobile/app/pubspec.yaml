@@ -78,6 +78,7 @@ dependencies:
   webview_flutter: ^2.0.13
   excel: ^4.0.2
   youtube_data_api: ^1.0.4
+  html_unescape: ^2.0.0
   
   
 dependency_overrides:
@@ -123,7 +124,6 @@ flutter:
     - assets/liturgia/sync/2024/mar/10/
     - assets/liturgia/sync/2024/mar/11/
     - assets/liturgia/sync/2024/mar/12/
-    - assets/epubs/G.A.E.epub
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

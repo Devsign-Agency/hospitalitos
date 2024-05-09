@@ -7,16 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/features/book/pages/index.page.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/shared/services/book_service.dart';
 import 'package:mobile_app/widgets/custom_card.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
-import 'package:mobile_app/widgets/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:mobile_app/features/book/book.screen.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:provider/provider.dart';
-import 'modal_bottom_actiosn_epub.dart';
 
 class CardPreviewItemList extends StatelessWidget {
   final Future<List<EpubBook>> future;

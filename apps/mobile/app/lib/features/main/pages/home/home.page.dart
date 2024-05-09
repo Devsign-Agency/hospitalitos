@@ -7,23 +7,18 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/book.dart';
 import 'package:mobile_app/core/models/user.dart';
-import 'package:mobile_app/features/bible/bible_screen.dart';
 import 'package:mobile_app/features/blog/screens/screens.dart';
-import 'package:mobile_app/features/favorite/screens/screens.dart';
 import 'package:mobile_app/features/library/screens/courses/discover_screen.dart';
 import 'package:mobile_app/features/liturgia/screens/calendar/calendar_screen.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/widget.dart';
 import 'package:mobile_app/features/main/pages/pages.dart';
-import 'package:mobile_app/features/notification/screens/notifications/notifications_screen.dart';
 import 'package:mobile_app/features/prayer/screens/prayers/prayers_screen.dart';
 import 'package:mobile_app/features/reading/screens/screens.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../../bible/screens/screens.dart';
-import '../../../library/screens/screens.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = 'home';
@@ -153,12 +148,12 @@ class _HomePageState extends State<HomePage> {
     List<dynamic> arr = [];
     var index = -1;
     liturgyService.liturgies.forEach((liturgia) {
-      final date = liturgia['date'];
+      final date = liturgia['date'].toUpperCase();
       index++;
       if (date == day) {
         final detail = liturgia['detail'];
-
-        if (detail[2].contains('LUNES')) {
+  
+        if ( detail[2].toUpperCase().contains('LUNES')) {
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
           arr.add(liturgyService.liturgies[index + 2]['detail']);
@@ -167,7 +162,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 5]['detail']);
           arr.add(liturgyService.liturgies[index + 6]['detail']);
         }
-        if (detail[2].contains('MARTES')) {
+        if (detail[2].toUpperCase().contains('MARTES')) {
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
           arr.add(liturgyService.liturgies[index + 1]['detail']);
@@ -176,7 +171,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 4]['detail']);
           arr.add(liturgyService.liturgies[index + 5]['detail']);
         }
-        if (detail[2].contains('MIÉRCOLES')) {
+        if (detail[2].toUpperCase().contains('MIÉRCOLES')) {
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
           arr.add(detail);
@@ -185,7 +180,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 3]['detail']);
           arr.add(liturgyService.liturgies[index + 4]['detail']);
         }
-        if (detail[2].contains('JUEVES')) {
+        if (detail[2].toUpperCase().contains('JUEVES')) {
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
           arr.add(liturgyService.liturgies[index - 1]['detail']);
@@ -195,7 +190,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 3]['detail']);
         }
 
-        if (detail[2].contains('VIERNES')) {
+        if (detail[2].toUpperCase().contains('VIERNES')) {
           arr.add(liturgyService.liturgies[index - 4]['detail']);
           arr.add(liturgyService.liturgies[index - 3]['detail']);
           arr.add(liturgyService.liturgies[index - 2]['detail']);
@@ -205,7 +200,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 2]['detail']);
         }
 
-        if (detail[2].contains('SÁBADO')) {
+        if (detail[2].toUpperCase().contains('SÁBADO')) {
           arr.add(liturgyService.liturgies[index - 5]['detail']);
           arr.add(liturgyService.liturgies[index - 4]['detail']);
           arr.add(liturgyService.liturgies[index - 3]['detail']);
@@ -215,7 +210,7 @@ class _HomePageState extends State<HomePage> {
           arr.add(liturgyService.liturgies[index + 1]['detail']);
         }
 
-        if (detail[2].contains('DOMINGO')) {
+        if (detail[2].toUpperCase().contains('DOMINGO')) {
           arr.add(liturgyService.liturgies[index - 6]['detail']);
           arr.add(liturgyService.liturgies[index - 5]['detail']);
           arr.add(liturgyService.liturgies[index - 4]['detail']);
@@ -228,10 +223,18 @@ class _HomePageState extends State<HomePage> {
     });
 
     List<Map<String, dynamic>> actions = [
+       
+      {
+        'icon': ImageConstant.imgVolumeIndigo900,
+        'action': () => { 
+          Navigator.of(context).pushNamed(ChatBubble.route)
+      }
+      },
       {
         'icon': ImageConstant.imgChurch,
         'action': () => {_launchURL()}
       },
+      
     ];
 
     final List<BottomNavigationMenu> bottomMenuList = [
@@ -271,16 +274,16 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        child: Icon(
-          Icons.chat_bubble,
-          color: ColorConstant.yellow100,
-        ),
-        onPressed: () {
-          Navigator.of(context).pushNamed(ChatBubble.route);
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.white,
+      //   child: Icon(
+      //     Icons.chat_bubble,
+      //     color: ColorConstant.yellow100,
+      //   ),
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed(ChatBubble.route);
+      //   },
+      // ),
       appBar: CustomAppBar(
         customTitle: Row(
           children: [
