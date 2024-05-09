@@ -34,6 +34,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     _currentIndex = widget.currentIndex!;
   }
 
+  @override
+  void didUpdateWidget(covariant CustomBottomNavigationBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      setState(() {
+        _currentIndex = widget.currentIndex;
+      });
+    }
+  }
+
   void _onTappedItem(int index) {
     _currentIndex = index;
     widget.onChangeIndex(index);

@@ -7,6 +7,9 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/app_export.dart';
 import '../../../../shared/shared.dart';
 import '../../../../widgets/widgets.dart';
+import '../../../library/screens/courses/discover_screen.dart';
+import '../../../liturgia/screens/screens.dart';
+import '../../../main/pages/pages.dart';
 import '../screens.dart';
 
 class ChaptersScreen extends StatefulWidget {
@@ -82,27 +85,6 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         arguments: bibleService.selectedChapter.verses);
   }
 
-  void showCustomToast(String message) {
-    Widget toast = Container(
-      width: double.infinity,
-      height: 48,
-      padding: getPadding(left: 16, right: 16, top: 14, bottom: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorConstant.black900ff,
-      ),
-      child: Text(
-        message,
-        style: AppStyle.txtRobotoRegular14Gray10002,
-      ),
-    );
-
-    fToast?.showToast(
-      child: toast,
-      toastDuration: const Duration(seconds: 3),
-    );
-  }
-
   Future<void> share(String value) async {
     await Share.share(value);
   }
@@ -112,6 +94,31 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
     String verse = BibleService.getVerseByPath(item.id);
 
     share('$title\n$verse\n${item.description}');
+  }
+
+  void handleChangeBottomNavigationBar(int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => DiscoverScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 2:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LiturgiaCalendarScreen()),
+            (Route<dynamic> route) => false);
+        break;
+      case 3:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BibleMain()),
+            (Route<dynamic> route) => false);
+        break;
+    }
   }
 
   @override
@@ -148,8 +155,8 @@ class _ChaptersScreenState extends State<ChaptersScreen> {
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 2,
-          onChangeIndex: (index) {},
+          currentIndex: 3,
+          onChangeIndex: handleChangeBottomNavigationBar,
           bottomMenuList: BibleService.bottomMenuList),
     );
   }

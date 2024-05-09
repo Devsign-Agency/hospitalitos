@@ -18,6 +18,7 @@ class ReadingScreen extends StatelessWidget {
         Provider.of<DailyReadingService>(context, listen: false);
 
     DailyReading reading = dailyReadingService.getDailyReadingSelected();
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Lecturas',

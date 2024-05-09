@@ -9,7 +9,7 @@ class BookService extends ChangeNotifier {
   EpubBook selectedBook = EpubBook();
   int chapterIndex = 0;
   int subchapterIndex = 0;
-
+  String chapterTitle = '';
   EpubChapter subchapterSelected = EpubChapter();
 
   // EpubBook get selectedBook => _selectedBook;

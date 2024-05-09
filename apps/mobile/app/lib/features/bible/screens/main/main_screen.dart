@@ -25,7 +25,7 @@ class _BibleMainState extends State<BibleMain> {
     super.dispose();
   }
 
-  handleChangeBottomNavigationBar(int index) {
+  void handleChangeBottomNavigationBar(int index) {
     switch (index) {
       case 0:
         Navigator.of(context).pushAndRemoveUntil(

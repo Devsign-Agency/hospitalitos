@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/prayer/screens/prayers/prayers_screen.dart';
 import 'package:mobile_app/features/reading/screens/reading_detail/reading_detail_screen.dart';
-
 import '../../../../core/app_export.dart';
 
 class ListViewReading extends StatelessWidget {

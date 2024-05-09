@@ -3,11 +3,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/style.dart';
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/widgets/custom_selection_area.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/models/BookBible.dart';
+import '../../../../shared/shared.dart';
 import '../../../book/widgets/widgets.dart';
+import '../widgets/widgets.dart';
 
 class ReadingDetailScreen extends StatefulWidget {
   static const String route = 'reading-detail-route';
@@ -36,35 +39,17 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
       fontSize: FontSize.medium);
 
   void handleChangeTextSetting(dynamic event, dynamic values) {
-    print('handleChange');
     textBook.fontSize = event['fontSize'];
     textBook.lineHeight = event['lineHeight'];
     textBook.margin = event['margin'];
     settingTextInitialValues['fontSize'] = values['fontSize'];
     settingTextInitialValues['margin'] = values['margin'];
     settingTextInitialValues['lineHeight'] = values['lineHeight'];
-    // textBook.color = event['color'];
     setState(() {});
   }
 
   Future<void> share(String value) async {
     await Share.share(value);
-  }
-
-  double convertFontSizePxToDouble(FontSize fontSize) {
-    Map<FontSize, double> values = {
-      FontSize.xSmall: 12.0,
-      FontSize.xxSmall: 14.0,
-      FontSize.smaller: 16.0,
-      FontSize.small: 18.0,
-      FontSize.medium: 24.0,
-      FontSize.large: 32.0,
-      FontSize.larger: 36.0,
-      FontSize.xLarge: 40.0,
-      FontSize.xxLarge: 48.0
-    };
-
-    return values[fontSize]!;
   }
 
   void setVoiceText(String text) {
@@ -88,32 +73,39 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
   }
 
   void playSelectedText() async {
-    ClipboardData? kTextPlain;
-    kTextPlain = await Clipboard.getData(Clipboard.kTextPlain);
-
-    _newVoiceText = kTextPlain?.text ?? '';
-    onAudioSound = true;
-
-    setState(() {});
+    _newVoiceText = await ClipboardService.getCopyText();
+    setOnAudioSound(true);
   }
 
   void shareSelectedText() async {
-    ClipboardData? selectedContent =
-        await Clipboard.getData(Clipboard.kTextPlain);
-
-    if (selectedContent != null) share(selectedContent.text!);
+    share(await ClipboardService.getCopyText());
   }
 
   void handleSelectedContent(SelectedContent? selectedContent) {
     if (selectedContent != null) {
-      ClipboardData data = ClipboardData(text: selectedContent.plainText);
-      Clipboard.setData(data);
+      ClipboardService.setCopyText(selectedContent.plainText);
     }
+  }
+
+  bool _isNumeric(String str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
   }
 
   @override
   Widget build(BuildContext context) {
     Reading reading = ModalRoute.of(context)?.settings.arguments! as Reading;
+    DailyReadingService dailyReadingService =
+        Provider.of<DailyReadingService>(context, listen: false);
+
+    int index =
+        reading.verses.split('').indexWhere((element) => _isNumeric(element));
+
+    List<Verse> verses = dailyReadingService.getReadingsByPath(
+        reading.verses.substring(0, index - 1).toLowerCase(),
+        reading.verses.substring(index));
 
     final List<PopupMenuItemModel> menuOptions = [
       PopupMenuItemModel(
@@ -157,10 +149,6 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
       ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
     ];
 
-    TextStyle valueStyle = AppStyle.txtNunitoSansRegular18Gray900.copyWith(
-        height: textBook.lineHeight,
-        fontSize: convertFontSizePxToDouble(textBook.fontSize));
-
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -186,7 +174,8 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
                       style: AppStyle.txtNunitoSansSemiBold26.copyWith(
                         color: ColorConstant.indigo900,
                         fontWeight: FontWeight.w900,
-                        fontSize: convertFontSizePxToDouble(textBook.fontSize),
+                        fontSize: ConvertUtils.getDoubleFromFontSize(
+                            textBook.fontSize),
                         height: textBook.lineHeight,
                       ),
                     ),
@@ -194,13 +183,12 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
                       height: 20,
                     ),
                     CustomSelectionArea(
-                      onSelectionChanged: handleSelectedContent,
-                      menuButtonItems: menuButtonItems,
-                      child: Text(
-                        reading.description,
-                        style: valueStyle,
-                      ),
-                    ),
+                        onSelectionChanged: handleSelectedContent,
+                        menuButtonItems: menuButtonItems,
+                        child: ListViewVerses(
+                          verses: verses,
+                          textBook: textBook,
+                        )),
                   ],
                 ),
               ),

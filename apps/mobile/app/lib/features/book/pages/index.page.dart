@@ -270,6 +270,7 @@ class _ListChaptersOfBook extends StatelessWidget {
         itemCount: book!.Chapters!.length,
         itemBuilder: (context, index) {
           var title = (book?.Chapters![index].Title!).toString();
+
           return title != ''
               ? Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -297,6 +298,7 @@ class _ListChaptersOfBook extends StatelessWidget {
 
                                     return ListTile(
                                       onTap: () {
+                                        bookService.chapterTitle = title;
                                         var sub =
                                             book.Chapters![index].SubChapters;
                                         bookService.chapterIndex = index;
@@ -331,6 +333,8 @@ class _ListChaptersOfBook extends StatelessWidget {
                                 book?.Chapters![index];
                             bookService.chapterIndex = index;
                             bookService.subchapterIndex = 0;
+                            bookService.chapterTitle = title;
+
                             Navigator.pushNamed(context, ChapterPage.route,
                                 arguments: EpubArguments(
                                     book: book,
