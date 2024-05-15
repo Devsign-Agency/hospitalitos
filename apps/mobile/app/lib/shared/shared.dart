@@ -12,4 +12,5 @@ export './services/marker_service.dart';
 export './services/pdf_service.dart';
 export './services/refresh_token.service.dart';
 export './services/text_to_speech.dart';
+export 'package:mobile_app/shared/services/bible_bookmark_service.dart';
 export 'package:mobile_app/shared/services/clipboard_service.dart';

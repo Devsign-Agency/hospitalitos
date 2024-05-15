@@ -28,22 +28,24 @@ class VerseList extends StatelessWidget {
       verses.add(value);
     });
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        ...List.generate(verses.length, (int index) {
-          return _Verse(
-            selected: true,
-            numberOfVerse: index + 1,
-            isDarkMode: isDarkMode,
-            textBook: textBook,
-            value: verses[index],
-            active: secuenceVerseIndex == index + 1,
-            onSelected: (Map<dynamic, String> verse) =>
-                bibleService.addNewVerseSelected(verse),
-          );
-        }),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          ...List.generate(verses.length, (int index) {
+            return _Verse(
+              selected: true,
+              numberOfVerse: index + 1,
+              isDarkMode: isDarkMode,
+              textBook: textBook,
+              value: verses[index],
+              active: secuenceVerseIndex == index + 1,
+              onSelected: (Map<dynamic, String> verse) =>
+                  bibleService.addNewVerseSelected(verse),
+            );
+          }),
+        ],
+      ),
     );
   }
 }

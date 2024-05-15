@@ -18,9 +18,7 @@ class LightTheme {
   );
   static get theme => ThemeData(
         colorScheme: colors,
-        appBarTheme: AppBarTheme(
-          color: ColorConstant.gray100,
-        ),
+        appBarTheme: AppBarTheme(backgroundColor: ColorConstant.gray100),
         tabBarTheme: TabBarTheme(indicatorColor: ColorConstant.indigo900),
         popupMenuTheme: PopupMenuThemeData(color: ColorConstant.whiteA700),
         sliderTheme: SliderThemeData(

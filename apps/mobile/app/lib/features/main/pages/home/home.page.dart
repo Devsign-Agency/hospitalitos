@@ -237,14 +237,6 @@ class _HomePageState extends State<HomePage> {
       
     ];
 
-    final List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
-      BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
-      BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
-    ];
-
     final List<Widget> slides = [];
 
     for (var element in arr) {
@@ -463,7 +455,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        bottomMenuList: bottomMenuList,
+        bottomMenuList: WidgetConstant.defaultBottomMenuList,
         onChangeIndex: _onChangeTab,
       ),
     );

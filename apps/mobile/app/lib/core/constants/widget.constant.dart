@@ -1,27 +1,25 @@
-import 'package:mobile_app/widgets/book_bottom_bar.dart';
+import 'package:mobile_app/core/app_export.dart';
 // import 'package:mobile_app/widgets/custom_bottom_bar.dart';
 
 class WidgetConstant {
-  static final List<BottomMenuModel> defaultBottomMenuList = [
-    const BottomMenuModel(
-      icon: 'assets/images/img_home.svg',
-      title: 'Home',
-      type: BottomBarEnum.Home,
-    ),
-    const BottomMenuModel(
-      icon: 'assets/images/img_search_gray_800.svg',
-      title: 'Descubre',
-      type: BottomBarEnum.Descubre,
-    ),
-    const BottomMenuModel(
-      icon: 'assets/images/img_calendar.svg',
-      title: 'Liturgia',
-      type: BottomBarEnum.Liturgia,
-    ),
-    const BottomMenuModel(
-      icon: 'assets/images/img_mobile.svg',
-      title: 'Biblia',
-      type: BottomBarEnum.Biblia,
-    )
+  static List<BottomNavigationMenu> defaultBottomMenuList = [
+    BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
+    BottomNavigationMenu(
+        icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
+    BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
+    BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
+  ];
+
+  static List<BottomNavigationMenu> bibleBottomMenuList = [
+    BottomNavigationMenu(
+        icon: ImageConstant.imgBookmark, title: 'Antiguo Testamento'),
+    BottomNavigationMenu(
+        icon: ImageConstant.imgBookmark, title: 'Nuevo Testamento'),
+  ];
+
+  static List<String> tabBarItems = [
+    'Libros',
+    'Capítulos',
+    'Versículos',
   ];
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/router/router.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/services/bible_service.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BookService()),
         ChangeNotifierProvider(create: (_) => BottomNavigationMainProvider()),
         ChangeNotifierProvider(create: (_) => MarkerService()),
+        ChangeNotifierProvider(create: (_) => BibleBookMarkService()),
         ChangeNotifierProvider(
           create: (_) => PrayerService(),
           lazy: false,

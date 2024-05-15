@@ -106,7 +106,7 @@ class _CustomAppBar extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0)),
               context: context,
-              builder: (context) => ModalBottomSheet()),
+              builder: (context) => Text('test')),
         ),
         // Icon(
         //   Icons.share_outlined,

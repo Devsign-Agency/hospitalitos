@@ -28,7 +28,7 @@ class CustomPopupMenuButton extends StatelessWidget {
                                     color: isDarkMode
                                         ? ColorConstant.whiteA700
                                         : ColorConstant.black900))),
-                    onTap: () => item.onTappedItem(context),
+                    onTap: () => item.onTappedItem(),
                   ))
             ]);
   }

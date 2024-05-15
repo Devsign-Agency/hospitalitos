@@ -17,6 +17,7 @@ export 'package:mobile_app/core/models/circle_button_model.dart';
 export 'package:mobile_app/core/models/text_book.dart';
 export 'package:mobile_app/core/models/daily_reading.dart';
 export 'package:mobile_app/core/models/prayer.dart';
+export 'package:mobile_app/core/models/bible_bookmark.dart';
 
 export 'package:mobile_app/core/theme/app.decoration.dart';
 export 'package:mobile_app/core/theme/app.style.dart';
@@ -24,5 +25,6 @@ export 'package:mobile_app/core/theme/app.style.dart';
 export 'package:mobile_app/core/utils/date_time.utils.dart';
 export 'package:mobile_app/core/utils/size.utils.dart';
 export 'package:mobile_app/core/utils/convert.utils.dart';
+export 'package:mobile_app/core/utils/app_modal_bottom_sheet.utils.dart';
 
 export 'package:url_launcher/url_launcher.dart';

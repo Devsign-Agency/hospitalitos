@@ -58,7 +58,7 @@ class _BibleScreenState extends State<BibleScreen> {
         page = BibleMain();
         break;
       case '/bible/chapters':
-        page = ChaptersScreen();
+        page = BookmarksScreen();
         break;
       case '/bible/index':
         page = IndexScreen();
@@ -105,7 +105,7 @@ class _BibleScreenState extends State<BibleScreen> {
               // hideBottomNavigator = true;
               break;
             case '/bible/chapters':
-              page = ChaptersScreen();
+              page = BookmarksScreen();
               hideBottomNavigator = false;
               break;
             case '/bible/index':

@@ -23,6 +23,7 @@ class TabBarViewBooks extends StatelessWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
+    print('HOLA MUNDO');
     return Stack(
       children: [
         ListView.builder(
@@ -33,6 +34,10 @@ class TabBarViewBooks extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 bibleService.selectedBook = books[index];
+                bibleService.selectedChapter = Chapter(
+                    chapter: '', ctdverses: -1, verses: {}, versiculos: []);
+                bibleService.selectedVerses = {};
+                bibleService.startVerse = -1;
                 onChangeTab();
               },
               child: Container(
