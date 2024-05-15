@@ -95,7 +95,7 @@ class LiturgiaCalendarScreen extends StatelessWidget {
           currentIndex: 2,
           onChangeIndex: (int index) =>
               handleChangeBottomNavigationBar(index, context),
-          bottomMenuList: BibleService.bottomMenuList),
+          bottomMenuList: WidgetConstant.defaultBottomMenuList),
     );
   }
 

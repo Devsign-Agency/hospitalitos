@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/features/bible/screens/index/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +6,6 @@ import '../../../../core/app_export.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
-import '../../../main/pages/pages.dart';
 
 class IndexScreen extends StatefulWidget {
   static const String route = 'bible/index';
@@ -27,33 +25,13 @@ class _IndexScreenState extends State<IndexScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-      length: BibleService.tabBarItems.length,
+      length: WidgetConstant.tabBarItems.length,
       vsync: this,
     );
 
     tabController.addListener(() {
-      BibleService bibleService =
-          Provider.of<BibleService>(context, listen: false);
       _showBottomNavigationBar = tabController.index == 0;
-
-      if (tabController.index == 0) {
-        _showBottomNavigationBar = true;
-        bibleService.selectedChapter =
-            Chapter(chapter: '', ctdverses: -1, verses: {}, versiculos: []);
-        bibleService.selectedVerses = {};
-        bibleService.startVerse = -1;
-      } else {
-        _showBottomNavigationBar = false;
-      }
-
       setState(() {});
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      BibleService bibleService =
-          Provider.of<BibleService>(context, listen: false);
-      bibleService.init();
-      bibleService.getBooksByGroup('antiguo');
     });
   }
 
@@ -76,13 +54,6 @@ class _IndexScreenState extends State<IndexScreen>
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    List<BottomNavigationMenu> bottomMenuList = [
-      BottomNavigationMenu(
-          icon: ImageConstant.imgBookmark, title: 'Antiguo Testamento'),
-      BottomNavigationMenu(
-          icon: ImageConstant.imgBookmark, title: 'Nuevo Testamento'),
-    ];
-
     return Scaffold(
       appBar: CustomAppBar(
           customTitle: Text('Índice',
@@ -100,7 +71,7 @@ class _IndexScreenState extends State<IndexScreen>
                 // Tab items
                 CustomTabBar(
                     tabController: tabController,
-                    items: BibleService.tabBarItems),
+                    items: WidgetConstant.tabBarItems),
 
                 // TabBarView
                 SizedBox(
@@ -139,7 +110,7 @@ class _IndexScreenState extends State<IndexScreen>
               currentIndex: bibleService.selectedGroup == 'antiguo' ? 0 : 1,
               onChangeIndex: (int index) =>
                   handleChangeBottomNavigationBar(index, bibleService),
-              bottomMenuList: bottomMenuList)
+              bottomMenuList: WidgetConstant.bibleBottomMenuList)
           : null,
     );
   }

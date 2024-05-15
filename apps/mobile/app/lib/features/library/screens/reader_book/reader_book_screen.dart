@@ -134,7 +134,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: ColorConstant.gray50,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       context: context,
-      builder: (context) => ModalBottomSheet());
+      builder: (context) => Text('test'));
 }
 
 class _CustomBottomNavigationBar extends StatefulWidget {

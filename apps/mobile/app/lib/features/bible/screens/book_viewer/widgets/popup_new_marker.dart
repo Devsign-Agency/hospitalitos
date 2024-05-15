@@ -8,7 +8,8 @@ import '../../../../../widgets/custom_text_form_field.dart';
 import '../../../../../widgets/widgets.dart';
 
 class PopupNewMarker extends StatefulWidget {
-  const PopupNewMarker({super.key});
+  final BibleBookMark bookMark;
+  const PopupNewMarker({super.key, required this.bookMark});
 
   @override
   State<PopupNewMarker> createState() => _PopupNewMarkerState();
@@ -57,7 +58,9 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       elevation: 5,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text('Añadir comentario', style: AppStyle.txtNunitoSansSemiBold23),
+        Text(
+            '${widget.bookMark.bookName} ${widget.bookMark.chapter}, ${widget.bookMark.verse}',
+            style: AppStyle.txtNunitoSansSemiBold23),
         CustomIconButton(
           height: getSize(48),
           width: getSize(48),
@@ -77,7 +80,7 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
             enabled: true,
             focusNode: FocusNode(),
             controller: usernameController,
-            hintText: 'Ingrese un comentario',
+            hintText: 'Añadir un comentario',
             margin: getMargin(top: 16),
             variant: TextFormFieldVariant.OutlineBottom,
             textInputType: TextInputType.visiblePassword,
@@ -95,13 +98,13 @@ class _PopupNewMarkerState extends State<PopupNewMarker> {
             child: Text('Cancelar', style: AppStyle.txtNunitoSansSemiBold16)),
         TextButton(
             onPressed: () async {
+              BibleBookMarkService bibleBookMarkService =
+                  Provider.of<BibleBookMarkService>(context, listen: false);
               Map<dynamic, String> verseSelected = bibleService.selectedVerses;
               // bibleService.addNewPage(usernameController.text);
-              bibleService.editMarker(
-                  bibleService.selectedBook,
-                  bibleService.selectedChapter,
-                  verseSelected,
-                  usernameController.text);
+              bibleBookMarkService.editBookMark(
+                  widget.bookMark.id, usernameController.text);
+
               usernameController.clear();
               bibleService.selectedVerses = {};
 

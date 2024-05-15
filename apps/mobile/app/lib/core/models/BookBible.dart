@@ -16,6 +16,12 @@ class BookBible {
             List<Chapter>.from(json['chapters'].map((x) => Chapter.fromMap(x))),
       );
 
+  static Map<String, dynamic> toMap(BookBible book) => {
+        'name': book.name,
+        'chapters':
+            json.encode(book.chapters.map((e) => Chapter.toMap(e)).toList()),
+      };
+
   Chapter getChapterByNumber(String number) {
     Chapter chapter =
         chapters.firstWhere((element) => element.chapter == number);
@@ -44,6 +50,14 @@ class Chapter {
           .entries
           .map((entry) => Verse(id: entry.key, verse: entry.value))
           .toList()));
+
+  static Map<String, dynamic> toMap(Chapter chapter) => {
+        'chapter': chapter.chapter,
+        'ctdverses': chapter.ctdverses,
+        'versiculos':
+            json.encode(chapter.versiculos.map((e) => Verse.toMap(e)).toList()),
+        'verses': chapter.verses,
+      };
 
   String getVerseByNumber(String number) {
     String verse = '';
@@ -98,4 +112,9 @@ class Verse {
   String toString() {
     return 'id: $id verse: $verse';
   }
+
+  static Map<String, dynamic> toMap(Verse verse) => {
+        'id': verse.id,
+        'verse': verse.verse,
+      };
 }

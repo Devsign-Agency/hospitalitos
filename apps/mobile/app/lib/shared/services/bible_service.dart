@@ -6,22 +6,9 @@ import 'package:mobile_app/core/models/BookBible.dart';
 import 'package:mobile_app/shared/preferences.dart';
 
 import '../../core/app_export.dart';
+import '../../core/models/list_view_favorite.dart';
 
 class BibleService extends ChangeNotifier {
-  static const List<String> tabBarItems = [
-    'Libros',
-    'Capítulos',
-    'Versículos',
-  ];
-
-  static List<BottomNavigationMenu> bottomMenuList = [
-    BottomNavigationMenu(icon: ImageConstant.imgHome, title: 'Home'),
-    BottomNavigationMenu(
-        icon: ImageConstant.imgSearchGray800, title: 'Descubre'),
-    BottomNavigationMenu(icon: ImageConstant.imgCalendar, title: 'Liturgia'),
-    BottomNavigationMenu(icon: ImageConstant.imgMobile, title: 'Biblia'),
-  ];
-
   // State
   static List<BookBible> books = [];
   late BookBible _selectedBook;
@@ -31,6 +18,9 @@ class BibleService extends ChangeNotifier {
   int verseNumber = 0;
   List<BookBible> _filteredBook = [];
   late String _selectedGroup = 'antiguo';
+  List<ListViewFavoriteModel> bookmarks = [];
+
+  String lastPage = '';
 
   // Getters
   BookBible get selectedBook => _selectedBook;
@@ -99,6 +89,8 @@ class BibleService extends ChangeNotifier {
 
     selectedGroup = 'antiguo';
 
+    // getBookMarks();
+
     notifyListeners();
   }
 
@@ -115,7 +107,7 @@ class BibleService extends ChangeNotifier {
       books.add(book);
     });
 
-    // getBooksByGroup('antiguo');
+    getBooksByGroup('antiguo');
   }
 
   // Get bible book by title
@@ -151,30 +143,6 @@ class BibleService extends ChangeNotifier {
     return markerListBook;
   }
 
-  void addNewPage(String description) {
-    DateTime now = DateTime.now();
-    int year = now.year;
-    int month = now.month;
-    int day = now.day;
-    String date = '$day-$month-$year';
-
-    String pathVerse = '${getCurrentPage()}/$description/$date';
-
-    dynamic aux = Preferences.pageList ?? [];
-
-    List<dynamic> markerListBook = [];
-
-    if (aux.isNotEmpty) {
-      markerListBook = json.decode(Preferences.pageList);
-    }
-
-    markerListBook.add(pathVerse);
-    Preferences.pageList = json.encode(markerListBook);
-
-    // getPageList();
-    //notifyListeners();
-  }
-
   String getPage() {
     String pathVerse = getCurrentPage();
     dynamic aux = Preferences.pageList ?? [];
@@ -194,6 +162,8 @@ class BibleService extends ChangeNotifier {
   void setLastPage() {
     Preferences.lastPage =
         '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
+
+    lastPage = '${selectedBook.name}/${selectedChapter.chapter}/$startVerse';
   }
 
   void getBookByName(String name) {
@@ -206,21 +176,6 @@ class BibleService extends ChangeNotifier {
 
   void getChapterFromBook(BookBible book, int indexOfChapter) {
     _selectedChapter = book.chapters[indexOfChapter - 1];
-  }
-
-  void deletePage(String pagePath) {
-    List<dynamic> pages = json.decode(Preferences.pageList) ?? [];
-
-    int i = pages.indexWhere(
-      (element) => element == pagePath,
-    );
-
-    if (i > -1) {
-      pages.removeAt(i);
-      Preferences.pageList = json.encode(pages);
-    }
-
-    notifyListeners();
   }
 
   String getCurrentPage() {
@@ -252,28 +207,6 @@ class BibleService extends ChangeNotifier {
     return selectedVerses.containsKey(numberOfVerse);
   }
 
-  void editMarker(BookBible book, Chapter chapterBook,
-      Map<dynamic, String> verse, String text) {
-    List<dynamic> markers = getPageList();
-    String verseKey = verse.keys.toList()[0].toString();
-
-    int index = markers.indexWhere((dynamic element) {
-      List<String> paths = element.split('/');
-
-      return book.name == paths[0] &&
-          chapterBook.chapter == paths[1] &&
-          verseKey == paths[2];
-    });
-
-    if (index != -1) {
-      List<String> paths = markers[index].split('/');
-
-      markers[index] = '${paths[0]}/${paths[1]}/${paths[2]}/$text/${paths[4]}';
-    }
-
-    Preferences.pageList = json.encode(markers);
-  }
-
   // moves the chapter forward or backward depending on the action
   void moveChapter(String action) {
     int move;
@@ -297,7 +230,7 @@ class BibleService extends ChangeNotifier {
           : books.sublist(index, books.length);
     }
 
-    selectedGroup = bookType;
+    _selectedGroup = bookType;
 
     notifyListeners();
   }

@@ -163,7 +163,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           currentIndex: 1,
           onChangeIndex: (int index) =>
               handleChangeBottomNavigationBar(index, context),
-          bottomMenuList: BibleService.bottomMenuList),
+          bottomMenuList: WidgetConstant.defaultBottomMenuList),
     );
   }
 }

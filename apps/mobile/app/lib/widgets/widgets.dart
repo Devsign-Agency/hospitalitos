@@ -19,7 +19,6 @@ export 'package:mobile_app/widgets/ftt_toast.dart';
 export 'package:mobile_app/widgets/list_collapse_items.dart';
 export 'package:mobile_app/widgets/list_view_item_favorite.dart';
 export 'package:mobile_app/widgets/menu_options.dart';
-export 'package:mobile_app/widgets/modal_bottom_sheet.dart';
 export 'package:mobile_app/widgets/notification_empty_list.dart';
 export 'package:mobile_app/widgets/popup_audio_player.dart';
 export 'package:mobile_app/widgets/side_menu.dart';
