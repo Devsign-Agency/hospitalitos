@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_html/style.dart';
 import 'package:provider/provider.dart';
 
@@ -137,7 +138,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
           Align(
             alignment: Alignment.center,
             child: Container(
-              margin: getMargin(top: 16, bottom: 28),
+              margin: getMargin(top: 16),
               width: 32,
               height: 4,
               color: ColorConstant.indigo900,
@@ -168,7 +169,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
     return SingleChildScrollView(
       child: ListView(shrinkWrap: true, children: [
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             // Colors section
             // Row(
@@ -182,6 +183,24 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
             //   ],
             // ),
             // SizedBox(height: 14),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                padding: getPadding(all: 5.0),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1.0,
+                        color: ColorConstant.indigo900.withOpacity(0.1)),
+                    borderRadius: BorderRadius.circular(18.0)),
+                child: CustomImageView(
+                    width: 24,
+                    height: 24,
+                    svgPath: ImageConstant.imgClose,
+                    color: ColorConstant.indigo900.withOpacity(0.6)),
+              ),
+            ),
+
+            SizedBox(height: 14),
 
             // Bar division
             Container(

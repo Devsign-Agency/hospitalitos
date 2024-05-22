@@ -62,13 +62,25 @@ class ListViewBookmarks extends StatelessWidget {
   }
 
   void _handleEventDelete(ListViewFavoriteModel item, BuildContext context) {
-    BibleBookMarkService bibleBookMarkService =
-        Provider.of<BibleBookMarkService>(context, listen: false);
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+              title: 'Eliminar marcador',
+              message: '¿Seguro que desea eliminar el marcador?',
+              onPressed: () {
+                BibleBookMarkService bibleBookMarkService =
+                    Provider.of<BibleBookMarkService>(context, listen: false);
 
-    List<String> splited = item.id.split('/');
-    String id = splited[splited.length - 1];
-    bibleBookMarkService.deleteBookMark(id);
-    Fluttertoast.showToast(msg: 'Marcador eliminado exitosamente');
+                List<String> splited = item.id.split('/');
+                String id = splited[splited.length - 1];
+                bibleBookMarkService.deleteBookMark(id);
+                Fluttertoast.showToast(msg: 'Marcador eliminado exitosamente');
+
+                Navigator.pop(context);
+              });
+        });
   }
 
   @override

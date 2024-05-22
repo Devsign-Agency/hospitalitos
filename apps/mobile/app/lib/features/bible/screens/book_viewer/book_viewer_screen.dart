@@ -33,6 +33,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     'lineHeight': 1.0,
     'color': Colors.black
   };
+
   TextBook _textBook = TextBook(
       fontFamily: 'fontFamily',
       color: Colors.black,

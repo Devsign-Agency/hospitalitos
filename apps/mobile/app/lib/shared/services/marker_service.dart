@@ -12,6 +12,8 @@ class MarkerService with ChangeNotifier {
       markerListBook = json.decode(Preferences.markerList);
     }
 
+    print(markerListBook);
+
     // Check if the book has any bookmarks
     int i = markerListBook.indexWhere(
       (element) => element['title'] == bookTitle,
@@ -29,6 +31,27 @@ class MarkerService with ChangeNotifier {
     }
 
     return markerList;
+  }
+
+  Map<dynamic, dynamic> getBookmarkByBook(String bookTitle) {
+    List<dynamic> markerListBook = [];
+    Map<dynamic, dynamic> bookmarks = {};
+
+    if (Preferences.markerList.isNotEmpty) {
+      markerListBook = json.decode(Preferences.markerList);
+    }
+
+    // Check if the book has any bookmarks
+    int i = markerListBook.indexWhere(
+      (element) => element['title'] == bookTitle,
+    );
+
+    if (i > -1) {
+      // Find chapter markers
+      bookmarks = markerListBook[i];
+    }
+
+    return bookmarks;
   }
 
   addNewMarker(
@@ -71,8 +94,7 @@ class MarkerService with ChangeNotifier {
     Preferences.markerList = json.encode(markerListBook);
   }
 
-  deleteMarker(
-      String bookTitle, dynamic chapter, Map<dynamic, dynamic> marker) {
+  deleteMarker(String bookTitle, dynamic chapterName, String id) {
     List<dynamic> markerListBook = json.decode(Preferences.markerList) ?? [];
 
     int i = markerListBook.indexWhere(
@@ -81,11 +103,11 @@ class MarkerService with ChangeNotifier {
 
     if (i > -1) {
       int chapterIndex = markerListBook[i]['chapters']
-          .indexWhere((element) => element['title'] == chapter!.Title);
+          .indexWhere((element) => element['title'] == chapterName);
 
       if (chapterIndex > -1) {
         markerListBook[i]['chapters'][chapterIndex]['markers']
-            .removeWhere((element) => element['id'] == marker['id']);
+            .removeWhere((element) => element['id'] == id);
 
         Preferences.markerList = json.encode(markerListBook);
       }

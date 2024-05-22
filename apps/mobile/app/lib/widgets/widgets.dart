@@ -4,6 +4,7 @@ export 'package:mobile_app/widgets/barInputSearch.dart';
 export 'package:mobile_app/widgets/card_preview_book_list.dart';
 export 'package:mobile_app/widgets/card_preview_books_list.dart';
 export 'package:mobile_app/widgets/card_preview_item_list.dart';
+export 'package:mobile_app/widgets/custom_alert_dialog.dart';
 export 'package:mobile_app/widgets/custom_app_bar.dart';
 export 'package:mobile_app/widgets/custom_bottom_navigation_bar.dart';
 export 'package:mobile_app/widgets/custom_card.dart';

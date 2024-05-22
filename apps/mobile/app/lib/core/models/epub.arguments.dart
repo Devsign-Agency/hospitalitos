@@ -1,8 +1,9 @@
 import 'package:epub_view/epub_view.dart';
 
 class EpubArguments {
-    final EpubBook? book;
-    final EpubChapter? chapter;
+  final EpubBook? book;
+  final EpubChapter? chapter;
+  final double? offset;
 
-    EpubArguments({this.book, this.chapter});
+  EpubArguments({this.book, this.chapter, this.offset});
 }
