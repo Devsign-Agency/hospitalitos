@@ -1,43 +1,20 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_app/shared/services/epub_bookmark_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/app_export.dart';
-import '../../../shared/shared.dart';
-import '../../../themes/themes.dart';
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/widgets.dart';
-import '../widgets/list_view_bookmarks.dart';
+import '../../../../core/app_export.dart';
+import '../../../../shared/shared.dart';
+import '../../../../themes/themes.dart';
+import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/widgets.dart';
+import '../../widgets/list_view_bookmarks.dart';
 
-class BookmarksScreen extends StatelessWidget {
+class EpubBookmarkScreen extends StatelessWidget {
   final EpubBook book;
 
-  const BookmarksScreen({super.key, required this.book});
-
-  List<Bookmark> getBookmarks(MarkerService markerService) {
-    List<Bookmark> bookmarkList = [];
-    final Map<dynamic, dynamic> bookmarks =
-        markerService.getBookmarkByBook(book.Title!);
-
-    if (bookmarks.isNotEmpty) {
-      bookmarks['chapters'].forEach((item) {
-        if (item.isNotEmpty) {
-          item['markers'].forEach((bookmark) {
-            bookmarkList.add(Bookmark(
-                id: bookmark['id'],
-                bookName: bookmarks['title'],
-                chapterName: item['title'],
-                text: bookmark['text'],
-                date: DateTime.parse(bookmark['id']),
-                offset: bookmark['offset'].toString()));
-          });
-        }
-      });
-    }
-
-    return bookmarkList;
-  }
+  const EpubBookmarkScreen({super.key, required this.book});
 
   void handleEventTap(Bookmark bookmark, BuildContext context) {
     BookService bookService = Provider.of<BookService>(context, listen: false);
@@ -75,8 +52,8 @@ class BookmarksScreen extends StatelessWidget {
             offset: double.parse(bookmark.offset)));
   }
 
-  void deleteBookmark(
-      Bookmark bookmark, MarkerService markerService, BuildContext context) {
+  void deleteBookmark(Bookmark bookmark, EpubBookmarkService bookmarkService,
+      BuildContext context) {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -85,8 +62,7 @@ class BookmarksScreen extends StatelessWidget {
               title: 'Eliminar marcador',
               message: '¿Seguro que desea eliminar el marcador?',
               onPressed: () {
-                markerService.deleteMarker(
-                    bookmark.bookName, bookmark.chapterName, bookmark.id);
+                bookmarkService.deleteBookmark(bookmark.id);
                 Fluttertoast.showToast(msg: 'Marcador eliminado con éxito');
                 Navigator.pop(context);
               });
@@ -99,10 +75,11 @@ class BookmarksScreen extends StatelessWidget {
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
-    MarkerService markerService =
-        Provider.of<MarkerService>(context, listen: true);
+    EpubBookmarkService bookmarkService =
+        Provider.of<EpubBookmarkService>(context, listen: true);
 
-    List<Bookmark> bookmarkList = getBookmarks(markerService);
+    List<Bookmark> bookmarkList =
+        bookmarkService.getBookmarksByBook(book.Title!);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -142,7 +119,7 @@ class BookmarksScreen extends StatelessWidget {
                   onTap: (Bookmark bookmark) =>
                       handleEventTap(bookmark, context),
                   onDelete: (Bookmark bookmark) =>
-                      deleteBookmark(bookmark, markerService, context)),
+                      deleteBookmark(bookmark, bookmarkService, context)),
 
             if (bookmarkList.isEmpty)
               Expanded(

@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/shared/services/book_service.dart';
 import 'package:mobile_app/widgets/custom_card.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../features/book/screens/screens.dart';
 
 class CardPreviewItemList extends StatelessWidget {
   final Future<List<EpubBook>> future;
@@ -101,7 +102,7 @@ class CardPreviewItemList extends StatelessWidget {
     BookService bookService = Provider.of<BookService>(context, listen: false);
 
     bookService.selectedBook = book;
-    Navigator.pushNamed(context, IndexPage.route,
+    Navigator.pushNamed(context, EpubIndexScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 

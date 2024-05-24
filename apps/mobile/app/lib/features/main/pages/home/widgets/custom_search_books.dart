@@ -12,11 +12,11 @@ import 'package:mobile_app/core/constants/image.constant.dart';
 import 'package:mobile_app/core/models/epub.arguments.dart';
 import 'package:mobile_app/core/theme/app.style.dart';
 import 'package:mobile_app/core/utils/size.utils.dart';
-import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/features/profile/screens/interests/interests_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../../widgets/widgets.dart';
+import '../../../../book/screens/screens.dart';
 
 class CustomSearchBookDelegate extends SearchDelegate<String> {
   // Dummy list
@@ -88,12 +88,10 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
       return FutureBuilder(
           future: fetchData(),
           builder: (_, AsyncSnapshot snapshot) {
-            
-
-            if(snapshot.hasData){
-               var epale = [...snapshot.data];
+            if (snapshot.hasData) {
+              var epale = [...snapshot.data];
               var suggestionList = dataBooks(epale, query);
-            return  ListView.separated(
+              return ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (_, int index) {
                   final item = suggestionList[index];
@@ -117,7 +115,7 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                           children: [
                             // Image
                             ClipRRect(
-                            borderRadius: borderRadius,
+                              borderRadius: borderRadius,
                               /*child: CustomImageView(
                             imagePath: image,
                             width: getSize(132),
@@ -125,7 +123,6 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                           ),*/
 
                               child: Row(
-                                
                                 children: [
                                   SizedBox.fromSize(
                                     size: Size.fromRadius(48), // Image radius
@@ -141,11 +138,9 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                             Container(
                               margin: EdgeInsets.all(5),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                 
                                   Container(
                                     child: Column(
                                       mainAxisAlignment:
@@ -169,9 +164,10 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                                       ],
                                     ),
                                   ),
-                                   Column(
+                                  Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       CustomIconButton(
                                         height: getSize(48),
@@ -197,11 +193,10 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
                     ),
                   );
                 },
-            
                 separatorBuilder: (_, __) => SizedBox(height: 8),
                 itemCount: suggestionList.length,
               );
-            }else{
+            } else {
               return Container();
             }
           });
@@ -214,7 +209,7 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
     List<dynamic> listTab = [];
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Title.toLowerCase().contains(query) ) {
+      if (data[i].Title.toLowerCase().contains(query)) {
         listTab.add(data[i]);
       }
     }
@@ -227,15 +222,15 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
 
   onTaped(context, EpubBook book) {
     testData(book);
-    Navigator.pushNamed(context, IndexPage.route,
+    Navigator.pushNamed(context, EpubIndexScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
-  downloadEpub(book){
+  downloadEpub(book) {
     print('book $book');
   }
 
- showCustomToast() {
+  showCustomToast() {
     Widget toast = Container(
       width: double.infinity,
       height: 48,
@@ -316,7 +311,8 @@ class CustomSearchBookDelegate extends SearchDelegate<String> {
     return new File(filePath).writeAsBytes(
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
-  testData(book){
+
+  testData(book) {
     print(book.Chapters);
   }
 

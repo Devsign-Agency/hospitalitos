@@ -2,7 +2,6 @@ import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/core/models/pdf_viewer.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
 import 'package:mobile_app/globals/states/app.state.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/app_bar/appbar_image.dart';

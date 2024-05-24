@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
-import 'package:mobile_app/features/book/pages/chapter.page.dart';
 import 'package:provider/provider.dart';
 import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
+import '../screens/screens.dart';
 
 class DrawerContent extends StatelessWidget {
   final EpubBook book;
@@ -147,7 +147,7 @@ class _DrawerTableContent extends StatelessWidget {
                                           book.Chapters![index].SubChapters![i];
                                       Navigator.pop(context);
                                       Navigator.popAndPushNamed(
-                                          context, ChapterPage.route,
+                                          context, ChapterScreen.route,
                                           arguments: EpubArguments(
                                               book: book,
                                               chapter: book.Chapters![index]
@@ -176,7 +176,8 @@ class _DrawerTableContent extends StatelessWidget {
                           bookService.chapterTitle = title;
                           Navigator.pop(context);
 
-                          Navigator.popAndPushNamed(context, ChapterPage.route,
+                          Navigator.popAndPushNamed(
+                              context, ChapterScreen.route,
                               arguments: EpubArguments(
                                   book: book, chapter: book?.Chapters![index]));
                         })

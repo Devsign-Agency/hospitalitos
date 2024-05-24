@@ -16,14 +16,20 @@ class ButtonNavigationChapter extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          width: 40,
-          height: 60,
+          width: 48,
+          height: 48,
           decoration: BoxDecoration(
-              color: ColorConstant.black900.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(1.0, 2.0),
+                    blurRadius: 0.2)
+              ],
+              color: ColorConstant.gray300.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(28)),
           child: Icon(
             icon,
-            color: ColorConstant.black900.withOpacity(0.4),
+            color: ColorConstant.indigo900.withOpacity(1.0),
           )),
     );
   }

@@ -284,7 +284,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   if (int.parse(bibleService.selectedChapter.chapter) > 1)
                     Positioned(
                       top: height,
-                      left: 0,
+                      left: 16,
                       child: ButtonNavigationChapter(
                           onTap: () => bibleService.moveChapter('back'),
                           icon: Icons.arrow_back),
@@ -294,7 +294,7 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
                   if (int.parse(bibleService.selectedChapter.chapter) <
                       bibleService.selectedBook.chapters.length)
                     Positioned(
-                        right: 0,
+                        right: 16,
                         top: height,
                         child: ButtonNavigationChapter(
                             onTap: () => bibleService.moveChapter('next'),

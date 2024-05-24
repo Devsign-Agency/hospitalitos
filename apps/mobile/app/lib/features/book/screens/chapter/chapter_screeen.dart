@@ -1,8 +1,8 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:epub_view/epub_view.dart';
-import 'package:mobile_app/features/book/pages/bookmarks_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:flutter/material.dart';
@@ -11,30 +11,33 @@ import 'package:html/parser.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../../core/app_export.dart';
-import '../../../shared/shared.dart';
-import '../../../themes/themes.dart';
-import '../../bible/screens/book_viewer/widgets/button_navigation_chapter.dart';
-import '../widgets/widgets.dart';
+
+import '../../../../core/app_export.dart';
+import '../../../../shared/services/epub_bookmark_service.dart';
+import '../../../../shared/shared.dart';
+import '../../../../themes/themes.dart';
+import '../../../bible/screens/book_viewer/widgets/widgets.dart';
+import '../../widgets/widgets.dart';
+import '../screens.dart';
 
 // import 'package:css_text/css_text.dart';
-class ChapterPage extends StatefulWidget {
+class ChapterScreen extends StatefulWidget {
   static const String route = 'book/chapter';
 
-  const ChapterPage({Key? key}) : super(key: key);
+  const ChapterScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChapterPage> createState() => _ChapterPageState();
+  State<ChapterScreen> createState() => _ChapterScreenState();
 }
 
-class _ChapterPageState extends State<ChapterPage> {
+class _ChapterScreenState extends State<ChapterScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
   bool onAudioSound = false;
   Map<String, dynamic> settingTextInitialValues = {
-    'fontSize': 5.0,
+    'fontSize': 8.0,
     'margin': 1.0,
     'lineHeight': 1.0,
-    'color': Colors.black
+    'color': const Color.fromARGB(255, 211, 187, 187)
   };
 
   TextBook textBook = TextBook(
@@ -43,7 +46,7 @@ class _ChapterPageState extends State<ChapterPage> {
       size: 32.0,
       margin: 14.0,
       lineHeight: 1.2,
-      fontSize: FontSize.medium);
+      fontSize: FontSize.xLarge);
 
   String _newVoiceText = '';
 
@@ -193,12 +196,12 @@ class _ChapterPageState extends State<ChapterPage> {
     final String bookTitle = book?.Title ?? '';
     final String bookAuthor = book?.Author ?? '';
 
-    MarkerService markerService =
-        Provider.of<MarkerService>(context, listen: true);
-
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
+
+    EpubBookmarkService bookmarkService =
+        Provider.of<EpubBookmarkService>(context, listen: true);
 
     parsedString = _parseDocumentToString(bookService.subchapterSelected);
 
@@ -221,7 +224,7 @@ class _ChapterPageState extends State<ChapterPage> {
                 .push(
               PageTransition(
                   type: PageTransitionType.leftToRight,
-                  child: BookmarksScreen(
+                  child: EpubBookmarkScreen(
                     book: book!,
                   )),
             )
@@ -297,28 +300,22 @@ class _ChapterPageState extends State<ChapterPage> {
                 await Clipboard.getData(Clipboard.kTextPlain);
 
             if (selectedContent != null) {
-              DateTime now = DateTime.now();
-              int year = now.year;
-              int month = now.month;
-              int day = now.day;
-              String date = '$day/$month/$year';
-
-              marker = {
-                'id': DateTime.now().toString(),
+              bookmarkService.createBookmark({
+                'bookName': bookService.selectedBook.Title,
+                'chapterName': bookService.subchapterSelected.Title,
                 'text': selectedContent.text,
-                'offset': offsetScroll,
-                'date': date,
-              };
-
-              markerService.addNewMarker(bookTitle, chapter, marker);
+                'date': DateTime.now(),
+                'offset': offsetScroll.toString()
+              });
             }
 
             Fluttertoast.showToast(msg: 'Marcador guardado con éxito');
           }),
     ];
 
-    double height = MediaQuery.of(context).size.height * 0.60;
+    double height = MediaQuery.of(context).size.height;
 
+    // Preferences.removeMarkerList();
     return Scaffold(
       key: _key,
       appBar: CustomAppBar(
@@ -339,65 +336,83 @@ class _ChapterPageState extends State<ChapterPage> {
         chapter: chapter!,
         isDarkMode: isDarkTheme,
       )),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            controller: scrollController,
-            child: CustomSelectionArea(
-              onSelectionChanged: handleSelectedContent,
-              menuButtonItems: menuButtonItems,
-              child: Padding(
-                padding:
-                    getPadding(left: textBook.margin, right: textBook.margin),
-                child: Html(
-                  onLinkTap: (url, _, __, ___) async {
-                    var item = findRefInBook(url);
+      body: SizedBox(
+        height: height,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              controller: scrollController,
+              child: CustomSelectionArea(
+                onSelectionChanged: handleSelectedContent,
+                menuButtonItems: menuButtonItems,
+                child: Padding(
+                  padding:
+                      getPadding(left: textBook.margin, right: textBook.margin),
+                  child: Html(
+                    onLinkTap: (url, _, __, ___) async {
+                      var item = findRefInBook(url);
 
-                    Fluttertoast.showToast(msg: item);
-                  },
-                  style: {
-                    'body': Style(
-                        fontSize: textBook.fontSize,
-                        color: isDarkTheme
-                            ? ColorConstant.whiteA700
-                            : ColorConstant.black900,
-                        lineHeight: LineHeight(textBook.lineHeight),
-                        fontFamily:
-                            Theme.of(context).textTheme.titleLarge!.fontFamily),
-                  },
-                  data: bookService.subchapterSelected.HtmlContent,
+                      Fluttertoast.showToast(msg: item);
+                    },
+                    style: {
+                      'body': Style(
+                          fontSize: textBook.fontSize,
+                          color: isDarkTheme
+                              ? ColorConstant.whiteA700
+                              : ColorConstant.black900,
+                          lineHeight: LineHeight(textBook.lineHeight),
+                          fontFamily: 'Nunito Sans'),
+                    },
+                    data: bookService.subchapterSelected.HtmlContent,
+                  ),
                 ),
               ),
             ),
-          ),
-          if (onAudioSound)
-            PopupAudioPlayer(
-              voiceText: _newVoiceText,
-              bookTitle: bookTitle,
-              bookAuthor: bookAuthor,
-              onCompletion: () {},
-            ),
-          if (bookService.hasChapterOrSubChapter() &&
-              bookService.subchapterIndex > 0)
-            Positioned(
-              top: height,
-              left: 0,
-              child: ButtonNavigationChapter(
-                  onTap: () => bookService.moveSubchapter('back'),
-                  icon: Icons.arrow_back),
-            ),
-          if (bookService.hasChapterOrSubChapter() &&
-              bookService.subchapterIndex <
-                  bookService.selectedBook.Chapters![bookService.chapterIndex]
-                          .SubChapters!.length -
-                      1)
-            Positioned(
-                right: 0,
-                top: height,
+            if (onAudioSound)
+              PopupAudioPlayer(
+                voiceText: _newVoiceText,
+                bookTitle: bookTitle,
+                bookAuthor: bookAuthor,
+                onCompletion: () {},
+              ),
+            if (bookService.hasChapterOrSubChapter() &&
+                bookService.subchapterIndex > 0)
+              Positioned(
+                top: height * 0.70,
+                left: 20,
                 child: ButtonNavigationChapter(
-                    onTap: () => bookService.moveSubchapter('next'),
-                    icon: Icons.arrow_forward)),
-        ],
+                    onTap: () => bookService.moveSubchapter('back'),
+                    icon: Icons.arrow_back),
+              ),
+            if (bookService.hasChapterOrSubChapter() &&
+                bookService.subchapterIndex <
+                    bookService.selectedBook.Chapters![bookService.chapterIndex]
+                            .SubChapters!.length -
+                        1)
+              Positioned(
+                  right: 20,
+                  top: height * 0.70,
+                  child: ButtonNavigationChapter(
+                      onTap: () => bookService.moveSubchapter('next'),
+                      icon: Icons.arrow_forward)),
+            // Positioned(
+            //     left: 20,
+            //     bottom: 20,
+            //     child: GestureDetector(
+            //       onTap: () {},
+            //       child: Container(
+            //           width: 48,
+            //           height: 48,
+            //           decoration: BoxDecoration(
+            //               color: ColorConstant.indigo900,
+            //               borderRadius: BorderRadius.circular(28)),
+            //           child: Icon(
+            //             Icons.bookmark,
+            //             color: ColorConstant.whiteA700.withOpacity(1.0),
+            //           )),
+            //     ))
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorConstant.black900.withOpacity(0.1),

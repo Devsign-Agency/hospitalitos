@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mobile_app/features/book/pages/pages.dart';
+import 'package:mobile_app/features/book/screens/screens.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/app_export.dart';
+import '../../../../shared/shared.dart';
+import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:image/image.dart' hide Image;
-import '../../../shared/shared.dart';
-import '../../../themes/themes.dart';
 
-class IndexPage extends StatefulWidget {
+class EpubIndexScreen extends StatefulWidget {
   static const String route = 'book/index';
   @override
-  State<IndexPage> createState() => _IndexPageState();
+  State<EpubIndexScreen> createState() => _IndexPageState();
 }
 
-class _IndexPageState extends State<IndexPage> with TickerProviderStateMixin {
+class _IndexPageState extends State<EpubIndexScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   FToast? fToast;
@@ -210,7 +211,7 @@ class _ListChaptersOfBook extends StatelessWidget {
                                         bookService.subchapterSelected = book
                                             .Chapters![index].SubChapters[i];
                                         Navigator.pushNamed(
-                                            context, ChapterPage.route,
+                                            context, ChapterScreen.route,
                                             arguments: EpubArguments(
                                                 book: book,
                                                 chapter: book.Chapters![index]
@@ -239,7 +240,7 @@ class _ListChaptersOfBook extends StatelessWidget {
                             bookService.subchapterIndex = 0;
                             bookService.chapterTitle = title;
 
-                            Navigator.pushNamed(context, ChapterPage.route,
+                            Navigator.pushNamed(context, ChapterScreen.route,
                                 arguments: EpubArguments(
                                     book: book,
                                     chapter: book?.Chapters![index]));

@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/features/library/screens/preview_video/preview_video_screen.dart';
-import 'package:mobile_app/widgets/card_preview_item_list%20copy.dart';
 import 'package:mobile_app/widgets/filters_bar.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/models/chip_item.dart';
@@ -45,8 +40,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
   callApi() async {
     try {
-      results = await yt
-          .search("Hospitalitos de la fe "); //searching for videos related to HD Music
+      results = await yt.search(
+          "Hospitalitos de la fe "); //searching for videos related to HD Music
       listVideos = results;
       print('results: $results');
       return results;

@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:epub_view/epub_view.dart' hide Image;
@@ -13,7 +12,6 @@ import 'package:mobile_app/core/models/epub.arguments.dart';
 import 'package:mobile_app/core/models/viewed_preview.dart';
 import 'package:mobile_app/core/theme/app.style.dart';
 import 'package:mobile_app/core/utils/size.utils.dart';
-import 'package:mobile_app/features/book/pages/index.page.dart';
 import 'package:mobile_app/features/library/widgets/tab_view_recommended.dart';
 import 'package:mobile_app/features/main/pages/home/widgets/custom_search_books.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,6 +19,7 @@ import 'package:provider/provider.dart';
 import '../../../../../shared/shared.dart';
 import '../../../../../themes/themes.dart';
 import '../../../../../widgets/widgets.dart';
+import '../../../../book/screens/screens.dart';
 
 class ListSeeMore extends StatefulWidget {
   static const String route = 'seemore';
@@ -79,8 +78,6 @@ class _ListSeeMoreState extends State<ListSeeMore> {
       ),
       body: Column(
         children: [
-          // builds a list, but if it is empty it shows a notification message
-          //_buildMainContent(books, context, isDarkTheme)
           // Recommended
           TabViewRecommended(
             future: getBooksItems(),
@@ -93,7 +90,7 @@ class _ListSeeMoreState extends State<ListSeeMore> {
 
   onTaped(item) async {
     var book = await fetchDataSpecific(item);
-    Navigator.pushNamed(context, IndexPage.route,
+    Navigator.pushNamed(context, EpubIndexScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
@@ -109,7 +106,6 @@ class _ListSeeMoreState extends State<ListSeeMore> {
           id: '2',
           title: 'Método para memorizar citas bíblicas',
           image: 'assets/images/img_10.png'),
-
     ];
 
     return Future.delayed(Duration(seconds: 1), () => items);
@@ -181,15 +177,13 @@ class _ListSeeMoreState extends State<ListSeeMore> {
 
                           Flexible(
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
                                       width: 200,
@@ -207,8 +201,7 @@ class _ListSeeMoreState extends State<ListSeeMore> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 6.0),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       CustomIconButton(
                                         height: getSize(48),
@@ -280,7 +273,7 @@ class _ListSeeMoreState extends State<ListSeeMore> {
   }
 
   onTap(context, EpubBook book) {
-    Navigator.pushNamed(context, IndexPage.route,
+    Navigator.pushNamed(context, EpubIndexScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 
