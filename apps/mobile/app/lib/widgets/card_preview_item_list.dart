@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/shared/services/book_service.dart';
+import 'package:mobile_app/shared/shared.dart';
 import 'package:mobile_app/widgets/custom_card.dart';
 import 'package:mobile_app/widgets/custom_image_view.dart';
 import 'package:path_provider/path_provider.dart';
@@ -100,9 +101,16 @@ class CardPreviewItemList extends StatelessWidget {
   onTap(context, EpubBook book) {
     // testData(book);
     BookService bookService = Provider.of<BookService>(context, listen: false);
-
+    DrawerService drawerService =
+        Provider.of<DrawerService>(context, listen: false);
+    drawerService.isFirstOpen = true;
+    drawerService.offset = 0.0;
+    bookService.subchapterSelected = book.Chapters![0];
     bookService.selectedBook = book;
-    Navigator.pushNamed(context, EpubIndexScreen.route,
+    bookService.subchapterIndex = 0;
+    bookService.chapterIndex = 0;
+
+    Navigator.pushNamed(context, ChapterScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 

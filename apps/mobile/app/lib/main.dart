@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BottomNavigationMainProvider()),
         ChangeNotifierProvider(create: (_) => BibleBookMarkService()),
         ChangeNotifierProvider(create: (_) => EpubBookmarkService()),
+        ChangeNotifierProvider(create: (_) => DrawerService()),
         ChangeNotifierProvider(
           create: (_) => PrayerService(),
           lazy: false,

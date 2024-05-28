@@ -8,6 +8,7 @@ import 'package:mobile_app/core/app_export.dart';
 import 'package:provider/provider.dart';
 import '../../../shared/shared.dart';
 import '../../../themes/themes.dart';
+import '../../../widgets/widgets.dart';
 import '../screens/screens.dart';
 
 class DrawerContent extends StatelessWidget {
@@ -58,6 +59,22 @@ class _DrawerHeader extends StatelessWidget {
               image: DecorationImage(image: image.image, fit: BoxFit.cover)),
         ),
         Positioned(
+          top: 38,
+          right: 10,
+          child: CustomIconButton(
+            margin: getMargin(left: 8),
+            height: getSize(32),
+            width: getSize(32),
+            shape: IconButtonShape.CircleBorder24,
+            variant: IconButtonVariant.FillTransparent,
+            onTap: () => Navigator.pop(context),
+            child: CustomImageView(
+              svgPath: ImageConstant.imgClose,
+              color: ColorConstant.whiteA700,
+            ),
+          ),
+        ),
+        Positioned(
           bottom: 40,
           left: 0,
           child: Padding(
@@ -91,10 +108,38 @@ class _DrawerHeader extends StatelessWidget {
   }
 }
 
-class _DrawerTableContent extends StatelessWidget {
+class _DrawerTableContent extends StatefulWidget {
   final EpubBook book;
 
   const _DrawerTableContent({super.key, required this.book});
+
+  @override
+  State<_DrawerTableContent> createState() => _DrawerTableContentState();
+}
+
+class _DrawerTableContentState extends State<_DrawerTableContent> {
+  double offsetScroll = 0;
+  ScrollController scrollController =
+      ScrollController(initialScrollOffset: 0.0);
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      DrawerService drawerService =
+          Provider.of<DrawerService>(context, listen: false);
+      scrollController.addListener(() {
+        drawerService.offset = scrollController.position.pixels;
+      });
+
+      if (scrollController.hasClients) {
+        await scrollController.animateTo(drawerService.offset,
+            duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
+      }
+
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,15 +151,17 @@ class _DrawerTableContent extends StatelessWidget {
 
     return Flexible(
       child: ListView.builder(
+          controller: scrollController,
           padding: getPadding(top: 0),
           shrinkWrap: true,
-          itemCount: book!.Chapters!.length,
+          itemCount: widget.book!.Chapters!.length,
           itemBuilder: (context, index) {
-            var title = (book?.Chapters![index].Title!).toString();
+            var title = (widget.book?.Chapters![index].Title!).toString();
 
             return title != ''
-                ? book.Chapters![index].SubChapters!.isNotEmpty
+                ? widget.book.Chapters![index].SubChapters!.isNotEmpty
                     ? ExpansionTile(
+                        initiallyExpanded: bookService.chapterIndex == index,
                         title: Text(
                           title,
                           style: AppStyle.txtNunitoSansSemiBold20Gray900
@@ -129,48 +176,71 @@ class _DrawerTableContent extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
-                                itemCount:
-                                    book.Chapters![index].SubChapters?.length,
+                                itemCount: widget
+                                    .book.Chapters![index].SubChapters?.length,
                                 itemBuilder: (BuildContext context, int i) {
-                                  var subtititle = book
-                                      .Chapters![index].SubChapters?[i].Title!
+                                  var subtititle = widget.book.Chapters![index]
+                                      .SubChapters?[i].Title!
                                       .toString();
 
                                   return ListTile(
+                                    contentPadding: getPadding(all: 0),
                                     onTap: () {
                                       bookService.chapterTitle = title;
-                                      var sub =
-                                          book.Chapters![index].SubChapters;
                                       bookService.chapterIndex = index;
                                       bookService.subchapterIndex = i;
-                                      bookService.subchapterSelected =
-                                          book.Chapters![index].SubChapters![i];
+                                      bookService.subchapterSelected = widget
+                                          .book
+                                          .Chapters![index]
+                                          .SubChapters![i];
                                       Navigator.pop(context);
                                       Navigator.popAndPushNamed(
                                           context, ChapterScreen.route,
                                           arguments: EpubArguments(
-                                              book: book,
-                                              chapter: book.Chapters![index]
+                                              book: widget.book,
+                                              chapter: widget
+                                                  .book
+                                                  .Chapters![index]
                                                   .SubChapters?[i]));
                                     },
-                                    title: Title(
-                                        color: isDarkTheme
-                                            ? ColorConstant.whiteA700
-                                            : ColorConstant.amber300,
-                                        child: Text(subtititle!)),
+                                    title: Container(
+                                      padding: getPadding(left: 20),
+                                      color: bookService.chapterIndex ==
+                                                  index &&
+                                              bookService.subchapterIndex == i
+                                          ? ColorConstant.yellow100
+                                              .withOpacity(0.2)
+                                          : null,
+                                      child: Title(
+                                          color: isDarkTheme
+                                              ? ColorConstant.whiteA700
+                                              : ColorConstant.amber300,
+                                          child: Text(
+                                            subtititle!,
+                                          )),
+                                    ),
                                   );
                                 })
                           ])
                     : ListTile(
-                        title: Text((book?.Chapters![index].Title!).toString(),
+                        contentPadding: getPadding(all: 0),
+                        title: Container(
+                          padding: getPadding(left: 20),
+                          color: bookService.chapterIndex == index
+                              ? ColorConstant.yellow100.withOpacity(0.2)
+                              : null,
+                          child: Text(
+                            (widget.book.Chapters![index].Title!).toString(),
                             style: AppStyle.txtNunitoSansSemiBold20Gray900
                                 .copyWith(
                                     color: isDarkTheme
                                         ? ColorConstant.whiteA700
-                                        : ColorConstant.gray900)),
+                                        : ColorConstant.gray900),
+                          ),
+                        ),
                         onTap: () {
                           bookService.subchapterSelected =
-                              book.Chapters![index];
+                              widget.book.Chapters![index];
                           bookService.chapterIndex = index;
                           bookService.subchapterIndex = 0;
                           bookService.chapterTitle = title;
@@ -179,7 +249,8 @@ class _DrawerTableContent extends StatelessWidget {
                           Navigator.popAndPushNamed(
                               context, ChapterScreen.route,
                               arguments: EpubArguments(
-                                  book: book, chapter: book?.Chapters![index]));
+                                  book: widget.book,
+                                  chapter: widget.book?.Chapters![index]));
                         })
                 : SizedBox();
           }),

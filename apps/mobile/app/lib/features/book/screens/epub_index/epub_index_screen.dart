@@ -1,33 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/features/book/screens/screens.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 import '../../../../core/app_export.dart';
+import '../../../../core/models/viewed_preview.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
+import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/widgets.dart';
 import 'package:epub_view/epub_view.dart' hide Image;
 import 'package:image/image.dart' hide Image;
 
+import '../../../library/widgets/tab_view_chapters.dart';
+import '../../../library/widgets/widgets.dart';
+
 class EpubIndexScreen extends StatefulWidget {
   static const String route = 'book/index';
+
+  const EpubIndexScreen({super.key});
+
   @override
-  State<EpubIndexScreen> createState() => _IndexPageState();
+  State<EpubIndexScreen> createState() => _PreviewBookScreenState();
 }
 
-class _IndexPageState extends State<EpubIndexScreen>
-    with TickerProviderStateMixin {
-  late TabController tabController;
-
-  FToast? fToast;
-
+class _PreviewBookScreenState extends State<EpubIndexScreen> {
+  var _scrollController = ScrollController();
+  bool _isExpanded = false;
   @override
   void initState() {
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-    fToast = FToast();
-    fToast?.init(context);
+    _scrollController.addListener(() {
+      setState(() {
+        _isExpanded = _isSliverAppBarExpanded;
+      });
+    });
   }
 
   @override
@@ -36,31 +44,246 @@ class _IndexPageState extends State<EpubIndexScreen>
         ModalRoute.of(context)!.settings.arguments as EpubArguments;
     final book = arguments.book;
 
-    return Scaffold(
-      appBar: CustomAppBar(title: book?.Title!),
-      body: Column(
-        children: [
-          CustomTabBar(
-              labelColor: ColorConstant.black9004c,
-              tabController: tabController,
-              items: IndexService.tabBarItems),
-
-          // TabBarView
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                // Books Tab
-                _ListChaptersOfBook(book: book),
-                _ChapterDetail(book: book),
-              ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            _CustomAppBar(
+              title: book!.Title!,
+              isExpanded: _isExpanded,
             ),
+          ],
+          body: GestureDetector(
+            child: TabBarView(children: [
+              // Chapters
+              _ListChaptersOfBook(book: book),
+
+              // Recommended
+              _ChapterDetail(book: book),
+
+              // Commentaries
+              TabViewComments(),
+            ]),
           ),
+        ),
+      ),
+    );
+  }
+
+  bool get _isSliverAppBarExpanded {
+    return _scrollController.hasClients && _scrollController.offset > (50);
+  }
+}
+
+class _CustomAppBar extends StatelessWidget {
+  final String title;
+  final bool isExpanded;
+
+  const _CustomAppBar(
+      {super.key, required this.isExpanded, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor: Colors.white,
+      expandedHeight: 360,
+      floating: false,
+      // pinned: true,
+      // title: Text(title, style: AppStyle.txtNunitoSansSemiBold23WhiteA700),
+      title: LayoutBuilder(builder: (context, constraints) {
+        print(constraints);
+        return Text(
+          'My title',
+          style: constraints.maxHeight > 150
+              ? AppStyle.txtNunitoSansSemiBold23WhiteA700
+              : AppStyle.txtNunitoSansSemiBold20Black900,
+        );
+      }),
+      bottom: TabBar(
+        labelColor: ColorConstant.indigo900,
+        indicatorColor: ColorConstant.indigo900,
+        indicatorSize: TabBarIndicatorSize.label,
+        unselectedLabelColor: ColorConstant.gray200,
+        tabAlignment: TabAlignment.fill,
+        tabs: [
+          Tab(
+              child: Text(
+            'Indice',
+            style: AppStyle.txtNunitoSansSemiBold16Indigo900,
+          )),
+          Tab(
+              child: Text(
+            'Recomendados',
+          )),
+          Tab(child: Text('Comentarios')),
+        ],
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        // centerTitle: true,
+        titlePadding: EdgeInsets.all(0),
+        background: _FlexibleSpaceBarBackground(),
+      ),
+      actions: [
+        CustomImageView(
+          svgPath: ImageConstant.imgFavWhite24x24,
+          width: getSize(24),
+          height: getSize(24),
+          color: ColorConstant.whiteA700,
+        ),
+        SizedBox(width: 32),
+        CustomImageView(
+          svgPath: ImageConstant.imgShare,
+          width: getSize(24),
+          height: getSize(24),
+          color: ColorConstant.whiteA700,
+          onTap: () => showModalBottomSheet(
+              backgroundColor: ColorConstant.gray50,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0)),
+              context: context,
+              builder: (context) => Text('test')),
+        ),
+        SizedBox(width: 16),
+      ],
+    );
+  }
+}
+
+class _FlexibleSpaceBarBackground extends StatefulWidget {
+  const _FlexibleSpaceBarBackground({
+    super.key,
+  });
+
+  @override
+  State<_FlexibleSpaceBarBackground> createState() =>
+      _FlexibleSpaceBarBackgroundState();
+}
+
+class _FlexibleSpaceBarBackgroundState
+    extends State<_FlexibleSpaceBarBackground> {
+  late VideoPlayerController _controller;
+  late String _fileName;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // flickManager.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EpubArguments;
+    final book = arguments.book;
+    Image image =
+        Image.memory(Uint8List.fromList(encodePng(book!.CoverImage!)));
+
+    return SizedBox(
+      width: double.infinity,
+      height: 180.0,
+      // color: Colors.red.withOpacity(0.3),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 220.0,
+                decoration: BoxDecoration(
+                    image:
+                        DecorationImage(image: image.image, fit: BoxFit.cover)),
+              ),
+              Positioned(
+                  right: 20,
+                  bottom: 14,
+                  child: Text(
+                    book.AuthorList![0]!,
+                    style: AppStyle.txtNunitoSansSemiBold16WhiteA700,
+                  ))
+            ],
+          ),
+          SizedBox(height: 16),
+          CustomButton(
+              margin: getMargin(left: 16, right: 16),
+              fontStyle: ButtonFontStyle.NunitoSansSemiBold16,
+              height: getVerticalSize(48),
+              text: 'Continuar viendo',
+              onTap: () {
+                Navigator.pushNamed(context, 'book',
+                    arguments:
+                        EpubArguments(book: book, chapter: book!.Chapters![0]));
+              }),
+          SizedBox(height: 16),
+          CustomButton(
+              margin: getMargin(left: 16, right: 16),
+              fontStyle: ButtonFontStyle.NunitoSansSemiBold16,
+              height: getVerticalSize(48),
+              variant: ButtonVariant.OutlineIndigo900,
+              text: 'Descargar',
+              onTap: () {}),
         ],
       ),
     );
   }
 }
+
+// class EpubIndexScreen extends StatefulWidget {
+//   static const String route = '';
+//   @override
+//   State<EpubIndexScreen> createState() => _IndexPageState();
+// }
+
+// class _IndexPageState extends State<EpubIndexScreen>
+//     with TickerProviderStateMixin {
+//   late TabController tabController;
+
+//   FToast? fToast;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     tabController = TabController(length: 2, vsync: this);
+//     fToast = FToast();
+//     fToast?.init(context);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final arguments =
+//         ModalRoute.of(context)!.settings.arguments as EpubArguments;
+//     final book = arguments.book;
+
+//     return Scaffold(
+//       appBar: CustomAppBar(title: book?.Title!),
+//       body: Column(
+//         children: [
+//           CustomTabBar(
+//               labelColor: ColorConstant.black9004c,
+//               tabController: tabController,
+//               items: IndexService.tabBarItems),
+
+//           // TabBarView
+//           Expanded(
+//             child: TabBarView(
+//               controller: tabController,
+//               children: [
+//                 // Books Tab
+//                 _ListChaptersOfBook(book: book),
+//                 _ChapterDetail(book: book),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _ChapterDetail extends StatelessWidget {
   const _ChapterDetail({
@@ -169,9 +392,8 @@ class _ListChaptersOfBook extends StatelessWidget {
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
 
     return ListView.builder(
+        padding: getPadding(top: 0),
         shrinkWrap: true,
-        //physics: const NeverScrollableScrollPhysics(),
-        //scrollDirection: Axis.vertical,
         itemCount: book!.Chapters!.length,
         itemBuilder: (context, index) {
           var title = (book?.Chapters![index].Title!).toString();
@@ -191,6 +413,7 @@ class _ListChaptersOfBook extends StatelessWidget {
                           ),
                           children: [
                               ListView.builder(
+                                  padding: getPadding(top: 0),
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
@@ -248,18 +471,5 @@ class _ListChaptersOfBook extends StatelessWidget {
                 )
               : Container();
         });
-  }
-
-  listSubMenuBook(subChapters) {
-    if (subChapters.isEmpty) {
-      return ListView.builder(
-        itemCount: subChapters.length,
-        itemBuilder: (BuildContext context, int index) {
-          var title = subChapters[index].Title!;
-
-          ListTile(title: title);
-        },
-      );
-    }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:epub_view/epub_view.dart';
 import 'package:page_transition/page_transition.dart';
@@ -13,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/app_export.dart';
-import '../../../../shared/services/epub_bookmark_service.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
 import '../../../bible/screens/book_viewer/widgets/widgets.dart';
@@ -72,6 +70,8 @@ class _ChapterScreenState extends State<ChapterScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BookService bookService =
           Provider.of<BookService>(context, listen: false);
+      DrawerService drawerService =
+          Provider.of<DrawerService>(context, listen: false);
 
       final arguments =
           ModalRoute.of(context)!.settings.arguments as EpubArguments;
@@ -83,6 +83,11 @@ class _ChapterScreenState extends State<ChapterScreen> {
       scrollController.addListener(() {
         offsetScroll = scrollController.position.pixels;
       });
+
+      if (drawerService.isFirstOpen) {
+        _key.currentState!.openDrawer();
+        drawerService.isFirstOpen = false;
+      }
 
       setState(() {});
     });
@@ -98,7 +103,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   void closePlayText() {
     onAudioSound = false;
-
     setState(() {});
   }
 
@@ -117,18 +121,10 @@ class _ChapterScreenState extends State<ChapterScreen> {
   }
 
   void setScrollController(double offset) async {
-    // scrollController.removeListener(() {});
-    // scrollController = ScrollController(initialScrollOffset: offset);
     if (scrollController.hasClients) {
       await scrollController.animateTo(offset,
           duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
     }
-
-    // scrollController.addListener(() {
-    //   offsetScroll = scrollController.position.pixels;
-
-    //   print('offsetScroll: $offsetScroll');
-    // });
     setState(() {});
   }
 
@@ -144,7 +140,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
     textBook.lineHeight = event['lineHeight'];
     textBook.margin = event['margin'];
     textBook.color = Colors.white;
-    // textBook.circle = event['circle'];
     setState(() {});
   }
 
@@ -165,20 +160,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
     _share('$parsedString\n');
   }
 
-  Color getTextColor(CircleButtonType type) {
-    Color color;
-    if (type == CircleButtonType.black ||
-        (type == CircleButtonType.grey) ||
-        (type == CircleButtonType.brown) ||
-        (type == CircleButtonType.red)) {
-      color = ColorConstant.whiteA700;
-    } else {
-      color = ColorConstant.black900;
-    }
-
-    return color;
-  }
-
   void showBottomSheet(bool isDarkTheme) {
     AppModalBottomSheet.modalBottomSheet(
         context,
@@ -192,7 +173,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
   @override
   Widget build(BuildContext context) {
     BookService bookService = Provider.of<BookService>(context, listen: true);
-
     final String bookTitle = book?.Title ?? '';
     final String bookAuthor = book?.Author ?? '';
 
@@ -229,7 +209,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
                   )),
             )
                 .then((value) {
-              print(value);
               book = value.book;
               chapter = value.chapter;
 
@@ -381,7 +360,12 @@ class _ChapterScreenState extends State<ChapterScreen> {
                 top: height * 0.70,
                 left: 20,
                 child: ButtonNavigationChapter(
-                    onTap: () => bookService.moveSubchapter('back'),
+                    onTap: () {
+                      bookService.moveSubchapter('back');
+                      scrollController.animateTo(0.0,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.bounceIn);
+                    },
                     icon: Icons.arrow_back),
               ),
             if (bookService.hasChapterOrSubChapter() &&
@@ -393,7 +377,12 @@ class _ChapterScreenState extends State<ChapterScreen> {
                   right: 20,
                   top: height * 0.70,
                   child: ButtonNavigationChapter(
-                      onTap: () => bookService.moveSubchapter('next'),
+                      onTap: () {
+                        bookService.moveSubchapter('next');
+                        scrollController.animateTo(0.0,
+                            duration: Duration(milliseconds: 100),
+                            curve: Curves.bounceIn);
+                      },
                       icon: Icons.arrow_forward)),
             // Positioned(
             //     left: 20,
