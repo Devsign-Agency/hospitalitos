@@ -172,7 +172,6 @@ class _BookViewerScreenState extends State<BookViewerScreen> {
     AppModalBottomSheet.modalBottomSheet(
         context,
         PanelSettingTextBook(
-          isDarkMode: isDarkTheme,
           initialValues: _settingTextInitialValues,
           onChange: handleChangeTextSetting,
         ));

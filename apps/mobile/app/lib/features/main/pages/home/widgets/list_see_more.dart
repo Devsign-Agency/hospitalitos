@@ -81,16 +81,27 @@ class _ListSeeMoreState extends State<ListSeeMore> {
           // Recommended
           TabViewRecommended(
             future: getBooksItems(),
-            onItemTapped: (item) => onTaped(item),
+            onItemTapped: (item) => onTaped(item, context),
           ),
         ],
       ),
     );
   }
 
-  onTaped(item) async {
+  onTaped(item, context) async {
     var book = await fetchDataSpecific(item);
-    Navigator.pushNamed(context, EpubIndexScreen.route,
+
+    BookService bookService = Provider.of<BookService>(context, listen: false);
+    DrawerService drawerService =
+        Provider.of<DrawerService>(context, listen: false);
+    drawerService.isFirstOpen = true;
+    drawerService.offset = 0.0;
+    bookService.subchapterSelected = book.Chapters![0];
+    bookService.selectedBook = book;
+    bookService.subchapterIndex = 0;
+    bookService.chapterIndex = 0;
+
+    Navigator.pushNamed(context, ChapterScreen.route,
         arguments: EpubArguments(book: book, chapter: book.Chapters![0]));
   }
 

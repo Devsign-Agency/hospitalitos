@@ -119,7 +119,6 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      isDarkMode: false,
                       initialValues: settingTextInitialValues,
                       onChange: handleChangeTextSetting,
                     ));

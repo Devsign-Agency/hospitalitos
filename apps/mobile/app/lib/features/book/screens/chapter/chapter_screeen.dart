@@ -1,24 +1,23 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:epub_view/epub_view.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:mobile_app/features/book/screens/chapter/widgets/epub_table_content.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
 import 'package:mobile_app/widgets/widgets.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../shared/shared.dart';
 import '../../../../themes/themes.dart';
-import '../../../bible/screens/book_viewer/widgets/widgets.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
+import 'widgets/widgets.dart';
 
-// import 'package:css_text/css_text.dart';
 class ChapterScreen extends StatefulWidget {
   static const String route = 'book/chapter';
 
@@ -30,8 +29,8 @@ class ChapterScreen extends StatefulWidget {
 
 class _ChapterScreenState extends State<ChapterScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
-  bool onAudioSound = false;
-  Map<String, dynamic> settingTextInitialValues = {
+  bool _showTextPlayer = false;
+  Map<String, dynamic> _settingTextInitialValues = {
     'fontSize': 8.0,
     'margin': 1.0,
     'lineHeight': 1.0,
@@ -48,40 +47,22 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   String _newVoiceText = '';
 
-  Map<dynamic, dynamic> marker = {};
-  double offsetScroll = 0;
-  ScrollController scrollController =
+  double _offsetScroll = 0;
+  ScrollController _scrollController =
       ScrollController(initialScrollOffset: 0.0);
-
-  int bottomNavigationBarCurrentIndex = 0;
-
-  PageController pageController = PageController();
 
   String parsedString = '';
   bool isDarkTheme = false;
-
-  late EpubBook? book = EpubBook();
-  late EpubChapter chapter = EpubChapter();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      BookService bookService =
-          Provider.of<BookService>(context, listen: false);
       DrawerService drawerService =
           Provider.of<DrawerService>(context, listen: false);
-
-      final arguments =
-          ModalRoute.of(context)!.settings.arguments as EpubArguments;
-      book = arguments.book;
-      chapter = bookService.subchapterSelected;
-
-      parsedString = _parseDocumentToString(arguments.chapter!);
-
-      scrollController.addListener(() {
-        offsetScroll = scrollController.position.pixels;
+      _scrollController.addListener(() {
+        _offsetScroll = _scrollController.position.pixels;
       });
 
       if (drawerService.isFirstOpen) {
@@ -95,34 +76,22 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   @override
   void dispose() {
-    scrollController.dispose();
+    _scrollController.dispose();
 
     Clipboard.setData(ClipboardData(text: ''));
     super.dispose();
   }
 
-  void closePlayText() {
-    onAudioSound = false;
-    setState(() {});
-  }
-
-  void openPlayText() async {
-    onAudioSound = true;
-    ClipboardData? data;
-    data = await Clipboard.getData(Clipboard.kTextPlain);
-
-    data != null ? _onChange(data.text!) : _onChange('');
-  }
-
-  void _onChange(String text) {
+  void playSelectedText() async {
+    _newVoiceText = await ClipboardService.getCopyText();
     setState(() {
-      _newVoiceText = text;
+      _showTextPlayer = true;
     });
   }
 
   void setScrollController(double offset) async {
-    if (scrollController.hasClients) {
-      await scrollController.animateTo(offset,
+    if (_scrollController.hasClients) {
+      await _scrollController.animateTo(offset,
           duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
     }
     setState(() {});
@@ -130,8 +99,7 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   void handleSelectedContent(SelectedContent? selectedContent) {
     if (selectedContent != null) {
-      ClipboardData data = ClipboardData(text: selectedContent.plainText);
-      Clipboard.setData(data);
+      ClipboardService.setCopyText(selectedContent.plainText);
     }
   }
 
@@ -153,29 +121,80 @@ class _ChapterScreenState extends State<ChapterScreen> {
     await Share.share(value);
   }
 
-  void _shareDocument(
-      EpubChapter? chapter, String bookTitle, String title) async {
-    String parsedString = _parseDocumentToString(chapter);
+  void shareSelectedText() async {
+    ClipboardData? selectedContent =
+        await Clipboard.getData(Clipboard.kTextPlain);
 
-    _share('$parsedString\n');
+    if (selectedContent != null) _share(selectedContent.text!);
   }
 
-  void showBottomSheet(bool isDarkTheme) {
-    AppModalBottomSheet.modalBottomSheet(
-        context,
-        PanelSettingTextBook(
-          isDarkMode: isDarkTheme,
-          initialValues: settingTextInitialValues,
-          onChange: _handleChangeSetting,
-        ));
+  void createBookmark(
+      EpubBookmarkService bookmarkService, BookService bookService) async {
+    ClipboardData? selectedContent =
+        await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (selectedContent != null) {
+      bookmarkService.createBookmark({
+        'bookName': bookService.selectedBook.Title,
+        'chapterName': bookService.subchapterSelected.Title,
+        'text': selectedContent.text,
+        'date': DateTime.now(),
+        'offset': _offsetScroll.toString()
+      });
+    }
+
+    Fluttertoast.showToast(msg: 'Marcador guardado con éxito');
+  }
+
+  void changeChapter(BookService bookService, String action) {
+    bookService.moveSubchapter(action);
+    _scrollController.animateTo(0.0,
+        duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
+  }
+
+  void handleChangePopupMenu(int option) {
+    BookService bookService = Provider.of<BookService>(context, listen: false);
+
+    switch (option) {
+      case 1:
+        // Open the bottom sheet modal of text settings
+        AppModalBottomSheet.modalBottomSheet(
+            context,
+            PanelSettingTextBook(
+              initialValues: _settingTextInitialValues,
+              onChange: _handleChangeSetting,
+            ));
+        break;
+      case 2:
+        // Share the current chapter
+        String parsedString =
+            _parseDocumentToString(bookService.subchapterSelected);
+
+        _share(
+            '${bookService.selectedBook.Title!}\n${bookService.chapterTitle}\n$parsedString');
+        break;
+      case 3:
+        // Navigate to bookmarks
+        Navigator.of(context)
+            .push(
+          PageTransition(
+              type: PageTransitionType.leftToRight,
+              child: EpubBookmarkScreen(
+                book: bookService.selectedBook,
+              )),
+        )
+            .then((value) {
+          if (value != null) {
+            setScrollController(value.offset);
+          }
+        });
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     BookService bookService = Provider.of<BookService>(context, listen: true);
-    final String bookTitle = book?.Title ?? '';
-    final String bookAuthor = book?.Author ?? '';
-
     ThemeProvider themeProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkTheme = themeProvider.currentTheme == DarkTheme.theme;
@@ -183,136 +202,32 @@ class _ChapterScreenState extends State<ChapterScreen> {
     EpubBookmarkService bookmarkService =
         Provider.of<EpubBookmarkService>(context, listen: true);
 
-    parsedString = _parseDocumentToString(bookService.subchapterSelected);
-
-    final List<PopupMenuItemModel> menuOptions = [
-      PopupMenuItemModel(
-          id: 1,
-          title: 'Ajustar texto',
-          onTappedItem: () => showBottomSheet(isDarkTheme)),
-      PopupMenuItemModel(
-          id: 2,
-          title: 'Compartir',
-          onTappedItem: () {
-            _shareDocument(chapter, bookTitle, bookService.chapterTitle);
-          }),
-      PopupMenuItemModel(
-          id: 3,
-          title: 'Marcadores',
-          onTappedItem: () {
-            Navigator.of(context)
-                .push(
-              PageTransition(
-                  type: PageTransitionType.leftToRight,
-                  child: EpubBookmarkScreen(
-                    book: book!,
-                  )),
-            )
-                .then((value) {
-              book = value.book;
-              chapter = value.chapter;
-
-              setScrollController(value.offset);
-              setState(() {});
-            });
-          }),
-    ];
-
-    String findRefInBook(url) {
-      var link = url!.split('_')[url!.split('_').length - 1];
-      var index = int.parse(link);
-      var item = '';
-      var i = 0;
-
-      LiturgyService liturgyService =
-          Provider.of<LiturgyService>(context, listen: false);
-
-      var data = liturgyService.data;
-
-      for (var element in data) {
-        var boookInstance = element['book'];
-        if (book?.Title! == boookInstance) {
-          item = data[i]['ref'][index - 1];
-        }
-        i++;
-      }
-      return item;
-    }
-
-    final actions = [
-      {
-        'icon': ImageConstant.imgMusicIndigo900,
-        'color': isDarkTheme
-            ? (onAudioSound ? ColorConstant.indigo900 : ColorConstant.whiteA700)
-            : ColorConstant.gray800,
-        'variant': !onAudioSound
-            ? IconButtonVariant.NoFill
-            : IconButtonVariant.OutlinePurple50,
-        'action': () {
-          setState(() {
-            onAudioSound = !onAudioSound;
-            _newVoiceText = parsedString;
-          });
-        }
-      },
-    ];
-
     final List<ContextMenuButtonItem> menuButtonItems = [
-      ContextMenuButtonItem(
-        label: 'Escuchar',
-        onPressed: () async {
-          openPlayText();
-        },
-      ),
-      ContextMenuButtonItem(
-          label: 'Compartir',
-          onPressed: () async {
-            ClipboardData? selectedContent =
-                await Clipboard.getData(Clipboard.kTextPlain);
-
-            if (selectedContent != null) _share(selectedContent.text!);
-          }),
+      ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
+      ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
       ContextMenuButtonItem(
           label: 'Añadir a marcador',
-          onPressed: () async {
-            ClipboardData? selectedContent =
-                await Clipboard.getData(Clipboard.kTextPlain);
-
-            if (selectedContent != null) {
-              bookmarkService.createBookmark({
-                'bookName': bookService.selectedBook.Title,
-                'chapterName': bookService.subchapterSelected.Title,
-                'text': selectedContent.text,
-                'date': DateTime.now(),
-                'offset': offsetScroll.toString()
-              });
-            }
-
-            Fluttertoast.showToast(msg: 'Marcador guardado con éxito');
-          }),
+          onPressed: () => createBookmark(bookmarkService, bookService)),
     ];
 
     double height = MediaQuery.of(context).size.height;
 
-    // Preferences.removeMarkerList();
     return Scaffold(
       key: _key,
-      appBar: CustomAppBar(
-          hasCustomTitle: true,
-          customTitle: Text(bookTitle,
-              style: AppStyle.txtNunitoSansSemiBold26WhiteA700.copyWith(
-                  color: isDarkTheme
-                      ? ColorConstant.whiteA700
-                      : ColorConstant.black900)),
-          leading: CustomIconBackButton(isDarkTheme: isDarkTheme),
-          actions: actions,
-          hasPopupMenu: true,
-          popupMenuButton: CustomPopupMenuButton(
-              isDarkMode: isDarkTheme, menuOptions: menuOptions)),
+      appBar: EpubAppBar(
+        title: bookService.selectedBook.Title!,
+        isActivePlay: _showTextPlayer,
+        onTapPlay: (bool value) => setState(() {
+          _showTextPlayer = value;
+          _newVoiceText =
+              _parseDocumentToString(bookService.subchapterSelected);
+        }),
+        onSelectedMenu: handleChangePopupMenu,
+      ),
       drawer: Drawer(
-          child: DrawerContent(
-        book: book!,
-        chapter: chapter!,
+          child: EpubDrawerContent(
+        book: bookService.selectedBook,
+        chapter: bookService.subchapterSelected,
         isDarkMode: isDarkTheme,
       )),
       body: SizedBox(
@@ -320,100 +235,39 @@ class _ChapterScreenState extends State<ChapterScreen> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              controller: scrollController,
+              controller: _scrollController,
               child: CustomSelectionArea(
                 onSelectionChanged: handleSelectedContent,
                 menuButtonItems: menuButtonItems,
-                child: Padding(
-                  padding:
-                      getPadding(left: textBook.margin, right: textBook.margin),
-                  child: Html(
-                    onLinkTap: (url, _, __, ___) async {
-                      var item = findRefInBook(url);
-
-                      Fluttertoast.showToast(msg: item);
-                    },
-                    style: {
-                      'body': Style(
-                          fontSize: textBook.fontSize,
-                          color: isDarkTheme
-                              ? ColorConstant.whiteA700
-                              : ColorConstant.black900,
-                          lineHeight: LineHeight(textBook.lineHeight),
-                          fontFamily: 'Nunito Sans'),
-                    },
-                    data: bookService.subchapterSelected.HtmlContent,
-                  ),
+                child: EpubTableContent(
+                  textBook: textBook,
+                  book: bookService.selectedBook,
+                  data: bookService.subchapterSelected.HtmlContent!,
                 ),
               ),
             ),
-            if (onAudioSound)
+            if (_showTextPlayer)
               PopupAudioPlayer(
                 voiceText: _newVoiceText,
-                bookTitle: bookTitle,
-                bookAuthor: bookAuthor,
+                bookTitle: bookService.selectedBook.Title ?? '',
+                bookAuthor: bookService.selectedBook.Author ?? '',
                 onCompletion: () {},
               ),
-            if (bookService.hasChapterOrSubChapter() &&
-                bookService.subchapterIndex > 0)
-              Positioned(
-                top: height * 0.70,
-                left: 20,
-                child: ButtonNavigationChapter(
-                    onTap: () {
-                      bookService.moveSubchapter('back');
-                      scrollController.animateTo(0.0,
-                          duration: Duration(milliseconds: 100),
-                          curve: Curves.bounceIn);
-                    },
-                    icon: Icons.arrow_back),
-              ),
-            if (bookService.hasChapterOrSubChapter() &&
-                bookService.subchapterIndex <
-                    bookService.selectedBook.Chapters![bookService.chapterIndex]
-                            .SubChapters!.length -
-                        1)
-              Positioned(
-                  right: 20,
-                  top: height * 0.70,
-                  child: ButtonNavigationChapter(
-                      onTap: () {
-                        bookService.moveSubchapter('next');
-                        scrollController.animateTo(0.0,
-                            duration: Duration(milliseconds: 100),
-                            curve: Curves.bounceIn);
-                      },
-                      icon: Icons.arrow_forward)),
-            // Positioned(
-            //     left: 20,
-            //     bottom: 20,
-            //     child: GestureDetector(
-            //       onTap: () {},
-            //       child: Container(
-            //           width: 48,
-            //           height: 48,
-            //           decoration: BoxDecoration(
-            //               color: ColorConstant.indigo900,
-            //               borderRadius: BorderRadius.circular(28)),
-            //           child: Icon(
-            //             Icons.bookmark,
-            //             color: ColorConstant.whiteA700.withOpacity(1.0),
-            //           )),
-            //     ))
+            EpubChapterBackButton(
+                onTap: () => changeChapter(bookService, 'back')),
+            EpubChapterNextButton(
+                onTap: () => changeChapter(bookService, 'next')),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorConstant.black900.withOpacity(0.1),
-        elevation: 0,
-        onPressed: () {
-          _key.currentState!.openDrawer();
-        },
-        child: Icon(
-          Icons.menu,
-          color: ColorConstant.indigo900,
-        ),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
+      floatingActionButton: !_showTextPlayer
+          ? CustomFloatingActionButton(onTap: () {
+              _showTextPlayer = false;
+              setState(() {});
+              _key.currentState!.openDrawer();
+            })
+          : null,
     );
   }
 }

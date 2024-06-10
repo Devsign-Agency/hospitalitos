@@ -143,7 +143,6 @@ class _DetailLiturgyScreenState extends State<DetailLiturgyScreen> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      isDarkMode: false,
                       initialValues: settingTextInitialValues,
                       onChange: handleChangeTextSetting,
                     ));

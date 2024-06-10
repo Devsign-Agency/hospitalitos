@@ -12,8 +12,9 @@ class EpubBookmarkService with ChangeNotifier {
     if (Preferences.markerList.isNotEmpty) {
       List<dynamic> bookMarksString = json.decode(Preferences.markerList);
 
-      bookmarks =
-          bookMarksString.map<Bookmark>((e) => Bookmark.fromJson(e)).toList();
+      print('bookmarksString: $bookMarksString');
+      // bookmarks =
+      //     bookMarksString.map<Bookmark>((e) => Bookmark.fromJson(e)).toList();
     }
 
     return bookmarks;

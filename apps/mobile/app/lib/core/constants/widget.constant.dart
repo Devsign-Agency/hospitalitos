@@ -17,6 +17,12 @@ class WidgetConstant {
         icon: ImageConstant.imgBookmark, title: 'Nuevo Testamento'),
   ];
 
+  static final List<PopupMenuItemModel> menuOptions = [
+    PopupMenuItemModel(id: 1, title: 'Ajustar texto', onTappedItem: () {}),
+    PopupMenuItemModel(id: 2, title: 'Compartir', onTappedItem: () {}),
+    PopupMenuItemModel(id: 3, title: 'Marcadores', onTappedItem: () {}),
+  ];
+
   static List<String> tabBarItems = [
     'Libros',
     'Capítulos',

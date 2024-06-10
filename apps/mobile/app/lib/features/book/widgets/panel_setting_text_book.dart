@@ -11,13 +11,11 @@ import '../../../widgets/widgets.dart';
 class PanelSettingTextBook extends StatefulWidget {
   final Map<String, dynamic> initialValues;
   final void Function(dynamic, dynamic) onChange;
-  final bool isDarkMode;
 
   const PanelSettingTextBook({
     super.key,
     required this.onChange,
     required this.initialValues,
-    required this.isDarkMode,
   });
 
   @override
@@ -144,7 +142,7 @@ class _PanelSettingTextBookState extends State<PanelSettingTextBook> {
               color: ColorConstant.indigo900,
             ),
           ),
-          _buildSliders(widget.isDarkMode),
+          _buildSliders(isDarkMode),
         ],
       ),
     );

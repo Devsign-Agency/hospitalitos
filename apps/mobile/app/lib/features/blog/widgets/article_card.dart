@@ -39,7 +39,8 @@ class ArticleCard extends StatelessWidget {
               padding: getPadding(all: 16),
               child: Stack(
                 children: [
-                  Positioned(top: 0, right: 0, child: _TimeRead(postData: post)),
+                  Positioned(
+                      top: 0, right: 0, child: _TimeRead(postData: post)),
                   Positioned(
                       left: 0,
                       bottom: 0,
@@ -109,15 +110,12 @@ class _TitleAndAuthor extends StatelessWidget {
         Align(
             alignment: Alignment.centerLeft,
             child: Row(
- 
               children: [
-                SizedBox( width: 250, child: 
-                Text(
-                    postData['yoast_head_json']['twitter_misc']['Escrito por'].isNotEmpty
-                        ? postData['yoast_head_json']['twitter_misc']['Escrito por']
-                        : ' - ',
-                 
-                    style: AppStyle.txtNunitoSansRegular14WhiteA700),),
+                SizedBox(
+                  width: 250,
+                  child:
+                      Text('', style: AppStyle.txtNunitoSansRegular14WhiteA700),
+                ),
               ],
             )),
       ],
@@ -129,10 +127,7 @@ class _TimeRead extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final postData;
 
-  const _TimeRead({
-    super.key,
-    required this.postData
-  });
+  const _TimeRead({super.key, required this.postData});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +143,7 @@ class _TimeRead extends StatelessWidget {
           Color.fromRGBO(0, 0, 0, 0.3),
         ]),
       ),
-      child: Text(postData['yoast_head_json']['twitter_misc']['Tiempo de lectura'], style: AppStyle.txtNunitoSansSemiBold13WhiteA700),
+      child: Text('', style: AppStyle.txtNunitoSansSemiBold13WhiteA700),
     );
   }
 }

@@ -121,7 +121,6 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                         topRight: Radius.circular(20))),
                 context: context,
                 builder: (context) => PanelSettingTextBook(
-                      isDarkMode: false,
                       initialValues: settingTextInitialValues,
                       onChange: handleChangeTextSetting,
                     ));

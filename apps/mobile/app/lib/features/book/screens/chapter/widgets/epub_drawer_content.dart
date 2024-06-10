@@ -6,17 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' hide Image;
 import 'package:mobile_app/core/app_export.dart';
 import 'package:provider/provider.dart';
-import '../../../shared/shared.dart';
-import '../../../themes/themes.dart';
-import '../../../widgets/widgets.dart';
-import '../screens/screens.dart';
+import '../../../../../shared/shared.dart';
+import '../../../../../themes/themes.dart';
+import '../../../../../widgets/widgets.dart';
+import '../../screens.dart';
 
-class DrawerContent extends StatelessWidget {
+class EpubDrawerContent extends StatelessWidget {
   final EpubBook book;
   final EpubChapter chapter;
   final bool isDarkMode;
 
-  const DrawerContent(
+  const EpubDrawerContent(
       {super.key,
       required this.book,
       required this.chapter,
@@ -28,10 +28,30 @@ class DrawerContent extends StatelessWidget {
 
     return SizedBox(
       height: height,
-      child: Column(
+      child: Stack(
         children: [
-          _DrawerHeader(image: image, book: book),
-          _DrawerTableContent(book: book)
+          Column(
+            children: [
+              _DrawerHeader(image: image, book: book),
+              _DrawerTableContent(book: book)
+            ],
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: CustomIconButton(
+              margin: getMargin(right: 8),
+              height: getSize(48),
+              width: getSize(48),
+              shape: IconButtonShape.CircleBorder24,
+              variant: IconButtonVariant.FillGray300,
+              onTap: () => Navigator.pop(context),
+              child: CustomImageView(
+                svgPath: ImageConstant.imgClose,
+                color: ColorConstant.indigo900,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -57,22 +77,6 @@ class _DrawerHeader extends StatelessWidget {
           height: 220.0,
           decoration: BoxDecoration(
               image: DecorationImage(image: image.image, fit: BoxFit.cover)),
-        ),
-        Positioned(
-          top: 38,
-          right: 10,
-          child: CustomIconButton(
-            margin: getMargin(left: 8),
-            height: getSize(32),
-            width: getSize(32),
-            shape: IconButtonShape.CircleBorder24,
-            variant: IconButtonVariant.FillTransparent,
-            onTap: () => Navigator.pop(context),
-            child: CustomImageView(
-              svgPath: ImageConstant.imgClose,
-              color: ColorConstant.whiteA700,
-            ),
-          ),
         ),
         Positioned(
           bottom: 40,
@@ -243,7 +247,7 @@ class _DrawerTableContentState extends State<_DrawerTableContent> {
                               widget.book.Chapters![index];
                           bookService.chapterIndex = index;
                           bookService.subchapterIndex = 0;
-                          bookService.chapterTitle = title;
+                          bookService.chapterTitle = '';
                           Navigator.pop(context);
 
                           Navigator.popAndPushNamed(

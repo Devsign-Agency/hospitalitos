@@ -1,7 +1,6 @@
 import 'package:epub_view/epub_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mobile_app/shared/services/epub_bookmark_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_export.dart';
