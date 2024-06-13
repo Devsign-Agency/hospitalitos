@@ -39,28 +39,26 @@ class DailyReadingService extends ChangeNotifier {
   }
 
   DailyReading getDailyReadingSelected() {
-    List<String> split = DateTime.now().toString().split('-');
+    List<String> splitDate = DateTime.now().toString().split('-');
 
-    String year = split[0];
-    String month = split[1];
-    String day = split[2].substring(0, 2);
+    String date =
+        '${splitDate[0]}-${splitDate[1]}-${splitDate[2].substring(0, 2)}';
 
-    String date = '$year-$month-$day';
     dailyReadingSelected = _dailyReadings.firstWhere((element) {
       return element.date == date;
     }, orElse: () => DailyReading(title: '', date: '', readings: []));
-
-    // notifyListeners();
     return dailyReadingSelected;
   }
 
   List<Verse> getReadingsByPath(String bookTitle, String path) {
     String mappedPath = path.replaceAll('--', '-n;');
+
     List<String> chapters = mappedPath.split(';');
 
     BookBible book = BibleService.books.firstWhere((element) {
-      return element.name.toLowerCase() == bookTitle;
+      return element.name.toLowerCase() == bookTitle.toLowerCase();
     }, orElse: () => BookBible(name: '', chapters: []));
+
     List<Verse> verseList = [];
 
     for (var element in chapters) {

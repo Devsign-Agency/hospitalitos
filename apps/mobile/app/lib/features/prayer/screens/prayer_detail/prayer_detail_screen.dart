@@ -113,7 +113,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
       PopupMenuItemModel(
           id: 1,
           title: 'Ajustar texto',
-          onTappedItem: (context) {
+          onTappedItem: () {
             showModalBottomSheet(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -128,7 +128,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
       PopupMenuItemModel(
           id: 2,
           title: 'Compartir',
-          onTappedItem: (context) {
+          onTappedItem: () {
             share('${prayer.title}\n\n${prayer.prayer}');
           })
     ];

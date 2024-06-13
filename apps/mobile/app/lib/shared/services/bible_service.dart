@@ -222,7 +222,7 @@ class BibleService extends ChangeNotifier {
   }
 
   void getBooksByGroup(String bookType) {
-    int index = books.indexWhere((element) => element.name == ' Mateo');
+    int index = books.indexWhere((element) => element.name == 'Mateo');
 
     if (index > -1) {
       _filteredBook = bookType == 'antiguo'

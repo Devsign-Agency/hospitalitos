@@ -94,6 +94,16 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
     return double.tryParse(str) != null;
   }
 
+  void shareVerses(String title, List<Verse> verses) {
+    List<String> verseList = [];
+
+    for (var verse in verses) {
+      verseList.add('${verse.id}) ${verse.verse}\n');
+    }
+
+    share('$title\n${verseList.join()}');
+  }
+
   @override
   Widget build(BuildContext context) {
     Reading reading = ModalRoute.of(context)?.settings.arguments! as Reading;
@@ -111,7 +121,7 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
       PopupMenuItemModel(
           id: 1,
           title: 'Ajustar texto',
-          onTappedItem: (context) {
+          onTappedItem: () {
             showModalBottomSheet(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -126,10 +136,7 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
       PopupMenuItemModel(
           id: 2,
           title: 'Compartir',
-          onTappedItem: (context) {
-            share(
-                '${reading.title}\n\n${reading.verses}\n\n${reading.description}');
-          })
+          onTappedItem: () => shareVerses(reading.title, verses))
     ];
 
     final appBarActions = [
@@ -139,7 +146,7 @@ class _ReadingDetailScreenState extends State<ReadingDetailScreen> {
         'variant': !onAudioSound
             ? IconButtonVariant.NoFill
             : IconButtonVariant.OutlinePurple50,
-        'action': () => handleButtonPlay(reading.description),
+        'action': () => handleButtonPlay(''),
       },
     ];
 

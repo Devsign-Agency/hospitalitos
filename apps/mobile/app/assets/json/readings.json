@@ -807,6 +807,158 @@
               "verses": "LUCAS 1:39-56"
             }
           ]
+        },
+        {
+          "date": "2024-06-11",
+          "title": "San Barnabas, Apóstol (Memoria)",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "description":
+                  "",
+              "verses": "HECHOS 11:21-26; 13:1-3"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "description":
+                  "",
+              "verses": "SALMOS 98:1-6"
+            },
+            {
+              "title": "Evangelio",
+              "description": "",
+              "verses": "MATEO 10:7-13"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-12",
+          "title": "Feria",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "description":
+                  "",
+              "verses": "I REYES 18:20-39"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "description":
+                  "",
+              "verses": "SALMOS 16:1-2, 4-5, 8, 11"
+            },
+            {
+              "title": "Evangelio",
+              "description": "",
+              "verses": "MATEO 5:17-19"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-13",
+          "title": "San Antonio de Padua, OFM, Presbítero, Doctor de la Iglesia (Fiesta)",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "description":
+                  "",
+              "verses": "SABIDURÍA 7:7-14"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "description":
+                  "",
+              "verses": "SALMOS 40:3-4, 10-11, 17"
+            },
+            {
+              "title": "Evangelio",
+              "description": "",
+              "verses": "MARCOS 16:15-20"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-14",
+          "title": "Feria",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "verses": "I REYES 19:9, 11-16"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "verses": "SALMOS 27:7-9, 13-14"
+            },
+            {
+              "title": "Evangelio",
+              "verses": "MATEO 5:27-32"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-15",
+          "title": "Sábado Memoria de la Santísima Virgen María",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "verses": "I REYES 19:19-21"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "verses": "SALMOS 16:1-2, 5, 7-10"
+            },
+            {
+              "title": "Evangelio",
+              "verses": "MATEO 5:33-37"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-16",
+          "title": "XI Domingo Ordinario",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "verses": "EZEQUIEL 17:22-24"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "verses": "SALMOS 92:2-3, 13-16"
+            },
+            {
+              "title": "Segunda Lectura",
+              "verses": "II CORINTIOS 5:6-10"
+            },
+            {
+              "title": "Evangelio",
+              "verses": "MARCOS 4:26-34"
+            }
+          ]
+        },
+        {
+          "date": "2024-06-17",
+          "title": "Feria",
+          "readings": [
+            {
+
+              "title": "Primera Lectura",
+              "verses": "I REYES 21:1-16"
+            },
+            {
+              "title": "Salmo Responsorial",
+              "verses": "SALMOS 5:2-3, 4-7"
+            },
+            {
+              "title": "Evangelio",
+              "verses": "MATEO 5:38-42"
+            }
+          ]
         }
     ]
 }
