@@ -23,6 +23,5 @@ class PrayerService extends ChangeNotifier {
 
       prayers.add(reading);
     }
-    print('prayers $prayers');
   }
 }

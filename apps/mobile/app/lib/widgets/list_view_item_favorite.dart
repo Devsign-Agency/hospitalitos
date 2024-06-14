@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobile_app/core/models/list_view_favorite.dart';
 import 'package:mobile_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +49,8 @@ class ListViewItemFavorite extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          height: getSize(100),
-          padding: getPadding(top: 10, bottom: 10),
+          height: getSize(110),
+          // padding: getPadding(top: 10, bottom: 10),
           decoration: boxDecoration,
           child: Row(
             children: [
@@ -77,15 +78,21 @@ class ListViewItemFavorite extends StatelessWidget {
                             ? () => onTappedItem!(item)
                             : null,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              item.title,
-                              style: AppStyle.txtNunitoSansSemiBold20Black900
-                                  .copyWith(
-                                      color: isDarkTheme
-                                          ? ColorConstant.whiteA700
-                                          : ColorConstant.black900),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 140),
+                              child: Text(
+                                item.title,
+                                style: AppStyle.txtNunitoSansSemiBold20Black900
+                                    .copyWith(
+                                        color: isDarkTheme
+                                            ? ColorConstant.whiteA700
+                                            : ColorConstant.black900),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
                             ),
                             ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: 200),

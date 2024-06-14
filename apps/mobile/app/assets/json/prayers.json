@@ -1,24 +1,39 @@
 {
     "prayers": [
         {
-            "title": "Padrenuestro",
-            "prayer": "Padre nuestro, que estás en el cielo,\nsantificado sea tu nombre;\nvenga a nosotros tu reino;\nhágase tu voluntad\nen la tierra como en el cielo.\nDanos hoy nuestro pan de cada día;\nperdona nuestras ofensas,\ncomo también nosotros perdonamos\na los que nos ofenden;\nno nos dejes caer en tentación,\n y líbranos del mal. Amén."
+            "title": "Acordaos",
+            "prayer": "Acordaos,\noh piadosísima Virgen María,\nque jamás se ha oído decir\nque ninguno de los que han acudido\na tu protección,\nimplorando tu asistencia\ny reclamando tu socorro,\nhaya sido abandonado de ti.\nAnimado con esta confianza,\na ti también acudo, oh Madre,\nVirgen de las vírgenes,\ny aunque gimiendo\nbajo el peso de mis pecados,\nme atrevo a comparecer\nante tu presencia soberana.\nNo deseches mis humildes súplicas,\noh Madre del Verbo divino,\nantes bien, escúchalas\ny acógelas benignamente. Amén",
+            "img": "acordaos.jpeg"
+        },
+        {
+            "title": "Acto de caridad",
+            "prayer": "Dios mío, te amo sobre todas las cosas\ny al prójimo por ti,\nporque Tú eres el infinito,\nsumo y perfecto Bien,\ndigno de todo amor.\nQuiero vivir y morir en este amor. Amén",
+            "img": "acto_caridad.jpeg"
         },
         {
             "title": "Ave María",
-            "prayer": "Dios te salve, María,\nllena eres de gracia;\nel Señor es contigo.\nbendita tú eres\nentre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén."
+            "prayer": "Dios te salve, María,\nllena eres de gracia;\nel Señor es contigo.\nbendita tú eres\nentre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén.",
+            "img": "ave_maria.jpeg"
         },
         {
             "title": "Ángel de Dios",
-            "prayer": "Ángel de Dios,\nque eres mi custodio,\npues la bondad divina\nme ha encomendado a ti,\nilumíname, guárdame, defiéndeme\ny gobiérname.\nAmén"
+            "prayer": "Ángel de Dios,\nque eres mi custodio,\npues la bondad divina\nme ha encomendado a ti,\nilumíname, guárdame, defiéndeme\ny gobiérname.\nAmén",
+            "img": "angel_dios.jpeg"
         },
         {
             "title": "Gloria al Padre",
-            "prayer": "Gloria al Padre\ny al Hijo\ny al Espíritu Santo.\nComo era en el principio,\nahora y siempre,\npor los siglos de los siglos. Amén."
+            "prayer": "Gloria al Padre\ny al Hijo\ny al Espíritu Santo.\nComo era en el principio,\nahora y siempre,\npor los siglos de los siglos. Amén.",
+            "img": "gloria_padre.jpeg"
         },
         {
-            "title": "Bendito sea Dios",
-            "prayer": "Bendito sea Dios.\nBendito sea su Santo Nombre.\nBendito sea Jesucristo verdadero Dios y verdadero Hombre.\nBendito sea el Nombre de Jesús.\nBendito sea su Sacratísimo Corazón.\nBendita sea su Preciosísima Sangre.\nBendito sea Jesús en el Santísimo Sacramento del Altar.\nBendito sea el Espíritu Santo Consolador.\nBendita sea la Incomparable Madre de Dios la Santísima Virgen María.\nBendita sea su Santa e Inmaculada Concepción.\nBendita sea su gloriosa Asunción.\nBendito sea el Nombre de María Virgen y Madre.\nBendito sea San José su casto esposo.\n Bendito sea Dios en sus Ángeles y en sus Santos."
+            "title": "Padrenuestro",
+            "prayer": "Padre nuestro, que estás en el cielo,\nsantificado sea tu nombre;\nvenga a nosotros tu reino;\nhágase tu voluntad\nen la tierra como en el cielo.\nDanos hoy nuestro pan de cada día;\nperdona nuestras ofensas,\ncomo también nosotros perdonamos\na los que nos ofenden;\nno nos dejes caer en tentación,\n y líbranos del mal. Amén.",
+            "img": "padre_nuestro.jpg"
+        },
+        {
+            "title": "Oración a San José",
+            "prayer": "Salve, custodio del Redentor\ny esposo de la Virgen María.\nA ti Dios confió a su Hijo,\nen ti María depositó su confianza,\ncontigo Cristo se forjó como hombre.\nOh, bienaventurado José,\nmuéstrate padre también a nosotros\ny guíanos en el camino de la vida.\nConcédenos gracia, misericordia y valentía,\ny defiéndenos de todo mal. Amén.\n(Papa Francisco, Patris Corde)",
+            "img": "oracion_san_jose.png"
         }
     ]
 }
