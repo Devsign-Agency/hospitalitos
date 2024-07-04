@@ -116,6 +116,7 @@ flutter:
     - assets/videos/
     - assets/pdf/
     - assets/json/
+    - assets/images/saints/
     - assets/liturgia/
     - assets/liturgia/sync/
     - assets/liturgia/sync/2024/

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/reading/screens/reading_detail/reading_detail_screen.dart';
-import '../../../../core/app_export.dart';
+import '../../../core/app_export.dart';
 
 class ListViewReading extends StatelessWidget {
   final List<Reading> readings;

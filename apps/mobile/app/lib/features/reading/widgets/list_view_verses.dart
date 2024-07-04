@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/app_export.dart';
-import '../../../../core/models/BookBible.dart';
+import '../../../core/app_export.dart';
+import '../../../core/models/BookBible.dart';
 
 class ListViewVerses extends StatelessWidget {
   final List<Verse> verses;

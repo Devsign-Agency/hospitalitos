@@ -1,0 +1,148 @@
+{
+   
+    "data": [
+        {
+            "date": "2024-06-27",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "CIRILO DE ALEJANDRÍA, OBISPO Y DOCTOR DE LA IGLESIA",
+                    "description": "Sobrino de Teófilo, quien desde el año 385 como obispo gobernó la diócesis de Alejandría en Egipto, Cirilo probablemente nació en la misma ciudad entre 370 y 380. Desde muy joven inició la vida eclesiástica y por lo tanto recibió una buena educación, tanto cultural como teológica. En el año 403 estuvo en Constantinopla siguiendo a su tío, y allí participó en el Sínodo del Roble, que determinó la deposición del obispo de la ciudad, Juan (más tarde llamado Crisóstomo). Fue celebrado como un triunfo de la Sede Alejandrina sobre la tradicionalmente rival Sede de Constantinopla, donde residía el emperador. A la muerte de su tío Teófilo, en el año 412, el aún joven Cirilo fue elegido obispo de la influyente Iglesia de Alejandría, que gobernó con gran energía durante 32 años, buscando siempre afirmar su primacía en todo el Oriente, fuerte también en sus tradicionales lazos con Roma.",
+                    "date": "6-27-2024",
+                    "image": "saint_1.jpeg"
+                }
+            ]
+        },
+        {
+            "date": "2024-06-28",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. IRENEO, OBISPO DE LYON Y MÁRTIR",
+                    "description": "Nativo de Asia, probablemente nacido en Esmirna, llegó a la Galia en el 177 d. C. Cuando aún era joven, tenía como maestro al obispo Policarpo, discípulo del apóstol Juan. Fue un verdadero testimonio cristiano en un período de dura persecución. Para evangelizar a celtas y germanos, aprendió las lenguas de aquellos pueblos conocidos como los bárbaros. Como pastor, se distinguió por la riqueza de la doctrina y el ardor misionero. Una de las herejías a las que se enfrentó fue el \"gnosticismo\", un movimiento filosófico-religioso según el cual la fe enseñada en la Iglesia sería solo un simbolismo. De sus escritos, quedan tan sólo dos obras: los cinco libros titulados \"Contra las herejías\" y “La exposición de la Predicación Apostólica.",
+                    "date": "6-28-2024",
+                    "image": "ireneo.jpeg"
+                },
+                {
+                    "id": 1,
+                    "name": "S. PABLO I, PAPA",
+                    "description": "Pablo, caso único en la Iglesia, es el primer Papa en suceder a un hermano, también Papa. Acaece en el siglo VIII, después de la muerte de Esteban II. Hombre amable, gobierna la Iglesia en tierras acosadas por los lombardos. Salva de los saqueos muchas reliquias cristianas. ",
+                    "date": "6-28-2024",
+                    "image": "pablo1.jpeg"
+                }
+            ]
+        },
+        {
+            "date": "2024-07-01",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "SS. JULIO Y AARÓN, MÁRTIRES DE BRETAÑA",
+                    "description": "Parece que Julio y Aarón fueron asesinados porque eran cristianos durante las persecuciones de Diocleciano en el 304. En Caerlon, fortaleza romana ocupada por la Legión II de Augusta del 75 al 431 en Bretaña, estos dos mártires son hoy especialmente venerados.",
+                    "image": ""
+                },
+                {
+                    "id": 1,
+                    "name": "S. AARÓN, HERMANO DE MOISÉS, SUMO SACERDOTE DEL ANTIGUO TESTAMENTO",
+                    "description": "Primer sacerdote del judaísmo, Aarón está junto a su hermano Moisés desde la liberación de Egipto. Cuando Moisés está en el Sinaí cede a la petición del pueblo de tener un ídolo. Dios lo perdona, pero sucesivas dudas le niegan el ingreso en Canaán, la Tierra Prometida.",
+                    "image": ""
+                }
+            ]
+        },
+        {
+            "date": "2024-07-02",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "SS. PROCESO Y MARTINIANO, MÁRTIRES ROMANOS",
+                    "description": "Venerados en el día de dies natalis, Proceso y Martiniano son los custodios de los apóstoles Pedro y Pablo durante su encarcelamiento en la prisión de Mamertino y convertidos por ellos. Están sepultados en el cementerio de Damasco, en la segunda milla de la Vía Aurelia en Roma.",
+                    "image": ""
+                }
+            ]
+        },
+        {
+            "date": "2024-07-03",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. TOMÁS, APÓSTOL",
+                    "description": "Apóstol de Jesús que ha pasado a la historia por no haber creído inmediatamente en la Resurrección, la fe de Tomás es realmente firme y fuerte. De hecho, le tocó a él ir hasta China y la India para evangelizar; fue en la India donde murió, después de haber fundado la primera comunidad de cristianos.",
+                    "image": "s.tomas.jpeg"
+                }
+            ]
+        },
+        {
+            "date": "2024-07-04",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. ISABEL DE PORTUGAL",
+                    "description": "Isabel, siendo reina, sigue su camino hacia la santidad cuidando de los pobres y poniendo paz entre las dinastías de Europa del 1300. Tras la muerte de su marido, Dionisio, peregrinó a Santiago de Compostela donde ofreció su corona, antes de encerrarse en el monasterio de las Clarisas de Coimbra.",
+                    "image": ""
+                },
+                {
+                    "id": 1,
+                    "name": "S. ULDERICO, OBISPO DE AUGSBURG",
+                    "description": "Iniciado en la vida sacerdotal por su tío Adalberone, Obispo de Augsburgo tras cuya muerte al joven clérigo Ulderico se le ofreció su sucesión, pero se negó. Sin embargo dirigió el episcopado durante 50 años desde el 923, siendo un vigoroso defensor de su pueblo, del clero local y de la ciudad.",
+                    "image": ""
+                },
+                {
+                    "id": 2,
+                    "name": "B. PIER GIORGIO FRASSATI",
+                    "description": "Piergiorgio, uno de los \"Santos del Compromiso Social\" del Piamonte, murió de poliomielitis fulminante el 4 de julio de 1925, a 24 años. San Juan Pablo II lo beatificó el 20 de mayo de 1990 por haber encarnado la caridad de Cristo en la vida cotidiana: lo llamó \"el joven de las bienaventuranzas\".",
+                    "image": "b.pier.jpeg"
+                }                
+            ]
+        },
+        {
+            "date": "2024-07-05",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. ANTONIO MARÍA ZACARÍAS, SACERDOTE, FUNDADOR DE LOS BARNABITAS",
+                    "description": "Durante los 36 años de su vida hizo dar a la Iglesia del 1500 un paso hacia adelante. Antonio María Zaccaria funda los Clérigos de San Pablo y las Angélicas de San Pablo – primer ejemplo de monjas fuera de la clausura – así como el grupo de laicos casados entregados al Evangelio.",
+                    "image": ""
+                }               
+            ]
+        },
+        {
+            "date": "2024-07-06",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. MARÍA GORETTI, VIRGEN Y MÁRTIR",
+                    "description": "A la pequeña María Goretti se le considera una mártir de la pureza, murió en el siglo XX defendiendo su castidad de un agresor que perdonó antes de morir. Al concluir su pena en la cárcel, se convirtió y reconcilió con la familia de la niña. Su fiesta es el 6 de julio.",
+                    "image": ""
+                }               
+            ]
+        },
+        {
+            "date": "2024-07-07",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "S. MARÍA GORETTI, VIRGEN Y MÁRTIR",
+                    "description": "A la pequeña María Goretti se le considera una mártir de la pureza, murió en el siglo XX defendiendo su castidad de un agresor que perdonó antes de morir. Al concluir su pena en la cárcel, se convirtió y reconcilió con la familia de la niña. Su fiesta es el 6 de julio.",
+                    "image": ""
+                }               
+            ]
+        },
+        {
+            "date": "2024-07-08",
+            "saints": [
+                {
+                    "id": 0,
+                    "name": "B. EUGENIO III, PAPA",
+                    "description": "Originario de Tvoli, durante 8 años Eugenio III defendió a la Iglesia de los turcos y fue responsable de la reforma de la Iglesia y de la Curia romana. Entró en la Orden cisterciense tras su encuentro con San Bernardo. Como Papa vivió la austeridad de la vida monástica hasta su muerte en 1153.",
+                    "image": "b.eugenio.jpeg"
+                },
+                {
+                    "id": 0,
+                    "name": "SS. AQUILA Y PRISCA (O PRISCILA), DISCÍPULOS DE S. PABLO",
+                    "description": "Amigos de Pablo, Aquila y Priscila, esposos y mártires, son recordados por el Apóstol de los gentiles que elogia el testimonio cristiano y el compromiso en la formación de los neófitos. Su hogar, \"ecclesia doméstica\", fue un punto de referencia para las comunidades de Corinto, Éfeso y Roma.",
+                    "image": "ss.aquila.jpeg"
+                }        
+            ]
+        }
+    ]
+}

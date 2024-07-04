@@ -14,6 +14,7 @@ export 'package:mobile_app/widgets/custom_image_view.dart';
 export 'package:mobile_app/widgets/custom_popup_menu_button.dart';
 export 'package:mobile_app/widgets/custom_selection_area.dart';
 export 'package:mobile_app/widgets/custom_slider.dart';
+export 'package:mobile_app/widgets/custom_sliver_app_bar.dart';
 export 'package:mobile_app/widgets/custom_tab_bar.dart';
 export 'package:mobile_app/widgets/epub/epub_reader.dart';
 export 'package:mobile_app/widgets/ftt_toast.dart';

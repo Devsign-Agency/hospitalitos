@@ -19,6 +19,7 @@ export 'package:mobile_app/core/models/daily_reading.dart';
 export 'package:mobile_app/core/models/prayer.dart';
 export 'package:mobile_app/core/models/bible_bookmark.dart';
 export 'package:mobile_app/core/models/bookmark.dart';
+export 'package:mobile_app/core/models/saint.dart';
 
 export 'package:mobile_app/core/theme/app.decoration.dart';
 export 'package:mobile_app/core/theme/app.style.dart';

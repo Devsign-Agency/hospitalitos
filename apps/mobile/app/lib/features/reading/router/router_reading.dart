@@ -16,6 +16,9 @@ class RouterReading {
     routes.addAll({
       ReadingDetailScreen.route: (BuildContext context) => ReadingDetailScreen()
     });
+    routes.addAll({
+      SaintDetailsScreen.route: (BuildContext context) => SaintDetailsScreen()
+    });
 
     for (final option in menuOptions) {
       routes.addAll({option.route: (BuildContext context) => option.screen});

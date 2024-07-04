@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_html/style.dart';
 import 'package:mobile_app/core/app_export.dart';
 import 'package:mobile_app/widgets/widgets.dart';
@@ -10,7 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/models/BookBible.dart';
 import '../../../../shared/shared.dart';
 import '../../../book/widgets/widgets.dart';
-import '../widgets/widgets.dart';
+import '../../widgets/widgets.dart';
 
 class ReadingDetailScreen extends StatefulWidget {
   static const String route = 'reading-detail-route';

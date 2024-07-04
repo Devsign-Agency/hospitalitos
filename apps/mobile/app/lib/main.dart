@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_app/router/router.dart';
 import 'package:mobile_app/shared/providers/bottom_navigation_main_provider.dart';
 import 'package:mobile_app/shared/services/prayer_service.dart';
+import 'package:mobile_app/shared/services/saints_service.dart';
 import 'package:mobile_app/shared/shared.dart';
 import 'package:provider/provider.dart';
 import 'themes/themes.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BibleBookMarkService()),
         ChangeNotifierProvider(create: (_) => EpubBookmarkService()),
         ChangeNotifierProvider(create: (_) => DrawerService()),
+        ChangeNotifierProvider(create: (_) => SaintsService()),
         ChangeNotifierProvider(
           create: (_) => PrayerService(),
           lazy: false,

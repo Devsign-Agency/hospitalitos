@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mobile_app/features/reading/screens/widgets/list_view_reading.dart';
+import 'package:mobile_app/features/reading/screens/screens.dart';
+import 'package:mobile_app/features/reading/widgets/list_view_reading.dart';
+import 'package:mobile_app/features/reading/widgets/list_view_saints.dart';
+import 'package:mobile_app/shared/services/saints_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/app_export.dart';
-import '../../../shared/shared.dart';
-import '../../../widgets/widgets.dart';
+import '../../../../core/app_export.dart';
+import '../../../../shared/shared.dart';
+import '../../../../widgets/widgets.dart';
 
 class ReadingScreen extends StatelessWidget {
   static const String route = 'reading-route';
@@ -26,6 +29,7 @@ class ReadingScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24),
 
@@ -58,7 +62,20 @@ class ReadingScreen extends StatelessWidget {
               readings: reading.readings,
             )),
 
-            SizedBox(height: 30),
+            SizedBox(height: 10),
+
+            Padding(
+              padding: getMargin(left: 16),
+              child: Text(
+                'Santos del día',
+                textAlign: TextAlign.left,
+                style: AppStyle.txtNunitoSansSemiBold23,
+              ),
+            ),
+
+            SizedBox(height: 10),
+
+            ListViewSaints(),
           ],
         ),
       ),
