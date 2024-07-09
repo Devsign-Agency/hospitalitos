@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app_export.dart';
@@ -67,7 +68,7 @@ class _ListViewItem extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: getSize(130),
+      height: getSize(110),
       decoration: boxDecoration,
       child: Row(
         children: [
@@ -82,40 +83,21 @@ class _ListViewItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 290),
-                        child: Text(
-                          bookmark.chapterName,
-                          style: AppStyle.txtNunitoSansSemiBold20,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      GestureDetector(
+                        onTap: () {
+                          onTapped!(bookmark);
+                        },
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: 290),
+                          child: Text(
+                            bookmark.chapterName,
+                            style: AppStyle.txtNunitoSansSemiBold20,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                       SizedBox(height: 5),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              onTapped!(bookmark);
-                            },
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: 280),
-                              child: Text(
-                                bookmark.text,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: AppStyle.txtNunitoSansSemiBold16
-                                    .copyWith(
-                                        color: isDarkTheme
-                                            ? ColorConstant.whiteA700
-                                            : ColorConstant.black900),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
                       Text(
                         formatDate(bookmark.date),
                         style: TextStyle(

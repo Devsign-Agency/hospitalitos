@@ -46,9 +46,9 @@ class EpubBookmarkScreen extends StatelessWidget {
     Navigator.pop(
         context,
         EpubArguments(
-            book: book,
-            chapter: epubChapter,
-            offset: double.parse(bookmark.offset)));
+          book: book,
+          chapter: epubChapter,
+        ));
   }
 
   void deleteBookmark(Bookmark bookmark, EpubBookmarkService bookmarkService,
@@ -77,8 +77,7 @@ class EpubBookmarkScreen extends StatelessWidget {
     EpubBookmarkService bookmarkService =
         Provider.of<EpubBookmarkService>(context, listen: true);
 
-    List<Bookmark> bookmarkList =
-        bookmarkService.getBookmarksByBook(book.Title!);
+    List<Bookmark> bookmarks = bookmarkService.getBookmarksByBook(book.Title!);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -93,7 +92,7 @@ class EpubBookmarkScreen extends StatelessWidget {
                       : ColorConstant.black900),
             ),
             SizedBox(width: 10),
-            Text('(${bookmarkList.length})',
+            Text('(${bookmarks.length})',
                 style: TextStyle(
                     color: isDarkTheme
                         ? ColorConstant.whiteA700
@@ -112,15 +111,15 @@ class EpubBookmarkScreen extends StatelessWidget {
             SizedBox(height: 30),
 
             // bookmark list
-            if (bookmarkList.isNotEmpty)
+            if (bookmarks.isNotEmpty)
               ListViewBookmark(
-                  bookmarks: bookmarkList,
+                  bookmarks: bookmarks,
                   onTap: (Bookmark bookmark) =>
                       handleEventTap(bookmark, context),
                   onDelete: (Bookmark bookmark) =>
                       deleteBookmark(bookmark, bookmarkService, context)),
 
-            if (bookmarkList.isEmpty)
+            if (bookmarks.isEmpty)
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -2,17 +2,17 @@ class Bookmark {
   String id;
   String bookName;
   String chapterName;
-  String text;
+  String? text;
   DateTime date;
-  String offset;
+  String? offset;
 
   Bookmark(
       {required this.id,
       required this.bookName,
       required this.chapterName,
-      required this.text,
+      this.text,
       required this.date,
-      required this.offset});
+      this.offset});
 
   @override
   String toString() {
@@ -24,9 +24,9 @@ class Bookmark {
       id: jsonData['id'],
       bookName: jsonData['bookName'],
       chapterName: jsonData['chapterName'],
-      text: jsonData['text'],
+      text: jsonData['text'] ?? '',
       date: DateTime.parse(jsonData['date']),
-      offset: jsonData['offset'],
+      offset: jsonData['offset'] ?? '',
     );
   }
 
@@ -34,8 +34,8 @@ class Bookmark {
         'id': bookmark.id,
         'bookName': bookmark.bookName,
         'chapterName': bookmark.chapterName,
-        'text': bookmark.text,
+        'text': bookmark.text ?? '',
         'date': bookmark.date.toString(),
-        'offset': bookmark.offset,
+        'offset': bookmark.offset ?? '',
       };
 }

@@ -184,9 +184,7 @@ class _ChapterScreenState extends State<ChapterScreen> {
               )),
         )
             .then((value) {
-          if (value != null) {
-            setScrollController(value.offset);
-          }
+          setScrollController(0.0);
         });
         break;
     }
@@ -205,9 +203,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
     final List<ContextMenuButtonItem> menuButtonItems = [
       ContextMenuButtonItem(label: 'Escuchar', onPressed: playSelectedText),
       ContextMenuButtonItem(label: 'Compartir', onPressed: shareSelectedText),
-      ContextMenuButtonItem(
-          label: 'Añadir a marcador',
-          onPressed: () => createBookmark(bookmarkService, bookService)),
     ];
 
     double height = MediaQuery.of(context).size.height;
@@ -257,6 +252,21 @@ class _ChapterScreenState extends State<ChapterScreen> {
                 onTap: () => changeChapter(bookService, 'back')),
             EpubChapterNextButton(
                 onTap: () => changeChapter(bookService, 'next')),
+            EpubBookmarkButton(
+                onTap: () {
+                  if (bookmarkService.checkChapterBelongsToBookmark(
+                      bookService.subchapterSelected.Title!)) {
+                    bookmarkService.deleteBookmarkByChapterName(
+                        bookService.subchapterSelected.Title!);
+                    Fluttertoast.showToast(msg: 'Marcador eliminado con éxito');
+                  } else {
+                    createBookmark(bookmarkService, bookService);
+                  }
+                },
+                icon: bookmarkService.checkChapterBelongsToBookmark(
+                        bookService.subchapterSelected.Title!)
+                    ? Icons.bookmark
+                    : Icons.bookmark_border_outlined)
           ],
         ),
       ),

@@ -6,50 +6,45 @@ import 'package:mobile_app/shared/shared.dart';
 import '../../core/app_export.dart';
 
 class EpubBookmarkService with ChangeNotifier {
-  List<Bookmark> bookmarks = [];
-
-  List<Bookmark> getBookmarks() {
+  getAllBookmarks() {
+    List<Bookmark> bookmarks = [];
     if (Preferences.markerList.isNotEmpty) {
       List<dynamic> bookMarksString = json.decode(Preferences.markerList);
 
-      print('bookmarksString: $bookMarksString');
-      // bookmarks =
-      //     bookMarksString.map<Bookmark>((e) => Bookmark.fromJson(e)).toList();
+      bookmarks =
+          bookMarksString.map<Bookmark>((e) => Bookmark.fromJson(e)).toList();
     }
 
     return bookmarks;
   }
 
-  List<Bookmark> getBookmarksByBook(String bookName) {
-    bookmarks = getBookmarks();
-
+  getBookmarksByBook(String bookName) {
+    List<Bookmark> bookmarks = getAllBookmarks();
     bookmarks =
         bookmarks.where((bookmark) => bookmark.bookName == bookName).toList();
 
     return bookmarks;
   }
 
-  Future<Bookmark> createBookmark(Map<String, dynamic> data) {
-    bookmarks = getBookmarks();
+  void createBookmark(Map<String, dynamic> data) {
+    List<Bookmark> bookmarks = getAllBookmarks();
 
     Bookmark newBookmark = Bookmark(
         id: DateTime.now().toString(),
         bookName: data['bookName'],
         chapterName: data['chapterName'],
-        text: data['text'],
-        date: data['date'],
-        offset: data['offset']);
+        date: data['date']);
 
     bookmarks.add(newBookmark);
 
     Preferences.markerList = encode(bookmarks);
 
     notifyListeners();
-
-    return Future.sync(() => newBookmark);
   }
 
   void deleteBookmark(String id) {
+    List<Bookmark> bookmarks = getAllBookmarks();
+
     int index = bookmarks.indexWhere((bookmark) => bookmark.id == id);
 
     if (index > -1) {
@@ -65,5 +60,27 @@ class EpubBookmarkService with ChangeNotifier {
         (bookmarks.map((e) => Bookmark.toMap(e)).toList());
 
     return json.encode(bookmarksMap);
+  }
+
+  bool checkChapterBelongsToBookmark(String chapterName) {
+    List<Bookmark> bookmarks = getAllBookmarks();
+    List<Bookmark> bookmarkFound = bookmarks
+        .where((bookmark) => bookmark.chapterName == chapterName)
+        .toList();
+
+    return bookmarkFound.isNotEmpty;
+  }
+
+  void deleteBookmarkByChapterName(String chapterName) {
+    List<Bookmark> bookmarks = getAllBookmarks();
+    int index =
+        bookmarks.indexWhere((bookmark) => bookmark.chapterName == chapterName);
+
+    if (index > -1) {
+      bookmarks.removeAt(index);
+
+      Preferences.markerList = encode(bookmarks);
+      notifyListeners();
+    }
   }
 }
