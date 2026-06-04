@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "branchName": "main",
+  "worktreePath": "/Users/eduardobitriagoe/Hospitalitos",
+  "upstream": "origin/main",
+  "mergeBase": "5ea36d0a85142b347a339a1e37bf9b95ae364c32",
+  "firstSeenHead": "5ea36d0a85142b347a339a1e37bf9b95ae364c32",
+  "lastSeenHead": "5ea36d0a85142b347a339a1e37bf9b95ae364c32",
+  "lastAnalyzedHead": "5ea36d0a85142b347a339a1e37bf9b95ae364c32",
+  "stale": false,
+  "staleReason": null,
+  "staleSince": null,
+  "lifecycleEvent": null,
+  "createdAt": "2026-05-28T19:45:08.013Z",
+  "updatedAt": "2026-05-28T19:45:08.013Z"
+}

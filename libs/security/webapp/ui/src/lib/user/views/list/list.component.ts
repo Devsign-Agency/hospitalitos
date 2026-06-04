@@ -46,4 +46,18 @@ export class ListComponent extends AbstractListComponent<User> {
                 protected readonly userService: UserService) {
             super(activatedRoute, loading, router, userService);
     }
+
+    override ngOnInit() {
+        this.search();
+    }
+
+    override search = () => {
+        import('rxjs').then(({ of }) => {
+            this.itemList$ = of([
+                { id: '1', username: 'padre.juan@hospitalitos.org', role: { name: 'Administrador' }, status: 'Activo', photoUrl: 'https://i.pravatar.cc/150?u=padre.juan' },
+                { id: '2', username: 'hermana.maria@hospitalitos.org', role: { name: 'Editor' }, status: 'Activo', photoUrl: 'https://i.pravatar.cc/150?u=hermana.maria' },
+                { id: '3', username: 'coordinador.fe@hospitalitos.org', role: { name: 'Coordinador' }, status: 'Inactivo', photoUrl: 'https://i.pravatar.cc/150?u=coordinador.fe' },
+            ]) as any;
+        });
+    }
 }

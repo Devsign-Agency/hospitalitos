@@ -1,6 +1,7 @@
 import { Component, ContentChildren, EventEmitter, Input, Output, QueryList } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ContentDirective, DataTableType } from '@kaad/layout/webapp/ui';
+import { ContentDirective } from '../../directives/content.directive';
+import { DataTableType } from '../../types/data-table.type';
 import { debounceTime } from 'rxjs';
 import { HasId } from '@kaad/shared/ng-common';
 

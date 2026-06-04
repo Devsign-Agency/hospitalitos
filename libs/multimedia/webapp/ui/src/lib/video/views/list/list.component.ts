@@ -53,5 +53,21 @@ export class ListComponent extends AbstractListComponent<Video> {
                 protected readonly videoService: VideoService) {
         super(activatedRoute, loading, router, videoService);
     }
+
+    override ngOnInit() {
+        this.search();
+    }
+
+    override search = () => {
+        import('rxjs').then(({ of }) => {
+            this.itemList$ = of([
+                { id: '1', name: 'Hospitalitos de la Fe - Introducción', code: 'HF-001', tags: 'Fe, Introducción', createdAt: new Date() },
+                { id: '2', name: 'Estudio de la Biblia - Génesis', code: 'BIB-001', tags: 'Biblia, Antiguo Testamento', createdAt: new Date() },
+                { id: '3', name: 'Material Católico - El Rosario', code: 'CAT-001', tags: 'Rosario, Oración', createdAt: new Date() },
+                { id: '4', name: 'Misa Dominical Especial', code: 'MIS-001', tags: 'Misa, Domingo', createdAt: new Date() },
+                { id: '5', name: 'Reflexiones sobre la Fe Católica', code: 'REF-001', tags: 'Reflexión, Fe', createdAt: new Date() },
+            ]) as any;
+        });
+    }
 }
 

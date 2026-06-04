@@ -1,0 +1,1538 @@
+{
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/jest.config.ts": {
+    "mtime": 1779994358742.5422,
+    "hash": "a1502c43cf69c6e5d93d5f89b04f9784"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/app/app.controller.spec.ts": {
+    "mtime": 1779994358742.7307,
+    "hash": "fd1e317886666fc4c466fb7e46c4f08c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/app/app.controller.ts": {
+    "mtime": 1779994358742.7722,
+    "hash": "e9c1d73daa5471b7460598fe5b45071b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/app/app.module.ts": {
+    "mtime": 1779994358742.812,
+    "hash": "bfa49f5e9b0eea99909c6e352fdfa18e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/app/app.service.spec.ts": {
+    "mtime": 1779994358742.8508,
+    "hash": "84a30dd08994d437e62df252880d0a41"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/app/app.service.ts": {
+    "mtime": 1779994358742.8896,
+    "hash": "7ebbef8f5d4dcf3f8927e1b520e1dbf4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/src/main.ts": {
+    "mtime": 1779994358742.9873,
+    "hash": "4a6bea3d5df3f09ee6fabd768cb14947"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/api/webpack.config.js": {
+    "mtime": 1779994358743.1814,
+    "hash": "87c8f54b0f36cc2a190a7fef0106b552"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/jest.config.ts": {
+    "mtime": 1779994358743.9727,
+    "hash": "2138bda4138f91d27450dbe9f25c6a0f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/app/app.component.spec.ts": {
+    "mtime": 1779994358744.2952,
+    "hash": "c2e9e3b246ee93dba127b043161ef106"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/app/app.component.ts": {
+    "mtime": 1779994358744.348,
+    "hash": "ee82a01219abad09791d916eb5f6c376"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/app/app.module.ts": {
+    "mtime": 1779994358744.3936,
+    "hash": "641c3e81c66e16633cf79e5d2d51e495"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/app/app.routes.ts": {
+    "mtime": 1779994358744.4407,
+    "hash": "89ab92ba19256357f57f071d3da3080f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/environments/environment.development.ts": {
+    "mtime": 1779994358744.6807,
+    "hash": "11b9db5a25220479bc23b664d0622e3d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/environments/environment.ts": {
+    "mtime": 1779994358744.7302,
+    "hash": "ce1ae809aba2c0fd57381371db385dff"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/main.ts": {
+    "mtime": 1779994358744.9204,
+    "hash": "b4caf4d5634413cfb039d2154d2c51d3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/test-setup.ts": {
+    "mtime": 1779994358745.0164,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/tailwind.config.js": {
+    "mtime": 1779994358745.3418,
+    "hash": "06e3b42746478c710f18e723f58c283c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice-e2e/cypress.config.ts": {
+    "mtime": 1779994358743.3274,
+    "hash": "247f55fde4d18e610ae52b2eef2d1049"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice-e2e/src/e2e/app.cy.ts": {
+    "mtime": 1779994358743.5098,
+    "hash": "64120c12aa61cc8e233d87a91f395d35"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice-e2e/src/support/app.po.ts": {
+    "mtime": 1779994358743.6626,
+    "hash": "fca5603ba099e3b21a58f035ed424a2c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice-e2e/src/support/commands.ts": {
+    "mtime": 1779994358743.7114,
+    "hash": "089bb05f9e4ded441e123b082ce00825"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice-e2e/src/support/e2e.ts": {
+    "mtime": 1779994358743.7607,
+    "hash": "c8a219c120331e47c0b57bd864ae62cc"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/jest.config.ts": {
+    "mtime": 1779994358745.6528,
+    "hash": "de28d41aa58cd4bfc924301bb2301b17"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/jest.preset.js": {
+    "mtime": 1779994358745.698,
+    "hash": "a830e6c3868df9c3f327ff31fd1a8922"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/jest.config.ts": {
+    "mtime": 1779994358746.0215,
+    "hash": "978ec57a5b0bb22a676baf30eeeefc63"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/index.ts": {
+    "mtime": 1779994358746.2124,
+    "hash": "e816a7a04fbfade29e74b280fa5afaa9"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/account.controller.spec.ts": {
+    "mtime": 1779994358746.3508,
+    "hash": "dc93f75ded6ec60e6cf20150c38c890b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/account.controller.ts": {
+    "mtime": 1779994358746.4114,
+    "hash": "5e20d973a46446ffc82742d58ba54880"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/account.service.spec.ts": {
+    "mtime": 1779994358746.467,
+    "hash": "9c1e9583cd1b04fa4a6f3a575cf99f56"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/account.service.ts": {
+    "mtime": 1779994358746.5256,
+    "hash": "8ba1aff1509dc3e6d063e38e553cb59a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/entities/account.entity.ts": {
+    "mtime": 1779994358746.6062,
+    "hash": "fb493988120f493c2db0a5c7dc882fa2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/account/interfaces/account.interface.ts": {
+    "mtime": 1779994358746.6816,
+    "hash": "2685fa7487c5b41788c3737a59e6a680"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/auth.controller.spec.ts": {
+    "mtime": 1779994358746.8171,
+    "hash": "a3d6b90f8fdcaab606b52c95b1ae1ffa"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/auth.controller.ts": {
+    "mtime": 1779994358746.878,
+    "hash": "fa72339e8388b66ace233b6041cc1438"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/auth.service.spec.ts": {
+    "mtime": 1779994358746.9272,
+    "hash": "3d92e3f9d7bde18e0769bbf23852a0a3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/auth.service.ts": {
+    "mtime": 1779994358746.9973,
+    "hash": "eba170c003e7a876ba1d4c52f9845a18"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/dto/register.dto.ts": {
+    "mtime": 1779994358747.126,
+    "hash": "da98da6f084ca36d8aab3746d450152b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/jwt.strategy.spec.ts": {
+    "mtime": 1779994358747.2153,
+    "hash": "eb273a3d74276c17c9d41b16caea92be"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/jwt.strategy.ts": {
+    "mtime": 1779994358747.2715,
+    "hash": "6d78cfee17974718a27a8bed2ea56102"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/local.strategy.spec.ts": {
+    "mtime": 1779994358747.328,
+    "hash": "5561185f96dd7a72c5bf67c8ec422e18"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/local.strategy.ts": {
+    "mtime": 1779994358747.3818,
+    "hash": "2644fcd27e44baa7970c30cc03b1636c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/refresh.strategy.spec.ts": {
+    "mtime": 1779994358747.439,
+    "hash": "67ba982e4f85d77e904acb48b7310ab4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/strategies/refresh.strategy.ts": {
+    "mtime": 1779994358747.4966,
+    "hash": "91be6abf8904ebeeb0684bc8d7c713b8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/validators/auth.validator.spec.ts": {
+    "mtime": 1779994358747.606,
+    "hash": "0775783573d8e9659af80585ee879eee"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth/validators/auth.validator.ts": {
+    "mtime": 1779994358747.659,
+    "hash": "b5f47d5faf60df32c1b524c65c59b0d6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/auth-api.module.ts": {
+    "mtime": 1779994358746.7393,
+    "hash": "1ba277e7b1f8b988d1626b2c0a4c0d35"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/jwt/jwt.utils.spec.ts": {
+    "mtime": 1779994358747.7578,
+    "hash": "f9710d457627bd290723997009222310"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/jwt/jwt.utils.ts": {
+    "mtime": 1779994358747.8237,
+    "hash": "8d1b7a650e7c4a2c1cc395ee54a5d227"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/session/entities/session.entity.ts": {
+    "mtime": 1779994358747.9653,
+    "hash": "44ac3088b1ee5a6ac5647b8acdda551d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/session/interfaces/session.interface.ts": {
+    "mtime": 1779994358748.0571,
+    "hash": "66572891216d68d45249e22c6403cdd2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/session/session.service.spec.ts": {
+    "mtime": 1779994358748.1157,
+    "hash": "67fc4cc8a6ee47920a19d7f70d2f04c3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/src/lib/session/session.service.ts": {
+    "mtime": 1779994358748.1726,
+    "hash": "feff3912d6d211c6121fa72b0ab78fb5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/index.ts": {
+    "mtime": 1779994358748.7876,
+    "hash": "4548f6573ea12647d3618eb16f486449"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/lib/auth/dto/auth.response.ts": {
+    "mtime": 1779994358748.9817,
+    "hash": "82b7835d34d608ec60a677d20c53c566"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/lib/auth/dto/refresh.response.ts": {
+    "mtime": 1779994358749.0806,
+    "hash": "e6ca278df94300aa3230d6b2cf82df41"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/lib/auth/dto/register.dto.ts": {
+    "mtime": 1779994358749.1343,
+    "hash": "c24bc9c86e205936683e17f24c66a7bf"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/lib/auth-ng-common.ts": {
+    "mtime": 1779994358748.8748,
+    "hash": "137a3c698ea9836da9b1d2585d9f7f29"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/src/lib/jwt/interfaces/payload.interface.ts": {
+    "mtime": 1779994358749.2434,
+    "hash": "57a0812ee7b152fb0785779bc391384d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/jest.config.ts": {
+    "mtime": 1779994358749.5605,
+    "hash": "a41c84a77d61b50b876e954a7ea00d1b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/index.ts": {
+    "mtime": 1779994358749.8047,
+    "hash": "b6944d14ca7b45e7091c24458cc97e16"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/auth-webapp-core.module.ts": {
+    "mtime": 1779994358749.885,
+    "hash": "ca04f4fad38d5cab87ea40d2741b7f87"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/admin.guard.spec.ts": {
+    "mtime": 1779994358749.9668,
+    "hash": "6f50891f7b213ab44b4d5696f757a50d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/admin.guard.ts": {
+    "mtime": 1779994358750.017,
+    "hash": "b86d3d763cffe9018d25f798e4a9057d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/auth-child.guard.spec.ts": {
+    "mtime": 1779994358750.075,
+    "hash": "13de1bd0d1aeeb2d522eddaca43c7a52"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/auth-child.guard.ts": {
+    "mtime": 1779994358750.127,
+    "hash": "522d2a204d4fa940dbec557f6f206194"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/auth.guard.spec.ts": {
+    "mtime": 1779994358750.1738,
+    "hash": "4f86eca7bc5910ffa72b7d544dae988d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/guards/auth.guard.ts": {
+    "mtime": 1779994358750.2231,
+    "hash": "c4d4eedb1da744d662e5ad9b3b7ea401"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/interceptors/jwt.interceptor.spec.ts": {
+    "mtime": 1779994358750.308,
+    "hash": "e6b72a083680f08a88850f0d3ee1e97b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/interceptors/jwt.interceptor.ts": {
+    "mtime": 1779994358750.3733,
+    "hash": "c0670d4668a78a3cfe5548467de6f012"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/services/auth.service.spec.ts": {
+    "mtime": 1779994358750.454,
+    "hash": "6ff822c5ba8c08270d7b614a0b4c4ae8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/lib/services/auth.service.ts": {
+    "mtime": 1779994358750.5332,
+    "hash": "d115cee2ce8a55680955fb840763d921"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358751.6113,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358752.013,
+    "hash": "1e03f850ccd02834b1f6f847cc149ad4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/index.ts": {
+    "mtime": 1779994358752.245,
+    "hash": "433878d80651607f1b5b3ba014efeea9"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/auth-webapp-ui.component.ts": {
+    "mtime": 1779994358752.391,
+    "hash": "6005bb857ac1ddd89916b6f4fb719013"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/auth-webapp-ui.module.ts": {
+    "mtime": 1779994358752.5923,
+    "hash": "3b8bbb5306847a48a45d66daa8551fc6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/auth-webapp-ui.routes.ts": {
+    "mtime": 1779994358752.6396,
+    "hash": "71d3b82d17434bea89378e14ede04a6e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/callback/callback.component.ts": {
+    "mtime": 1779994358752.7996,
+    "hash": "07d9b32ff2d0a0e9c11cd249c0c88374"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/login/login.component.spec.ts": {
+    "mtime": 1779994358753.2874,
+    "hash": "d229ff3060ba59d6af5670485c7aa69e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/login/login.component.ts": {
+    "mtime": 1779994358753.3691,
+    "hash": "5731f45af62cb028552a310cb385bcf4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/logout/logout.component.ts": {
+    "mtime": 1779994358753.4626,
+    "hash": "d5ae549c042510f655a2293448fe0cc6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/notification/notification.component.spec.ts": {
+    "mtime": 1779994358753.6572,
+    "hash": "7e2228e76b7ba73336c759616580b7bf"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/notification/notification.component.ts": {
+    "mtime": 1779994358753.7166,
+    "hash": "e6fd30481584ce2a5fc90928628b3cac"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/register/register.component.spec.ts": {
+    "mtime": 1779994358753.9153,
+    "hash": "1a35517b905e07aa5f7ef5e4a8e5464a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/register/register.component.ts": {
+    "mtime": 1779994358753.9773,
+    "hash": "3497a2fd265341ca51d66adb1e1e5d2d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358754.815,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/jest.config.ts": {
+    "mtime": 1779994358755.294,
+    "hash": "79af8fad1ed41a1ffcaef63ca472aeab"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/src/index.ts": {
+    "mtime": 1779994358755.4858,
+    "hash": "fc59cc6cdcdbb8b65959ad801b1c54f0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/src/lib/config-api.module.ts": {
+    "mtime": 1779994358755.5828,
+    "hash": "45c236a38e01732db903e83c63a063f2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/src/lib/configuration.ts": {
+    "mtime": 1779994358755.642,
+    "hash": "3e3bfc522c1c1c3fb04e4eabf53a9893"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/src/lib/validation.ts": {
+    "mtime": 1779994358755.7014,
+    "hash": "af381c40f1ba61b4b83a87ce22ab8e66"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/jest.config.ts": {
+    "mtime": 1779994358756.077,
+    "hash": "b521d713821739f71662f1165e99d8b0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/index.ts": {
+    "mtime": 1779994358756.4307,
+    "hash": "ac57ad19e80ff8028a2eb3287c95291a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/lib/config-webapp-core.module.ts": {
+    "mtime": 1779994358756.5356,
+    "hash": "0e1b71c6f488f1026b757dad0b3c9ced"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/lib/config.service.spec.ts": {
+    "mtime": 1779994358756.5972,
+    "hash": "37051137e9ceb9167a36deea2b70134e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/lib/config.service.ts": {
+    "mtime": 1779994358756.654,
+    "hash": "6244ad86a42a4cfdccd871621fadfda8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/lib/config.ts": {
+    "mtime": 1779994358756.7056,
+    "hash": "821979605d15580fa62341c36258721f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358756.7566,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/jest.config.ts": {
+    "mtime": 1779994358757.1711,
+    "hash": "5a270f07faab1fed9e277c65d093771d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/index.ts": {
+    "mtime": 1779994358757.4744,
+    "hash": "255babe9e0a619314b208dc49542f471"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/admin.guard.spec.ts": {
+    "mtime": 1779994358757.6472,
+    "hash": "019c84222b1283622212412062dc80df"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/admin.guard.ts": {
+    "mtime": 1779994358757.7244,
+    "hash": "5848998ca15a9884098efcd0988c596a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/jwt.guard.spec.ts": {
+    "mtime": 1779994358757.777,
+    "hash": "6468cd1a35dcf288a81659a1b9a54cd8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/jwt.guard.ts": {
+    "mtime": 1779994358757.829,
+    "hash": "9b9fa6b23faf59e95427f3dbf845c8c7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/local.guard.spec.ts": {
+    "mtime": 1779994358757.8774,
+    "hash": "a538b548c03bc6b61d112110f18092f6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/local.guard.ts": {
+    "mtime": 1779994358757.928,
+    "hash": "b6a7cc4ca2c3c12a4aa1aa5f46644c45"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/refresh.guard.spec.ts": {
+    "mtime": 1779994358757.979,
+    "hash": "7c2a5ce522cbcb2d4015aa6aa581173d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/auth/guards/refresh.guard.ts": {
+    "mtime": 1779994358758.0242,
+    "hash": "2b523d689a7640c1c1e2dd4509bc7136"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/src/lib/core-api.module.ts": {
+    "mtime": 1779994358758.0808,
+    "hash": "6637bd8d14e8d2eccc09f484e92a4bea"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/jest.config.ts": {
+    "mtime": 1779994358758.5554,
+    "hash": "f6e9954cb17fe8eaa7c3b72f3c73f740"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/index.ts": {
+    "mtime": 1779994358758.7422,
+    "hash": "784f061378f4ddb1d24a6edc24d13b1a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/authentication.controller.spec.ts": {
+    "mtime": 1779994358758.9976,
+    "hash": "8776086ec8b661638bed16d92fb93b4c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/authentication.controller.ts": {
+    "mtime": 1779994358759.0718,
+    "hash": "aacf399241750e4694182720b1b0ff04"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/authentication.service.spec.ts": {
+    "mtime": 1779994358759.1257,
+    "hash": "aeb372c560d9c8ed1a1eba53eb5d9f91"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/authentication.service.ts": {
+    "mtime": 1779994358759.1914,
+    "hash": "71f33ac5a9395c4bf0bdfb7285a81041"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/guards/google.guard.spec.ts": {
+    "mtime": 1779994358759.2878,
+    "hash": "8e5de61192e9dad644d35dbb1312b5f1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/guards/google.guard.ts": {
+    "mtime": 1779994358759.3464,
+    "hash": "552e1a5795c25b89fff7eca47aa19825"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/strategies/google.strategy.spec.ts": {
+    "mtime": 1779994358759.4304,
+    "hash": "9cdbe81d11a22127f9819f43a7543627"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/authentication/strategies/google.strategy.ts": {
+    "mtime": 1779994358759.484,
+    "hash": "97c70f3d6d927bb4bc2404adb6234b15"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/common/base.service.ts": {
+    "mtime": 1779994358759.5698,
+    "hash": "72acdc2fcd7ea8c20e9c2dfca8005b7c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/dto/login.dto.ts": {
+    "mtime": 1779994358759.7988,
+    "hash": "ade99198f8d86f6a3bf1caa570b1eaf7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/dto/metadata-video.dto.ts": {
+    "mtime": 1779994358759.8538,
+    "hash": "0003597335d8a65b9a817b2ca2d1f749"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/dto/upload-video.response.ts": {
+    "mtime": 1779994358759.977,
+    "hash": "57f1856602403159a1a34bf63f3d8ee1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/gcloud-api.module.ts": {
+    "mtime": 1779994358760.0278,
+    "hash": "0449c93a0252bcfdbb845b8c3d86b704"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/youtube/youtube.controller.spec.ts": {
+    "mtime": 1779994358760.1895,
+    "hash": "88b381079338f548f332893176b2462e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/youtube/youtube.controller.ts": {
+    "mtime": 1779994358760.2478,
+    "hash": "823ae123a8e1fd0c2d29c4ad26022ec8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/youtube/youtube.service.spec.ts": {
+    "mtime": 1779994358760.3,
+    "hash": "1abafd2ee7b979b6044f5db8be096b13"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/src/lib/youtube/youtube.service.ts": {
+    "mtime": 1779994358760.36,
+    "hash": "ec7a80f6963915627470def43639162c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/core/jest.config.ts": {
+    "mtime": 1779994358761.2778,
+    "hash": "bba73a76831976707cf4811abdc44932"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/core/src/index.ts": {
+    "mtime": 1779994358761.774,
+    "hash": "a71f85691e53c7e087d2c09bd6f4490f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/core/src/lib/layout-webapp-core.module.ts": {
+    "mtime": 1779994358761.9536,
+    "hash": "ec505d508269bd5d48898367c2a199b2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358762.0034,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358762.4895,
+    "hash": "ada824ee7e158c8105b4a36af5f693f6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/index.ts": {
+    "mtime": 1779994358762.8293,
+    "hash": "60f3f2769fb1be5c86376325bd830648"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/aside/aside.component.spec.ts": {
+    "mtime": 1779994358763.204,
+    "hash": "3e427e87d15e96b85a03cd2e7806c0f7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/aside/aside.component.ts": {
+    "mtime": 1779994358763.2646,
+    "hash": "71aad54c9b7506b51cbe8bb4a9f0a4fd"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/breadcrumb/breadcrumb.component.spec.ts": {
+    "mtime": 1779994358763.4683,
+    "hash": "3c82d6a9f75aece6c41e35225d92908f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/breadcrumb/breadcrumb.component.ts": {
+    "mtime": 1779994358763.5469,
+    "hash": "b142c07fd873a85fe332b3afc3823245"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/footer/footer.component.spec.ts": {
+    "mtime": 1779994358763.7756,
+    "hash": "76a1e916095f14d8381f6ec9c8d366d6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/footer/footer.component.ts": {
+    "mtime": 1779994358763.8423,
+    "hash": "1947b192fd32a71ce46e3d802fd92169"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/header/header.component.spec.ts": {
+    "mtime": 1779994358764.0828,
+    "hash": "c71f096d560571c0c85555c42f83293a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/header/header.component.ts": {
+    "mtime": 1779994358764.1387,
+    "hash": "8af20663e17d3aaeb0dc338a04ef3586"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/loading/loading.component.spec.ts": {
+    "mtime": 1779994358764.3223,
+    "hash": "87d3f51a85fc7e43f8d1131cbbaf09ca"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/loading/loading.component.ts": {
+    "mtime": 1779994358764.387,
+    "hash": "5832d8f25b0028aa57911bc1be6bc0a2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/menu/menu.component.spec.ts": {
+    "mtime": 1779994358764.5679,
+    "hash": "71f9517258df12aaa4f2146302dd13a0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/menu/menu.component.ts": {
+    "mtime": 1779994358764.6143,
+    "hash": "fab7292ac0bcbcdebb37761ba8ba4026"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/modal/modal.component.ts": {
+    "mtime": 1779994358764.8013,
+    "hash": "3a9db400a4cebbd2d18b8879ed2ad10f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/pagination/pagination.component.spec.ts": {
+    "mtime": 1779994358764.9858,
+    "hash": "f4cb9f71ba4064909e1d82e3ccb2e192"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/pagination/pagination.component.ts": {
+    "mtime": 1779994358765.1494,
+    "hash": "375d721583864f878b2bb15b94768264"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/toast/toast.component.spec.ts": {
+    "mtime": 1779994358765.3547,
+    "hash": "7e7aaa16c807c20323d47f980a1066c2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/toast/toast.component.ts": {
+    "mtime": 1779994358765.418,
+    "hash": "0eedbb2c6ee01bf33a3241670b5dd6f8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/directives/content.directive.spec.ts": {
+    "mtime": 1779994358765.5156,
+    "hash": "e3ff3f768a5158019b7705f356217735"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/directives/content.directive.ts": {
+    "mtime": 1779994358765.57,
+    "hash": "1e475f6662c6d003a3bf0aa9072807d6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/icons/svg/icons.ts": {
+    "mtime": 1779994358765.6907,
+    "hash": "87b2328d8e4b01e5f4076c649d7fc775"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/icons/svg/svg.interface.ts": {
+    "mtime": 1779994358765.7346,
+    "hash": "141a93130b549be96ed4fb3e4769244e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layout-webapp-ui.module.ts": {
+    "mtime": 1779994358765.7898,
+    "hash": "d3dd16420a9582573e8f7406787df817"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/main/main.component.spec.ts": {
+    "mtime": 1779994358765.9973,
+    "hash": "987df340be95e339932b28195bc744cf"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/main/main.component.ts": {
+    "mtime": 1779994358766.0532,
+    "hash": "1aa7eb3b50b468a03720ecec0e9860d5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/security/security.component.spec.ts": {
+    "mtime": 1779994358766.2307,
+    "hash": "5b0cec82c00cb451b8b256dabbe03c8c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/security/security.component.ts": {
+    "mtime": 1779994358766.284,
+    "hash": "be9e296c1168ebb300ace70ca106ecab"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/menu/menu-item.interface.ts": {
+    "mtime": 1779994358766.371,
+    "hash": "a535a41e4f31912e64d8ce42e59b49d8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/menu/menu.interface.ts": {
+    "mtime": 1779994358766.4253,
+    "hash": "b903c247836db3fc576a3d1f1d0ec966"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/aside.service.spec.ts": {
+    "mtime": 1779994358766.5107,
+    "hash": "2be9e5e9dcc5bdc4418dcaa4ee56a652"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/aside.service.ts": {
+    "mtime": 1779994358766.561,
+    "hash": "425fc4337bbe18581f476e4b260e0d13"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/loading.service.spec.ts": {
+    "mtime": 1779994358766.6143,
+    "hash": "da6bfed098bba886f3210d1b736facea"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/loading.service.ts": {
+    "mtime": 1779994358766.6724,
+    "hash": "9fe991b5eb9dad33ad2d1917d455557d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/modal.service.ts": {
+    "mtime": 1779994358766.7275,
+    "hash": "f7fdce6fea11be8d35c3f5be266df12a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/toast.service.spec.ts": {
+    "mtime": 1779994358766.778,
+    "hash": "b7835f4e1129093810009bdea4475b79"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/services/toast.service.ts": {
+    "mtime": 1779994358766.8328,
+    "hash": "7da22a709cec3814a282f78208d0b9f3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/types/data-table.type.ts": {
+    "mtime": 1779994358766.9224,
+    "hash": "a5c07b8eb2f4b973a56c7d4d97406910"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/detail/detail.view.spec.ts": {
+    "mtime": 1779994358767.1338,
+    "hash": "50b4f6532f90846b2b730ff7d5110f88"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/detail/detail.view.ts": {
+    "mtime": 1779994358767.1904,
+    "hash": "878d520cee45e540ff5e0ba0538f5fd2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/form/form.view.spec.ts": {
+    "mtime": 1779994358767.3582,
+    "hash": "9e5591a29edcd9267084d3ed533f276c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/form/form.view.ts": {
+    "mtime": 1779994358767.4133,
+    "hash": "6e05bc7b85a64e5fe862b85f77c0c28e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/list/list.view.spec.ts": {
+    "mtime": 1779994358767.6023,
+    "hash": "46eb855ecf92d8ab5975b642961c2a13"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/list/list.view.ts": {
+    "mtime": 1779994358767.652,
+    "hash": "12c58320bf44b3e81a69e830e385d24d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358767.7043,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/jest.config.ts": {
+    "mtime": 1779994358768.13,
+    "hash": "8d10612ca42dca94e481ae4d138fee4a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/index.ts": {
+    "mtime": 1779994358768.3057,
+    "hash": "0a24627e30c17bad470d06fc88a6a151"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/dto/send-mailer.dto.ts": {
+    "mtime": 1779994358768.4697,
+    "hash": "bfb60806d495000fc9c0a7cd9391355f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/index.ts": {
+    "mtime": 1779994358768.5264,
+    "hash": "f116ad714f873b9ad7cbe13574286db6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/mail-sender.controller.spec.ts": {
+    "mtime": 1779994358768.652,
+    "hash": "e34f0eaf97b4a030eaf097d02e03be28"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/mail-sender.controller.ts": {
+    "mtime": 1779994358768.7117,
+    "hash": "6f26c07949c61927fb033ac29ae0385f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/mail-sender.module.ts": {
+    "mtime": 1779994358768.7693,
+    "hash": "39994b8eb0831d9230e58bb3a15bb374"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/mail-sender.service.spec.ts": {
+    "mtime": 1779994358768.825,
+    "hash": "a42ba7f8a7273729f312dcf3ac4f4927"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/src/lib/sender/mail-sender.service.ts": {
+    "mtime": 1779994358768.8774,
+    "hash": "18673432942fd822a03029c37695bc4c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358769.3936,
+    "hash": "343448d12c6e34ede0fcd94bdca79dff"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/index.ts": {
+    "mtime": 1779994358769.6262,
+    "hash": "da175b853bac363abdf480cf58b27945"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/lib/main-webapp-ui.component.ts": {
+    "mtime": 1779994358770.6638,
+    "hash": "55ca730ed6b3c69e05c464dc0861d1b7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/lib/main-webapp-ui.module.ts": {
+    "mtime": 1779994358770.7156,
+    "hash": "84f40a3e10f6dc853b38dd7f83491218"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/lib/main-webapp-ui.routes.ts": {
+    "mtime": 1779994358770.7708,
+    "hash": "f50cc488385fff80cde3e0ae2571117c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358770.8198,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/jest.config.ts": {
+    "mtime": 1779994358771.251,
+    "hash": "0db415a027c594f04c6bb129771b62f7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/index.ts": {
+    "mtime": 1779994358771.424,
+    "hash": "1e9892787a4dca6c649365db6cc1033a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/common/common.module.ts": {
+    "mtime": 1779994358771.5408,
+    "hash": "a73664a08c5a06be15dcb149988fe18b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/multimedia-api.module.ts": {
+    "mtime": 1779994358771.5886,
+    "hash": "cdf13cdee1d91594754b43cc5a6fb9d9"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/dto/create-video.dto.ts": {
+    "mtime": 1779994358771.6948,
+    "hash": "7d07e0f9bd8bc115ee4b786045984d57"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/dto/update-video.dto.ts": {
+    "mtime": 1779994358771.7551,
+    "hash": "014b1f4623c1e30abeca25010d6efb59"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/entities/video.entity.ts": {
+    "mtime": 1779994358771.843,
+    "hash": "8c59050175220d6af4efb98ffef49fb0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/validators/video.validator.spec.ts": {
+    "mtime": 1779994358771.9243,
+    "hash": "764afdfa04eb866217a68e2a01a57bb7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/validators/video.validator.ts": {
+    "mtime": 1779994358771.9954,
+    "hash": "b2f129bf3ff8d3c0a1ef3646f44fdf2b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/video.controller.spec.ts": {
+    "mtime": 1779994358772.1238,
+    "hash": "fafba3361cb18bb7b5a4a91d7be152e6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/video.controller.ts": {
+    "mtime": 1779994358772.1968,
+    "hash": "24a4244e1172b0e95d7201a3b06ff05a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/video.module.ts": {
+    "mtime": 1779994358772.2522,
+    "hash": "83e591fc5c37826f573df5ec01d3b796"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/video.service.spec.ts": {
+    "mtime": 1779994358772.3064,
+    "hash": "3e648f70b058835a467915abb96a7dae"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/src/lib/video/video.service.ts": {
+    "mtime": 1779994358772.368,
+    "hash": "759a19c687d712147ce18ecff054fd12"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/index.ts": {
+    "mtime": 1779994358772.8296,
+    "hash": "0032cedbe86acbeb8c83c70c7356aae7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/lib/common/interfaces/multimedia.interface.ts": {
+    "mtime": 1779994358772.9756,
+    "hash": "407407f41b2861b3bf45b93f1899bad0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/lib/video/dto/create-video.dto.ts": {
+    "mtime": 1779994358773.1646,
+    "hash": "a15edaf91aa9eca6f4731f8038d75d12"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/lib/video/dto/update-video.dto.ts": {
+    "mtime": 1779994358773.2185,
+    "hash": "2a42e45507019a10410adb6dce8beb7c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/lib/video/index.ts": {
+    "mtime": 1779994358773.2673,
+    "hash": "9e2a44027fdb08e1ca72bfb2f08d90da"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/src/lib/video/interfaces/video.interface.ts": {
+    "mtime": 1779994358773.367,
+    "hash": "c2fb1b2fe5900d6bf0f5b32d96fcc015"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/jest.config.ts": {
+    "mtime": 1779994358773.666,
+    "hash": "d537ddc0f35cb72f9245c9fd2d8cb3eb"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/src/index.ts": {
+    "mtime": 1779994358773.899,
+    "hash": "7b374a9a40922386759023c7a83c20dd"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/src/lib/multimedia-webapp-core.module.ts": {
+    "mtime": 1779994358773.979,
+    "hash": "d5a2ebc02192c8264be753f0291fe9ba"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/src/lib/video/services/video.service.spec.ts": {
+    "mtime": 1779994358774.0894,
+    "hash": "53fa9f4781b09334f1e9858c9b6ded7d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/src/lib/video/services/video.service.ts": {
+    "mtime": 1779994358774.1536,
+    "hash": "ca037b03a5d645738546769733683de0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358774.2026,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358774.667,
+    "hash": "9df8d1794042aec772a475781f4d5848"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/index.ts": {
+    "mtime": 1779994358774.9307,
+    "hash": "106b266570967bc1410c9fe16d0874e6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/multimedia-webapp-ui.module.ts": {
+    "mtime": 1779994358775.523,
+    "hash": "7c2fe0043387d0a20d798d85ed3d8bd3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/multimedia-webapp-ui.routes.ts": {
+    "mtime": 1779994358775.7026,
+    "hash": "88dceac164e8a7e7690137e6e8bda0cf"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/video.component.ts": {
+    "mtime": 1779994358776.0212,
+    "hash": "2f3238a46e4167217d81437d0de442b2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/video.module.ts": {
+    "mtime": 1779994358776.0894,
+    "hash": "2259bd80734f74c750cdee622464bb11"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/video.routes.ts": {
+    "mtime": 1779994358776.147,
+    "hash": "e4918a6e2eeb821a87175c61599a9a72"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/detail/detail.component.spec.ts": {
+    "mtime": 1779994358776.3765,
+    "hash": "0cf53b20127ef4ce90d76403a0ee525c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/detail/detail.component.ts": {
+    "mtime": 1779994358776.445,
+    "hash": "633365d93b5dc56d0338e0c686b0cfa3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/form/form.component.spec.ts": {
+    "mtime": 1779994358776.6333,
+    "hash": "430f96bc06c51d50419d0ec8520cdc7c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/form/form.component.ts": {
+    "mtime": 1779994358776.6938,
+    "hash": "bad9df2db4794491365a93191f5e58b7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/list/list.component.spec.ts": {
+    "mtime": 1779994358776.8755,
+    "hash": "bfc578fa7ceca7827c3568b70c016f11"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/list/list.component.ts": {
+    "mtime": 1779994358776.9248,
+    "hash": "eb790086de7e936f80511af31070e6d0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358776.9731,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/jest.config.ts": {
+    "mtime": 1779994358777.3562,
+    "hash": "a8f1c11c29e6da4ae150539c75da3815"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/index.ts": {
+    "mtime": 1779994358777.634,
+    "hash": "c721b48aafcebf43d7f510a470cf3819"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/dto/create-role.dto.ts": {
+    "mtime": 1779994358778.826,
+    "hash": "735bd34dac6517f255884c5eafd87b4f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/dto/update-role.dto.ts": {
+    "mtime": 1779994358778.8818,
+    "hash": "7245151cdd6ef7f9449910ab59985d25"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/entities/role.entity.ts": {
+    "mtime": 1779994358778.9788,
+    "hash": "3fd15465eb2c84949f4285f5b8fe5740"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/role.controller.spec.ts": {
+    "mtime": 1779994358779.037,
+    "hash": "b0aff4dbdd3ad5747eb338d6ee092e67"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/role.controller.ts": {
+    "mtime": 1779994358779.1086,
+    "hash": "e060706503325edb7afcdf7e1e5019b6"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/role.service.spec.ts": {
+    "mtime": 1779994358779.1655,
+    "hash": "393dc64268d3a58f3300fc9bbdf737b1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/role.service.ts": {
+    "mtime": 1779994358779.2253,
+    "hash": "b5d86325c4e5caaee54d0961dd62db43"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/validators/role.validator.spec.ts": {
+    "mtime": 1779994358779.3123,
+    "hash": "92baf0dd52de205811cf5a6555798f93"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/role/validators/role.validator.ts": {
+    "mtime": 1779994358779.373,
+    "hash": "26b119797e0cdca9bc4d656f44120b07"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/security-api.module.ts": {
+    "mtime": 1779994358779.4329,
+    "hash": "b868fe87955041fddaadb96b2c1003a1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/dto/create-google-user.dto.ts": {
+    "mtime": 1779994358779.6753,
+    "hash": "e7814694e380923c0ded3474ee322027"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/dto/create-user.dto.ts": {
+    "mtime": 1779994358779.7317,
+    "hash": "828c5206b7ebab757240ced94a8ac6d4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/dto/update-user.dto.ts": {
+    "mtime": 1779994358779.791,
+    "hash": "ea3bfff1f2c6805084e7106278b212e4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/dto/user.dto.ts": {
+    "mtime": 1779994358779.8423,
+    "hash": "02848ed9817ef246ecfc13453398cfa1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/entities/user.entity.ts": {
+    "mtime": 1779994358779.9312,
+    "hash": "5c44e377a221940ea30126ce1b39b9b5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/user.controller.spec.ts": {
+    "mtime": 1779994358779.985,
+    "hash": "cd0160531e18748fa031a66ba32c1a8c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/user.controller.ts": {
+    "mtime": 1779994358780.0337,
+    "hash": "92db37754ee89b1fbf164cd1df399e9c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/user.service.spec.ts": {
+    "mtime": 1779994358780.0933,
+    "hash": "956945c23e3a2edfa5f6fc277ec109d9"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/user.service.ts": {
+    "mtime": 1779994358780.1533,
+    "hash": "252e26b468f8aadacb94c4af99565d80"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/validators/user.validator.spec.ts": {
+    "mtime": 1779994358780.241,
+    "hash": "1fef4308eb7901a73fd93be7c9e72665"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/src/lib/user/validators/user.validator.ts": {
+    "mtime": 1779994358780.3005,
+    "hash": "f11ae715cc580b79de89ae57fddeacd1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/index.ts": {
+    "mtime": 1779994358780.7712,
+    "hash": "9ac7ed68e52da06e90b99e68440d5ec1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/role/dto/create-role.dto.ts": {
+    "mtime": 1779994358781.5012,
+    "hash": "7c7b760879defab65fc41104f7b6636d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/role/dto/update-role.dto.ts": {
+    "mtime": 1779994358781.5537,
+    "hash": "e405c65a1df82a4b69120668645709ad"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/role/interfaces/role.interface.ts": {
+    "mtime": 1779994358781.6418,
+    "hash": "817149433352c314ab87f13ed91fd9dc"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/security-ng-common.ts": {
+    "mtime": 1779994358781.6948,
+    "hash": "816e7c13b2a32923e46dbedb77a86fae"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/user/dto/create-google-user.dto.ts": {
+    "mtime": 1779994358781.8184,
+    "hash": "53fa227a56a64be3316e9885c66a24c8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/user/dto/create-user.dto.ts": {
+    "mtime": 1779994358781.8677,
+    "hash": "4e00dccef36ccc49e9876c38560de77f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/user/dto/update-user.dto.ts": {
+    "mtime": 1779994358781.9128,
+    "hash": "fcee743f9bfef54dd41f825404a51900"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/user/dto/user.dto.ts": {
+    "mtime": 1779994358781.9602,
+    "hash": "7a51173a683874bc4767eb2f6186bd7f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/src/lib/user/interfaces/user.interface.ts": {
+    "mtime": 1779994358782.7715,
+    "hash": "3f3663acab8f18d94465f675b6941471"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/jest.config.ts": {
+    "mtime": 1779994358783.0764,
+    "hash": "9455e3245fbe724ce42bfedae314cd0a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/src/index.ts": {
+    "mtime": 1779994358783.2856,
+    "hash": "7d129871f39a70cee9cba4bef897e733"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/src/lib/security-webapp-core.module.ts": {
+    "mtime": 1779994358783.5432,
+    "hash": "ed0edc1f500306be40b737d4c44572f1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/src/lib/user/services/user.service.spec.ts": {
+    "mtime": 1779994358783.6519,
+    "hash": "3763362e4aecdbd82d6ec6042979c5ff"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/src/lib/user/services/user.service.ts": {
+    "mtime": 1779994358783.7039,
+    "hash": "fb4bee6e0d0b863db8a9bf9810415e4f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358783.7527,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358784.1316,
+    "hash": "2da9af1d3c51619997862192e3ce21fd"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/index.ts": {
+    "mtime": 1779994358784.348,
+    "hash": "4209501df3b4ceed435307987cdb0cb5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/security-webapp-ui.module.ts": {
+    "mtime": 1779994358784.436,
+    "hash": "d0cb84f270078649238c1bf0ef9af3ca"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/security-webapp-ui.routes.ts": {
+    "mtime": 1779994358784.4878,
+    "hash": "ace6ee818b065f9e29cd2e55c00c5cf8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/user.component.ts": {
+    "mtime": 1779994358784.625,
+    "hash": "6015aa8f387b2b7d5c217a5b9c129e6e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/user.module.ts": {
+    "mtime": 1779994358784.6768,
+    "hash": "a55281150014dc0ebb44505101ecb65d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/user.routes.ts": {
+    "mtime": 1779994358784.726,
+    "hash": "4d4e125e31f4d4191afbbac7ba4ce940"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/detail/detail.component.spec.ts": {
+    "mtime": 1779994358784.9768,
+    "hash": "0cf53b20127ef4ce90d76403a0ee525c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/detail/detail.component.ts": {
+    "mtime": 1779994358785.0374,
+    "hash": "724326eae52efe84d235e7b7895f91d4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/form/form.component.spec.ts": {
+    "mtime": 1779994358785.2378,
+    "hash": "430f96bc06c51d50419d0ec8520cdc7c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/form/form.component.ts": {
+    "mtime": 1779994358785.3042,
+    "hash": "bac8954db37c58e39c6e1b906c47174b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/list/list.component.spec.ts": {
+    "mtime": 1779994358785.5159,
+    "hash": "bfc578fa7ceca7827c3568b70c016f11"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/list/list.component.ts": {
+    "mtime": 1779994358785.57,
+    "hash": "89194b1eb620bf614d7a21fb97622012"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358785.6235,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/jest.config.ts": {
+    "mtime": 1779994358786.0486,
+    "hash": "1eb33556aefa2079cc4c625be8c4bb8f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/index.ts": {
+    "mtime": 1779994358786.2288,
+    "hash": "eed2b10fcd89338416f6fa5be2df6482"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/database/auditable.entity.ts": {
+    "mtime": 1779994358786.3455,
+    "hash": "98d3fa5c3a5fdf8ca5f2e0b104e20769"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/decorators/public.decorator.ts": {
+    "mtime": 1779994358786.4316,
+    "hash": "04ce66f12d6dcfdf76cc0f072fa90b45"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/pagination/page-meta.ts": {
+    "mtime": 1779994358786.5186,
+    "hash": "2f3465d14f3125a586be856caad8c63e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/pagination/page-options.ts": {
+    "mtime": 1779994358786.5737,
+    "hash": "8feda5d679b328154020adb2fd55ec19"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/pagination/page.ts": {
+    "mtime": 1779994358786.6277,
+    "hash": "f31eba2f2311fd6a136e689091ec84e3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/search/search-options.ts": {
+    "mtime": 1779994358786.715,
+    "hash": "f2b729652efadde6088835a6484b623d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/src/lib/shared-api.module.ts": {
+    "mtime": 1779994358786.7747,
+    "hash": "c87c9e449eef1aceb96d8936edecce9c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/index.ts": {
+    "mtime": 1779994358787.2058,
+    "hash": "4ab43df13b4b37554676fb4f6764c50b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/constants/global.constant.ts": {
+    "mtime": 1779994358787.325,
+    "hash": "ef6bb2ef80bfb3946deabe9e4b9989b3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/database/auditable.interface.ts": {
+    "mtime": 1779994358787.409,
+    "hash": "f1dff63a1f5ec18de122e0d408c07e26"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/database/base-database.interface.ts": {
+    "mtime": 1779994358787.464,
+    "hash": "6a9dcf9a4b9f4f284ebdbb9fe5449a36"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/database/has-id.interface.ts": {
+    "mtime": 1779994358787.516,
+    "hash": "4011bf3684797fa3b2700f956b5de6c7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/pagination/order.enum.ts": {
+    "mtime": 1779994358787.5996,
+    "hash": "e8fb84df3ff301b0dee3ea3d6913f904"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/pagination/page-meta.ts": {
+    "mtime": 1779994358787.6614,
+    "hash": "e1ed67b161b613fd3b3f2fa5e5de5520"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/pagination/page-options.ts": {
+    "mtime": 1779994358787.7144,
+    "hash": "5812e7f2a12ea63202dc075c186a9180"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/pagination/page.ts": {
+    "mtime": 1779994358787.7673,
+    "hash": "436d9b3fa1e75eb9b2da4fba7727b6da"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/search/search-options.ts": {
+    "mtime": 1779994358787.8533,
+    "hash": "3ff256eb5fe696a4b7ec943128224a6f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/src/lib/shared-ng-common.ts": {
+    "mtime": 1779994358787.8965,
+    "hash": "da393c3eedc835dfec225b04e948f598"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/jest.config.ts": {
+    "mtime": 1779994358788.206,
+    "hash": "0576fe0faec5c7068b22192ed22c2be0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/index.ts": {
+    "mtime": 1779994358788.4424,
+    "hash": "092b18a6ab1f5142e477fb1ddbc8d2c9"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/interfaces/createable.interface.ts": {
+    "mtime": 1779994358789.0076,
+    "hash": "cf0a15f2f9ea34c2a5eec3685bb08674"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/interfaces/deletable.interface.ts": {
+    "mtime": 1779994358789.058,
+    "hash": "b2e15bd3557b17768d67692d6fc2cdb4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/interfaces/findable.interface.ts": {
+    "mtime": 1779994358789.1138,
+    "hash": "3a85ac0b5ab0026a7b19c6927e4e8aed"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/interfaces/serviceable.interface.ts": {
+    "mtime": 1779994358789.2393,
+    "hash": "c63670ff414864e3cb3fde2fbe6404c1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/interfaces/updatable.interface.ts": {
+    "mtime": 1779994358789.2983,
+    "hash": "7a852794d9df4d5edcc6cc335b060922"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/services/base.service.spec.ts": {
+    "mtime": 1779994358789.3884,
+    "hash": "cbd7627d873fec8c06f691507650e3ef"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/crud/services/base.service.ts": {
+    "mtime": 1779994358789.4414,
+    "hash": "66dee4da83ef12ee7f4b7781a0a2261f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/lib/shared-webapp-core.module.ts": {
+    "mtime": 1779994358789.49,
+    "hash": "e1c32cb4084b580994a39b18754ca443"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/src/test-setup.ts": {
+    "mtime": 1779994358789.5461,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/jest.config.ts": {
+    "mtime": 1779994358790.0532,
+    "hash": "70dcd2398cc485cb1459f749b5224f42"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/index.ts": {
+    "mtime": 1779994358790.3098,
+    "hash": "f420034bc5ddfcc8f667b80c73503867"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/abstracts/detail.component.ts": {
+    "mtime": 1779994358790.5813,
+    "hash": "da2328850f1f6af2aad79f5f35dbb063"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/abstracts/form.component.ts": {
+    "mtime": 1779994358790.629,
+    "hash": "187744560e1f3be2952f5700ff58b38f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/abstracts/list.component.ts": {
+    "mtime": 1779994358790.6814,
+    "hash": "fed6a9256a2393a1d28bf78fb1dd45b8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/resolvers/data.resolver.spec.ts": {
+    "mtime": 1779994358790.7644,
+    "hash": "b7a5c03483edde7cfaab3e5e80d4fd97"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/resolvers/data.resolver.ts": {
+    "mtime": 1779994358790.9246,
+    "hash": "85d05319349dd120500f3adcd7245893"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/shared-webapp-ui.module.ts": {
+    "mtime": 1779994358791.041,
+    "hash": "541fba58400d026c6e92a14606576fa4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/lib/validators/match.validator.ts": {
+    "mtime": 1779994358791.1274,
+    "hash": "0ed69989252a0c19a0b8588bfa97188b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/src/test-setup.ts": {
+    "mtime": 1779994358791.1846,
+    "hash": "64a26cec98cf2d72e310fa87b1f29e40"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/README.md": {
+    "mtime": 1779994358742.3037,
+    "hash": "470b0cee03185f71dd9ad913e6bec7ec"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/app/app.component.html": {
+    "mtime": 1779994358744.206,
+    "hash": "b60dc51731ba1361924a13a1fd4f0b62"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/apps/webapp/backoffice/src/index.html": {
+    "mtime": 1779994358744.8708,
+    "hash": "f622caab047581b1502d690effc29cd1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/docker-compose.yml": {
+    "mtime": 1779994358745.603,
+    "hash": "06260277c839bfdadb5bab33b1f9a719"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/api/README.md": {
+    "mtime": 1779994358745.9734,
+    "hash": "e45737348c08c2249edefacf350f1b1d"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/ng-common/README.md": {
+    "mtime": 1779994358748.612,
+    "hash": "b2141352ac069fd5989640f886c5e51c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/core/README.md": {
+    "mtime": 1779994358749.5117,
+    "hash": "74815efbb79a23ea3d01484a80ee5c53"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/README.md": {
+    "mtime": 1779994358751.9685,
+    "hash": "b35d98513303aa44a383afe234137451"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/auth-webapp-ui.component.html": {
+    "mtime": 1779994358752.3376,
+    "hash": "0fc898d1e2094a3af65e8264488374e0"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/callback/callback.component.html": {
+    "mtime": 1779994358752.7476,
+    "hash": "9872689985cad8a4d3ba4f78c4c2d6fa"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/login/login.component.html": {
+    "mtime": 1779994358753.185,
+    "hash": "0814161995977116788bfffa78b8a64b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/notification/notification.component.html": {
+    "mtime": 1779994358753.561,
+    "hash": "f9bdae382a50f08b6e4cd821b6a1abf7"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/auth/webapp/ui/src/lib/views/register/register.component.html": {
+    "mtime": 1779994358753.8125,
+    "hash": "1fa9c828e9479e74fe3442523153cdee"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/api/README.md": {
+    "mtime": 1779994358755.2422,
+    "hash": "5f03324dc0a228ccfb595c224f145c8a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/config/webapp/core/README.md": {
+    "mtime": 1779994358756.0261,
+    "hash": "cc3aac56d20347a61976decbb42d2a0b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/core/api/README.md": {
+    "mtime": 1779994358757.1194,
+    "hash": "051e01edc480a47f14da2ffae91f8399"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/gcloud/api/README.md": {
+    "mtime": 1779994358758.4983,
+    "hash": "cd4146a66c6ee69c00c3e690b64cc80e"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/core/README.md": {
+    "mtime": 1779994358761.122,
+    "hash": "f82d26ce1c9a1d7cb50f8947d435df4b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/README.md": {
+    "mtime": 1779994358762.441,
+    "hash": "077565c28dbadc52c58711aa208d58df"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/aside/aside.component copy.html": {
+    "mtime": 1779994358763.0256,
+    "hash": "498bee5c41a9b6ff1763e03f9b88bf68"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/aside/aside.component.html": {
+    "mtime": 1779994358763.1104,
+    "hash": "28bf9642c1a98d02bdc7669052de6fda"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/breadcrumb/breadcrumb.component.html": {
+    "mtime": 1779994358763.368,
+    "hash": "e9c1aa34b6e20617195f3e272ed6d5fb"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/footer/footer.component.html": {
+    "mtime": 1779994358763.678,
+    "hash": "998cda629ff6880d9ef50ffed4570f4a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/header/header.component.html": {
+    "mtime": 1779994358763.9685,
+    "hash": "a96725bec93d3a22944baa2b3df954bd"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/loading/loading.component.html": {
+    "mtime": 1779994358764.2234,
+    "hash": "7d6d91402541d38f4f7ecc993f5aca46"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/menu/menu.component.html": {
+    "mtime": 1779994358764.4778,
+    "hash": "f330a2edaac65d2c732a39e2b207dc04"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/modal/modal.component.html": {
+    "mtime": 1779994358764.7036,
+    "hash": "69fcedc935499ecf546e313c13d3c9ee"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/pagination/pagination.component.html": {
+    "mtime": 1779994358764.897,
+    "hash": "c59c30f9c4234407b84f0e49abdce05f"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/components/toast/toast.component.html": {
+    "mtime": 1779994358765.2588,
+    "hash": "0795583fbf98ccfd3b612e294eb2d728"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/main/main.component.html": {
+    "mtime": 1779994358765.907,
+    "hash": "6594fa5f32e1dc8af840caa6aef33682"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/layouts/security/security.component.html": {
+    "mtime": 1779994358766.1401,
+    "hash": "6134cd9a6c7961efbe941ac1ab14d6b5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/detail/detail.view.html": {
+    "mtime": 1779994358767.044,
+    "hash": "99240278faa4cb92ec21889601e7a3b8"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/form/form.view.html": {
+    "mtime": 1779994358767.2727,
+    "hash": "16a6692a8034b8337aa6e43c4944f06a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/layout/webapp/ui/src/lib/views/list/list.view.html": {
+    "mtime": 1779994358767.5115,
+    "hash": "374a7514226603ab301a8f51d447d21c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/mailer/api/README.md": {
+    "mtime": 1779994358768.0845,
+    "hash": "daf49e091b11ae3aa5b8fc455249353b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/README.md": {
+    "mtime": 1779994358769.344,
+    "hash": "62215e1f6b4fb3edcfe8c7dce9ffac15"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/main/webapp/ui/src/lib/main-webapp-ui.component.html": {
+    "mtime": 1779994358770.601,
+    "hash": "6c306037bf21bd116dff827f206a05a3"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/api/README.md": {
+    "mtime": 1779994358771.2058,
+    "hash": "ca32c9a24792cd9bde0f595c8366b6e5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/ng-common/README.md": {
+    "mtime": 1779994358772.6553,
+    "hash": "913b0ded1839f749b8843b7532c1fbf4"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/core/README.md": {
+    "mtime": 1779994358773.6182,
+    "hash": "0560b7eac3d83b58d7efdd19b66a8e76"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/README.md": {
+    "mtime": 1779994358774.6218,
+    "hash": "fce9afcdb3909409a0aec105e4c7cb57"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/video.component.html": {
+    "mtime": 1779994358775.847,
+    "hash": "e6e5d8a6f8dbe48a7e0ca08fe3921443"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/detail/detail.component.html": {
+    "mtime": 1779994358776.2903,
+    "hash": "94357355f43a7095ceec292408010ffb"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/form/form.component.html": {
+    "mtime": 1779994358776.5415,
+    "hash": "a30557cfadea3b2ca1f676eefb90d21a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/multimedia/webapp/ui/src/lib/video/views/list/list.component.html": {
+    "mtime": 1779994358776.7898,
+    "hash": "3b6e0546087b6323608decfae5ae294c"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/api/README.md": {
+    "mtime": 1779994358777.3135,
+    "hash": "82e2f39a35695ac2bdf0656ee7a99a05"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/ng-common/README.md": {
+    "mtime": 1779994358780.5935,
+    "hash": "f2c073bd7bc5fa4b2e88a0ea0bd4e02b"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/core/README.md": {
+    "mtime": 1779994358783.0327,
+    "hash": "8ff95e5e3a63efd9d3ccf05da21c611a"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/README.md": {
+    "mtime": 1779994358784.0864,
+    "hash": "fcdff2ba8b9737c8f12d4cba806b34c2"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/user.component.html": {
+    "mtime": 1779994358784.5742,
+    "hash": "e6e5d8a6f8dbe48a7e0ca08fe3921443"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/detail/detail.component.html": {
+    "mtime": 1779994358784.8528,
+    "hash": "c217913bfcb0c8ddfc34d8218dc16969"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/form/form.component.html": {
+    "mtime": 1779994358785.1367,
+    "hash": "4b6f45891b56466d62a69a477097c540"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/security/webapp/ui/src/lib/user/views/list/list.component.html": {
+    "mtime": 1779994358785.4033,
+    "hash": "1161ce79cb7fd3be2f511ddd8afbfa82"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/api/README.md": {
+    "mtime": 1779994358786.0007,
+    "hash": "c0f54eb385fc15c1c868034b9d59d4b5"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/ng-common/README.md": {
+    "mtime": 1779994358787.0396,
+    "hash": "7d902f764687d9a6414d08691e9e8e11"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/core/README.md": {
+    "mtime": 1779994358788.1543,
+    "hash": "ceed9b9713133bf36444485d2bab78f1"
+  },
+  "/Users/eduardobitriagoe/Hospitalitos/libs/shared/webapp/ui/README.md": {
+    "mtime": 1779994358790.0083,
+    "hash": "b01b8ce6e4c95716a7350e87ed650a96"
+  }
+}

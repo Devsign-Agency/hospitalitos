@@ -21,39 +21,33 @@ export class AsideComponent {
         name: 'aside',
         items: [
             {
-                name: 'Dashboard',
-                type: 'item',
-                icon: 'dashboard',
-                uri: '/dashboard'
-            },
-            {
                 name: 'Multimedia',
                 type: 'menu',
                 icon: 'kanban',
                 uri: 'multimedia',
                 items: [
                     {
-                        name: 'Videos',
+                        name: 'Videos Católicos',
                         type: 'item',
                         icon: 'video',
                         uri: 'multimedia/video'
                     },
                     {
-                        name: 'Audios',
+                        name: 'Audios / Reflexiones',
                         type: 'item',
                         icon: 'audio',
                         uri: 'multimedia/audio'
                     },
                     {
-                        name: 'Books',
+                        name: 'Biblias y Libros',
                         type: 'item',
                         icon: 'book',
-                        uri: 'multimedia/user'
+                        uri: 'multimedia/book'
                     }
                 ]
             },
             {
-                name: 'Users',
+                name: 'Gestión de Usuarios',
                 type: 'item',
                 icon: 'users',
                 uri: 'security/user'

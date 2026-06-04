@@ -1,0 +1,16 @@
+{
+  "requested_mode": "all",
+  "resolved_mode": "all",
+  "source": "cli",
+  "root": ".",
+  "git_root": ".",
+  "head": "5ea36d0a85142b347a339a1e37bf9b95ae364c32",
+  "candidate_count": null,
+  "included_count": 384,
+  "excluded_untracked_count": 0,
+  "excluded_ignored_count": 0,
+  "excluded_sensitive_count": 38,
+  "missing_committed_count": 0,
+  "warnings": [],
+  "recommendation": null
+}
